@@ -7,8 +7,8 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { AuthServices } from '../../../../../agylsoft-secoi-frontend/src/app/core/auth/services/auth.service';
-import { LoadingService } from '../../../../../agylsoft-secoi-frontend/src/app/core/services/loading.service';
+import { AuthServices } from '../core/auth/services/auth.service';
+import { LoadingService } from '../global/services/loading.service';
 
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {

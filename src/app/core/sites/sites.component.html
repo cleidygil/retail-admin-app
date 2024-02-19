@@ -1,0 +1,66 @@
+<div
+  class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 bg-slate-700"
+>
+  <!-- <div class="sm:mx-auto sm:w-full sm:max-w-md">
+  </div> -->
+  
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <!-- <img
+        class="mx-auto h-12 w-auto my-4"
+        src="../../../assets/img/logosis1.png"
+        alt="GSOFT"
+      /> -->
+
+      <h2
+        class="mt-10 text-center text-9xl font-bold tracking-tight text-gray-700"
+      >
+        Selecciona una oficina
+      </h2>
+      <form class="space-y-1" (submit)="onSubmit()">
+        <mat-form-field appearance="fill" color="warn">
+          <mat-label>Oficina</mat-label>
+          <mat-select [formControl]="sitesControl"  required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let item of department" [value]="{id:item.id,name:item.name}" >
+              {{ item.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="sitesControl.hasError('required')"
+            >Debes Seleccionar un site</mat-error
+          >
+        </mat-form-field>
+        <div class="flex items-center justify-between">
+          <div class="text-sm">
+            <button  (click)="logout()" class="font-medium text-gBrownMedium hover:text-gBrown"
+              >Ingresar con otro Usuario</button>
+          </div>
+        </div>
+        <div class="flex flex-row-reverse">
+            <div>
+                <button type="button"
+                mat-raised-button
+                color="primary"
+                class="rounded-md  px-3.5 py-2.5 text-sm"
+                [disabled]="sitesControl.invalid"
+                (click)="onSubmit()"
+                >Seleccionar Oficina</button>
+            </div>
+          </div>
+      </form>
+
+      <div class="mt-6">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="bg-white px-2 text-gray-500"
+              >GSOFT - Techonologies</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

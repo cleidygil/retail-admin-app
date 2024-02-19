@@ -1,7 +1,34 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsLogoutGuard } from './core/auth/guards/is-logout.guard';
+import { IsLoginGuard } from './core/auth/guards/is-login.guard';
+import { SitesGuard } from './core/sites/guard/sites.guard';
 
-const routes: Routes = [];
+const routes: Routes = [{
+  path :'',
+  redirectTo:'login',
+  pathMatch:'full'
+},
+{
+  path:'login',
+  loadChildren:()=>import('../app/core/auth/auth.module').then(m=>m.AuthModule),
+  canActivate:[IsLogoutGuard]
+},
+{
+  path:'sites',
+  loadChildren:()=>import('./core/sites/sites.module').then(m=>m.SitesModule),
+  canActivate:[IsLoginGuard]
+},
+{
+  path:'home',
+  loadChildren:()=>import('../app/core/home/home.module').then(m=>m.HomeModule),
+  canActivate:[SitesGuard]
+},
+{
+  path:'**',
+  redirectTo:'login',
+  pathMatch:'full'
+}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

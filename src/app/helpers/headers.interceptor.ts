@@ -6,7 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GlobalService } from '../../../../../agylsoft-secoi-frontend/src/app/core/services/global.service';
+import { GlobalService } from '../global/services/global.service';
 
 @Injectable()
 export class HeadersInterceptor implements HttpInterceptor {
