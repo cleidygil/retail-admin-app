@@ -9,6 +9,7 @@ import { SnackbarComponent } from 'src/app/global/components/snackbar/snackbar.c
 import { LoadingComponent } from 'src/app/global/components/loading/loading.component';
 import { MenuComponent } from './menu/menu.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    MaterialDesignModule
+    MaterialDesignModule,
+    ReactiveFormsModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 

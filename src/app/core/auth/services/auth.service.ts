@@ -27,10 +27,11 @@ export class AuthServices {
     const obs$ = await this.http.post<ReturnLogin>(`${this.url}/login/`, value)
     firstValueFrom(obs$)
       .then((result) => {
-        sessionStorage.setItem('token', result.token)
-        sessionStorage.setItem('user', JSON.stringify(result.user))
+        localStorage.setItem('token', result.token)
+        localStorage.setItem('user', JSON.stringify(result.user))
         this.snack.openSnackBar(result.message)
-        this.router.navigate(['home'])
+        // this.router.navigate(['/sites'])
+        location.href = '/home'
         this.isLoggedSub.next(true)
         this.loading.hideLoading()
         // this.requestPermission()
@@ -54,13 +55,13 @@ export class AuthServices {
 
   async logout() {
     this.isLoggedSub.next(false)
-    sessionStorage.clear()
+    localStorage.clear()
     localStorage.clear()
     location.href = '/login'
   }
 
   get token(): boolean {
-    const a = !!sessionStorage.getItem('token')
+    const a = !!localStorage.getItem('token')
     // console.log(a);    
     return a
   }
@@ -73,7 +74,7 @@ export class AuthServices {
   //   getToken(messaging, { vapidKey: environment.firebase.vpaidkey }).then(
   //     (currentToken: any) => {
   //       if (currentToken) {
-  //         const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+  //         const user = JSON.parse(localStorage.getItem('user') || '{}');
   //         console.log(user);
   //         console.log(currentToken);
   //         const body = {

@@ -9,14 +9,13 @@ import { SitesService } from '../services/sites.service';
 })
 export class SitesGuard implements CanActivate {
   constructor(private sites:SitesService,private router:Router){}
-  canActivate(route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.sites.isLoggedIn || this.router.parseUrl('/sites')
+  canActivate():Observable<true|UrlTree>{
+    return this.isSiteLogin();
   }
   
-  // isSiteLogin(): Observable<true | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree{
-  //   return this.sites.sitesLogin$.pipe(
-  //     map((login:boolean)=>login || this.router.parseUrl('/home'))
-  //   )
-  // }
+  isSiteLogin():Observable<true|UrlTree>{
+    return this.sites.sitesLogin$.pipe(
+      map((login:boolean)=>login || this.router.parseUrl('/sites'))
+    )
+  }
 }

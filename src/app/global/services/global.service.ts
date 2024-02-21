@@ -34,9 +34,9 @@ export class GlobalService {
     return new Date().toISOString().slice(0, 10);
   }
   User() {
-    const a = sessionStorage.getItem('user') ?? '';
-    sessionStorage.setItem('user', a);
-    return JSON.parse(sessionStorage.getItem('user') ?? '');
+    // const a = sessionStorage.getItem('user') ?? '';
+    // sessionStorage.setItem('user', a);
+    return JSON.parse(localStorage.getItem('user') ?? '');
   }
   get Menu():Menu[]{
     const {menus} = this.User() ??  {}

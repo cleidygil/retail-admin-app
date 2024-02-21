@@ -7,11 +7,7 @@ const routes: Routes = [{
   path: '',
   component: AuthComponent
 },
-{
-  path: '**',
-  redirectTo: '',
-  pathMatch: 'full'
-}];
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

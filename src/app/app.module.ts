@@ -11,7 +11,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptorInterceptor } from './helpers/auth-interceptor.interceptor';
 import { HeadersInterceptor } from './helpers/headers.interceptor';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { DashboardComponent } from './core/dashboard/dashboard.component';
 
 @NgModule({
@@ -23,12 +23,12 @@ import { DashboardComponent } from './core/dashboard/dashboard.component';
     RouterModule.forRoot([]),
     BrowserModule,
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
+    // ServiceWorkerModule.register('ngsw-worker.js', {
+    //   enabled: !isDevMode(),
+    //   // Register the ServiceWorker as soon as the application is stable
+    //   // or after 30 seconds (whichever comes first).
+    //   registrationStrategy: 'registerWhenStable:30000'
+    // }),
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialDesignModule,
@@ -45,7 +45,9 @@ import { DashboardComponent } from './core/dashboard/dashboard.component';
       useClass: AuthInterceptorInterceptor,
       multi: true,
     },
-  ], 
+    { provide: LocationStrategy, 
+      useClass: HashLocationStrategy }
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

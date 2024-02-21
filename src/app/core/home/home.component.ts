@@ -13,7 +13,7 @@ export class HomeComponent {
   valid: boolean = this.screenWidth < 949 ? false: false;
   classMain: string = this.screenWidth < 949 ? 'active': '';
   classToggle: string = ''
-user = this.global.User()
+user = this.global.User() ?? ''
   toggleFullscreen() {
     if (document.fullscreenElement) {
       document.exitFullscreen();
