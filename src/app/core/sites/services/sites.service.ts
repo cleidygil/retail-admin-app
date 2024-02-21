@@ -41,13 +41,17 @@ export class SitesService {
     this.sitesLogin.next(true)
     this.auth.setLoggin()
     this.loading.hideLoading()
-    this.router.navigate(['home'])
+    this.router.navigate(['/home/dashboard'])
   }
 
   validarSites():boolean{
     const user = this.global.User()
     
     return user.oficina ? true : false 
+  }
+  get isLoggedIn(): boolean {
+    // Lógica para verificar si el usuario está autenticado
+    return this.sitesLogin.value;
   }
 
 

@@ -27,19 +27,24 @@ export class AuthServices {
     const obs$ = await this.http.post<ReturnLogin>(`${this.url}/login/`, value)
     firstValueFrom(obs$)
       .then((result) => {
-        // console.log(result)
+        sessionStorage.setItem('token', result.token)
+        sessionStorage.setItem('user', JSON.stringify(result.user))
         this.snack.openSnackBar(result.message)
+        this.router.navigate(['home'])
         this.isLoggedSub.next(true)
-        localStorage.setItem('token', result.token)
-        localStorage.setItem('user', JSON.stringify(result.user))
-        this.router.navigate(['sites'])
         this.loading.hideLoading()
-       
         // this.requestPermission()
       }).catch((err) => {
         console.log(err);
-        this.snack.openSnackBar(err)
+        if (err.status == 400) {
+          return this.snack.openSnackBar(err.error.error)
+        }
+        if (err.status == 0) {
+          return this.snack.openSnackBar("Sin conexion con el Backend, por favor comunicarse con el administrador")
+        }
+        this.snack.openSnackBar("Ha ocurrido un error, por favor comunicarse con el administrador")
         this.loading.hideLoading()
+        return
       });
   }
 
@@ -55,9 +60,13 @@ export class AuthServices {
   }
 
   get token(): boolean {
-    const a = !!localStorage.getItem('token')
+    const a = !!sessionStorage.getItem('token')
     // console.log(a);    
     return a
+  }
+ get isLoggedIn(): boolean {
+    // Lógica para verificar si el usuario está autenticado
+    return this.isLoggedSub.value;
   }
   // requestPermission() {
   //   const messaging = getMessaging();

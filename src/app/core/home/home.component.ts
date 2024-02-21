@@ -1,4 +1,5 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
+import { GlobalService } from 'src/app/global/services/global.service';
 
 @Component({
   selector: 'app-home',
@@ -6,12 +7,13 @@ import { Component, HostListener } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  private global = inject(GlobalService)
   @HostListener('window:resize', ['$event'])
   screenWidth:number =window.innerWidth
   valid: boolean = this.screenWidth < 949 ? false: false;
   classMain: string = this.screenWidth < 949 ? 'active': '';
   classToggle: string = ''
-
+user = this.global.User()
   toggleFullscreen() {
     if (document.fullscreenElement) {
       document.exitFullscreen();

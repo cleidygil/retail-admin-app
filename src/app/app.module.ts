@@ -12,6 +12,7 @@ import { AuthInterceptorInterceptor } from './helpers/auth-interceptor.intercept
 import { HeadersInterceptor } from './helpers/headers.interceptor';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { DashboardComponent } from './core/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CommonModule } from '@angular/common';
   ],
   imports: [
     CommonModule,
+    RouterModule.forRoot([]),
     BrowserModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -30,7 +32,6 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialDesignModule,
-    RouterModule.forRoot([]),
 
   ],
   providers: [

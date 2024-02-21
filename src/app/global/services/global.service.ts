@@ -15,10 +15,10 @@ export class GlobalService {
   constructor(private router: Router,private http: HttpClient ) {}
 
   get Token(): string {
-    return localStorage.getItem('token') ?? '';
+    return sessionStorage.getItem('token') ?? '';
   }
   get RefreshJWT(): string {
-    return localStorage.getItem('RefreshToken') ?? '';
+    return sessionStorage.getItem('RefreshToken') ?? '';
   }
 
   Header(): HttpHeaders {
@@ -34,9 +34,9 @@ export class GlobalService {
     return new Date().toISOString().slice(0, 10);
   }
   User() {
-    const a = localStorage.getItem('user') ?? '';
+    const a = sessionStorage.getItem('user') ?? '';
     sessionStorage.setItem('user', a);
-    return JSON.parse(localStorage.getItem('user') ?? '');
+    return JSON.parse(sessionStorage.getItem('user') ?? '');
   }
   get Menu():Menu[]{
     const {menus} = this.User() ??  {}

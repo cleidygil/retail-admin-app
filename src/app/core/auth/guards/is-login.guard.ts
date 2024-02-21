@@ -9,12 +9,12 @@ import { AuthServices } from '../services/auth.service';
 })
 export class IsLoginGuard implements CanActivate {
   constructor(private auth:AuthServices,private router:Router){}
-  canActivate(): Observable<true|UrlTree>{
-    return this.isLoggind();
+  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.auth.isLoggedIn || this.router.parseUrl('/login')
   }
-  isLoggind(): Observable<true|UrlTree>{
+  isLoggind():Observable<true | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.auth.isLoggedSub$.pipe(
-        map((login:boolean)=>login || this.router.parseUrl('/login'))
+        map((login:boolean)=>login || this.router.parseUrl('/'))
       )
   }
 }

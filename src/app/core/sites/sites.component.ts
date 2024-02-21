@@ -30,32 +30,34 @@ export class SitesComponent {
   department!: Department[];
 
   ngOnInit(): void {
-    if(!this.user.groups.includes("Call Center Gsoft")){
-      this.sites
-      .asignarSite(this.user.id, 45)
-      .then((result) => {
-        this.global.formatearUser(true, 'oficina', { id:45, name:'Sede Principal (Montesano)', status: true });
-        this.snack.openSnackBar("Sucursal Montesano")
-        this.sites.LoginSites();
-      })
-      .catch((err) => {
-        this.snack.openSnackBar("Error 500")
-        this.loading.hideLoading()
-      });
-    }
+    this.sites.LoginSites();
+     this.snack.openSnackBar("Sucursal Montesano")
+    // if(!this.user.groups.includes("Call Center Gsoft")){
+    //   this.sites
+    //   .asignarSite(this.user.id, 45)
+    //   .then((result) => {
+    //     this.global.formatearUser(true, 'oficina', { id:45, name:'Sede Principal (Montesano)', status: true });
+    //     this.snack.openSnackBar("Sucursal Montesano")
+    //     this.sites.LoginSites();
+    //   })
+    //   .catch((err) => {
+    //     this.snack.openSnackBar("Error 500")
+    //     this.loading.hideLoading()
+    //   });
+    // }
     
-    this.sites
-      .getDepartment()
-      .then((result) => {
-        this.department = result;
-      })
-      .catch((err:any) => {
-        if (err.status == 401) {
-          this.snack.openSnackBar(err.error.code)
-          this.auth.logout();
-        }
-        this.snack.openSnackBar("Error 500")
-      });
+    // this.sites
+    //   .getDepartment()
+    //   .then((result) => {
+    //     this.department = result;
+    //   })
+    //   .catch((err:any) => {
+    //     if (err.status == 401) {
+    //       this.snack.openSnackBar(err.error.code)
+    //       this.auth.logout();
+    //     }
+    //     this.snack.openSnackBar("Error 500")
+    //   });
   }
 
   onSubmit() {

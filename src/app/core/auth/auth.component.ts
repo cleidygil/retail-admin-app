@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoadingService } from 'src/app/global/services/loading.service';
 import { AuthServices } from './services/auth.service';
@@ -9,6 +9,7 @@ import { AuthServices } from './services/auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
+  private auth= inject(AuthServices)
   value = '';
   hide = true;
   loginForm = new FormGroup({
@@ -16,7 +17,7 @@ export class AuthComponent {
     password: new FormControl('' , [Validators.required])
   })
 
-  constructor(private form: FormBuilder, private auth: AuthServices, private loading: LoadingService) { }
+  constructor() {}
 
   onSubmit() {
     const value = this.loginForm.value
