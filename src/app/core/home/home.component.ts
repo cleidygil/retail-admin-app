@@ -1,5 +1,6 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { GlobalService } from 'src/app/global/services/global.service';
+import { AuthServices } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,12 +9,17 @@ import { GlobalService } from 'src/app/global/services/global.service';
 })
 export class HomeComponent {
   private global = inject(GlobalService)
+  private auth = inject(AuthServices)
+
   @HostListener('window:resize', ['$event'])
-  screenWidth:number =window.innerWidth
-  valid: boolean = this.screenWidth < 949 ? false: false;
-  classMain: string = this.screenWidth < 949 ? 'active': '';
+  screenWidth: number = window.innerWidth
+  valid: boolean = this.screenWidth < 949 ? false : false;
+  classMain: string = this.screenWidth < 949 ? 'active' : '';
   classToggle: string = ''
-user = this.global.User() ?? ''
+  user = ''
+  constructor() {
+    this.user = this.global.User()
+  }
   toggleFullscreen() {
     if (document.fullscreenElement) {
       document.exitFullscreen();
@@ -23,7 +29,10 @@ user = this.global.User() ?? ''
   }
   sidebarOverlay() {
     this.valid = !this.valid;
-    this.classMain = this.valid? 'active':'';
-    this.classToggle = this.valid? 'hidden': '';
+    this.classMain = this.valid ? 'active' : '';
+    this.classToggle = this.valid ? 'hidden' : '';
+  }
+  logout() {
+    this.auth.logout()
   }
 }

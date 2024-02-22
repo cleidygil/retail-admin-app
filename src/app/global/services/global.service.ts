@@ -36,7 +36,7 @@ export class GlobalService {
   User() {
     // const a = sessionStorage.getItem('user') ?? '';
     // sessionStorage.setItem('user', a);
-    return JSON.parse(localStorage.getItem('user') ?? '');
+    return JSON.parse(sessionStorage.getItem('user') ?? '');
   }
   get Menu():Menu[]{
     const {menus} = this.User() ??  {}

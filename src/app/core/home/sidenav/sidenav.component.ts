@@ -15,9 +15,5 @@ export class SidenavComponent {
   valid!: boolean
   @Output() classMain = new EventEmitter<string>();
   classToggle: boolean = this.screenWidth < 949 ? false : true;
-
-  get menu():Menu[]{
-    const {menus} = this.global.User()
-    return menus || []
-  }
+  menus= JSON.parse(sessionStorage.getItem('menus') || '') 
 }

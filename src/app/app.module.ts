@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { MaterialDesignModule } from './components-iu/material-design.module';
-import { AuthComponent } from './components-iu/auth/auth.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptorInterceptor } from './helpers/auth-interceptor.interceptor';
 import { HeadersInterceptor } from './helpers/headers.interceptor';
