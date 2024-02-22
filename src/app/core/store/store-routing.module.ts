@@ -4,11 +4,17 @@ import { BrandsComponent } from './brands/brands.component';
 import { BoxesComponent } from './boxes/boxes.component';
 import { MeasurementUnitComponent } from './measurement-unit/measurement-unit.component';
 import { DsitributiontsMediumComponent } from './dsitributionts-medium/dsitributionts-medium.component';
+import { MyStoreComponent } from './my-store/my-store.component';
 
 const routes: Routes = [
+
   {
     path: '',
     children: [
+      {
+        path :'store',
+        component: MyStoreComponent
+      },
       {
         path: 'brands',
         component: BrandsComponent

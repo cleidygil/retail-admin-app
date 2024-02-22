@@ -103,8 +103,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatOptionModule,
     ReactiveFormsModule,
-    
-    
+    MatMenuModule,
+
   ],
 })
 

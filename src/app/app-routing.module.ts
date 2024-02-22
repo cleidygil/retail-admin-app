@@ -23,8 +23,7 @@ const routes: Routes = [{
 {
   path:'home',
   loadChildren:()=>import('../app/core/home/home.module').then(m=>m.HomeModule),
-  // canActivate:[SitesGuard]
-},
+  canActivate:[IsLoginGuard]},
 {
   path:'**',
   redirectTo:'login',

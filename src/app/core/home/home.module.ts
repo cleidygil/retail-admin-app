@@ -10,10 +10,11 @@ import { LoadingComponent } from 'src/app/global/components/loading/loading.comp
 import { MenuComponent } from './menu/menu.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, ConfirmDialogComponent, SnackbarComponent, LoadingComponent, MenuComponent, SidenavComponent],
+  declarations: [HomeComponent, ConfirmDialogComponent, SnackbarComponent, LoadingComponent, MenuComponent, SidenavComponent, NotificationsComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

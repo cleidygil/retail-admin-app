@@ -9,18 +9,20 @@ import { DsitributiontsMediumComponent } from './dsitributionts-medium/dsitribut
 import { PaymentsMethodsComponent } from './payments-methods/payments-methods.component';
 import { MyStoreComponent } from './my-store/my-store.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
+import { DialogBrandsComponent } from './brands/dialog-brands/dialog-brands.component';
 
 
 
 @NgModule({
   declarations: [
-  
+    BrandsComponent,
     BoxesComponent,
-       MeasurementUnitComponent,
-       DsitributiontsMediumComponent,
-       PaymentsMethodsComponent,
-       MyStoreComponent,
-       SuppliersComponent
+    MeasurementUnitComponent,
+    DsitributiontsMediumComponent,
+    PaymentsMethodsComponent,
+    MyStoreComponent,
+    SuppliersComponent,
+    DialogBrandsComponent
   ],
   imports: [
     CommonModule,

@@ -9,7 +9,7 @@ import { AuthServices } from '../services/auth.service';
 })
 export class IsLogoutGuard implements CanActivate {
   constructor(private auth:AuthServices,private router:Router){}
-  canActivate(): Observable<true| UrlTree> {
+  canActivate(): Observable<true | UrlTree> {
     return this.isLogout();
   }
 
@@ -18,5 +18,6 @@ export class IsLogoutGuard implements CanActivate {
         map((login:boolean)=> !login || this.router.parseUrl('/home'))
       )
   }
-  
+
+
 }

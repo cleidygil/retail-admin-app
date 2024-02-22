@@ -41,7 +41,7 @@ export class SitesService {
     this.sitesLogin.next(true)
     this.auth.setLoggin()
     this.loading.hideLoading()
-    this.router.navigate(['/home/dashboard'])
+    this.router.navigate(['home'])
   }
 
   validarSites():boolean{

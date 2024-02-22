@@ -59,13 +59,13 @@ export class AuthServices {
 
   async logout() {
     this.isLoggedSub.next(false)
-    localStorage.clear()
+    sessionStorage.clear()
     localStorage.clear()
     location.href = '/login'
   }
 
   get token(): boolean {
-    const a = !!localStorage.getItem('token')
+    const a = !!sessionStorage.getItem('token')
     // console.log(a);    
     return a
   }

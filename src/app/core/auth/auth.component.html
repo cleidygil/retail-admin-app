@@ -1,18 +1,18 @@
 <!-- component -->
 <div class="font-sans text-gray-900 antialiased">
-  <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#f8f4f3]">
+  <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-200">
       <div>
           <a href="/">
-              <h2 class="font-bold text-3xl">RETAIL <span class="bg-[#f84525] text-white px-2 rounded-md">ADMIN</span></h2>
+              <span class="font-bold text-3xl">RETAIL <span class="bg-orange-500 text-white px-2 rounded-md">ADMIN</span></span>
           </a>
       </div>
 
       <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
           <form [formGroup]="loginForm"  (submit)="onSubmit()">
 
-              <div class="py-8">
+              <div class="py-4">
                   <span class="flex justify-center">
-                      <span class="text-2xl font-semibold">Ingresar</span>
+                      <span class="text-xl font-semibold">Ingresar</span>
                   </span>
               </div>
 
@@ -21,14 +21,14 @@
                   <input type='email' 
                       formControlName='email'
                       placeholder='ejemplo@gsoftve.com'
-                      class="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]" />                        
+                      class="w-full rounded-md py-2.5 px-4 border text-sm outline-orange-500" />                        
               </div>
 
 
               <div class="mt-4">
                   <label class="block font-medium text-sm text-gray-700" for="password" value="Password" ></label>
                   <div class="relative">
-                      <input id="password"  [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="" required autocomplete="current-password" class = 'w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]'>
+                      <input id="password"  [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="" required autocomplete="current-password" class = 'w-full rounded-md py-2.5 px-4 border text-sm outline-orange-500'>
 
                       <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
                         <span
@@ -58,7 +58,7 @@
                       </a>
                 </div>   -->
                 <div class=" text-center sm:text-right whitespace-nowrap my-4">
-                <button [disabled]="loginForm.invalid" type="submit" class="ms-4 inline-flex items-center px-4 py-2  {{loginForm.invalid ? 'bg-[#b8b5b4]': 'bg-[#f84525]'}} border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-800 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <button [disabled]="loginForm.invalid" type="submit" class="ms-4 inline-flex items-center px-4 py-2  {{loginForm.invalid ? 'bg-orange-200': 'bg-orange-500'}} border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                   INGRESAR
                 </button>
 

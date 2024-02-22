@@ -27,10 +27,9 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/custom-theme.scss",
-              "src/styles.css",
-              "@angular/material/prebuilt-themes/deeppurple-amber.css"
-                         ],
+              "src/theme-app.scss",
+              "src/styles.css"
+              ],
             "scripts": [  ],
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"
@@ -95,6 +94,7 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
+              "src/theme-app.scss",
               "src/styles.css"
             ],
             "scripts": []
