@@ -7,9 +7,9 @@
       RETAIL <span class="bg-[#f84525] text-white px-2 rounded-md">SOFT</span>
     </h2>
   </a>
-  <ul class="mt-4">
+  <ul class="mt-4" *ngIf="menus.length > 0">
   
-    <app-menu *ngFor="let item of menu" [ruta]="item" ></app-menu>
+    <app-menu *ngFor="let item of menus" [ruta]="item" ></app-menu>
   </ul>
 </div>
 <div

@@ -15,11 +15,11 @@ const routes: Routes = [{
   loadChildren:()=>import('./core/auth/auth.module').then(m=>m.AuthModule),
   canActivate:[IsLogoutGuard]
 },
-// {
-//   path:'sites',
-//   loadChildren:()=>import('./core/sites/sites.module').then(m=>m.SitesModule),
-//   canActivate:[IsLoginGuard]
-// },
+{
+  path:'sites',
+  loadChildren:()=>import('./core/sites/sites.module').then(m=>m.SitesModule),
+  canActivate:[false]
+},
 {
   path:'home',
   loadChildren:()=>import('../app/core/home/home.module').then(m=>m.HomeModule),
