@@ -13,15 +13,19 @@ export class DialogBrandsComponent {
   private services = inject(StoreService)
   private snack = inject(SnackbarService)
   constructor(public dialogRef: MatDialogRef<DialogBrandsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  accept: string = '.jpg,.png';
 
   brandsform = new FormGroup({
     name: new FormControl('', [Validators.required]),
   })
+  file = new FormControl('');
+  selectedFile: any = null;
+  myFiles: any[] = [];
+  format: any = [];
+
   archivoSeleccionado!: File;
   mostrar !: any
   ngOnInit(): void {
-    console.log(this.data)
-    console.log(this.archivoSeleccionado)
     if (this.data != '') {
       this.brandsform.patchValue({
         name: this.data.name,
@@ -29,26 +33,43 @@ export class DialogBrandsComponent {
     }
   }
   seleccionarArchivo(event: any) {
-    console.log(event)
-    this.archivoSeleccionado = event.target?.files[0];
-    console.log(this.archivoSeleccionado, 'arch')
-    let reader = new FileReader();
-    reader.readAsDataURL(this.archivoSeleccionado);
-    reader.onload = function () {
-      console.log(reader.result)
-      reader.result
-      return
-    }
-    this.mostrar = reader.result?? ''
-  }
-  removeFile() {
+    const file = event.target.files[0];
+    this.selectedFile = file;
+    console.log(this.selectedFile.name)
 
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      const isImageType = file.type.startsWith('image/');
+
+      if (isImageType) {
+        this.myFiles = [{ name: file.name, imageData: result, preview: result }];
+      } else {
+        this.myFiles = [{ name: file.name, imageData: result, preview: null }];
+      }
+
+      const files = this.myFiles.map((file) => {
+        return {
+          name: file.name,
+          image_data: file.imageData
+        }
+      })
+
+      this.format = files
+    };
+    reader.readAsDataURL(file);
+  }
+  resetFile(indice: number): void {
+    this.format = this.format.filter((fil: string, i: number) => i !== indice);
+    this.myFiles = this.myFiles.filter(
+      (fil: string, i: number) => i !== indice
+    );
   }
   onSubmit() {
     const form = this.brandsform.value
     let body = {
       name: form.name,
-      image: this.mostrar
+      image: this.selectedFile.name
     }
     if (this.data != '') {
       this.services.patchBrandID(body, this.data.id).then((res) => {
