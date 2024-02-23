@@ -12,8 +12,8 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path :'store',
-        component: MyStoreComponent
+        path: 'store',
+        loadChildren: () => import('./my-store/my-store.module').then(m => m.MyStoreModule)
       },
       {
         path: 'brands',

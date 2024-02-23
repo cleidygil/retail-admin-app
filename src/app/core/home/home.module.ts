@@ -11,17 +11,24 @@ import { MenuComponent } from './menu/menu.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { EncabezadoComponent } from 'src/app/global/components/encabezado/encabezado.component';
+import { PipeModule } from "../../global/pipes/pipe.module";
 
 
 @NgModule({
-  declarations: [HomeComponent, ConfirmDialogComponent, SnackbarComponent, LoadingComponent, MenuComponent, SidenavComponent, NotificationsComponent],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    MaterialDesignModule,
-    ReactiveFormsModule
-  ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-
+    declarations: [HomeComponent, ConfirmDialogComponent, SnackbarComponent, LoadingComponent, MenuComponent, SidenavComponent, NotificationsComponent, EncabezadoComponent],
+    exports: [
+        LoadingComponent,
+        SnackbarComponent,
+        EncabezadoComponent,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        MaterialDesignModule,
+        ReactiveFormsModule,
+        PipeModule
+    ]
 })
 export class HomeModule { }

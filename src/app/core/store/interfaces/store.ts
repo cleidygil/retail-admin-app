@@ -21,3 +21,43 @@ export class BrandsParams {
     page?: number
     status?:string
 }
+
+
+export class MyStoreParams {
+  search?:string
+  page?: number
+  status?:string
+}
+export interface AllStores {
+  count: number
+  next: string
+  previous: any
+  results: AllStore[]
+}
+
+export interface AllStore {
+  id: number
+  rif: string
+  name: string
+  address: string
+  phone: string
+  parent?: number
+  localphone: string
+  description: string
+  payment_methods: PaymentMethod[]
+  currency?: number
+  currency_name?: string
+}
+
+export interface PaymentMethod {
+  id: number
+  payment_method: number
+  payment_method_name: string
+  bank?: number
+  bank_account?: string
+  email?: string
+}
+export class MethosdParams{
+  status?:string
+  currency?:string
+}

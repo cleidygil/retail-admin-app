@@ -10,6 +10,7 @@ import { PaymentsMethodsComponent } from './payments-methods/payments-methods.co
 import { MyStoreComponent } from './my-store/my-store.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
 import { DialogBrandsComponent } from './brands/dialog-brands/dialog-brands.component';
+import { HomeModule } from '../home/home.module';
 
 
 
@@ -27,7 +28,8 @@ import { DialogBrandsComponent } from './brands/dialog-brands/dialog-brands.comp
   imports: [
     CommonModule,
     StoreRoutingModule,
-    MaterialDesignModule
+    MaterialDesignModule,
+    HomeModule
   ]
 })
 export class StoreModule { }

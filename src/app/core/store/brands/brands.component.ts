@@ -60,5 +60,9 @@ export class BrandsComponent {
       width: window.innerWidth > 639 ? '40%' : '100%',
       data: element
     })
+    dialogRef.afterClosed().subscribe((data: boolean) => {
+      if (data) {
+        this.getBrands()      }
+    })
   }
 }
