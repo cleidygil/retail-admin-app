@@ -1,9 +1,7 @@
-export interface Department {
-    id: number
-    name: string
-    email: string
-    color: string
-    issue: string
-    serie: number
-  }
-  
+
+export interface Store {
+  id: number
+  store: number
+  store__name: string
+  store__rif: string
+}

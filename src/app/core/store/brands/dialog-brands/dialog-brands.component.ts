@@ -69,14 +69,20 @@ export class DialogBrandsComponent {
     const form = this.brandsform.value
     let body = {
       name: form.name,
-      image: this.selectedFile.name
+      image: this.selectedFile !=null ? this.selectedFile.name :  this.data?.image
     }
     if (this.data != '') {
+      console.log('Editar')
       this.services.patchBrandID(body, this.data.id).then((res) => {
         this.dialogRef.close(true)
         this.snack.openSnackBar("Actualizado exitosamente")
       }).catch((error) => {
+        if (error.status == 404 || error.status == 0) {
+          this.snack.openSnackBar("Ocurrio un error, intente nuevamente")
+          return
+        }
         this.snack.openSnackBar(error.error.message)
+        return
       })
       return
     }

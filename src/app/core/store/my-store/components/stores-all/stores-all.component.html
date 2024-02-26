@@ -64,7 +64,7 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Tienda</th>
         <td mat-cell *matCellDef="let element">
-          <span class="inline-block items-end">
+          <span class="inline-block items-center">
             <mat-icon class="mr-2">store</mat-icon> {{ element.name }}
           </span>
         </td>
@@ -84,40 +84,31 @@
       <ng-container matColumnDef="payment">
         <th mat-header-cell *matHeaderCellDef>Metodos de Pagos</th>
         <td mat-cell *matCellDef="let element">
-          <span class="inline-block mx-auto items-end">
-            {{ element.payment_methods.length }}
-            <button
-              mat-icon-button
-              matTooltip="Metodos de pagos"
-              (click)="openPaymentsMethods(element)"
-            >
-              <mat-icon>add_card</mat-icon>
-            </button>
+          <span class="inline-block mx-auto items-center font-medium text-xl">
+            <mat-icon>account_balance</mat-icon>  {{ element.payment_methods.length }}
           </span>
         </td>
       </ng-container>
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Accion</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button [matMenuTriggerFor]="menu" >
+          <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>settings</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openEdit(element)">
+            <!-- <button mat-menu-item (click)="openEdit(element)">
               <mat-icon>edit</mat-icon>
               <span>Editar tienda</span>
             </button>
             <button mat-menu-item disabled>
               <mat-icon>delete</mat-icon>
               <span>Eliminar</span>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>notifications_off</mat-icon>
-              <span>Disable alerts</span>
-            </button>
+            </button> -->
+            <a mat-menu-item [routerLink]="['./my_store/', element.id]">
+              <mat-icon>display_settings</mat-icon>
+              <span>Detalles de la Tienda</span>
+            </a>
           </mat-menu>
-          
-        
         </td>
       </ng-container>
 

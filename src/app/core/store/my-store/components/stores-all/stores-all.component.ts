@@ -46,6 +46,7 @@ export class StoresAllComponent {
     params.page = this.nextPage
     params.status = valor.status || ''
     params.search = valor.search || ''
+    params.parent = 'false'
 
     this.brandServices.getMyStore(params).then((result) => {
       this.loading.hideLoading()

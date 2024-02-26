@@ -1,0 +1,11 @@
+<mat-tab-group preserveContent>
+    <mat-tab label="Informacion">
+        <app-store-info [info]="info"></app-store-info>
+    </mat-tab>
+    <mat-tab label="Metodos de Pagos">
+        <app-store-payments-methods [info]="info"></app-store-payments-methods>
+    </mat-tab>
+    <mat-tab label="Usuarios">
+        <app-store-users [info]="info"></app-store-users>
+    </mat-tab>
+  </mat-tab-group>

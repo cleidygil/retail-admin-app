@@ -16,7 +16,7 @@ export class HomeComponent {
   valid: boolean = this.screenWidth < 949 ? false : false;
   classMain: string = this.screenWidth < 949 ? 'active' : '';
   classToggle: string = ''
-  user = ''
+  user:any = ''
   constructor() {
     this.user = this.global.User()
   }

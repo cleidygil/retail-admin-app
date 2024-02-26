@@ -4,7 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { AllStores, Brands, BrandsParams, MethosdParams } from '../interfaces/store';
+import { AllStore, AllStores, Brands, BrandsParams, MethosdParams } from '../interfaces/store';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class StoreService {
     return lastValueFrom(obs$)
   }
   patchBrandID(body:any, id:number): Promise<any> {
-    const obs$ = this.http.patch<any>(`${this.url}/api/stores/brands/${id}`,body)
+    const obs$ = this.http.patch<any>(`${this.url}/api/stores/brands/${id}/`,body)
     return lastValueFrom(obs$)
   }
   getMyStore(params: BrandsParams): Promise<AllStores> {
@@ -39,10 +39,29 @@ export class StoreService {
     return lastValueFrom(obs$)
   }
   patchMyStoreID(body:any, id:number): Promise<any> {
-    const obs$ = this.http.patch<any>(`${this.url}/api/stores/${id}`,body)
+    const obs$ = this.http.patch<any>(`${this.url}/api/stores/${id}/`,body)
     return lastValueFrom(obs$)
   }
-
+  getMyStoreID(id:number): Promise<AllStore> {
+    const obs$ = this.http.get<AllStore>(`${this.url}/api/stores/${id}/`)
+    return lastValueFrom(obs$)
+  }
+  getMyStoreUsers(id:number): Promise<AllStore> {
+    const obs$ = this.http.get<AllStore>(`${this.url}/api/stores/${id}/users/`)
+    return lastValueFrom(obs$)
+  }
+  postMyStoreUsers(body:any, id:number): Promise<any> {
+    const obs$ = this.http.post<any>(`${this.url}/api/stores/${id}/users/`,body)
+    return lastValueFrom(obs$)
+  }
+  getMyStorePaymentMethods(id:number): Promise<AllStore> {
+    const obs$ = this.http.get<AllStore>(`${this.url}/api/stores/${id}/payment_methods/`)
+    return lastValueFrom(obs$)
+  }
+  postMyStorePaymentMethods(body:any, id:number): Promise<any> {
+    const obs$ = this.http.post<any>(`${this.url}/api/stores/${id}/payment_methods/`,body)
+    return lastValueFrom(obs$)
+  }
   getPaymentMethods(params:MethosdParams): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<any>(`${this.url}/api/payments/methods/`, { params: resparams })

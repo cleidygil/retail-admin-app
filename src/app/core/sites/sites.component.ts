@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SitesService } from './services/sites.service';
-import { Department } from './interfaces/SitesInterface';
+import {  Store } from './interfaces/SitesInterface';
 import { AuthServices } from '../auth/services/auth.service';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { LoadingService } from 'src/app/global/services/loading.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
+import { MyStoreParams } from '../store/interfaces/store';
 
 interface Animal {
   name: string;
@@ -26,12 +27,12 @@ export class SitesComponent {
 
 
   user = this.global.User();
-  sitesControl = new FormControl<Department | null>(null, Validators.required);
-  department!: Department[];
+  sitesControl = new FormControl<Store | null>(null, Validators.required);
+  department!: Store[];
 
   ngOnInit(): void {
-    this.sites.LoginSites();
-     this.snack.openSnackBar("Sucursal Montesano")
+    // this.sites.LoginSites();
+    
     // if(!this.user.groups.includes("Call Center Gsoft")){
     //   this.sites
     //   .asignarSite(this.user.id, 45)
@@ -45,33 +46,35 @@ export class SitesComponent {
     //     this.loading.hideLoading()
     //   });
     // }
-    
-    // this.sites
-    //   .getDepartment()
-    //   .then((result) => {
-    //     this.department = result;
-    //   })
-    //   .catch((err:any) => {
-    //     if (err.status == 401) {
-    //       this.snack.openSnackBar(err.error.code)
-    //       this.auth.logout();
-    //     }
-    //     this.snack.openSnackBar("Error 500")
-    //   });
+
+  
+    this.sites
+      .getStores(this.user.id)
+      .then((result) => {
+        this.department = result;
+      })
+      .catch((err:any) => {
+        if (err.status == 401) {
+          this.snack.openSnackBar(err.error.code)
+          this.auth.logout();
+        }
+        this.snack.openSnackBar("Error 500")
+      });
   }
 
   onSubmit() {
     this.loading.showLoading();
-    const id = this.sitesControl.value?.id ?? 0;
-    const name = this.sitesControl.value?.name;
+    const store = this.sitesControl.value?.id ?? 0;
+    const store_name = this.sitesControl.value?.store__name;
     this.sites
-      .asignarSite(this.user.id, id)
+      .assignStore(this.user.id, store)
       .then((result) => {
-        this.global.formatearUser(true, 'oficina', { id, name, status: true });
+        this.global.formatearUser(true, 'store', { store, store_name});
         this.sites.LoginSites();
       })
       .catch((err) => {
-        this.snack.openSnackBar("Error 500")
+        console.log(err)
+        this.snack.openSnackBar("Ocurrio un error, intente nuevamente")
         this.loading.hideLoading()
       });
   }

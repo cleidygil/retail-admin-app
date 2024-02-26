@@ -33,10 +33,8 @@ export class AuthServices {
         sessionStorage.setItem('user', JSON.stringify(result.user))
         sessionStorage.setItem('menus', JSON.stringify(result.user.menus))
         this.snack.openSnackBar(result.message)
-        this.global.formatearUser(true, 'oficina', { id: 1, name: 'Sede Principal', status: true });
-        this.snack.openSnackBar(result.message)
         this.isLoggedSub.next(true)
-        this.router.navigate(['home'])
+        this.router.navigate(['branch'])
         this.loading.hideLoading()
         // this.requestPermission()
       }).catch((err) => {

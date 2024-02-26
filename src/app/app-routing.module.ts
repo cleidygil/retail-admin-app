@@ -16,14 +16,14 @@ const routes: Routes = [{
   canActivate:[IsLogoutGuard]
 },
 {
-  path:'sites',
+  path:'branch',
   loadChildren:()=>import('../app/core/sites/sites.module').then(m=>m.SitesModule),
   canActivate:[IsLoginGuard]
 },
 {
   path:'home',
   loadChildren:()=>import('../app/core/home/home.module').then(m=>m.HomeModule),
-  canActivate:[IsLoginGuard]},
+  canActivate:[SitesGuard]},
 {
   path:'**',
   redirectTo:'login',

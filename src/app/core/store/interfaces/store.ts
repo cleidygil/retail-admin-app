@@ -27,6 +27,8 @@ export class MyStoreParams {
   search?:string
   page?: number
   status?:string
+  remove_pagination?: string
+  parent?:string
 }
 export interface AllStores {
   count: number

@@ -28,7 +28,6 @@ export class GlobalService {
     return headers; 
   }
 
-  setJWT() {}
 
   Fecha(): string {
     return new Date().toISOString().slice(0, 10);
@@ -42,25 +41,6 @@ export class GlobalService {
     const {menus} = this.User() ??  {}
     return menus
 }
-
-  cleanJson(jsonString: string): any | '' {
-    // console.log(jsonString);
-    const endIndex = jsonString.indexOf('ONU CATV');
-    const result = jsonString.substring(0, endIndex);
-    // console.log(result);
-    try {
-      return JSON.parse(jsonString);
-      //return JSON.stringify(jsonObj, null, 2);
-    } catch (error) {
-      console.error(error);
-      return '';
-    }
-  }
-
-  changeDate(date: string) {
-    const a = new Date(date).toISOString().slice(0, 10);
-    this.dateBS.next(a);
-  }
 
   formatearFecha(date: string = '') {
     const fecha = new Date(date);
@@ -104,26 +84,22 @@ export class GlobalService {
   formatearUser(obj: boolean, nombre: string | null, nuevo: object) {
     // funcion para formatear la informacion del sessionStorage
     if (obj) {
-      const a = { ...this.User(), oficina: { ...nuevo } };
-      localStorage.setItem('user', JSON.stringify(a));
+      const a = { ...this.User(), ...nuevo };
+      sessionStorage.setItem('user', JSON.stringify(a));
     } else {
       const a = { ...this.User(), ...nuevo };
-      localStorage.setItem('user', JSON.stringify(a));
+      sessionStorage.setItem('user', JSON.stringify(a));
     }
   }
 
   formatearNumero(numero:number) {
     // Dividir el número en partes enteras y decimales
     const partes = numero.toFixed(2).split(".");
-    
     // Agregar comas como separadores de miles en la parte entera
     const parteEnteraFormateada = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    
     // Unir la parte entera formateada con las decimales y devolver el resultado
     return parteEnteraFormateada + "," + partes[1];
   }
-  getBanks(type:number):Promise<any>{
-    const obs$ = this.http.get<any>(`${this.url}/api/gsoft/payments/banks/?type=${type}&remove_pagination=true`)
-    return firstValueFrom(obs$)
-  }
+
+
 }

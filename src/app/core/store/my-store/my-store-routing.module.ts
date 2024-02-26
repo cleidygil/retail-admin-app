@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StoresAllComponent } from './components/stores-all/stores-all.component';
 import { MyStoreComponent } from './my-store.component';
+import { StoreDetailsComponent } from './components/store-details/store-details.component';
 
 const routes: Routes = [
   {
@@ -10,12 +11,16 @@ const routes: Routes = [
     children:[
       {
         path :'',
-        redirectTo:'all_store',
+        redirectTo:'',
         pathMatch:'full'
       },
       {
-        path: 'all_store',
+        path: '',
         component: StoresAllComponent
+      },
+      {
+        path: 'my_store/:id',
+        component: StoreDetailsComponent
       }
     ]
   },

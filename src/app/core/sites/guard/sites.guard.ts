@@ -15,7 +15,7 @@ export class SitesGuard implements CanActivate {
   
   isSiteLogin():Observable<true|UrlTree>{
     return this.sites.sitesLogin$.pipe(
-      map((login:boolean)=>login || this.router.parseUrl('/sites'))
+      map((login:boolean)=>login || this.router.parseUrl('/branch'))
     )
   }
 }
