@@ -4,7 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { AllStore, AllStores, Brands, BrandsParams, MethosdParams } from '../interfaces/store';
+import { AllStore, AllStores, Brands, BrandsParams, MethosdParams, UserStore } from '../interfaces/store';
 
 @Injectable({
   providedIn: 'root'
@@ -46,11 +46,11 @@ export class StoreService {
     const obs$ = this.http.get<AllStore>(`${this.url}/api/stores/${id}/`)
     return lastValueFrom(obs$)
   }
-  getMyStoreUsers(id:number): Promise<AllStore> {
-    const obs$ = this.http.get<AllStore>(`${this.url}/api/stores/${id}/users/`)
+  getMyStoreUsers(id:number): Promise<UserStore[]> {
+    const obs$ = this.http.get<UserStore[]>(`${this.url}/api/stores/${id}/users/`)
     return lastValueFrom(obs$)
   }
-  postMyStoreUsers(body:any, id:number): Promise<any> {
+  postMyStoreUsers(body:any, id:number): Promise<UserStore> {
     const obs$ = this.http.post<any>(`${this.url}/api/stores/${id}/users/`,body)
     return lastValueFrom(obs$)
   }
@@ -65,6 +65,11 @@ export class StoreService {
   getPaymentMethods(params:MethosdParams): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<any>(`${this.url}/api/payments/methods/`, { params: resparams })
+    return lastValueFrom(obs$)
+  }
+  getBanks(params:MethosdParams): Promise<any> {
+    const resparams = this.queryParams.buildQueryParams(params)
+    const obs$ = this.http.get<any>(`${this.url}/api/payments/banks/`, { params: resparams })
     return lastValueFrom(obs$)
   }
 }

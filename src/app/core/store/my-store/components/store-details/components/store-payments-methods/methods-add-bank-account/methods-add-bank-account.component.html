@@ -1,0 +1,18 @@
+<form [formGroup]="payments" class="grid gap-2 p-4">
+  <div>
+    <mat-form-field class="w-full" appearance="fill">
+      <mat-label>Banco</mat-label>
+      <mat-select formControlName="bank">
+        <mat-option *ngFor="let item of bank_arr" [value]="item.id">{{
+          item.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="w-full" appearance="fill">
+      <mat-label>Nro de Cuenta</mat-label>
+      <input matInput formControlName="bank_account" maxlength="20" />
+    </mat-form-field>
+  </div>
+</form>

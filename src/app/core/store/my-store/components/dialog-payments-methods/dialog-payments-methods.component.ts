@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
 import { StoreService } from '../../../services/store.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MethosdParams } from '../../../interfaces/store';
+import { Methods, MethosdParams } from '../../../interfaces/store';
 
 @Component({
   selector: 'app-dialog-payments-methods',
@@ -14,20 +14,11 @@ export class DialogPaymentsMethodsComponent {
   private services = inject(StoreService)
   private snack = inject(SnackbarService)
   constructor(public dialogRef: MatDialogRef<DialogPaymentsMethodsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  payments = new FormGroup({
-    payment_methods: new FormControl<any>('', [Validators.required]),
-    // bank: new FormControl<any>('', [Validators.required]),
-    // bank_account: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern('[0-9]*')]),
-    // email: new FormControl('', [Validators.required, Validators.email]),
-  })
+  values: any
   methods_arr: any[] = []
-  payment_methods_arr: any[] = []
-  payment_methods: any[] = []
-
+  methods_selected = new FormControl<Methods | null>(null)
   ngOnInit(): void {
     this.getMethods()
-
   }
   getMethods() {
     const params: MethosdParams = new MethosdParams()
@@ -38,20 +29,20 @@ export class DialogPaymentsMethodsComponent {
     })
   }
   onSubmit() {
-    const valor = this.payments.value
-    let body = {
-      "payment_method": valor.payment_methods,
-      "method": true
+
+    let body={
+      payment_methods:[this.methods_selected.value?.id],
+      method: true
     }
-    console.log(body)
-   
-      this.services.postMyStorePaymentMethods(body, this.data.id).then((res) => {
-        this.dialogRef.close(true)
-        this.snack.openSnackBar("Actualizado exitosamente")
-      }).catch((error) => {
-        this.snack.openSnackBar(error.error.message)
-      })
-      return
-   
+    let body2 = {...body, ...this.values}
+    this.services.postMyStorePaymentMethods(body2, this.data?.id).then((res) => {
+      this.dialogRef.close(true)
+      this.snack.openSnackBar("Actualizado exitosamente")
+    }).catch((error) => {
+      this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
+      this.snack.openSnackBar(error.error.message)
+    })
+
   }
+
 }

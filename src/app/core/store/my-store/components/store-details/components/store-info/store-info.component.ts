@@ -57,10 +57,8 @@ export class StoreInfoComponent {
       "parent":this.user.store,
       "localphone": valor.localphone,
       "description": valor.description,
-      // "payment_methods": this.payment_methods,
       "currency": null
     }
-    console.log(body)
     this.services.patchMyStoreID(body, this.info?.id).then((res) => {
       this.snack.openSnackBar("Tienda actualizada exitosamente")
     }).catch((error) => {

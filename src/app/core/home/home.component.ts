@@ -13,8 +13,8 @@ export class HomeComponent {
 
   @HostListener('window:resize', ['$event'])
   screenWidth: number = window.innerWidth
-  valid: boolean = this.screenWidth < 949 ? false : false;
-  classMain: string = this.screenWidth < 949 ? 'active' : '';
+  valid: boolean = this.screenWidth < 768 ? false : false;
+  classMain: string = this.screenWidth < 768 ? 'active' : '';
   classToggle: string = ''
   user:any = ''
   constructor() {

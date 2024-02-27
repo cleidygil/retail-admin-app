@@ -1,34 +1,34 @@
 
 export interface Brands {
-    count: number
-    next: string
-    previous: any
-    results: Brand[]
-  }
-  
+  count: number
+  next: string
+  previous: any
+  results: Brand[]
+}
+
 export interface Brand {
-    id: number
-    name: string
-    image: string
-    store: any
-    store_name: any
-  }
-  
+  id: number
+  name: string
+  image: string
+  store: any
+  store_name: any
+}
+
 
 
 export class BrandsParams {
-    search?:string
-    page?: number
-    status?:string
+  search?: string
+  page?: number
+  status?: string
 }
 
 
 export class MyStoreParams {
-  search?:string
+  search?: string
   page?: number
-  status?:string
+  status?: string
   remove_pagination?: string
-  parent?:string
+  parent?: string
 }
 export interface AllStores {
   count: number
@@ -54,12 +54,30 @@ export interface AllStore {
 export interface PaymentMethod {
   id: number
   payment_method: number
-  payment_method_name: string
+  payment_method__name?: string
   bank?: number
+  bank__name?: number
   bank_account?: string
   email?: string
 }
-export class MethosdParams{
-  status?:string
-  currency?:string
+export class MethosdParams {
+  status?: string
+  remove_pagination?: string
+  currency?: string
+}
+
+export interface UserStore {
+  id: number
+  user: number
+  user__name: string
+  user__lastname: string
+}
+
+export interface Methods {
+  id: number
+  name: string
+  currency: number
+  currency_name: string
+  status: number
+  status_name: string
 }

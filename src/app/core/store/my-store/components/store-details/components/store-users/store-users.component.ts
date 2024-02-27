@@ -1,7 +1,9 @@
 import { Component, Input, inject } from '@angular/core';
-import { AllStore } from 'src/app/core/store/interfaces/store';
+import { AllStore, UserStore } from 'src/app/core/store/interfaces/store';
 import { StoreService } from 'src/app/core/store/services/store.service';
 import { LoadingService } from 'src/app/global/services/loading.service';
+import { DialogStoreUserComponent } from '../../../dialog-store-user/dialog-store-user.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-store-users',
@@ -12,8 +14,8 @@ export class StoreUsersComponent {
   @Input() info!: AllStore
   private loading = inject(LoadingService)
   private services = inject(StoreService)
-
-  store_user: any
+  private dialog = inject(MatDialog)
+  store_user: UserStore[] = []
   ngOnInit(): void {
     setTimeout(() => {
       this.getStoreUsers()
@@ -25,5 +27,16 @@ export class StoreUsersComponent {
       this.store_user = result
     }).catch((err) => {
     });
+  }
+  openUser(element: any) {
+    let dialogRef = this.dialog.open(DialogStoreUserComponent, {
+      width: window.innerWidth > 639 ? '40%' : '100%',
+      data: element
+    })
+    dialogRef.afterClosed().subscribe((data: boolean) => {
+      if (data) {
+        this.getStoreUsers()
+      }
+    })
   }
 }
