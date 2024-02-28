@@ -5,6 +5,7 @@ import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
 import { AllStore, AllStores, Brands, BrandsParams, MethosdParams, UserStore } from '../interfaces/store';
+import { Store } from '../../sites/interfaces/SitesInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class StoreService {
   private queryParams = inject(QueryParamsService)
   private global = inject(GlobalService)
   url = environment.API_URL;
+  user = this.global.User()
   constructor() { }
 
   getBrands(params: BrandsParams): Promise<Brands> {
@@ -27,6 +29,11 @@ export class StoreService {
   }
   patchBrandID(body:any, id:number): Promise<any> {
     const obs$ = this.http.patch<any>(`${this.url}/api/stores/brands/${id}/`,body)
+    return lastValueFrom(obs$)
+  }
+
+  getUserStores(): Promise<AllStore[]> {
+    const obs$ = this.http.get<AllStore[]>(`${this.url}/api/users/${this.user.id}/stores/`)
     return lastValueFrom(obs$)
   }
   getMyStore(params: BrandsParams): Promise<AllStores> {

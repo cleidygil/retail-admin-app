@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
 import { StoreService } from '../../../services/store.service';
 import { MethosdParams } from '../../../interfaces/store';
+import { GlobalService } from 'src/app/global/services/global.service';
 
 @Component({
   selector: 'app-dialog-add-store',
@@ -13,6 +14,7 @@ import { MethosdParams } from '../../../interfaces/store';
 export class DialogAddStoreComponent {
   private services = inject(StoreService)
   private snack = inject(SnackbarService)
+  private global = inject(GlobalService)
   constructor(public dialogRef: MatDialogRef<DialogAddStoreComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   storeForm = new FormGroup({
@@ -31,9 +33,11 @@ export class DialogAddStoreComponent {
     bank_account: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern('[0-9]*')]),
     email: new FormControl('', [Validators.required, Validators.email]),
   })
+  user = this.global.User()
   methods_arr: any[] = []
   payment_methods_arr: any[] = []
   payment_methods: any[] = []
+  bank_arr:any[]=[]
   ngOnInit(): void {
     this.getMethods()
 
@@ -43,6 +47,15 @@ export class DialogAddStoreComponent {
     const params: MethosdParams = new MethosdParams()
     this.services.getPaymentMethods(params).then((result) => {
       this.methods_arr = result
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+  getBanks() {
+    const params: MethosdParams = new MethosdParams()
+    params.remove_pagination = 'true'
+    this.services.getBanks(params).then((result) => {
+      this.bank_arr = result
     }).catch((error) => {
       console.log(error)
     })
@@ -76,15 +89,15 @@ export class DialogAddStoreComponent {
   onSubmit() {
     const valor = this.storeForm.value
     let body = {
-      "rif": valor.rif,
+      "rif": null,
       "name": valor.name,
       "address": valor.address,
       "phone": valor.phone,
-      "parent": 1,
+      "parent":this.user.store,
       "localphone": valor.localphone,
       "description": valor.description,
-      "payment_methods": this.payment_methods,
-      "currency": valor.currency
+      "payment_methods": [],
+      "currency": null
     }
     console.log(body)
     this.services.setMyStore(body).then((res) => {
