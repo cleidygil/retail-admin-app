@@ -6,12 +6,12 @@ import { SitesGuard } from './core/sites/guard/sites.guard';
 
 
 const routes: Routes = [{
-  path :'',
-  redirectTo:'login',
-  pathMatch:'full'
+  path: '',
+  redirectTo: '',
+  pathMatch: 'full'
 },
 {
-  path:'login',
+  path:'',
   loadChildren:()=>import('./core/auth/auth.module').then(m=>m.AuthModule),
   canActivate:[IsLogoutGuard]
 },
@@ -24,11 +24,7 @@ const routes: Routes = [{
   path:'home',
   loadChildren:()=>import('../app/core/home/home.module').then(m=>m.HomeModule),
   canActivate:[SitesGuard]},
-{
-  path:'**',
-  redirectTo:'login',
-  pathMatch:'full'
-}];
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes,  { useHash: true })],

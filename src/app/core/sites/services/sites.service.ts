@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { AuthServices } from '../../auth/services/auth.service';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { LoadingService } from 'src/app/global/services/loading.service';
-import { BrandsParams } from '../../store/interfaces/store';
+import { AllStore, BrandsParams } from '../../store/interfaces/store';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 
 @Injectable({
@@ -24,22 +24,30 @@ export class SitesService {
   private sitesLogin = new BehaviorSubject<boolean>(this.validarSites())
   sitesLogin$ = this.sitesLogin.asObservable()
 
+
   fecha = this.global.Fecha()
   headers = this.global.Header()
   url = environment.API_URL
-
+  paso1 = new BehaviorSubject<any | null>(null)
+  paso2 = new BehaviorSubject<any | null>(null)
+  pasoFinal = new BehaviorSubject<any | null>(null)
   constructor() { }
 
-  getStores(id:number): Promise<Store[]> {
-    const obs$ = this.http.get<Store[]>(`${this.url}/api/users/${id}/stores/`)
+  getStores(id: number): Promise<AllStore[]> {
+    const obs$ = this.http.get<AllStore[]>(`${this.url}/api/users/${id}/stores/`)
     return lastValueFrom(obs$)
   }
 
-  assignStore(id:number, store: number) {
+  assignStore(id: number, store: number) {
     const obs$ = this.http.patch(`${this.url}/api/users/${id}/`, { store: store }, { headers: this.headers })
     return lastValueFrom(obs$)
   }
-
+  CreateStore() {
+    this.sitesLogin.next(false)
+    this.auth.setLoggin()
+    this.loading.hideLoading()
+    this.router.navigate(['branch/new-store'])
+  }
   LoginSites() {
     this.sitesLogin.next(true)
     this.auth.setLoggin()

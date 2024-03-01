@@ -20,7 +20,7 @@ export class StoresAllComponent {
   private loading = inject(LoadingService);
   private dialog = inject(MatDialog)
   mystores: AllStore[] = []
-
+  mybranch: AllStore[] = []
   params = new FormGroup({
     search: new FormControl(''),
     status: new FormControl('')
@@ -40,7 +40,9 @@ export class StoresAllComponent {
 
     this.brandServices.getUserStores().then((result) => {
       this.loading.hideLoading()
-      this.mystores = result
+      this.mystores = result.filter(e => e.parent == null).map(e => e)
+      this.mybranch = result.filter(e => e.parent != null).map(e => e)
+
     }).catch((err) => {
       this.loading.hideLoading()
     });
@@ -57,5 +59,5 @@ export class StoresAllComponent {
       }
     })
   }
-  
+
 }

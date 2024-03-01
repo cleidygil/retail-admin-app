@@ -1,0 +1,85 @@
+<div class="max-w-xl my-4 gap-4 mx-auto self-center mt-16">
+  <div
+    class="flex items-center justify-between text-base text-gray-600 dark:text-gray-400"
+  >
+    <div class="flex items-center">
+      <div
+        [ngClass]="paso1 ? 'bg-gray-600' : 'bg-gray-400'"
+        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        1
+      </div>
+    </div>
+    <div
+      [ngClass]="paso2 ? 'bg-gray-600' : 'bg-gray-400'"
+      class="h-1 w-full"
+    ></div>
+    <div class="flex items-center">
+      <div
+        [ngClass]="paso2 ? 'bg-gray-600' : 'bg-gray-400'"
+        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        2
+      </div>
+    </div>
+    <div
+      [ngClass]="pasoFinal ? 'bg-gray-600' : 'bg-gray-400'"
+      class="h-1 w-full"
+    ></div>
+    <div class="flex items-center">
+      <div
+        [ngClass]="pasoFinal ? 'bg-gray-600' : 'bg-gray-400'"
+        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        3
+      </div>
+    </div>
+  </div>
+</div>
+<div class="w-full flex justify-center">
+  <ng-container *ngIf="paso1">
+    <div class="flex flex-col gap-4">
+      <app-paso1 (value1)="value1 = $event"></app-paso1>
+      <div class="flex justify-end gap-2">
+        <button
+          type="button"
+          [ngClass]="value1 == null ? 'bg-gray-300' : 'bg-gray-600'"
+          [disabled]="value1 == null"
+          (click)="paso1 = !paso1; paso2 = !paso2"
+          class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+        >
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="paso2">
+    <div class="flex flex-col gap-4">
+      <app-paso2 (value2)="value2 = $event"></app-paso2>
+      <div class="flex justify-between gap-2">
+        <button
+          type="button"
+          [ngClass]="value1 == null ? 'bg-gray-300' : 'bg-gray-600'"
+          [disabled]="value1 == null"
+          (click)="paso1 = !paso1; paso2 = !paso2"
+          class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+        >
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <button
+          type="button"
+          [ngClass]="value2 == null ? 'bg-gray-300' : 'bg-gray-600'"
+          [disabled]="value2 == null"
+          (click)="paso2 = !paso2; pasoFinal = !pasoFinal"
+          class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+        >
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="pasoFinal">
+    <app-paso-final (valueEnd)="valueEnd = $event"></app-paso-final>
+  </ng-container>
+  <ng-container *ngIf="!pasoFinal"> </ng-container>
+</div>

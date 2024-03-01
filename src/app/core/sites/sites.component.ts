@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SitesService } from './services/sites.service';
-import {  Store } from './interfaces/SitesInterface';
+import { Store } from './interfaces/SitesInterface';
 import { AuthServices } from '../auth/services/auth.service';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { LoadingService } from 'src/app/global/services/loading.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
-import { MyStoreParams } from '../store/interfaces/store';
+import { AllStore, MyStoreParams } from '../store/interfaces/store';
+import { Router } from '@angular/router';
 
 interface Animal {
   name: string;
@@ -24,36 +25,30 @@ export class SitesComponent {
   private loading = inject(LoadingService);
   private auth = inject(AuthServices);
   private snack = inject(SnackbarService)
-
+  private router = inject(Router)
 
   user = this.global.User();
-  sitesControl = new FormControl<Store | null>(null, Validators.required);
-  department!: Store[];
+  sitesControl = new FormControl<AllStore | null>(null, Validators.required);
 
   ngOnInit(): void {
-    // this.sites.LoginSites();
-    
-    // if(!this.user.groups.includes("Call Center Gsoft")){
-    //   this.sites
-    //   .asignarSite(this.user.id, 45)
-    //   .then((result) => {
-    //     this.global.formatearUser(true, 'oficina', { id:45, name:'Sede Principal (Montesano)', status: true });
-    //     this.snack.openSnackBar("Sucursal Montesano")
-    //     this.sites.LoginSites();
-    //   })
-    //   .catch((err) => {
-    //     this.snack.openSnackBar("Error 500")
-    //     this.loading.hideLoading()
-    //   });
-    // }
-
-  
+    console.log('sites')
+    this.sites.CreateStore()
+    return
+  if (this.user.store == null) {
+      this.router.navigate(['new-store'])
+      return
+    }
     this.sites
       .getStores(this.user.id)
       .then((result) => {
-        this.department = result;
+        if (result.length > 0) {
+          this.asignarStore(result)
+          return
+        }
+        this.router.navigate(['new-store'])
+        return
       })
-      .catch((err:any) => {
+      .catch((err: any) => {
         if (err.status == 401) {
           this.snack.openSnackBar(err.error.code)
           this.auth.logout();
@@ -62,14 +57,30 @@ export class SitesComponent {
       });
   }
 
+asignarStore(department:AllStore[]){
+ let store = department[0].id
+ let store_name = department[0].name
+  this.sites
+      .assignStore(this.user.id, store)
+      .then((result) => {
+        this.global.formatearUser(true, 'store', { store, store_name });
+        this.sites.LoginSites();
+      })
+      .catch((err) => {
+        console.log(err)
+        this.snack.openSnackBar("Ocurrio un error, intente nuevamente")
+        this.loading.hideLoading()
+      }); 
+}
+
   onSubmit() {
     this.loading.showLoading();
     const store = this.sitesControl.value?.id ?? 0;
-    const store_name = this.sitesControl.value?.store__name;
+    const store_name = this.sitesControl.value?.name;
     this.sites
       .assignStore(this.user.id, store)
       .then((result) => {
-        this.global.formatearUser(true, 'store', { store, store_name});
+        this.global.formatearUser(true, 'store', { store, store_name });
         this.sites.LoginSites();
       })
       .catch((err) => {
@@ -79,7 +90,7 @@ export class SitesComponent {
       });
   }
 
-  logout(){
+  logout() {
     this.auth.logout()
   }
 }
