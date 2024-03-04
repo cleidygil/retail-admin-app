@@ -46,6 +46,21 @@ export class Paso1Component {
         currency: valor?.currency?.toString()
       })
     }
+    this.storeForm.valueChanges.subscribe(valor=>{
+      let body = {
+        "rif": valor.rif,
+        "name": valor.name,
+        "address": valor.address,
+        "phone": valor.phone,
+        "parent":null,
+        "localphone": valor.localphone,
+        "description": valor.description,
+        "currency": valor.currency
+      }
+      this.value1.emit(body)
+      this.services.paso1.next(body)
+    })
+
   }
 
   onSubmit() {
@@ -55,7 +70,7 @@ export class Paso1Component {
       "name": valor.name,
       "address": valor.address,
       "phone": valor.phone,
-      "parent": this.user.store,
+      "parent": null,
       "localphone": valor.localphone,
       "description": valor.description,
       "currency": valor.currency

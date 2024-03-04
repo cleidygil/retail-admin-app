@@ -10,9 +10,10 @@ import { Paso2Component } from './new-store/components/paso2/paso2.component';
 import { PasoFinalComponent } from './new-store/components/paso-final/paso-final.component';
 import { MethodBsComponent } from './new-store/components/paso2/method-bs/method-bs.component';
 import { MethodUsdComponent } from './new-store/components/paso2/method-usd/method-usd.component';
+import { MethodTdcComponent } from './new-store/components/paso2/method-tdc/method-tdc.component';
 
 @NgModule({
-  declarations: [SitesComponent, NewStoreComponent, Paso1Component, Paso2Component, PasoFinalComponent, MethodBsComponent, MethodUsdComponent],
+  declarations: [SitesComponent, NewStoreComponent, Paso1Component, Paso2Component, PasoFinalComponent, MethodBsComponent, MethodUsdComponent, MethodTdcComponent],
   imports: [CommonModule, SitesRoutingModule, MaterialDesignModule,ReactiveFormsModule],
 })
 export class SitesModule {}

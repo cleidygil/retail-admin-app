@@ -1,34 +1,71 @@
-<div class="max-w-xl my-4 gap-4 mx-auto self-center mt-16">
+<nav class="bg-neutral-50 shadow-sm p-4 flex items-center justify-between">
+  <div>
+    <svg
+      width="70"
+      height="70"
+      viewBox="0 0 121 121"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="120.991" height="120.991" rx="60.4953" fill="#A8A8A8" />
+      <path
+        d="M91.6832 50.0993L85.8458 29.3071H35.144L29.3066 50.0993C29.3066 52.7295 30.2891 55.1336 31.9057 56.9685V83.8866C31.9057 88.1854 35.4039 91.6836 39.7027 91.6836H60.4949C64.7937 91.6836 68.292 88.1854 68.292 83.8866V59.0997C69.2692 58.5331 70.1477 57.8106 70.891 56.9685C72.7961 59.1309 75.5848 60.4954 78.6881 60.4954H81.2871C82.1837 60.4954 83.0544 60.381 83.8861 60.1653V91.6836H89.0841V56.9685C90.7007 55.1362 91.6832 52.7295 91.6832 50.0993ZM60.4949 86.4856H39.7027C38.2707 86.4856 37.1037 85.3186 37.1037 83.8866V76.0895H63.0939V83.8866C63.0939 85.3186 61.927 86.4856 60.4949 86.4856ZM63.0939 70.8915H37.1037V60.1653C37.9354 60.381 38.8061 60.4954 39.7027 60.4954H42.3017C45.405 60.4954 48.1911 59.1283 50.0988 56.9685C52.0065 59.1309 54.7926 60.4954 57.8959 60.4954H63.0939V70.8915ZM78.6881 55.2973C75.8213 55.2973 73.49 52.966 73.49 50.0993H68.292C68.292 52.966 65.9606 55.2973 63.0939 55.2973H57.8959C55.0292 55.2973 52.6978 52.966 52.6978 50.0993H47.4998C47.4998 52.966 45.1685 55.2973 42.3017 55.2973H39.7027C36.9452 55.2973 34.684 53.1402 34.5151 50.4268L39.0634 34.5052H47.4998V42.3022H52.6978V34.5052H68.292V42.3022H73.49V34.5052H81.9264L86.4747 50.4268C86.3058 53.1402 84.042 55.2973 81.2871 55.2973H78.6881Z"
+        fill="#FAFAFA"
+      />
+    </svg>
+  </div>
+  <div class="flex items-center space-x-4 text-neutral-500">
+    <span class="text-base font-medium"
+      >{{ user.name }} {{ user.lastname }}</span
+    >
+    <button [matMenuTriggerFor]="menu">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="#A8A8A8"
+        class="w-10 h-10"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </button>
+  </div>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Salir</span>
+    </button>
+  </mat-menu>
+</nav>
+<div class="max-w-4xl mx-auto self-center">
   <div
-    class="flex items-center justify-between text-base text-gray-600 dark:text-gray-400"
+    class="flex items-center self-center justify-between text-base text-neutral-500 dark:text-neutral-400 mt-16"
   >
     <div class="flex items-center">
       <div
-        [ngClass]="paso1 ? 'bg-gray-600' : 'bg-gray-400'"
+        [ngClass]="paso1 ? 'bg-neutral-500' : 'bg-neutral-300'"
         class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
       >
         1
       </div>
     </div>
-    <div
-      [ngClass]="paso2 ? 'bg-gray-600' : 'bg-gray-400'"
-      class="h-1 w-full"
-    ></div>
+    <div class="h-1 w-full bg-neutral-500"></div>
     <div class="flex items-center">
       <div
-        [ngClass]="paso2 ? 'bg-gray-600' : 'bg-gray-400'"
+        [ngClass]="paso2 ? 'bg-neutral-500' : 'bg-neutral-300'"
         class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
       >
         2
       </div>
     </div>
-    <div
-      [ngClass]="pasoFinal ? 'bg-gray-600' : 'bg-gray-400'"
-      class="h-1 w-full"
-    ></div>
+    <div class="h-1 w-full bg-neutral-500"></div>
+
     <div class="flex items-center">
       <div
-        [ngClass]="pasoFinal ? 'bg-gray-600' : 'bg-gray-400'"
+        [ngClass]="pasoFinal ? 'bg-neutral-500' : 'bg-neutral-300'"
         class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
       >
         3
@@ -36,14 +73,21 @@
     </div>
   </div>
 </div>
-<div class="w-full flex justify-center">
+<div class="max-w-4xl self-center mx-auto">
   <ng-container *ngIf="paso1">
     <div class="flex flex-col gap-4">
       <app-paso1 (value1)="value1 = $event"></app-paso1>
-      <div class="flex justify-end gap-2">
+      <div class="bottom-0 flex justify-end gap-2">
+        <!-- <button
+          type="button"
+          (click)="paso1 = !paso1; pasoFinal = !pasoFinal"
+          class="p-3 bg-neutral-700 rounded-full text-white w-1/2 font-semibold"
+        >
+          Omitir
+        </button> -->
         <button
           type="button"
-          [ngClass]="value1 == null ? 'bg-gray-300' : 'bg-gray-600'"
+          [ngClass]="value1 == null ? 'bg-neutral-300' : 'bg-neutral-500'"
           [disabled]="value1 == null"
           (click)="paso1 = !paso1; paso2 = !paso2"
           class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
@@ -59,7 +103,7 @@
       <div class="flex justify-between gap-2">
         <button
           type="button"
-          [ngClass]="value1 == null ? 'bg-gray-300' : 'bg-gray-600'"
+          [ngClass]="value1 == null ? 'bg-neutral-300' : 'bg-neutral-500'"
           [disabled]="value1 == null"
           (click)="paso1 = !paso1; paso2 = !paso2"
           class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
@@ -68,7 +112,14 @@
         </button>
         <button
           type="button"
-          [ngClass]="value2 == null ? 'bg-gray-300' : 'bg-gray-600'"
+          (click)="paso2 = !paso2; pasoFinal = !pasoFinal"
+          class="p-3 bg-neutral-700 rounded-full text-white w-1/2 font-semibold"
+        >
+          Omitir
+        </button>
+        <button
+          type="button"
+          [ngClass]="value2 == null ? 'bg-neutral-300' : 'bg-neutral-500'"
           [disabled]="value2 == null"
           (click)="paso2 = !paso2; pasoFinal = !pasoFinal"
           class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
@@ -79,7 +130,89 @@
     </div>
   </ng-container>
   <ng-container *ngIf="pasoFinal">
-    <app-paso-final (valueEnd)="valueEnd = $event"></app-paso-final>
+    <div class="flex flex-col gap-4">
+      <app-paso-final (valueEnd)="valueEnd = $event"> </app-paso-final>
+      <div class="flex bottom-4 justify-between gap-2">
+        <button
+          type="button"
+          (click)="paso2 = !paso2; pasoFinal = !pasoFinal"
+          class="w-12 h-12 rounded-full flex items-center bg-neutral-500 justify-center text-white text-xl"
+        >
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <button
+          type="button"
+          (click)="end = !end; pasoFinal = !pasoFinal"
+          class="p-3 bg-neutral-700 rounded-full text-white w-1/2 font-semibold"
+        >
+          Omitir
+        </button>
+        <button
+          type="button"
+          [ngClass]="valueEnd == null ? 'bg-neutral-300' : 'bg-neutral-500'"
+          [disabled]="valueEnd == null"
+          (click)="onSubmit()"
+          class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+        >
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+      </div>
+    </div>
   </ng-container>
-  <ng-container *ngIf="!pasoFinal"> </ng-container>
+  <ng-container *ngIf="end">
+    <div class="max-w-xl self-center mx-auto my-10 bg-white p-8">
+      <div class="flex flex-col gap-4 my-2 justify-center w-full">
+        <div class="flex flex-col justify-center items-center text-center">
+          <div *ngIf="img != ''" class="gap-2 my-8 p-2">
+            <div
+              class="flex items-center justify-center mt-2"
+              *ngIf="img?.image[0].preview"
+            >
+              <img
+                [src]="img?.image[0].preview"
+                alt="{{ img?.image[0].preview.name }}"
+                class="max-w-24 h-24"
+              />
+            </div>
+          </div>
+          <svg
+            width="160"
+            height="142"
+            viewBox="0 0 160 142"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clip-path="url(#clip0_45_499)">
+              <path
+                d="M159.537 7.59483C158.536 9.01061 157.714 10.6054 156.502 11.8096C129.081 39.1488 101.62 66.4472 74.1672 93.7498C70.5911 97.3055 67.5765 97.2892 64.0045 93.6928C55.2373 84.8686 46.466 76.0444 37.7069 67.2121C35.0177 64.4985 34.7248 61.2764 36.9013 58.7459C38.9843 56.3252 42.5034 55.9916 44.9892 58.0014C45.5099 58.4245 45.9859 58.9086 46.4619 59.3846C53.5896 66.553 60.7132 73.7214 67.8287 80.902C68.2274 81.3047 68.5285 81.8052 68.9353 82.3381C83.0158 68.0623 96.8685 54.0226 110.998 39.698C109.126 37.7615 107.015 35.2798 104.61 33.1317C94.3176 23.9414 82.2143 18.9699 68.4186 18.8844C51.2137 18.7787 36.7712 25.2717 25.392 38.2863C18.2399 46.4677 13.8624 56.0201 12.5606 66.7523C10.327 85.1859 15.7827 101.154 29.0779 114.23C37.2105 122.224 47.0396 127.126 58.2723 129.03C69.0655 130.857 79.5496 129.514 89.5699 125.1C100.249 120.393 108.728 113.062 114.859 103.119C119.675 95.3079 122.352 86.7929 122.861 77.6107C122.93 76.3699 122.967 75.125 123.089 73.8882C123.41 70.54 125.985 68.3431 129.309 68.5302C132.361 68.7011 134.659 71.2275 134.679 74.4659C134.728 82.1591 133.382 89.6326 130.827 96.858C127.369 106.63 121.897 115.19 114.452 122.403C105.123 131.443 94.1183 137.562 81.3274 140.039C57.8003 144.6 37.239 138.493 20.1114 121.805C9.08214 111.056 2.81285 97.753 0.843778 82.3829C-3.1025 51.5816 15.3067 20.5321 46.3765 10.6095C70.9085 2.77386 93.1948 7.78604 112.735 24.6533C115.241 26.8177 117.731 29.0024 120.229 31.1748L119.716 31.8176C120.127 31.4311 120.542 31.0569 120.941 30.6622C130.282 21.3824 139.618 12.1025 148.963 2.82675C151.604 0.206751 154.753 -0.281448 157.157 1.77306C158.166 2.63554 158.756 3.98216 159.537 5.10908V7.5989V7.59483Z"
+                fill="#7C7A7A"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_45_499">
+                <rect
+                  width="159.222"
+                  height="141"
+                  fill="white"
+                  transform="translate(0.388672 0.5)"
+                />
+              </clipPath>
+            </defs>
+          </svg>
+
+          <p class="pt-2 text-2xl font-semibold text-neutral-400">
+            Tu tienda se ha creado con exito.
+          </p>
+        </div>
+      </div>
+      <div class="flex justify-center gap-2">
+        <button
+          class="p-3 rounded-full text-white w-1/2 font-semibold bg-neutral-500"
+          (click)="goStore()"
+        >
+          Ir a mi tienda
+        </button>
+      </div>
+    </div>
+  </ng-container>
 </div>

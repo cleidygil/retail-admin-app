@@ -20,17 +20,25 @@ export class Paso2Component {
 
 
   methodsform = new FormGroup({
-    payment_methods: new FormControl<any>('', [Validators.required]),
-    bank: new FormControl<any>('', [Validators.required]),
-    bank_account: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern('[0-9]*')]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    methods_selected :new FormControl<string | number>('')
   })
   user = this.global.User()
+  inputMethod:any
   methods_arr: any[] = []
   methods:any
-  methods_selected = new FormControl<Methods | null>(null)
   ngOnInit(): void {
+    if(this.sitesServices.paso2.value != null){
+      console.log(this.sitesServices.paso2.value)
+      let valor =  this.sitesServices.paso2.value
+      this.methodsform.patchValue({
+        methods_selected: valor.payment_method
+      })
+      this.inputMethod = valor.payment_method
+    }
     this.getMethods()
+    this.methodsform.valueChanges.subscribe(change=> {
+      this.inputMethod = change.methods_selected
+    })
   }
   getMethods() {
     const params: MethosdParams = new MethosdParams()
@@ -43,11 +51,15 @@ export class Paso2Component {
 
   onSubmit() {
     let body={
-      payment_methods:[this.methods_selected.value?.id],
+      payment_method: Number(this.methodsform.value.methods_selected),
     }
     let body2 = {...body, ...this.methods}
     this.value2.emit(body2)
     this.sitesServices.paso2.next(body2)
 
+  }
+  changeReset(){
+    this.sitesServices.paso2.next(null)
+    this.value2.emit(null)
   }
 }

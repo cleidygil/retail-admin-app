@@ -31,13 +31,7 @@ export class SitesComponent {
   sitesControl = new FormControl<AllStore | null>(null, Validators.required);
 
   ngOnInit(): void {
-    console.log('sites')
-    this.sites.CreateStore()
-    return
-  if (this.user.store == null) {
-      this.router.navigate(['new-store'])
-      return
-    }
+  
     this.sites
       .getStores(this.user.id)
       .then((result) => {
@@ -45,7 +39,7 @@ export class SitesComponent {
           this.asignarStore(result)
           return
         }
-        this.router.navigate(['new-store'])
+        this.sites.CreateStore()
         return
       })
       .catch((err: any) => {

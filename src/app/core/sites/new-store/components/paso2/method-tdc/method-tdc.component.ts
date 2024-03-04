@@ -1,25 +1,27 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SitesService } from 'src/app/core/sites/services/sites.service';
+import { StoreService } from 'src/app/core/store/services/store.service';
 
 @Component({
-  selector: 'app-method-usd',
-  templateUrl: './method-usd.component.html',
-  styleUrls: ['./method-usd.component.css']
+  selector: 'app-method-tdc',
+  templateUrl: './method-tdc.component.html',
+  styleUrls: ['./method-tdc.component.css']
 })
-export class MethodUsdComponent {
+export class MethodTdcComponent {
   @Output() methods = new EventEmitter()
-  @Input() input: any
-  payments!: FormGroup
+  @Input() input:any
+  private services = inject(StoreService)
   private sitesServices = inject(SitesService)
 
-
+  payments!: FormGroup
+  bank_arr: any[] = []
   ngOnInit(): void {
     this.payments = new FormGroup({
-      sender: new FormControl(null),
-      bank: new FormControl(null),
+      bank: new FormControl<any>(null),
       bank_account: new FormControl(null),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl(null),
+      sender: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern('[0-9]*')])
     })
     this.payments.valueChanges.subscribe(changes => {
       this.methods.emit(changes)
@@ -36,4 +38,5 @@ export class MethodUsdComponent {
       this.input = valor?.payment_method
     }
   }
+ 
 }

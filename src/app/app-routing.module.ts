@@ -7,11 +7,11 @@ import { SitesGuard } from './core/sites/guard/sites.guard';
 
 const routes: Routes = [{
   path: '',
-  redirectTo: '',
+  redirectTo: 'login',
   pathMatch: 'full'
 },
 {
-  path:'',
+  path:'login',
   loadChildren:()=>import('./core/auth/auth.module').then(m=>m.AuthModule),
   canActivate:[IsLogoutGuard]
 },

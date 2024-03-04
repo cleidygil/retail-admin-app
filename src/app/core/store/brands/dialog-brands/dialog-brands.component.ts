@@ -17,7 +17,7 @@ export class DialogBrandsComponent {
 
   brandsform = new FormGroup({
     name: new FormControl('', [Validators.required]),
-  })
+  }) 
   file = new FormControl('');
   selectedFile: any = null;
   myFiles: any[] = [];

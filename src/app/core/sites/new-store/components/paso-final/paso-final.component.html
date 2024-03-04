@@ -1,1 +1,107 @@
-<p>paso-final works!</p>
+<div class="max-w-xl self-center mx-auto my-10 bg-white p-8">
+  <div class="flex justify-center w-full">
+    <h1 class="text-3xl font-medium">Sube una imagen de tu tienda</h1>
+  </div>
+  <form [formGroup]="files" class="flex flex-col gap-4 my-2 justify-center w-full">
+    <div class="flex flex-col justify-center text-center">
+      <label  for="file" *ngIf="myFiles.length == 0"
+        class="flex items-center w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white"
+      >
+      <input
+            type="file"
+            name="file"
+            id="file"
+            class="sr-only"
+           formControlName="file"
+            [accept]="accept"
+            (change)="seleccionarArchivo($event)"
+          />
+        <svg   
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-24 w-24 text-white rounded-full mx-auto"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 4.5v15m7.5-7.5h-15"
+          />
+        </svg>
+      </label>
+      <ng-container *ngIf="myFiles.length > 0">
+        <div
+          *ngFor="let file of myFiles; index as i"
+          class="rounded-md bg-[#F5F7FB] py-4 px-8"
+        >
+          <!-- Sección de vista previa de la foto -->
+          <div
+            class="flex items-center justify-center mt-2"
+            *ngIf="file.preview"
+          >
+            <img
+              [src]="file.preview"
+              alt="{{ file.name }}"
+              class="max-w-24 h-24"
+            />
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="truncate pr-3 text-base font-medium text-neutral-800">
+              {{ file.name }}
+            </span>
+            <button class="text-neutral-800" (click)="resetFile(i)">
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 10 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M0.279337 0.279338C0.651787 -0.0931121 1.25565 -0.0931121 1.6281 0.279338L9.72066 8.3719C10.0931 8.74435 10.0931 9.34821 9.72066 9.72066C9.34821 10.0931 8.74435 10.0931 8.3719 9.72066L0.279337 1.6281C-0.0931125 1.25565 -0.0931125 0.651788 0.279337 0.279338Z"
+                  fill="currentColor"
+                />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M0.279337 9.72066C-0.0931125 9.34821 -0.0931125 8.74435 0.279337 8.3719L8.3719 0.279338C8.74435 -0.0931127 9.34821 -0.0931123 9.72066 0.279338C10.0931 0.651787 10.0931 1.25565 9.72066 1.6281L1.6281 9.72066C1.25565 10.0931 0.651787 10.0931 0.279337 9.72066Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="relative mt-5 h-[6px] w-full rounded-lg bg-[#E2E5EF]">
+            <div
+              class="absolute left-0 right-0 h-full w-[100%] rounded-lg bg-orange-600"
+            ></div>
+          </div>
+        </div>
+      </ng-container>
+      <p class="pt-2 text-2xl font-semibold text-neutral-400">Formatos admitidos JPG y PNG</p>
+    </div>
+  
+    <!-- <div
+    class=" flex items-center border-2  my-2 py-2 px-3 rounded-2xl"
+  >
+    <textarea rows="6"
+      class="pl-2 w-full outline-none border-none"
+      formControlName="description"
+      placeholder="Agrega una breve descripcion de tu tienda"
+    ></textarea>
+  </div> -->
+  </form>
+    <div class="flex justify-center gap-2">
+      <button
+        class="p-3 rounded-full text-white w-1/2 font-semibold"
+        [ngClass]="files.invalid ? 'bg-neutral-300' : 'bg-neutral-700'"
+        [disabled]="files.invalid"
+        (click)="onSubmit()"
+      >
+      Guardar
+      </button>
+    </div>
+</div>
