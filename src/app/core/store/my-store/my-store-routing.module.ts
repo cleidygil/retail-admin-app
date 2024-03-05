@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { StoresAllComponent } from './components/stores-all/stores-all.component';
 import { MyStoreComponent } from './my-store.component';
 import { StoreDetailsComponent } from './components/store-details/store-details.component';
+import { DialogAddStoreComponent } from './components/dialog-add-store/dialog-add-store.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'my_store/:id',
         component: StoreDetailsComponent
+      },
+      {
+        path: 'new_branch',
+        component: DialogAddStoreComponent
       }
     ]
   },

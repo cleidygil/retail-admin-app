@@ -1,19 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { SettingRoutingModule } from './setting-routing.module';
-import { SettingComponent } from './setting.component';
+import { ShoppingComponent } from './shopping.component';
+import { ShoppingRoutingModule } from './shopping-routing.module';
 import { MaterialDesignModule } from 'src/app/components-iu/material-design.module';
 
 
+
 @NgModule({
-  declarations: [
-    SettingComponent
-  ],
+  declarations: [ShoppingComponent],
   imports: [
     CommonModule,
-    SettingRoutingModule,
+    ShoppingRoutingModule,
     MaterialDesignModule
   ]
 })
-export class SettingModule { }
+export class ShoppingModule { }

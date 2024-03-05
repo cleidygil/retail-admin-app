@@ -1,160 +1,40 @@
-<!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
 <div class="text-gray-800 font-inter">
-  <!--sidenav -->
-  <app-sidenav [valid]="valid" (classMain)="classMain = $event"></app-sidenav>
-  <!-- end sidenav -->
   <main
-    class="max-w-screen md:w-[calc(100%-256px)] md:ml-64 transition-all main"
+    class="max-w-screen  h-full md:ml-64 transition-all main"
     [ngClass]="classMain"
   >
-    <!-- navbar -->
-    <div
-      class="py-2 px-6 bg-gray-200 flex items-center shadow-md shadow-black/5 sticky top-0 left-0 z-30"
-    >
-      <button
-        type="button"
-        class="text-lg text-gray-900 font-semibold sidebar-toggle"
-        (click)="sidebarOverlay()"
-      >
-        <mat-icon class="mat-18">menu</mat-icon>
-      </button>
-
-      <ul class="ml-auto flex items-center">
-        <!--Init  notification -->
-        <li class="dropdown">
-          <button
-            [matMenuTriggerFor]="menu"
-            type="button"
-            class="dropdown-toggle text-gray-400 mr-4 w-8 h-8 rounded flex items-center justify-center hover:text-gray-600"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              class="hover:bg-gray-100 rounded-full"
-              viewBox="0 0 24 24"
-              style="fill: gray"
-            >
-              <path
-                d="M19 13.586V10c0-3.217-2.185-5.927-5.145-6.742C13.562 2.52 12.846 2 12 2s-1.562.52-1.855 1.258C7.185 4.074 5 6.783 5 10v3.586l-1.707 1.707A.996.996 0 0 0 3 16v2a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-2a.996.996 0 0 0-.293-.707L19 13.586zM19 17H5v-.586l1.707-1.707A.996.996 0 0 0 7 14v-4c0-2.757 2.243-5 5-5s5 2.243 5 5v4c0 .266.105.52.293.707L19 16.414V17zm-7 5a2.98 2.98 0 0 0 2.818-2H9.182A2.98 2.98 0 0 0 12 22z"
-              ></path>
-            </svg>
-          </button>
-          <mat-menu #menu="matMenu">
-            <ul
-              class="max-h-w overflow-y-auto"
-              data-tab-for="notification"
-              data-page="notifications"
-            >
-            <li>
-                <a
-                  href="#"
-                  class="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                >
-                  <img
-                    src="https://placehold.co/32x32"
-                    alt=""
-                    class="w-8 h-8 rounded block object-cover align-middle"
-                  />
-                  <div class="ml-2">
-                    <div
-                      class="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500"
-                    >
-                      New notifications
-                    </div>
-                    <div class="text-[11px] text-gray-400">from a user</div>
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </mat-menu>
-         
-        </li>
-        <!--End  notification -->
+    <nav class="bg-neutral-200 shadow-sm p-4 flex items-center justify-between">
+      <div>
         <button
-          id="fullscreen-button"
-          style="fill: gray"
-          (click)="toggleFullscreen()"
+          type="button"
+          class="text-lg text-gray-900 font-semibold sidebar-toggle"
+          (click)="sidebarOverlay()"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            class="hover:bg-gray-100 rounded-full"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M5 5h5V3H3v7h2zm5 14H5v-5H3v7h7zm11-5h-2v5h-5v2h7zm-2-4h2V3h-7v2h5z"
-            ></path>
-          </svg>
+          <mat-icon class="mat-18">menu</mat-icon>
         </button>
-
-        <div class=" ml-3">
-          <button
-            [matMenuTriggerFor]="usermenu"
-            class=" flex items-center"
-          >
-            <div class="flex-shrink-0 w-10 h-10 relative">
-              <div
-                class="p-1 bg-white rounded-full focus:outline-none focus:ring"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="w-8 h-8 rounded-full"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-
-                <div
-                  class="top-0 left-7 absolute w-3 h-3 bg-lime-400 border-2 border-white rounded-full animate-ping"
-                ></div>
-                <div
-                  class="top-0 left-7 absolute w-3 h-3 bg-lime-500 border-2 border-white rounded-full"
-                ></div>
-              </div>
-            </div>
-            <div class="p-2 md:block text-left">
-              <h2 class="text-sm font-semibold text-gray-800">{{user?.name}}  {{user?.lastname}}</h2>
-              <!-- <p class="text-xs text-gray-500">Administrator</p> -->
-            </div>
-          </button>
-          <mat-menu #usermenu="matMenu">
-            <button mat-menu-item (click)="logout()">
-              <mat-icon>logout</mat-icon>
-              <span>Salir</span>
-            </button>
-          </mat-menu>
-        
-        </div>
-      </ul>
-    </div>
-    
-    <!-- end navbar -->
-
-    <!-- Content -->
-    <div class="p-6 h-full">
-      <!-- <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
-              <div class="shrink-0">
-                <img class="h-12 w-12" src="/img/logo.svg" alt="ChitChat Logo">
-              </div>
-              <div>
-                <div class="text-xl font-medium text-black">ChitChat</div>
-                <p class="text-slate-500">You have a new message!</p>
-              </div>
-            </div> -->
+        <app-sidenav
+          [valid]="valid"
+          (classMain)="classMain = $event"
+        ></app-sidenav>
+      </div>
+      <div class="inline-flex gap-2 items-center">
+        <svg width="40" height="40" viewBox="0 0 68 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.787354" width="66.431" height="66.7429" rx="33.2155" fill="#A8A8A8"/>
+          <path d="M34.0029 33.3715C36.316 33.3715 38.5773 32.6855 40.5006 31.4004C42.4239 30.1153 43.923 28.2887 44.8082 26.1516C45.6934 24.0145 45.925 21.6629 45.4737 19.3942C45.0225 17.1254 43.9086 15.0415 42.2729 13.4058C40.6372 11.7702 38.5533 10.6563 36.2846 10.205C34.0158 9.75371 31.6642 9.98532 29.5272 10.8705C27.3901 11.7557 25.5635 13.2548 24.2783 15.1781C22.9932 17.1015 22.3073 19.3627 22.3073 21.6759C22.3104 24.7768 23.5436 27.7498 25.7363 29.9425C27.9289 32.1352 30.902 33.3684 34.0029 33.3715ZM34.0029 13.8788C35.545 13.8788 37.0525 14.3361 38.3347 15.1928C39.6169 16.0496 40.6163 17.2673 41.2064 18.6921C41.7966 20.1168 41.951 21.6845 41.6501 23.197C41.3493 24.7095 40.6067 26.0988 39.5162 27.1892C38.4258 28.2797 37.0365 29.0223 35.524 29.3231C34.0115 29.624 32.4438 29.4695 31.0191 28.8794C29.5943 28.2893 28.3766 27.2899 27.5198 26.0077C26.6631 24.7255 26.2058 23.218 26.2058 21.6759C26.2058 19.6079 27.0273 17.6247 28.4895 16.1625C29.9517 14.7003 31.935 13.8788 34.0029 13.8788Z" fill="#FAFAFA"/>
+          <path d="M34.0029 37.27C29.3517 37.2751 24.8924 39.1251 21.6035 42.414C18.3146 45.7029 16.4646 50.1622 16.4595 54.8134C16.4595 55.3304 16.6648 55.8262 17.0304 56.1917C17.396 56.5573 17.8918 56.7626 18.4087 56.7626C18.9257 56.7626 19.4215 56.5573 19.7871 56.1917C20.1526 55.8262 20.358 55.3304 20.358 54.8134C20.358 51.1945 21.7956 47.7239 24.3545 45.165C26.9134 42.6061 30.384 41.1685 34.0029 41.1685C37.6217 41.1685 41.0923 42.6061 43.6512 45.165C46.2102 47.7239 47.6477 51.1945 47.6477 54.8134C47.6477 55.3304 47.8531 55.8262 48.2187 56.1917C48.5842 56.5573 49.08 56.7626 49.597 56.7626C50.114 56.7626 50.6098 56.5573 50.9753 56.1917C51.3409 55.8262 51.5463 55.3304 51.5463 54.8134C51.5411 50.1622 49.6911 45.7029 46.4022 42.414C43.1133 39.1251 38.6541 37.2751 34.0029 37.27Z" fill="#FAFAFA"/>
+          </svg>
+          
+        <span class="text-xl font-medium"
+          >{{ user.name }} {{ user.lastname }}</span
+        >
+      </div>
+      <div class="flex items-center space-x-4 text-neutral-500">
+        <button mat-icon-button (click)="logout()">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    </nav>
+    <div class="p-6 ">
       <router-outlet></router-outlet>
     </div>
   </main>

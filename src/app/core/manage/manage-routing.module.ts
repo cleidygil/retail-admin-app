@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SettingComponent } from './setting.component';
+import { ManageModule } from './manage.module';
+import { ManageComponent } from './manage.component';
 
 const routes: Routes = [
- {
-  path:'',
-  component:SettingComponent
- }
+  {path:'',
+component:ManageComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SettingRoutingModule { }
+export class ManageRoutingModule { }

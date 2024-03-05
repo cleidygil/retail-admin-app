@@ -1,19 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SettingRoutingModule } from './setting-routing.module';
-import { SettingComponent } from './setting.component';
+import { InventoryRoutingModule } from './inventory-routing.module';
+import { InventoryComponent } from './inventory.component';
 import { MaterialDesignModule } from 'src/app/components-iu/material-design.module';
 
 
 @NgModule({
-  declarations: [
-    SettingComponent
-  ],
+  declarations: [InventoryComponent],
   imports: [
     CommonModule,
-    SettingRoutingModule,
+    InventoryRoutingModule,
     MaterialDesignModule
   ]
 })
-export class SettingModule { }
+export class InventoryModule { }

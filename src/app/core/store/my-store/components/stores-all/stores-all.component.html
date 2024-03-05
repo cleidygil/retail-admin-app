@@ -8,9 +8,9 @@
           > 
         </a>
     -->
-    <button mat-mini-fab color="primary" (click)="openEdit('')">
+    <a mat-mini-fab color="primary" [routerLink]="['/home/store/store/new_branch']">
       <mat-icon>add</mat-icon>
-    </button>
+    </a>
   </div>
 
   <form class="mt-2 gap-3" [formGroup]="params">
@@ -25,7 +25,7 @@
           formControlName="search"
           placeholder="Buscar"
           required
-          class="w-full rounded-full py-2.5 px-4 border text-base bg-gray-300 outline-orange-500"
+          class="w-full rounded-full py-2.5 px-4 border text-base bg-neutral-300 outline-orange-500"
         />
 
         <div
@@ -92,7 +92,7 @@
         >
           <a
             [routerLink]="['./my_store/', item.id]"
-            class="flex items-center w-32 h-32 rounded-full mx-auto bg-gray-400 text-white"
+            class="flex items-center w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@
         >
           <a
             [routerLink]="['./my_store/', item.id]"
-            class="flex items-center w-32 h-32 rounded-full mx-auto bg-gray-400 text-white"
+            class="flex items-center w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
