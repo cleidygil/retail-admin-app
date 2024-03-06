@@ -118,8 +118,9 @@
 
 <div class="flex justify-center gap-2">
   <button
-    class="p-3 rounded-full text-white w-1/2 font-semibold text-xl bg-neutral-500"
+    class="p-3 rounded-full text-white w-1/2 font-semibold text-xl "
     [ngClass]="productSale.invalid ? 'bg-neutral-300' : 'bg-neutral-500'"
+    [disabled]="productSale.invalid"
     (click)="onSubmit()"
   >
     Crear sucursal
