@@ -8,7 +8,11 @@
           > 
         </a>
     -->
-    <a mat-mini-fab color="primary" [routerLink]="['/home/store/store/new_branch']">
+    <a
+      mat-mini-fab
+      color="primary"
+      [routerLink]="['/home/store/store/new_branch']"
+    >
       <mat-icon>add</mat-icon>
     </a>
   </div>
@@ -82,10 +86,10 @@
   </form>
 
   <ng-container *ngIf="mystores.length > 0">
-    <div class="mx-auto text-center  w-60 gap-4 my-4">
+    <div class="mx-auto text-center w-60 gap-4 my-4">
       <h2>Tienda Principal</h2>
 
-      <div class="flex justify-center gap-4  my-4">
+      <div class="flex justify-center gap-4 my-4">
         <div
           class="flex flex-col justify-center text-center"
           *ngFor="let item of mystores"
@@ -117,9 +121,9 @@
     </div>
   </ng-container>
   <ng-container *ngIf="mybranch.length > 0">
-    <div class="mx-auto text-center  w-60 gap-4 my-4">
+    <div class="mx-auto text-center w-60 gap-4 my-4">
       <h2>Sucursales</h2>
-      <div class="flex justify-center gap-4  my-4">
+      <div class="flex justify-center gap-4 my-4">
         <div
           class="flex flex-col justify-center text-center"
           *ngFor="let item of mybranch"

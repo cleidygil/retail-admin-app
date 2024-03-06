@@ -1,0 +1,8 @@
+.radio input ~ label {
+    background-color: #dadada;
+    color: rgb(194, 186, 186);
+  }
+  .radio input:checked ~ label {
+    background-color: rgb(163 163 163 / var(--tw-bg-opacity));
+    color: white;
+  }

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../services/users.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
 import { StoreService } from '../../store/services/store.service';
+import { MyStoreParams } from '../../store/interfaces/store';
 
 @Component({
   selector: 'app-new-user',
@@ -36,7 +37,9 @@ export class NewUserComponent {
     })
   }
   getStoresAllUsers() {
-    this.storeServices.getUserStores().then((result) => {
+    const params = new MyStoreParams()
+    params.parent = 'true'
+    this.storeServices.getUserStores(params).then((result) => {
       this.store_arr = result
     }).catch((error) => {
       this.snack.openSnackBar(error.error.message)

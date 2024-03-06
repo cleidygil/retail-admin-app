@@ -4,7 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { AllStore, AllStores, Brands, BrandsParams, MethosdParams, UserStore } from '../interfaces/store';
+import { AllStore, AllStores, Brands, BrandsParams, MethosdParams, MyStoreParams, UserStore } from '../interfaces/store';
 import { Store } from '../../sites/interfaces/SitesInterface';
 
 @Injectable({
@@ -32,8 +32,9 @@ export class StoreService {
     return lastValueFrom(obs$)
   }
 
-  getUserStores(): Promise<AllStore[]> {
-    const obs$ = this.http.get<AllStore[]>(`${this.url}/api/users/${this.user.id}/stores/`)
+  getUserStores(params: MyStoreParams): Promise<AllStore[]> {
+    const resparams = this.queryParams.buildQueryParams(params)
+    const obs$ = this.http.get<AllStore[]>(`${this.url}/api/users/${this.user.id}/stores/`, {params: resparams})
     return lastValueFrom(obs$)
   }
   getMyStore(params: BrandsParams): Promise<AllStores> {

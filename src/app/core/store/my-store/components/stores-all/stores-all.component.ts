@@ -26,28 +26,36 @@ export class StoresAllComponent {
     status: new FormControl('')
   })
   ngOnInit(): void {
+    this.loading.showLoading()
     this.getAllStore()
+    this.getAllBranch()
   }
 
   getAllStore() {
-    this.loading.showLoading()
-    // const params = new MyStoreParams()
-    // const valor = this.params.value;
-    // params.page = this.nextPage
-    // params.status = valor.status || ''
-    // params.search = valor.search || ''
-    // params.parent = 'false'
+   
+    const params = new MyStoreParams()
+    params.parent = 'false'
 
-    this.brandServices.getUserStores().then((result) => {
+    this.brandServices.getUserStores(params).then((result) => {
       this.loading.hideLoading()
-      this.mystores = result.filter(e => e.parent == null).map(e => e)
-      this.mybranch = result.filter(e => e.parent != null).map(e => e)
+      this.mystores = result
+      // this.mybranch = result.filter(e => e.parent != null).map(e => e)
 
     }).catch((err) => {
       this.loading.hideLoading()
     });
   }
+  getAllBranch() {
+    const params = new MyStoreParams()
+    params.parent = 'true'
+    this.brandServices.getUserStores(params).then((result) => {
+      this.loading.hideLoading()
+      this.mybranch = result
 
+    }).catch((err) => {
+      this.loading.hideLoading()
+    });
+  }
   openEdit(element: any) {
     let dialogRef = this.dialog.open(DialogAddStoreComponent, {
       width: window.innerWidth > 639 ? '40%' : '100%',
