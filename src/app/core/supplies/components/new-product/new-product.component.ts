@@ -47,6 +47,7 @@ export class NewProductComponent {
 
 
   seleccionarArchivo(event: any) {
+    console.log(this.files.value)
     const file = event.target.files[0];
     this.selectedFile = file;
 
@@ -57,7 +58,7 @@ export class NewProductComponent {
       const isImageType = file.type.startsWith('image/');
       let imageUrl:any
       if (isImageType) {
-       imageUrl = this.convertirBase64AUrl(dataUrl);
+      //  imageUrl = this.convertirBase64AUrl(dataUrl);
         this.myFiles = [{ name: file.name, imageData: result, preview: result }];
       } else {
         this.myFiles = [{ name: file.name, imageData: result, preview: null }];

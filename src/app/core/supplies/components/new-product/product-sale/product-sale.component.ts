@@ -15,6 +15,7 @@ import { SuppliesService } from '../../../services/supplies.service';
 })
 export class ProductSaleComponent {
   @Input() myFiles: any[] = []
+  @Input() files: any
   private services = inject(SuppliesService)
   private storeServices = inject(StoreService)
   private snack = inject(SnackbarService)
@@ -23,20 +24,19 @@ export class ProductSaleComponent {
   user = this.global.User()
   constructor() { }
   categories: any[] = []
+  subcategories: any[] = []
   munits: any[] = []
   mystores: AllStore[] = []
 
   productSale = new FormGroup({
     'name': new FormControl('', [Validators.required]),
-    'serial': new FormControl('', [Validators.required]),
     'um': new FormControl('', [Validators.required]),
     'category': new FormControl('', [Validators.required]),
-    'impuesto': new FormControl('', [Validators.required]),
-    'costSale': new FormControl('', [Validators.required]),
-    'totalcostsale': new FormControl('', [Validators.required]),
+    'subcategory': new FormControl('', [Validators.required]),
     'store': new FormControl('', [Validators.required])
   })
   ngOnInit(): void {
+    console.log(this.files, this.myFiles)
     this.getAllStore()
     this.getCategories()
     this.getMU()
@@ -61,28 +61,37 @@ export class ProductSaleComponent {
   }
   getCategories() {
     const params: ParamsGlobal = new ParamsGlobal()
+    params.category= 'true'
     this.services.getCategories(params).then((result) => {
       this.categories = result.results
     }).catch((error) => {
       console.log(error)
     })
   }
+  getSubCategories(e:any) {
+    console.log(e, 'sub', e.target.value)
+    const params: ParamsGlobal = new ParamsGlobal()
+    params.parent = e.target.value
+    this.services.getCategories(params).then((result) => {
+      this.subcategories = result.results
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
  
   onSubmit() {
-    if (this.myFiles.length == 0) {
-      return this.snack.openSnackBar("Por favor agregar la imagen al producto.")
+    if (this.files.file =='' && this.files.url =='') {
+      return this.snack.openSnackBar("Por favor agregar la imagen al producto o una URL de la imagen.")
     }
     const valor = this.productSale.value
   
     let body = {
       "name": valor?.name,
       "description": valor?.name,
-      "barcode": valor?.serial,
       "authorization": true,
-      "image":this.myFiles[0].name,
+      "image":this.files.url || this.files.file,
       "mu": valor?.um,
-      "price": valor?.costSale,
-      "subcategory": valor?.category,
+      "subcategory": valor?.subcategory,
       "store": valor?.store,
     }
     this.services.postProduts(body).then((res) => {

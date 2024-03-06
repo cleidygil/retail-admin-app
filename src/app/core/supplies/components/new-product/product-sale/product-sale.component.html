@@ -1,23 +1,12 @@
-<form
-  [formGroup]="productSale"
-  class="grid xl:grid-cols-2 grid-cols-1 gap-2 my-4"
->
-  <div
-    class="xl:col-span-2 flex items-center border-2 my-2 py-2 px-3 rounded-2xl"
-  >
+<form [formGroup]="productSale" class="grid grid-cols-1 gap-2 my-4">
+  <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
     <input
       class="pl-2 w-full outline-none border-none"
       formControlName="name"
       placeholder="Nombre del Producto"
     />
   </div>
-  <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-    <input
-      class="pl-2 w-full outline-none border-none"
-      formControlName="serial"
-      placeholder="Serial 00000"
-    />
-  </div>
+
   <div class="relative inline-flex">
     <svg
       class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none"
@@ -53,7 +42,7 @@
         fill-rule="nonzero"
       />
     </svg>
-    <select
+    <select   (change)="getSubCategories($event)"
       formControlName="category"
       class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
     >
@@ -75,30 +64,20 @@
       />
     </svg>
     <select
-      formControlName="impuesto"
+  
+      formControlName="subcategory"
       class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
     >
-      <option value="">Impuesto</option>
-      <option value="1">BOLIVARES</option>
-      <option value="2">DOLARES</option>
-      <option value="3">EUROS</option>
+      <option *ngFor="let item of subcategories" [value]="item.id">
+        {{ item.name }}
+      </option>
     </select>
   </div>
-  <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-    <input
-      class="pl-2 w-full outline-none border-none"
-      formControlName="costSale"
-      placeholder="Costo de venta"
-    />
+
+  <div class="flex justify-center gap-2 my-2 text-xl text-neutral-600">
+    Asigna al inventario de alguna sucursal
   </div>
-  <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-    <input
-      class="pl-2 w-full outline-none border-none"
-      formControlName="totalcostsale"
-      placeholder="Total costo de venta"
-    />
-  </div>
-  <div class="xl:col-span-2 flex justify-center gap-4 my-4">
+  <div class="flex justify-center gap-4 my-4">
     <div class="inline-block radio text-center" *ngFor="let item of mystores">
       <div class="flex flex-col justify-center text-center">
         <input
@@ -135,9 +114,7 @@
     </div>
   </div>
 </form>
-<div>
- 
-</div>
+<div></div>
 
 <div class="flex justify-center gap-2">
   <button

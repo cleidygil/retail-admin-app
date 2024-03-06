@@ -112,28 +112,7 @@
       </form>
     </div>
   </div>
-  <form [formGroup]="checked" class="flex justify-center mx-2 gap-4">
-    <label for="toggle" class="text-xl font-semibold text-gray-700"
-      >Producto para la venta</label
-    >
-    <div
-      class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in"
-    >
-      <input
-        type="checkbox"
-        formControlName="check"
-        name="toggle"
-        id="toggle"
-        class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
-      />
-      <label
-        for="toggle"
-        class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
-      ></label>
-    </div>
-  </form>
-  <ng-container *ngIf="checked.value.check">
-    <app-product-sale  [myFiles]="myFiles"></app-product-sale>
-  </ng-container>
-  <ng-container *ngIf="!checked.value.check"> </ng-container>
+
+
+    <app-product-sale  [myFiles]="myFiles" [files]="files.value" ></app-product-sale>
 </div>
