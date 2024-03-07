@@ -17,13 +17,17 @@
     <div></div>
   </div>
 <div class="grid xl:grid-cols-3 gap-4 m-4 mx-auto">
-    <div *ngFor="let item of productsAll"
-      class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
+    <a *ngFor="let item of productsAll" [routerLink]="['../products', item.id]"
+      class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 "
     >
 
       <div class="flex items-center">
         <ng-container *ngIf="item.image != null else SinImagen">
-          <img alt="..." [src]="item.image" class="relative inline-block max-h-28 max-w-28 rounded-full border-2  object-cover object-center hover:z-10 focus:z-10 ">
+          <img alt="..." [src]="item.image" 
+          class="relative  w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white  object-cover object-center hover:z-10 focus:z-10"
+
+         
+          >
 
         </ng-container>
         <ng-template #SinImagen>
@@ -37,10 +41,9 @@
       </div>
       <div class="grid justify-start gap-2 text-neutral-500">
         <span class="text-xl font-semibold text-neutral-600">{{item.name}}</span>
-        <span class="text-sm">Serial 000000</span>
-        <span class="text-sm font-semibold">Costo total</span>
+        <span class="text-sm">U.M. :{{item.mu_name}}</span>
         <span class="text-sm">Asignado a :</span>
-        <span class="text-sm">Sucursal Bahia</span>
+        <span class="text-sm">{{item.store_name}}</span>
       </div>
-    </div>
+    </a>
   </div>

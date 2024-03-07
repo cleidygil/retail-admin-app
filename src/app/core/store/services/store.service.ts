@@ -4,8 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { AllStore, AllStores, Brands, BrandsParams, MethosdParams, MyStoreParams, UserStore } from '../interfaces/store';
-import { Store } from '../../sites/interfaces/SitesInterface';
+import { AllStore, AllStores,  MethosdParams, MyStoreParams, UserStore } from '../interfaces/store';
 
 @Injectable({
   providedIn: 'root'
@@ -18,26 +17,13 @@ export class StoreService {
   user = this.global.User()
   constructor() { }
 
-  getBrands(params: BrandsParams): Promise<Brands> {
-    const resparams = this.queryParams.buildQueryParams(params)
-    const obs$ = this.http.get<Brands>(`${this.url}/api/stores/brands/`, { params: resparams })
-    return lastValueFrom(obs$)
-  }
-  setBrands(body:any): Promise<any> {
-    const obs$ = this.http.post<any>(`${this.url}/api/stores/brands/`,body)
-    return lastValueFrom(obs$)
-  }
-  patchBrandID(body:any, id:number): Promise<any> {
-    const obs$ = this.http.patch<any>(`${this.url}/api/stores/brands/${id}/`,body)
-    return lastValueFrom(obs$)
-  }
-
+  
   getUserStores(params: MyStoreParams): Promise<AllStore[]> {
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<AllStore[]>(`${this.url}/api/users/${this.user.id}/stores/`, {params: resparams})
     return lastValueFrom(obs$)
   }
-  getMyStore(params: BrandsParams): Promise<AllStores> {
+  getMyStore(params: MyStoreParams): Promise<AllStores> {
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<AllStores>(`${this.url}/api/stores/`, { params: resparams })
     return lastValueFrom(obs$)

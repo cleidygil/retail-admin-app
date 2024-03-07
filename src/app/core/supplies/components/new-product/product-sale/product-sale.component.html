@@ -42,7 +42,7 @@
         fill-rule="nonzero"
       />
     </svg>
-    <select   (change)="getSubCategories($event)"
+    <select   (change)="getSubCategories()"
       formControlName="category"
       class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
     >
@@ -121,8 +121,8 @@
     class="p-3 rounded-full text-white w-1/2 font-semibold text-xl "
     [ngClass]="productSale.invalid ? 'bg-neutral-300' : 'bg-neutral-500'"
     [disabled]="productSale.invalid"
-    (click)="onSubmit()"
+    (click)="id !=null ? Update() :  onSubmit()"
   >
-    Crear sucursal
+    {{id !=null ?  'Actualizar': 'Crear'}} sucursal
   </button>
 </div>

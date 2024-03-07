@@ -7,10 +7,12 @@ import { MaterialDesignModule } from 'src/app/components-iu/material-design.modu
 import { NewProductComponent } from './components/new-product/new-product.component';
 import { ProductsAllComponent } from './components/products-all/products-all.component';
 import { ProductSaleComponent } from './components/new-product/product-sale/product-sale.component';
+import { RecipesAllComponent } from './components/recipes-all/recipes-all.component';
+import { NewRecipesComponent } from './components/new-recipes/new-recipes.component';
 
 
 @NgModule({
-  declarations: [SuppliesComponent, NewProductComponent, ProductsAllComponent, ProductSaleComponent],
+  declarations: [SuppliesComponent, NewProductComponent, ProductsAllComponent, ProductSaleComponent, RecipesAllComponent, NewRecipesComponent],
   imports: [
     CommonModule,
     SuppliesRoutingModule,

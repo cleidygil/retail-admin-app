@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BrandsComponent } from './brands/brands.component';
 
 const routes: Routes = [
 
@@ -15,10 +14,6 @@ const routes: Routes = [
       {
         path: 'store',
         loadChildren: () => import('./my-store/my-store.module').then(m => m.MyStoreModule)
-      },
-      {
-        path: 'brands',
-        component: BrandsComponent
       },
     ]
   }

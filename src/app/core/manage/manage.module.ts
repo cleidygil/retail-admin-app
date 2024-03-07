@@ -4,10 +4,16 @@ import { CommonModule } from '@angular/common';
 import { ManageRoutingModule } from './manage-routing.module';
 import { ManageComponent } from './manage.component';
 import { MaterialDesignModule } from 'src/app/components-iu/material-design.module';
+import { BrandsComponent } from './components/brands/brands.component';
+import { NewBrandsComponent } from './components/new-brands/new-brands.component';
+import { MeasurementunitsComponent } from './components/measurementunits/measurementunits.component';
+import { NewMeasurementunitsComponent } from './components/new-measurementunits/new-measurementunits.component';
+import { NewSuppliersComponent } from './components/new-suppliers/new-suppliers.component';
+import { SuppliersComponent } from './components/suppliers/suppliers.component';
 
 
 @NgModule({
-  declarations: [ManageComponent],
+  declarations: [ManageComponent, BrandsComponent, NewBrandsComponent, MeasurementunitsComponent, NewMeasurementunitsComponent, NewSuppliersComponent, SuppliersComponent],
   imports: [
     CommonModule,
     ManageRoutingModule,

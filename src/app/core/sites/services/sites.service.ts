@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { AuthServices } from '../../auth/services/auth.service';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { LoadingService } from 'src/app/global/services/loading.service';
-import { AllStore, BrandsParams } from '../../store/interfaces/store';
+import { AllStore } from '../../store/interfaces/store';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 
 @Injectable({

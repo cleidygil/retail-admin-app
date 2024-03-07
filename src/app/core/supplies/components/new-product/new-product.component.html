@@ -26,20 +26,35 @@
               [accept]="accept"
               (change)="seleccionarArchivo($event)"
             />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="h-24 w-24 text-white rounded-full mx-auto"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
+            <ng-container *ngIf="id != null; else SinImagen">
+              <div class="relative">
+
+                <img
+                alt="..."
+                [src]="image"
+                class="relative w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white  object-cover object-center hover:z-10 focus:z-10"
+                />
+                <div class="bottom-1 absolute right-4 z-10">
+                <mat-icon color="primary" class="flex " >add_photo_alternate</mat-icon>
+                </div>
+              </div>
+           
+            </ng-container>
+            <ng-template #SinImagen>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-24 w-24 text-white rounded-full mx-auto"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                /></svg
+            ></ng-template>
           </label>
           <ng-container *ngIf="myFiles.length > 0">
             <div
@@ -125,5 +140,6 @@
   <app-product-sale
     [myFiles]="myFiles"
     [files]="files.value"
+    (image)="image = $event"
   ></app-product-sale>
 </div>

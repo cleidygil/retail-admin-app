@@ -1,5 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { SuppliesService } from '../../services/supplies.service';
 
 
 @Component({
@@ -8,7 +11,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./new-product.component.css']
 })
 export class NewProductComponent {
-  constructor() { }
+  private services = inject(SuppliesService)
+
+  private activateRou = inject(ActivatedRoute);
+  sub!: Subscription
+  id: number | null = null
   selectedFile: any = null;
   myFiles: any[] = [];
   format: any = [];
@@ -18,8 +25,17 @@ export class NewProductComponent {
     file: new FormControl(''),
     url: new FormControl(''),
   })
+  image:string = ''
+  constructor() {
+    this.sub = this.activateRou.params.subscribe((data) => {
+      this.id = Number(data['id']) || null
+    })
+  }
+ngOnInit(): void {
+
+}
+  
   seleccionarArchivo(event: any) {
-    console.log(this.files.value)
     const file = event.target.files[0];
     this.selectedFile = file;
 
@@ -66,7 +82,7 @@ export class NewProductComponent {
 
     // Crear una URL a partir del blob
     const objectURL = URL.createObjectURL(blob);
-    console.log(objectURL)
     return objectURL;
   }
+  
 }
