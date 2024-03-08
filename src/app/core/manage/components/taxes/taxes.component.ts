@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./taxes.component.css']
 })
 export class TaxesComponent {
-
+  taxes: any[] = []
 }
