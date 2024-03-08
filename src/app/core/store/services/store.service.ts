@@ -56,6 +56,14 @@ export class StoreService {
     const obs$ = this.http.post<any>(`${this.url}/api/stores/${id}/payment_methods/`,body)
     return lastValueFrom(obs$)
   }
+  getMyStoreDistributionsMedium(id:number): Promise<any> {
+    const obs$ = this.http.get<any>(`${this.url}/api/stores/${id}/distributions_medium/`)
+    return lastValueFrom(obs$)
+  }
+  postMyStoreDistributionsMedium(body:any, id:number): Promise<any> {
+    const obs$ = this.http.post<any>(`${this.url}/api/stores/${id}/distributions_medium/`,body)
+    return lastValueFrom(obs$)
+  }
   getPaymentMethods(params:MethosdParams): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<any>(`${this.url}/api/payments/methods/`, { params: resparams })

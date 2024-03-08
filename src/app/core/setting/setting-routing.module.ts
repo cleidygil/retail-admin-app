@@ -14,6 +14,11 @@ const routes: Routes = [
     loadChildren: () => import('./components/methods-payments/methods.module').then(m => m.MethodsModule),
 
   },
+  {
+    path: 'distributions_medium',
+    loadChildren: () => import('./components/distributions-medium/distributions-medium.module').then(m => m.DistributionsMediumModule),
+
+  }
 ];
 
 @NgModule({

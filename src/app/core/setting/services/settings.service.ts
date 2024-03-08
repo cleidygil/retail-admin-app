@@ -17,10 +17,9 @@ export class SettingsService {
   user = this.global.User()
   constructor() { }
 
-  getBrands(params: Settings): Promise<any> {
+  getDistriMedium(params: Settings): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
-    const obs$ = this.http.get<any>(`${this.url}/api/stores/brands/`, { params: resparams })
+    const obs$ = this.http.get<any>(`${this.url}/api/services/distributions_medium/`, { params: resparams })
     return lastValueFrom(obs$)
   }
-
 }
