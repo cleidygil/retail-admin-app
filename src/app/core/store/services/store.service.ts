@@ -4,7 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { AllStore, AllStores,  MethosdParams, MyStoreParams, UserStore } from '../interfaces/store';
+import { AllStore, AllStores,  MethosdParams, MyStoreParams, PaymentMethod, UserStore } from '../interfaces/store';
 
 @Injectable({
   providedIn: 'root'
@@ -48,8 +48,8 @@ export class StoreService {
     const obs$ = this.http.post<any>(`${this.url}/api/stores/${id}/users/`,body)
     return lastValueFrom(obs$)
   }
-  getMyStorePaymentMethods(id:number): Promise<AllStore> {
-    const obs$ = this.http.get<AllStore>(`${this.url}/api/stores/${id}/payment_methods/`)
+  getMyStorePaymentMethods(id:number): Promise<PaymentMethod[]> {
+    const obs$ = this.http.get<PaymentMethod[]>(`${this.url}/api/stores/${id}/payment_methods/`)
     return lastValueFrom(obs$)
   }
   postMyStorePaymentMethods(body:any, id:number): Promise<any> {

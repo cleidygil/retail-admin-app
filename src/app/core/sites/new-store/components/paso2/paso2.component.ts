@@ -23,12 +23,12 @@ export class Paso2Component {
     methods_selected :new FormControl<string | number>('')
   })
   user = this.global.User()
-  inputMethod:any
+  inputMethod: any = ''
   methods_arr: any[] = []
   methods:any
   ngOnInit(): void {
+  
     if(this.sitesServices.paso2.value != null){
-      console.log(this.sitesServices.paso2.value)
       let valor =  this.sitesServices.paso2.value
       this.methodsform.patchValue({
         methods_selected: valor.payment_method
@@ -45,13 +45,13 @@ export class Paso2Component {
     this.services.getPaymentMethods(params).then((result) => {
       this.methods_arr = result
     }).catch((error) => {
-      console.log(error)
+      console.log(error) 
     })
   }
 
   onSubmit() {
     let body={
-      payment_method: Number(this.methodsform.value.methods_selected),
+      payment_method: Number(this.inputMethod),
     }
     let body2 = {...body, ...this.methods}
     this.value2.emit(body2)

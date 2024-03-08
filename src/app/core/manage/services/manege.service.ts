@@ -4,7 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { BrandsParams, Brands, Management } from '../interface/manege';
+import { BrandsParams, Brands, Management } from '../interface/manege.interface';
 
 @Injectable({
   providedIn: 'root'

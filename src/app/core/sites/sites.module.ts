@@ -14,6 +14,10 @@ import { MethodTdcComponent } from './new-store/components/paso2/method-tdc/meth
 
 @NgModule({
   declarations: [SitesComponent, NewStoreComponent, Paso1Component, Paso2Component, PasoFinalComponent, MethodBsComponent, MethodUsdComponent, MethodTdcComponent],
-  imports: [CommonModule, SitesRoutingModule, MaterialDesignModule,ReactiveFormsModule],
+  imports: [CommonModule, SitesRoutingModule, MaterialDesignModule, ReactiveFormsModule],
+  exports: [
+    MethodBsComponent, MethodUsdComponent, MethodTdcComponent
+
+  ]
 })
-export class SitesModule {}
+export class SitesModule { }

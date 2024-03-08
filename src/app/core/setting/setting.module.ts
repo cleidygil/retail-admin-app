@@ -8,7 +8,8 @@ import { MaterialDesignModule } from 'src/app/components-iu/material-design.modu
 
 @NgModule({
   declarations: [
-    SettingComponent
+    SettingComponent,
+  
   ],
   imports: [
     CommonModule,

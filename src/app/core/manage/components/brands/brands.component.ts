@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ManageService } from '../../services/manege.service';
 import { PageEvent } from '@angular/material/paginator';
 import { LoadingService } from 'src/app/global/services/loading.service';
-import { Brand,  BrandsParams } from '../../interface/manege';
+import { Brand,  BrandsParams } from '../../interface/manege.interface';
 
 @Component({
   selector: 'app-brands',

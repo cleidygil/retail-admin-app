@@ -6,7 +6,7 @@ import { AllStore, MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { StoreService } from 'src/app/core/store/services/store.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
 import { ManageService } from '../../services/manege.service';
-import { Management } from '../../interface/manege';
+import { Management } from '../../interface/manege.interface';
 
 @Component({
   selector: 'app-new-measurementunits',

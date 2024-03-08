@@ -16,13 +16,25 @@ export class UsersComponent {
   private snack = inject(SnackbarService)
   user = this.global.User()
   listUsers: any[] = []
-  ngOnInit(): void {
+  listUsersAll: any[] = []
+  ngOnInit(): void {  this.loading.showLoading()
     this.getMyUsers()
+    this.getallUsers()
   }
   getMyUsers() {
-    this.loading.showLoading()
-    this.userServices.getMyAccountStores(this.user.id).then((result) => {
+    // this.loading.showLoading()
+    this.userServices.getMyAccountStores().then((result) => {
       this.listUsers = result
+      this.loading.hideLoading()
+    }).catch((error) => {
+      this.loading.hideLoading()
+      this.snack.openSnackBar(error.error.message)
+    })
+  }
+  getallUsers() {
+    // this.loading.showLoading()
+    this.userServices.getAllUsers().then((result) => {
+      this.listUsersAll = result.results
       this.loading.hideLoading()
     }).catch((error) => {
       this.loading.hideLoading()
