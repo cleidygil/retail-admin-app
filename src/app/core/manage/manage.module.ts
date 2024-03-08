@@ -10,10 +10,12 @@ import { MeasurementunitsComponent } from './components/measurementunits/measure
 import { NewMeasurementunitsComponent } from './components/new-measurementunits/new-measurementunits.component';
 import { NewSuppliersComponent } from './components/new-suppliers/new-suppliers.component';
 import { SuppliersComponent } from './components/suppliers/suppliers.component';
+import { TaxesComponent } from './components/taxes/taxes.component';
+import { NewTaxesComponent } from './components/new-taxes/new-taxes.component';
 
 
 @NgModule({
-  declarations: [ManageComponent, BrandsComponent, NewBrandsComponent, MeasurementunitsComponent, NewMeasurementunitsComponent, NewSuppliersComponent, SuppliersComponent],
+  declarations: [ManageComponent, BrandsComponent, NewBrandsComponent, MeasurementunitsComponent, NewMeasurementunitsComponent, NewSuppliersComponent, SuppliersComponent, TaxesComponent, NewTaxesComponent],
   imports: [
     CommonModule,
     ManageRoutingModule,

@@ -7,6 +7,8 @@ import { MeasurementunitsComponent } from './components/measurementunits/measure
 import { NewMeasurementunitsComponent } from './components/new-measurementunits/new-measurementunits.component';
 import { SuppliersComponent } from './components/suppliers/suppliers.component';
 import { NewSuppliersComponent } from './components/new-suppliers/new-suppliers.component';
+import { TaxesComponent } from './components/taxes/taxes.component';
+import { NewTaxesComponent } from './components/new-taxes/new-taxes.component';
 
 const routes: Routes = [
   {
@@ -36,8 +38,7 @@ const routes: Routes = [
   {
     path: 'new_measurement_units',
     component: NewMeasurementunitsComponent,
-  }
-  ,
+  },
   {
     path: 'suppliers',
     component: SuppliersComponent
@@ -49,6 +50,14 @@ const routes: Routes = [
   {
     path: 'new_suppliers',
     component: NewSuppliersComponent,
+  },
+  {
+    path: 'taxes',
+    component: TaxesComponent
+  },
+  {
+    path: 'new_taxes',
+    component: NewTaxesComponent,
   }
 ];
 
