@@ -22,7 +22,6 @@ export class NewCategoryComponent {
   store: string = ''
   sub!: Subscription
   id: number | null = null
-  selectedFile: any = null;
   myFiles: any[] = [];
   format: any = [];
   accept: string = '.jpg,.png';
@@ -43,31 +42,30 @@ export class NewCategoryComponent {
   categform = new FormGroup({
     'name': new FormControl('', [Validators.required]),
     'description': new FormControl('', [Validators.required]),
-    'store': new FormControl('', [Validators.required])
+    // 'store': new FormControl('', [Validators.required])
   })
+  // Sub categoria
+  viewFormSubCatf: boolean = false
+  subcategform = new FormGroup({
+    'name': new FormControl('', [Validators.required]),
+    'description': new FormControl('', [Validators.required]),
+    // 'store': new FormControl('', [Validators.required])
+  })
+  filesSub = new FormGroup({
+    file: new FormControl(''),
+    url: new FormControl(''),
+  })
+  myFilesSub: any[] = [];
+  formatSub: any = [];
+  acceptSub: string = '.jpg,.png';
   ngOnInit(): void {
-    this.getAllStore()
+    this.getSubCategories()
     if (this.id != null) {
       this.getCategoryID()
     }
-    if (this.store != '') {
-      console.log(this.store.toString())
-      this.categform.get('store')?.setValue(this.store)
-      this.categform.patchValue({
-        store: this.store.toString()
-      })
-    }
+
   }
 
-  getAllStore() {
-    const params = new MyStoreParams()
-    params.parent = 'true'
-    this.storeServices.getUserStores(params).then((result) => {
-      this.mystores = result
-    }).catch((err) => {
-      console.log(err)
-    });
-  }
   onSubmit() {
     const valor = this.categform.value
     if (this.files.value.file == '' && this.files.value.url == '') {
@@ -86,12 +84,13 @@ export class NewCategoryComponent {
     let body = {
       "parent": null,
       "image": sendImag,
+      store: this.store
     }
     let body2 = { ...valor, ...body }
     if (this.id != null) {
       this.services.patchCategoryID(body2, Number(this.id)).then((res) => {
         this.snack.openSnackBar("Categoria actualizado exitosamente");
-        this.router.navigate(['/home/management/categories'])
+        this.router.navigate(['../'])
       }).catch((error) => {
         this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
       })
@@ -99,9 +98,10 @@ export class NewCategoryComponent {
     }
     this.services.postCategory(body2).then((res) => {
       this.snack.openSnackBar("Categoria registrado exitosamente");
-      this.router.navigate(['/home/management/categories'])
+      this.router.navigate(['../'])
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
+
     })
     return
 
@@ -112,7 +112,6 @@ export class NewCategoryComponent {
         this.categform.patchValue({
           name: result.name,
           description: result?.description,
-          store: result.store?.toString(),
         })
         this.image = result.image
         this.files.patchValue({
@@ -127,8 +126,6 @@ export class NewCategoryComponent {
 
   seleccionarArchivo(event: any) {
     const file = event.target.files[0];
-    this.selectedFile = file;
-
     const reader = new FileReader();
     reader.onload = (event) => {
       const result = reader.result as string;
@@ -169,6 +166,7 @@ export class NewCategoryComponent {
     return objectURL;
   }
   getSubCategories() {
+
     const params: Management = new Management()
     params.parent = this.id?.toString()
     this.services.getCategories(params).then((result) => {
@@ -176,5 +174,62 @@ export class NewCategoryComponent {
     }).catch((error) => {
       console.log(error)
     })
+  }
+  onSubmitSubCategory() {
+    const valor = this.subcategform.value
+    if (this.filesSub.value.file == '' && this.filesSub.value.url == '') {
+      return this.snack.openSnackBar("Por favor agregar la imagen a la categoria o una URL de la imagen.")
+    }
+    let sendImag;
+    if (this.filesSub.value.file != '') {
+      sendImag = this.myFiles[0].imageData
+    }
+    if (this.filesSub.value.url != '') {
+      sendImag = this.filesSub.value.url
+    }
+    if (this.id != null && this.filesSub.value.file == '' && this.filesSub.value.url == '') {
+      sendImag = this.image
+    }
+    let body = {
+      "parent": this.id,
+      "image": sendImag,
+      store: this.store
+    }
+    let body2 = { ...valor, ...body }
+
+    this.services.postCategory(body2).then((res) => {
+      this.snack.openSnackBar("Sub-categoria registrado exitosamente");
+      this.router.navigate(['../'])
+    }).catch((error) => {
+      this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
+    })
+    return
+  }
+  seleccionarArchivoSub(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = reader.result as string;
+      const isImageType = file.type.startsWith('image/');
+      if (isImageType) {
+        this.myFilesSub = [{ name: file.name, imageData: result, preview: result }];
+      } else {
+        this.myFilesSub = [{ name: file.name, imageData: result, preview: null }];
+      }
+      const files = this.myFilesSub.map((file) => {
+        return {
+          name: file.name,
+          image_data: file.imageData
+        }
+      })
+      this.formatSub = files
+    };
+    reader.readAsDataURL(file);
+  }
+  resetFileSUb(indice: number): void {
+    this.myFilesSub = this.myFilesSub.filter(
+      (fil: string, i: number) => i !== indice
+    );
+    this.formatSub = this.formatSub.filter((fil: string, i: number) => i !== indice);
   }
 }
