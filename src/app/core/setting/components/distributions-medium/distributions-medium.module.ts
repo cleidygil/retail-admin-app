@@ -15,7 +15,7 @@ import { MaterialDesignModule } from 'src/app/components-iu/material-design.modu
   imports: [
     CommonModule,
     DistributionsMediumRoutingModule,
-    MaterialDesignModule
+    MaterialDesignModule,
   ]
 })
 export class DistributionsMediumModule { }

@@ -8,20 +8,5 @@ import { StoreService } from 'src/app/core/store/services/store.service';
   styleUrls: ['./distributions-medium.component.css']
 })
 export class DistributionsMediumComponent {
-  private servicesStore = inject(StoreService);
-  mystores: AllStore[] = []
-
-  ngOnInit(): void {
-    this.getAllStore()
-  }
-
-  getAllStore() {
-    const params = new MyStoreParams()
-    params.parent = 'true'
-    this.servicesStore.getUserStores(params).then((result) => {
-      this.mystores = result
-    }).catch((err) => {
-      console.log(err)
-    });
-  }
+ ruta:string= 'all'
 }

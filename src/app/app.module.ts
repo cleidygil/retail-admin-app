@@ -16,6 +16,7 @@ import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/c
 @NgModule({
   declarations: [
     AppComponent,
+  
      ],
   imports: [
     CommonModule,

@@ -13,15 +13,20 @@ import { NewSuppliersComponent } from './components/new-suppliers/new-suppliers.
 import { SuppliersComponent } from './components/suppliers/suppliers.component';
 import { TaxesComponent } from './components/taxes/taxes.component';
 import { NewTaxesComponent } from './components/new-taxes/new-taxes.component';
+import { CategoryComponent } from './components/category/category.component';
+import { NewCategoryComponent } from './components/new-category/new-category.component';
+import { HomeModule } from '../home/home.module';
+import { MyBranchComponent } from './components/my-branch/my-branch.component';
 registerLocaleData(localeEs, 'es');
 
 
 @NgModule({
-  declarations: [ManageComponent, BrandsComponent, NewBrandsComponent, MeasurementunitsComponent, NewMeasurementunitsComponent, NewSuppliersComponent, SuppliersComponent, TaxesComponent, NewTaxesComponent],
+  declarations: [ManageComponent, BrandsComponent, NewBrandsComponent, MeasurementunitsComponent, NewMeasurementunitsComponent, NewSuppliersComponent, SuppliersComponent, TaxesComponent, NewTaxesComponent, CategoryComponent, NewCategoryComponent],
   imports: [
     CommonModule,
     ManageRoutingModule,
-    MaterialDesignModule
+    MaterialDesignModule,
+    HomeModule
   ],
   providers: [ DatePipe, { provide: LOCALE_ID, useValue: 'es' } ]
 })

@@ -1,0 +1,215 @@
+<div class="flex justify-between gap-2">
+  <a [routerLink]="[id != null ? '../': '../categories']" mat-mini-fab color="primary">
+    <mat-icon>chevron_left</mat-icon>
+  </a>
+</div>
+<div class="max-w-xl self-center mx-auto bg-white p-2">
+  <div class="flex flex-col justify-center w-full text-center">
+    <p class="text-3xl font-semibold">Crea tu categoria</p>
+    <div class="flex justify-center items-center">
+      <form
+        [formGroup]="files"
+        class="flex flex-col gap-4 my-2 justify-center w-full"
+      >
+        <div class="flex flex-col justify-center text-center">
+          <label
+            for="file"
+            *ngIf="myFiles.length == 0"
+            class="flex items-center w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white"
+          >
+            <input
+              type="file"
+              name="file"
+              id="file"
+              class="sr-only"
+              formControlName="file"
+              [accept]="accept"
+              (change)="seleccionarArchivo($event)"
+            />
+            <ng-container *ngIf="id != null; else SinImagen">
+              <div class="relative">
+                <img
+                  alt="..."
+                  [src]="image"
+                  class="relative w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white object-cover object-center hover:z-10 focus:z-10"
+                />
+                <div class="bottom-1 absolute right-4 z-10">
+                  <mat-icon color="primary" class="flex"
+                    >add_photo_alternate</mat-icon
+                  >
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #SinImagen>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-24 w-24 text-white rounded-full mx-auto"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                /></svg
+            ></ng-template>
+          </label>
+          <ng-container *ngIf="myFiles.length > 0">
+            <div
+              *ngFor="let file of myFiles; index as i"
+              class="rounded-md bg-[#F5F7FB] py-4 px-8"
+            >
+              <div
+                class="flex items-center justify-center mt-2"
+                *ngIf="file.preview"
+              >
+                <img
+                  [src]="file.preview"
+                  alt="{{ file.name }}"
+                  class="max-w-20 h-20"
+                />
+              </div>
+              <div class="flex items-center justify-between">
+                <span
+                  class="truncate pr-3 text-base font-medium text-neutral-600"
+                >
+                  {{ file.name }}
+                </span>
+                <button class="text-neutral-800" (click)="resetFile(i)">
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0.279337 0.279338C0.651787 -0.0931121 1.25565 -0.0931121 1.6281 0.279338L9.72066 8.3719C10.0931 8.74435 10.0931 9.34821 9.72066 9.72066C9.34821 10.0931 8.74435 10.0931 8.3719 9.72066L0.279337 1.6281C-0.0931125 1.25565 -0.0931125 0.651788 0.279337 0.279338Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0.279337 9.72066C-0.0931125 9.34821 -0.0931125 8.74435 0.279337 8.3719L8.3719 0.279338C8.74435 -0.0931127 9.34821 -0.0931123 9.72066 0.279338C10.0931 0.651787 10.0931 1.25565 9.72066 1.6281L1.6281 9.72066C1.25565 10.0931 0.651787 10.0931 0.279337 9.72066Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div class="relative mt-5 h-[6px] w-full rounded-lg bg-[#E2E5EF]">
+                <div
+                  class="absolute left-0 right-0 h-full w-[100%] rounded-lg bg-orange-600"
+                ></div>
+              </div>
+            </div>
+          </ng-container>
+          <p class="pt-2 text-2xl font-semibold text-neutral-400">
+            Formatos admitidos JPG y PNG
+          </p>
+        </div>
+        <div class="flex flex-col justify-center text-center">
+          <span>o carga la URL de la imagen</span>
+          <div>
+            <div class="mt-2 border-2 my-2 py-2 px-3 rounded-2xl">
+              <div class="flex pl-2 outline-none border-none sm:max-w-md">
+                <span
+                  class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"
+                  >http://</span
+                >
+                <input
+                  formControlName="url"
+                  type="text"
+                  name="company-website"
+                  id="company-website"
+                  class="block flex-1 outline-none border-none bg-transparent text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  placeholder="www.example.com"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <form [formGroup]="categform" class="grid grid-cols-1 gap-2 my-4">
+    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+      <input
+        class="pl-2 w-full outline-none border-none"
+        formControlName="name"
+        placeholder="Nombre de la Categoria"
+      />
+    </div>
+    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+      <textarea
+        rows="2"
+        class="pl-2 w-full outline-none border-none"
+        formControlName="description"
+        placeholder="Coloque una descripcion"
+      ></textarea>
+    </div>
+    <div class="flex justify-center gap-2 my-2 text-xl text-neutral-600">
+      Asigna a alguna sucursal
+    </div>
+    <div class="flex justify-center gap-4 my-4">
+      <div class="inline-block radio text-center" *ngFor="let item of mystores">
+        <div class="flex flex-col justify-center text-center">
+          <input
+            formControlName="store"
+            name="store"
+            type="radio"
+            [id]="item.id"
+            hidden="hidden"
+            [value]="item.id"
+          />
+          <label
+            [for]="item.id"
+            class="flex items-center w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-24 w-24 text-white rounded-full mx-auto"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
+              />
+            </svg>
+          </label>
+        </div>
+        <p class="pt-2 text-sm font-semibold text-gray-400">
+          {{ item.name }}
+        </p>
+      </div>
+    </div>
+  </form>
+  <div></div>
+
+  <div class="flex justify-center gap-2">
+    <button
+      class="p-3 rounded-full text-white w-1/2 font-semibold text-xl"
+      [ngClass]="categform.invalid ? 'bg-neutral-300' : 'bg-neutral-500'"
+      [disabled]="categform.invalid"
+      (click)="onSubmit()"
+    >
+      {{ id != null ? "Actualizar" : "Agregar" }} categoria
+    </button>
+  </div>
+  <div class="flex justify-center gap-2 my-2">
+    <button
+      class="p-3 rounded-full text-white w-1/2 font-semibold text-xl"
+     
+      (click)="onSubmit()"
+    >
+      {{ id != null ? "Actualizar" : "Agregar" }} categoria
+    </button>
+  </div>
+</div>

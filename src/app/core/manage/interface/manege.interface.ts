@@ -3,6 +3,9 @@ export class Management {
   page?: number
   status?: string
   remove_pagination?: string
+  category?:string
+  parent?:string
+  store?:string
 }
 
 
@@ -34,4 +37,22 @@ export interface Taxes {
   id: number
   title: string
   completed: boolean
+}
+export interface Categories {
+  count: number
+  next: string
+  previous: string
+  results: Category[]
+}
+
+export interface Category {
+  id: number
+  name: string
+  description: string
+  image: string
+  parent: number
+  parent_name: string
+  store: number
+  store_name: string
+  status: boolean
 }

@@ -9,11 +9,18 @@ import { SuppliersComponent } from './components/suppliers/suppliers.component';
 import { NewSuppliersComponent } from './components/new-suppliers/new-suppliers.component';
 import { TaxesComponent } from './components/taxes/taxes.component';
 import { NewTaxesComponent } from './components/new-taxes/new-taxes.component';
+import { CategoryComponent } from './components/category/category.component';
+import { NewCategoryComponent } from './components/new-category/new-category.component';
+import { MyBranchComponent } from './components/my-branch/my-branch.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ManageComponent
+  },
+  {
+    path: 'branch',
+   loadChildren: ()=> import('./components/my-branch/my-branch.module').then(m=> m.MyBranchModule)
   },
   {
     path: 'new_brand',
@@ -58,7 +65,8 @@ const routes: Routes = [
   {
     path: 'new_taxes',
     component: NewTaxesComponent,
-  }
+  },
+
 ];
 
 @NgModule({

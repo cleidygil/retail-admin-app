@@ -10,7 +10,7 @@ import { SitesModule } from 'src/app/core/sites/sites.module';
 
 
 @NgModule({
-  declarations: [  MethodsPaymentsComponent,
+  declarations: [  
     NewMethodPaymentComponent,
     MethodsStoreComponent],
   imports: [
