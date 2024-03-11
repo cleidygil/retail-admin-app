@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { ParamsGlobal } from 'src/app/core/supplies/interfaces/supplies';
+import { LoadingService } from 'src/app/global/services/loading.service';
+import { ManageService } from '../../services/manege.service';
+import { Management } from '../../interface/manege.interface';
 
 @Component({
   selector: 'app-taxes',
@@ -7,4 +12,30 @@ import { Component } from '@angular/core';
 })
 export class TaxesComponent {
   taxes: any[] = []
+  private services = inject(ManageService)
+  private loading = inject(LoadingService);
+
+  nextPage: number = 1;
+  count: number = 1
+  ngOnInit(): void {
+    this.getTaxes()
+  }
+
+  getTaxes() {
+    this.loading.showLoading()
+    const params: Management = new Management()
+    // params.page = this.nextPage
+    params.status = 'true'
+    this.services.getTaxes(params).then((result) => {
+      this.loading.hideLoading()
+      this.taxes = result
+    }).catch((err) => {
+      this.loading.hideLoading()
+    });
+  }
+  nextPageIndex(event: PageEvent) {
+    this.nextPage = event.pageIndex + 1;
+    this.getTaxes()
+  }
+
 }

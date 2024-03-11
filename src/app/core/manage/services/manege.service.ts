@@ -4,7 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { BrandsParams, Brands, Management } from '../interface/manege.interface';
+import { BrandsParams, Brands, Management, Taxes } from '../interface/manege.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +58,15 @@ export class ManageService {
   }
   patchSuppliersID(body:any, id:number): Promise<any> {
     const obs$ = this.http.patch<any>(`${this.url}/api/stores/suppliers/${id}/`,body)
+    return lastValueFrom(obs$)
+  }
+  getTaxes(params: Management): Promise<Taxes[]> {
+    const resparams = this.queryParams.buildQueryParams(params)
+    const obs$ = this.http.get<Taxes[]>(`${this.url}/api/services/taxes/`, {params: resparams})
+    return lastValueFrom(obs$)
+  }
+  postTaxes(body:any,): Promise<any> {
+    const obs$ = this.http.post<any>(`${this.url}/api/services/taxes/`,body)
     return lastValueFrom(obs$)
   }
 

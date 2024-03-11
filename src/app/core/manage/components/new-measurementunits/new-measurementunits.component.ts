@@ -28,10 +28,10 @@ export class NewMeasurementunitsComponent {
   muform = new FormGroup({
     name: new FormControl('', [Validators.required]),
     store: new FormControl<any>('', [Validators.required]),
-    value: new FormControl('', [Validators.required]),
+    value: new FormControl('', [Validators.required, Validators.maxLength(5), Validators.minLength(1), Validators.pattern('[0-9]*')]),
     abbreviation: new FormControl('', [Validators.required]),
     equivalence: new FormControl('', [Validators.required]),
-    cantidad: new FormControl('', [Validators.required])
+    cantidad: new FormControl('', [Validators.required,Validators.maxLength(5), Validators.minLength(1), Validators.pattern('[0-9]*')])
   })
   mu: any[] = []
   constructor() {

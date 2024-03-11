@@ -23,12 +23,18 @@
         placeholder="Abreviatura de la unidad"
       />
     </div>
-    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-      <input
-        class="pl-2 w-full outline-none border-none"
-        formControlName="cantidad"
-        placeholder="Cantidad"
-      />
+    <div>
+      <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+        <input
+          class="pl-2 w-full outline-none border-none"
+          formControlName="cantidad"
+          placeholder="Cantidad"
+          minlength="1"
+          maxlength="5"
+          pattern="[0-9]*"
+        />
+      </div>
+      <mat-error class="text-xs flex justify-center" *ngIf="muform.controls['cantidad'].hasError('pattern')">Solo caracteres numericos </mat-error>
     </div>
     <div class="grid xl:flex items-center justify-around gap-2  w-full">
       <div class="relative w-full  inline-flex my-2">
@@ -57,12 +63,20 @@
       <div class="flex justify-center mx-4">
           <mat-icon >sync_alt</mat-icon>
       </div>
-      <div class="flex w-full items-center border-2 my-2 py-2 px-3 rounded-2xl">
-        <input
-          class="pl-2 w-full outline-none border-none"
-          formControlName="value"
-          placeholder="Ejemplo: 1000"
-        />
+      <div>
+        <div class="flex w-full items-center border-2 my-2 py-2 px-3 rounded-2xl">
+          <input
+            class="pl-2 w-full outline-none border-none"
+            formControlName="value"
+            placeholder="Ejemplo: 1000"
+            minlength="1"
+            maxlength="5"
+            pattern="[0-9]*"
+          />
+          
+          <mat-icon matSuffix >scale</mat-icon>
+        </div>
+        <mat-error class="text-xs flex justify-center" *ngIf="muform.controls['value'].hasError('pattern')">Solo caracteres numericos </mat-error>
       </div>
     </div>
 

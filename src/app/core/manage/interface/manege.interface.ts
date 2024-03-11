@@ -28,3 +28,10 @@ export class BrandsParams {
   page?: number
   status?: string
 }
+
+export interface Taxes {
+  userId: number
+  id: number
+  title: string
+  completed: boolean
+}

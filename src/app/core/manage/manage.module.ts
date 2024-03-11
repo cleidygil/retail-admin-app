@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
 import { ManageRoutingModule } from './manage-routing.module';
 import { ManageComponent } from './manage.component';
@@ -12,6 +13,7 @@ import { NewSuppliersComponent } from './components/new-suppliers/new-suppliers.
 import { SuppliersComponent } from './components/suppliers/suppliers.component';
 import { TaxesComponent } from './components/taxes/taxes.component';
 import { NewTaxesComponent } from './components/new-taxes/new-taxes.component';
+registerLocaleData(localeEs, 'es');
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import { NewTaxesComponent } from './components/new-taxes/new-taxes.component';
     CommonModule,
     ManageRoutingModule,
     MaterialDesignModule
-  ]
+  ],
+  providers: [ DatePipe, { provide: LOCALE_ID, useValue: 'es' } ]
 })
 export class ManageModule { }
