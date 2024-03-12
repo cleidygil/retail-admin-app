@@ -15,10 +15,11 @@ export class MethodsStoreComponent {
   store_payment_methods: PaymentMethod[] = []
   sub!: Subscription
   id: number = 0
-
+  store: number = 0
   constructor() {
     this.activateRou.params.subscribe(data => {
       this.id = Number(data['id'])
+      this.store = Number(data['store'])
     })
   }
   ngOnInit(): void {
@@ -26,7 +27,7 @@ export class MethodsStoreComponent {
   }
 
   getAllStore() {
-    this.servicesStore.getMyStorePaymentMethods(this.id).then((result) => {
+    this.servicesStore.getMyStorePaymentMethods(this.store).then((result) => {
       this.store_payment_methods = result
     }).catch((err) => {
     });

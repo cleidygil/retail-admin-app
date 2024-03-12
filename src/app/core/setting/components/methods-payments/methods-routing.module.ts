@@ -10,11 +10,11 @@ const routes: Routes = [
     component: MethodsPaymentsComponent
   },
   {
-    path: 'method_store/:id',
+    path: ':store/method_store',
     component: MethodsStoreComponent
   },
   {
-    path: 'new_method/:id',
+    path: ':store/new_method',
     component: NewMethodPaymentComponent
   }
 ];

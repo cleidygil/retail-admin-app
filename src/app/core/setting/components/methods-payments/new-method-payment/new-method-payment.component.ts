@@ -24,6 +24,7 @@ export class NewMethodPaymentComponent {
   sub!: Subscription
   id: number = 0
 
+
   methodsform = new FormGroup({
     methods_selected: new FormControl<string | number>('')
   })
@@ -34,7 +35,8 @@ export class NewMethodPaymentComponent {
 
   constructor() {
     this.activateRou.params.subscribe(data => {
-      this.id = Number(data['id'])
+      this.id = Number(data['store'])
+     
     })
   }
   ngOnInit(): void {
@@ -68,7 +70,7 @@ export class NewMethodPaymentComponent {
     let body2 = { ...body, ...this.methods }
     this.services.postMyStorePaymentMethods(body2, this.id).then((res) => {
       this.snack.openSnackBar("Metodo de pago agregado exitosamente")
-      this.router.navigate(['/home/settings/methods_payments/method_store/', this.id])
+      this.router.navigate(['../'])
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
       this.snack.openSnackBar(error.error.message)
