@@ -8,6 +8,10 @@ const routes: Routes = [
   {
     path: '',
     component: ShoppingComponent
+  },
+  {
+    path: 'purchases_orders',
+    loadChildren: ()=> import('./components/purchases-orders/purchases-orders.module').then(m=> m.PurchasesOrdersModule)
   }
 ];
 
