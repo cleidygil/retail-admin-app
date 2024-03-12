@@ -59,6 +59,9 @@ export class NewCategoryComponent {
   myFilesSub: any[] = [];
   formatSub: any = [];
   acceptSub: string = '.jpg,.png';
+  imageSub: string = ''
+  valueSubCat: string = 'new'
+  idSubcat: number = 0
   ngOnInit(): void {
     this.getSubCategories()
     if (this.id != null) {
@@ -91,7 +94,8 @@ export class NewCategoryComponent {
     if (this.id != null) {
       this.services.patchCategoryID(body2, Number(this.id)).then((res) => {
         this.snack.openSnackBar("Categoria actualizado exitosamente");
-        this.router.navigate(['../'])
+        this.router.navigate(['../categories'])
+        this.getCategoryID()
       }).catch((error) => {
         this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
       })
@@ -99,7 +103,9 @@ export class NewCategoryComponent {
     }
     this.services.postCategory(body2).then((res) => {
       this.snack.openSnackBar("Categoria registrado exitosamente");
-      this.router.navigate(['../'])
+      this.router.navigate(['../categories'])
+      this.getCategoryID()
+
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
 
@@ -197,10 +203,21 @@ export class NewCategoryComponent {
       store: this.store
     }
     let body2 = { ...valor, ...body }
-
+    if (this.valueSubCat == 'edit') {
+      this.services.patchCategoryID(body2, this.idSubcat).then((res) => {
+        this.snack.openSnackBar("Sub-categoria actualizado exitosamente");
+        this.router.navigate(['../categories'])
+        this.getSubCategories()
+      }).catch((error) => {
+        this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
+      })
+      return
+    }
     this.services.postCategory(body2).then((res) => {
       this.snack.openSnackBar("Sub-categoria registrado exitosamente");
-      this.router.navigate(['../'])
+      this.router.navigate(['../categories'])
+      this.getSubCategories()
+
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
     })
@@ -232,5 +249,19 @@ export class NewCategoryComponent {
       (fil: string, i: number) => i !== indice
     );
     this.formatSub = this.formatSub.filter((fil: string, i: number) => i !== indice);
+  }
+  editsubcategory(elements: any) {
+    this.viewFormSubCatf = true
+    this.valueSubCat = 'edit'
+    this.idSubcat = Number(elements.id)
+    this.subcategform.patchValue({
+      name: elements.name,
+      description: elements?.description,
+    })
+    this.imageSub = elements.image
+    this.filesSub.patchValue({
+      url: elements.image
+    })
+
   }
 }

@@ -31,6 +31,7 @@ export class NewBrandsComponent {
   })
   image: string = ''
   mystores: AllStore[] = []
+  store: number | null = null
   brandsform = new FormGroup({
     name: new FormControl('', [Validators.required]),
     store: new FormControl<any>('', [Validators.required])
@@ -38,6 +39,7 @@ export class NewBrandsComponent {
   constructor() {
     this.sub = this.activateRou.params.subscribe((data) => {
       this.id = Number(data['id']) || null
+      this.store = Number(data['store']) || null
     })
   }
   ngOnInit(): void {
@@ -77,21 +79,21 @@ export class NewBrandsComponent {
       "store": valor.store,
     }
     this.services.setBrands(body).then((res) => {
+      this.router.navigate(['../'])
       this.snack.openSnackBar("Marca creada exitosamente");
-      this.router.navigate(['/home/management/brands'])
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
     })
-    return
-    if (this.id != null) {
-      this.services.patchBrandID(body, Number(this.id)).then((res) => {
-        this.snack.openSnackBar("Marca actualizada exitosamente");
-        this.router.navigate(['/home/management/brands'])
-      }).catch((error) => {
-        this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
-      })
-      return
-    }
+    // return
+    // if (this.id != null) {
+    //   this.services.patchBrandID(body, Number(this.id)).then((res) => {
+    //     this.snack.openSnackBar("Marca actualizada exitosamente");
+    //     this.router.navigate(['/home/management/brands'])
+    //   }).catch((error) => {
+    //     this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
+    //   })
+    //   return
+    // }
   }
   getProductsID() {
     this.services.getBrandId(Number(this.id)).then((result) => {
