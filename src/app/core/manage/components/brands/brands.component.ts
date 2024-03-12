@@ -2,7 +2,9 @@ import { Component, inject } from '@angular/core';
 import { ManageService } from '../../services/manege.service';
 import { PageEvent } from '@angular/material/paginator';
 import { LoadingService } from 'src/app/global/services/loading.service';
-import { Brand,  BrandsParams } from '../../interface/manege.interface';
+import { Brand, BrandsParams } from '../../interface/manege.interface';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-brands',
@@ -12,10 +14,17 @@ import { Brand,  BrandsParams } from '../../interface/manege.interface';
 export class BrandsComponent {
   private brandServices = inject(ManageService)
   private loading = inject(LoadingService);
-
+  private activateRou = inject(ActivatedRoute);
+  store: number | null = null
   nextPage: number = 1;
   count: number = 1
-  brands:Brand[] =[] 
+  brands: Brand[] = []
+  sub!: Subscription
+  constructor() {
+    this.sub = this.activateRou.params.subscribe(data => {
+      this.store = data['store']
+    })
+  }
   ngOnInit(): void {
     this.getBrands()
   }
@@ -24,7 +33,7 @@ export class BrandsComponent {
     this.loading.showLoading()
     const params = new BrandsParams()
     params.page = this.nextPage
- 
+    params.store = this.store?.toString()
     this.brandServices.getBrands(params).then((result) => {
       this.loading.hideLoading()
       this.brands = result.results
@@ -37,5 +46,5 @@ export class BrandsComponent {
     this.nextPage = event.pageIndex + 1;
     this.getBrands()
   }
-  
+
 }

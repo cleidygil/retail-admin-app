@@ -45,6 +45,7 @@ export class NewCategoryComponent {
     // 'store': new FormControl('', [Validators.required])
   })
   // Sub categoria
+  viewListSubCatf: boolean = false
   viewFormSubCatf: boolean = false
   subcategform = new FormGroup({
     'name': new FormControl('', [Validators.required]),

@@ -23,18 +23,6 @@ const routes: Routes = [
    loadChildren: ()=> import('./components/my-branch/my-branch.module').then(m=> m.MyBranchModule)
   },
   {
-    path: 'new_brand',
-    component: NewBrandsComponent,
-  },
-  {
-    path: 'brands',
-    component: BrandsComponent
-  },
-  {
-    path: 'brands/:id',
-    component: NewBrandsComponent
-  },
-  {
     path: 'measurement_units',
     component: MeasurementunitsComponent
   },

@@ -30,6 +30,7 @@ export class BrandsParams {
   search?: string
   page?: number
   status?: string
+  store?:string
 }
 
 export interface Taxes {
