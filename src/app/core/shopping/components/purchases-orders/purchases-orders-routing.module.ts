@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PurchasesOrdersComponent } from './purchases-orders.component';
 import { OrdersListComponent } from './components/orders-list/orders-list.component';
 import { NewOrdersComponent } from './components/new-orders/new-orders.component';
+import { SuppliersComponent } from './components/suppliers/suppliers.component';
 
 const routes: Routes = [
   {
@@ -14,7 +15,11 @@ const routes: Routes = [
     component: OrdersListComponent
   },
   {
-    path:'new_orders',
+    path:'suppliers', 
+    component: SuppliersComponent
+  },
+  {
+    path:'new_orders/:id', 
     component: NewOrdersComponent
   }
 ];

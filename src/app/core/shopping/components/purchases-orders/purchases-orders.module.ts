@@ -7,10 +7,12 @@ import { HomeModule } from 'src/app/core/home/home.module';
 import { MaterialDesignModule } from 'src/app/components-iu/material-design.module';
 import { OrdersListComponent } from './components/orders-list/orders-list.component';
 import { NewOrdersComponent } from './components/new-orders/new-orders.component';
+import { SuppliersComponent } from './components/suppliers/suppliers.component';
+import { DialogSelectedProductsComponent } from './components/dialog-selected-products/dialog-selected-products.component';
 
 
 @NgModule({
-  declarations: [PurchasesOrdersComponent, OrdersListComponent, NewOrdersComponent],
+  declarations: [PurchasesOrdersComponent, OrdersListComponent, NewOrdersComponent, SuppliersComponent, DialogSelectedProductsComponent],
   imports: [
     CommonModule,
     PurchasesOrdersRoutingModule,

@@ -31,6 +31,8 @@ export class BrandsParams {
   page?: number
   status?: string
   store?:string
+  remove_pagination?: string
+
 }
 
 export interface Taxes {
