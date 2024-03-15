@@ -4,6 +4,7 @@ export class MyStoreParams {
   status?: string
   remove_pagination?: string
   parent?: string
+  brands?: string
 }
 export interface AllStores {
   count: number

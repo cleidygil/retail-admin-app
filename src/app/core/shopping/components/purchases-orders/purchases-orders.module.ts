@@ -9,10 +9,11 @@ import { OrdersListComponent } from './components/orders-list/orders-list.compon
 import { NewOrdersComponent } from './components/new-orders/new-orders.component';
 import { SuppliersComponent } from './components/suppliers/suppliers.component';
 import { DialogSelectedProductsComponent } from './components/dialog-selected-products/dialog-selected-products.component';
+import { ProductsAllComponent } from './components/dialog-selected-products/products-all/products-all.component';
 
 
 @NgModule({
-  declarations: [PurchasesOrdersComponent, OrdersListComponent, NewOrdersComponent, SuppliersComponent, DialogSelectedProductsComponent],
+  declarations: [PurchasesOrdersComponent, OrdersListComponent, NewOrdersComponent, SuppliersComponent, DialogSelectedProductsComponent, ProductsAllComponent],
   imports: [
     CommonModule,
     PurchasesOrdersRoutingModule,

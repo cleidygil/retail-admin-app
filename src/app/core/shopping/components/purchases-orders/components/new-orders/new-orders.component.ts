@@ -71,7 +71,7 @@ export class NewOrdersComponent {
   addProduct() {
     const dialogo = this.dialog.open(DialogSelectedProductsComponent, {
       data: '',
-      width: window.innerWidth > 432 ? '40%' :'auto',
+      width: window.innerWidth > 432 ? '50%' :'auto',
       // height: '80%'
     })
   }
