@@ -23,9 +23,9 @@
       formControlName="um"
       class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
     >
-      <!-- <option value="">Unidad de medida</option> -->
-      <option *ngFor="let item of munits" [value]="item.id">
-        {{ item.name }}
+      <option value="">Unidad de medida</option>
+      <option *ngFor="let unit of munits" [value]="unit.id">
+        {{ unit.name }} - {{unit.abbreviation}}
       </option>
     </select>
   </div>

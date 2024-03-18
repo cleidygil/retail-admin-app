@@ -14,10 +14,12 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { EncabezadoComponent } from 'src/app/global/components/encabezado/encabezado.component';
 import { PipeModule } from "../../global/pipes/pipe.module";
 import { MyBranchsComponent } from 'src/app/global/components/my-branchs/my-branchs.component';
+import { NotificationDialogComponent } from 'src/app/global/components/notification-dialog/notification-dialog.component';
 
 
 @NgModule({
-    declarations: [HomeComponent, ConfirmDialogComponent, SnackbarComponent, LoadingComponent, MenuComponent, SidenavComponent, NotificationsComponent, EncabezadoComponent,  MyBranchsComponent],
+    declarations: [HomeComponent, ConfirmDialogComponent, SnackbarComponent, LoadingComponent, MenuComponent, SidenavComponent, NotificationsComponent, EncabezadoComponent, MyBranchsComponent, NotificationDialogComponent,
+    ],
     exports: [
         LoadingComponent,
         SnackbarComponent,

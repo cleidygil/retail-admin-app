@@ -45,12 +45,12 @@ export class ProductSaleComponent {
     })
   }
   ngOnInit(): void {
+    this.getMU()
+    this.getAllStore()
+    this.getCategories()
     if (this.id != null) {
       this.getProductsID()
     }
-    this.getAllStore()
-    this.getCategories()
-    this.getMU()
   }
   getMU() {
     const params: ParamsGlobal = new ParamsGlobal()
@@ -115,12 +115,13 @@ export class ProductSaleComponent {
     this.services.getProductID(Number(this.id)).then((result) => {
       this.productSale.patchValue({
         name: result.name,
-        um: result.mu,
+        um: result?.mu,
         category: result.subcategory.parent,
         subcategory: result.subcategory.id,
         store: result.store.id
 
       })
+      this.getMU()
       this.image.emit(result.image)
       this.getSubCategories()
     }).catch((error) => {

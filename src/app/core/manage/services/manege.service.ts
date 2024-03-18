@@ -16,6 +16,7 @@ export class ManageService {
   url = environment.API_URL;
   user = this.global.User()
   store = new BehaviorSubject<string>('')
+  productsArr = new BehaviorSubject<any[]>([])
   constructor() { }
 
   getBrands(params: BrandsParams): Promise<Brands> {

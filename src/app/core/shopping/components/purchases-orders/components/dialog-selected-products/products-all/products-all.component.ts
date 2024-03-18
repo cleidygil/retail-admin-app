@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { LoadingService } from 'src/app/global/services/loading.service';
 
@@ -11,6 +11,7 @@ export class ProductsAllComponent {
   private formBuilder = inject(FormBuilder)
   private loading = inject(LoadingService)
   @Input() productsAll: any = []
+  @Output() valueForm = new EventEmitter()
   nextPage: number = 1;
   pageIndex: number = 10
   counters!: FormGroup;
@@ -20,7 +21,9 @@ export class ProductsAllComponent {
       inputs: this.formBuilder.array([])
     });
     this.agregarControles();
-    
+    this.counters.valueChanges.subscribe(data=>{
+      this.valueForm.emit(data.inputs)
+    })
   }
 
 
@@ -51,7 +54,6 @@ export class ProductsAllComponent {
       let data = new FormControl<{ id: number, name: string, count: any }>({ id: item.id, name: item.name, count: 0 });  // Inicializa el control con el valor que desees
       (this.counters.controls['inputs'] as FormArray).push(data);
     });
-  console.log(this.productsAll, 'arr')
   }
   decrement(index: number, id: number, name: string) {
     let valor: any = (this.counters.controls['inputs'] as FormArray).at(index).value.count

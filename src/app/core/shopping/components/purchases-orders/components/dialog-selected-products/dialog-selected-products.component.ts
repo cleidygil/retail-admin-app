@@ -32,7 +32,7 @@ export class DialogSelectedProductsComponent {
   brandsSelect = new FormGroup({
     brand: new FormControl(''),
   })
- 
+  valueForm: any[] = []
 
 
   constructor(
@@ -41,8 +41,7 @@ export class DialogSelectedProductsComponent {
   ) { }
   ngOnInit(): void {
     this.getBrands()
-    // this.getAllProducts()
-   
+
   }
 
   getAllProducts() {
@@ -57,6 +56,8 @@ export class DialogSelectedProductsComponent {
       console.log(err)
     });
   }
+
+
   getBrands() {
     const params = new BrandsParams()
     params.page = this.nextPage
@@ -82,8 +83,20 @@ export class DialogSelectedProductsComponent {
       return
     }
   }
+
+  searchig(event: Event) {
+    // const filterValue = (event.target as HTMLInputElement).value;
+    // this.productsAll = filterValue.trim().toLowerCase()
+  }
   nextPageIndexProducts(event: PageEvent) {
     this.nextPageProd = event.pageIndex + 1;
     this.getAllProducts()
   }
+  onSubmit() {
+    let limplio = this.valueForm.filter(item =>Number(item.count) > 0).map(item=> item)
+    this.brandServices.productsArr.next(limplio)
+    this.dialogRef.close(true)
+  }
 }
+
+

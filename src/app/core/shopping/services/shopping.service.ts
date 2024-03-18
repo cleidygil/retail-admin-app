@@ -22,4 +22,8 @@ export class ShoppingService {
     const obs$ = this.http.get<PurchasesOrders>(`${this.url}/api/inventory/purchases_order/`, { params: resparams })
     return lastValueFrom(obs$)
   }
+  postPurchasesOrders(body: any): Promise<any> {
+    const obs$ = this.http.post<any>(`${this.url}/api/inventory/purchases_order/`, body)
+    return lastValueFrom(obs$)
+  }
 }
