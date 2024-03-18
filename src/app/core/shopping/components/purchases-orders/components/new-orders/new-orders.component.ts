@@ -105,9 +105,21 @@ export class NewOrdersComponent {
     })
     dialogo.afterClosed().subscribe(data => {
       if (data) {
-        console.log(this.services.productsArr.value)
-        this.allProdutcts = this.services.productsArr.value
+        this.services.productsArr.value?.map((product) => {
+          let body = {
+            product: product.id,
+            name: product.name,
+            cost: null,
+            purchase_order:null,
+            quantity: product.count
+          }
+          this.allProdutcts.push(body)
+        })
       }
     })
+  }
+
+  deleteProduct(id: number) {
+   this.allProdutcts = this.allProdutcts.filter(item => item.product != id).map(item=> item)
   }
 }

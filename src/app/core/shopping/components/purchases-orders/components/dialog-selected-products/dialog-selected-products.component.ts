@@ -7,6 +7,7 @@ import { Brand, BrandsParams } from 'src/app/core/manage/interface/manege.interf
 import { ManageService } from 'src/app/core/manage/services/manege.service';
 import { MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { SuppliesService } from 'src/app/core/supplies/services/supplies.service';
+import { LoadingService } from 'src/app/global/services/loading.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class DialogSelectedProductsComponent {
   private services = inject(SuppliesService)
   private brandServices = inject(ManageService)
   private snack = inject(SnackbarService)
+  private loading = inject(LoadingService)
   productsAll: any = []
   brands: any = []
   nextPage: number = 1;
@@ -41,19 +43,22 @@ export class DialogSelectedProductsComponent {
   ) { }
   ngOnInit(): void {
     this.getBrands()
-
+    this.getAllProducts()
   }
 
   getAllProducts() {
+    this.loading.showLoading()
     const params = new MyStoreParams()
-    params.brands = this.brandsSelect.value?.brand || ''
-    params.page = this.nextPage
+    params.brands = this.brandsSelect.value?.brand || '';
+    params.page = this.nextPageProd;
+    params.search = this.params.value?.search || '';
     this.services.getAllProducts(params).then((result) => {
+      this.loading.hideLoading()
       this.productsAll = result.results
       this.countProd = result.count
-
     }).catch((err) => {
       console.log(err)
+      this.loading.hideLoading()
     });
   }
 
@@ -65,8 +70,10 @@ export class DialogSelectedProductsComponent {
       this.brands = result.results
       this.count = result.count
       this.pageIndex = Math.ceil(Number(result.count) / 10)
+      this.loading.hideLoading()
       console.log(this.pageIndex, 'page Index')
     }).catch((err) => {
+      this.loading.hideLoading()
     });
   }
   nextPageIndex() {
@@ -84,17 +91,14 @@ export class DialogSelectedProductsComponent {
     }
   }
 
-  searchig(event: Event) {
-    // const filterValue = (event.target as HTMLInputElement).value;
-    // this.productsAll = filterValue.trim().toLowerCase()
-  }
+
   nextPageIndexProducts(event: PageEvent) {
     this.nextPageProd = event.pageIndex + 1;
     this.getAllProducts()
   }
   onSubmit() {
-    let limplio = this.valueForm.filter(item =>Number(item.count) > 0).map(item=> item)
-    this.brandServices.productsArr.next(limplio)
+    let limpio = this.valueForm.filter(item => Number(item.count) > 0 && !!item.id).map(item => item)
+    this.brandServices.productsArr.next(limpio)
     this.dialogRef.close(true)
   }
 }

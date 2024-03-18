@@ -16,40 +16,20 @@ export class ProductsAllComponent {
   pageIndex: number = 10
   counters!: FormGroup;
   ngOnInit(): void {
-    this.loading.showLoading()
     this.counters = this.formBuilder.group({
       inputs: this.formBuilder.array([])
     });
     this.agregarControles();
     this.counters.valueChanges.subscribe(data=>{
       this.valueForm.emit(data.inputs)
+
     })
   }
 
-
-  // decrement(event: Event) {
-  //   const buttonId = (event.target as Element).id;
-  //   const inputElement: any = document.getElementById(buttonId) as HTMLInputElement;
-  //   console.log(inputElement.id, 'in')
-  //   if (parseInt(inputElement.value) > 0) {
-  //     inputElement.value = parseInt(inputElement.value) - Number(1);
-  //     return
-  //   }
-  // }
-  // increment(event: Event) {
-  //   const buttonId = (event.target as Element).id;
-  //   const inputElement: any = document.getElementById(buttonId) as HTMLInputElement;
-  //   console.log(inputElement.id, 'in')
-  //   if (parseInt(inputElement.value) > 0) {
-  //     inputElement.value = parseInt(inputElement.value) + Number(1);
-  //     return
-  //   }
-  // }
   getControls() {
     return (this.counters.controls['inputs'] as FormArray).controls;
   }
   agregarControles() {
-    this.loading.hideLoading()
     this.productsAll.forEach((item: any) => {
       let data = new FormControl<{ id: number, name: string, count: any }>({ id: item.id, name: item.name, count: 0 });  // Inicializa el control con el valor que desees
       (this.counters.controls['inputs'] as FormArray).push(data);

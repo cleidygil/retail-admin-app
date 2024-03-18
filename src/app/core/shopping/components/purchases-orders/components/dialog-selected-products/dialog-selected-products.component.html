@@ -127,17 +127,12 @@
         </button>
       </div>
       <form class="my-2 gap-3" [formGroup]="params">
-        <div class="mt-4 w-full">
-          <label
-            class="block font-medium text-sm text-gray-700"
-            for="password"
-            value="Password"
-          ></label>
-          <div class="relative">
+        <div class="mt-4 gap-4 w-full flex ">
+          <div class="relative w-full">
             <input
               formControlName="search"
               placeholder="Buscar"
-              (input)="searchig($event)"
+              (input)="getAllProducts(); nextPageProd = 1"
               required
               class="w-full rounded-full py-2.5 px-4 border text-base bg-neutral-300 outline-orange-500"
             />
@@ -154,12 +149,22 @@
               </button>
             </div>
           </div>
+          <button
+            mat-icon-button
+            color="accent"
+            (click)="params.reset(); getAllProducts(); nextPageProd = 1"
+          >
+            <mat-icon>filter_alt_off</mat-icon>
+          </button>
         </div>
       </form>
     </div>
     <div>
       <div *ngIf="productsAll.length > 0" class="grid my-4 gap-2">
-        <app-products-all [productsAll]="productsAll" (valueForm)=" valueForm = $event"></app-products-all>
+        <app-products-all
+          [productsAll]="productsAll"
+          (valueForm)="valueForm = $event"
+        ></app-products-all>
         <div class="flex justify-center items-center space-x-4">
           <mat-paginator
             class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
@@ -175,7 +180,8 @@
   </div>
 </mat-dialog-content>
 <div class="flex w-full justify-center my-2 gap-2 px-4" mat-dialog-actions>
-  <button (click)="onSubmit()"
+  <button
+    (click)="onSubmit()"
     class="p-3 rounded-full my-2 gap-2 px-4 text-white w-full font-semibold text-xl bg-neutral-500"
   >
     Cargar
