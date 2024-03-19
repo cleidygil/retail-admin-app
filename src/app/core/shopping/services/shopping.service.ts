@@ -37,7 +37,7 @@ export class ShoppingService {
   }
   getPurchasesOrdersItems(params: Shopping): Promise<OrderItems> {
     const resparams = this.queryParams.buildQueryParams(params)
-    const obs$ = this.http.get<OrderItems>(`${this.url}/api/inventory/purchases_order/`, { params: resparams })
+    const obs$ = this.http.get<OrderItems>(`${this.url}/api/inventory/purchases_order/items/`, { params: resparams })
     return lastValueFrom(obs$)
   }
 }

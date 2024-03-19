@@ -30,7 +30,7 @@ export class ProductsAllComponent {
   agregarControles() {
     this.productsAll.map((item: any) => {
       const lessonForm = this.formBuilder.group({
-        quantity: 0,
+        quantity: 0 || item.quantity,
         product: item.id,
         name: item.name,
         brand_name: item.brand_name,
