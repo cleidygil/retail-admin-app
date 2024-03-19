@@ -8,6 +8,7 @@ import { LoadingService } from 'src/app/global/services/loading.service';
   styleUrls: ['./products-all.component.css']
 })
 export class ProductsAllComponent {
+  [x: string]: any;
   private formBuilder = inject(FormBuilder)
   private loading = inject(LoadingService)
   @Input() productsAll: any = []
@@ -20,35 +21,31 @@ export class ProductsAllComponent {
       inputs: this.formBuilder.array([])
     });
     this.agregarControles();
-    this.counters.valueChanges.subscribe(data=>{
-      this.valueForm.emit(data.inputs)
-
-    })
+  
   }
 
-  getControls() {
-    return (this.counters.controls['inputs'] as FormArray).controls;
+  get inputs() {
+    return (this.counters.controls["inputs"] as FormArray);
   }
   agregarControles() {
-    this.productsAll.forEach((item: any) => {
-      let data = new FormControl<{ id: number, name: string, count: any }>({ id: item.id, name: item.name, count: 0 });  // Inicializa el control con el valor que desees
-      (this.counters.controls['inputs'] as FormArray).push(data);
+    this.productsAll.map((item: any) => {
+      const lessonForm = this.formBuilder.group({
+        quantity: 0,
+        product: item.id,
+        name: item.name,
+        brand_name: item.brand_name,
+        mu_name: item.mu_name
+      });
+      this.inputs.push(lessonForm)
     });
   }
-  decrement(index: number, id: number, name: string) {
-    let valor: any = (this.counters.controls['inputs'] as FormArray).at(index).value.count
-    if (parseInt(valor) > 0) {
-    const cant: any = parseInt(valor) - Number(1);
-    (this.counters.controls['inputs'] as FormArray).at(index).patchValue({ id, name, count: cant });
-    }
-  }
-  increment(index: number, id: number, name: string) {
-    let valor: any = (this.counters.controls['inputs'] as FormArray).at(index).value.count
-    const cant: any = parseInt(valor + 1);
-    (this.counters.controls['inputs'] as FormArray).at(index).patchValue({ id, name, count: cant });
 
+  asignarValor(event: Event, index: number, item: any) {
+    const target = event.target as HTMLInputElement
+    (this.inputs).at(index).patchValue({ quantity: Number(target.value) });
+    this.inputs?.valueChanges.subscribe(data => {
+      this.valueForm.emit(data)
+    }) 
   }
-  confirmar() {
-    console.log(this.counters.controls['inputs'].value)
-  }
+
 }

@@ -90,14 +90,12 @@ export class DialogSelectedProductsComponent {
       return
     }
   }
-
-
   nextPageIndexProducts(event: PageEvent) {
     this.nextPageProd = event.pageIndex + 1;
     this.getAllProducts()
   }
   onSubmit() {
-    let limpio = this.valueForm.filter(item => Number(item.count) > 0 && !!item.id).map(item => item)
+    let limpio = this.valueForm.filter(item => Number(item.quantity) > 0).map(item => item)
     this.brandServices.productsArr.next(limpio)
     this.dialogRef.close(true)
   }

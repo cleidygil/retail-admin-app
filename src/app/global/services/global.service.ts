@@ -42,6 +42,7 @@ export class GlobalService {
     return menus
 }
 
+
   formatearFecha(date: string = '') {
     const fecha = new Date(date);
     const anio = fecha.getFullYear();

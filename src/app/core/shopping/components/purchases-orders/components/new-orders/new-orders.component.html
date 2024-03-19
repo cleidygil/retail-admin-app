@@ -87,12 +87,17 @@
   <div class="relative my-4">
     <ng-container *ngIf="allProdutcts.length > 0">
       <div class="sticky top-0 left-0 right-0 bg-white z-10 my-4 p-2">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-auto ">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-auto">
           <div *ngFor="let product of allProdutcts">
             <div
-              class="bg-neutral-200 rounded-xl p-2  w-full flex items-center justify-between leading-4"
+              class="relative bg-neutral-200 rounded-xl p-2 w-full flex items-center justify-between leading-4"
             >
-              <div class="flex  gap-2">
+              <button
+                class="absolute top-0 right-0  text-xs"
+              >
+                <mat-icon mat-icon-button class="text-neutral-600"  (click)="deleteProduct(product.product)">cancel</mat-icon>
+              </button>
+              <div class="flex gap-2">
                 <svg
                   width="64"
                   height="64"
@@ -116,26 +121,18 @@
                 </svg>
 
                 <div class="flex flex-col text-neutral-500">
-                  <span class="font-semibold text-neutral-600 uppercase text-wrap
-                  ">{{
-                    product.name
-                  }}</span>
+                  <span
+                    class="font-semibold text-sm text-neutral-600 uppercase text-wrap"
+                    >{{ product.name }}</span
+                  >
                 </div>
-                <div class="inline-flex items-center text-center mt-1 ">
+                <div class="inline-flex items-center text-center mt-1">
                   <div
                     mat-icon-button
-                    class="bg-neutral-500 text-gray-50 p-2 font-semibold w-8 h-8 rounded-full outline-none"
+                    class="bg-neutral-500 text-gray-50 p-2 font-semibold rounded-full outline-none"
                   >
                     {{ product.quantity }}
                   </div>
-                  <button
-                    (click)="deleteProduct(product.product)"
-                    mat-icon-button
-                    color="warn"
-                    class="bg-neutral-500 text-gray-50 p-2 font-semibold w-8 h-8 rounded-full outline-none"
-                  >
-                    <mat-icon>delete</mat-icon>
-                  </button>
                 </div>
               </div>
             </div>

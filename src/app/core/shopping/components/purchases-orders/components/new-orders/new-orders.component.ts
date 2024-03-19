@@ -105,21 +105,33 @@ export class NewOrdersComponent {
     })
     dialogo.afterClosed().subscribe(data => {
       if (data) {
-        this.services.productsArr.value?.map((product) => {
+        let newDate: any[] = []
+        this.services.productsArr.value?.map((product: any) => {
           let body = {
-            product: product.id,
+            product: product.product,
             name: product.name,
             cost: null,
-            purchase_order:null,
-            quantity: product.count
+            purchase_order: null,
+            quantity: product.quantity
           }
-          this.allProdutcts.push(body)
-        })
+          newDate.push(body)
+        });
+        let copias = [...this.allProdutcts, ...newDate]
+        let prueba = copias.reduce((acc: any[], obj: any) => {
+          let duplicado = acc.filter((it) => it.product === obj.product)
+          if (duplicado.length > 0) {
+            duplicado[0].quantity = obj.quantity
+          } else {
+            acc.push(obj);
+          }
+          return acc;
+        }, []);
+        this.allProdutcts = prueba.length > 0 ? prueba : this.allProdutcts
       }
     })
   }
 
   deleteProduct(id: number) {
-   this.allProdutcts = this.allProdutcts.filter(item => item.product != id).map(item=> item)
+    this.allProdutcts = this.allProdutcts.filter(item => item.product != id).map(item => item)
   }
 }
