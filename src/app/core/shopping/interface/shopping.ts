@@ -9,6 +9,8 @@ export class Shopping {
     finish_date_until?:string
     purchase_order?:string
     search?:string
+    type?:string
+    remove_pagination?:string
 }
 
 export interface PurchasesOrders {
@@ -58,4 +60,11 @@ export interface PurchasesOrders {
     inventory_status: string
     created_at: string
   }
+  export interface StatusOrder {
+    id: number
+    name: string
+    description: string
+    type: string
+  }
+  
   

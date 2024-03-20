@@ -32,11 +32,11 @@ export class NewOrdersComponent {
   image: string = ''
   mystores: AllStore[] = []
   supplierform = new FormGroup({
-    'name': new FormControl('', [Validators.required]),
-    'rif': new FormControl('', [Validators.required, Validators.max(10)]),
-    'address': new FormControl('', [Validators.required]),
-    'email': new FormControl('', [Validators.required, Validators.email]),
-    'store': new FormControl<any>('', [Validators.required]),
+    'name': new FormControl({value:'', readonly:true},[Validators.required]),
+    'rif': new FormControl({value:'', readonly:true}, [Validators.required, Validators.max(10)]),
+    'address': new FormControl({value:'', readonly:true}, [Validators.required]),
+    'email': new FormControl({value:'', readonly:true}, [Validators.required, Validators.email]),
+    'store': new FormControl<any>({value:'', readonly:true}, [Validators.required]),
   })
   constructor() {
     this.sub = this.activateRou.params.subscribe((data) => {
@@ -71,17 +71,19 @@ export class NewOrdersComponent {
     });
 
   }
-  onSubmit() {
+  onSubmit(status: number) {
     this.loading.showLoading()
     let valor = this.supplierform.value
     let body = {
       store: valor.store,
       items: this.allProdutcts,
       supplier: this.id,
+      status: status
     }
 
     this.shopServices.postPurchasesOrders(body).then((result) => {
       this.loading.hideLoading()
+      this.services.productsArr.next([])
       const dialogo = this.dialog.open(NotificationDialogComponent, {
         data: ['Tu order ha sido creada con exito.', 'Hemos enviado un PDF de la orden de compra a tu email y al prveedor.'],
         width: window.innerWidth > 432 ? '30%' : 'auto',

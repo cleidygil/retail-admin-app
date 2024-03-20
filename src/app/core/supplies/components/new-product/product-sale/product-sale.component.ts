@@ -5,7 +5,7 @@ import { AllStore, MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { StoreService } from 'src/app/core/store/services/store.service';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
-import { ParamsGlobal } from '../../../interfaces/supplies';
+import { MeasurementUnit, ParamsGlobal } from '../../../interfaces/supplies';
 import { SuppliesService } from '../../../services/supplies.service';
 import { Subscription } from 'rxjs';
 
@@ -29,12 +29,12 @@ export class ProductSaleComponent {
   user = this.global.User()
   categories: any[] = []
   subcategories: any[] = []
-  munits: any[] = []
+  munits: MeasurementUnit[] = []
   mystores: AllStore[] = []
  
   productSale = new FormGroup({
     'name': new FormControl('', [Validators.required]),
-    'um': new FormControl<any>('', [Validators.required]),
+    'unidadmedida': new FormControl<any>('', [Validators.required]),
     'category': new FormControl<any>('', [Validators.required]),
     'subcategory': new FormControl<any>('', [Validators.required]),
     'store': new FormControl<any>('', [Validators.required])
@@ -56,7 +56,7 @@ export class ProductSaleComponent {
     const params: ParamsGlobal = new ParamsGlobal()
     params.remove_pagination = 'true'
     this.services.getMeasurementUnits(params).then((result) => {
-      this.munits = result.results
+      this.munits = result
     }).catch((error) => {
       console.log(error)
     })
@@ -100,7 +100,7 @@ export class ProductSaleComponent {
       "description": valor?.name,
       "authorization": true,
       "image": this.files.url || this.files.file,
-      "mu": valor?.um,
+      "mu": valor?.unidadmedida,
       "subcategory": valor?.subcategory,
       "store": valor?.store,
     }
@@ -115,7 +115,7 @@ export class ProductSaleComponent {
     this.services.getProductID(Number(this.id)).then((result) => {
       this.productSale.patchValue({
         name: result.name,
-        um: result?.mu,
+        unidadmedida: result?.mu,
         category: result.subcategory.parent,
         subcategory: result.subcategory.id,
         store: result.store.id
@@ -147,7 +147,7 @@ export class ProductSaleComponent {
       "description": valor?.name,
       "authorization": true,
       "image": sendImag,
-      "mu": valor?.um,
+      "mu": valor?.unidadmedida,
       "subcategory": valor?.subcategory,
       "store": valor?.store,
     }

@@ -14,13 +14,24 @@
 <ng-container *ngIf="ordersList.length > 0; else NewOrders">
   <div class="h-full mx-auto flex flex-col justify-center my-4 p-2">
     <div class="flex justify-center">
-      <h1 class="text-3xl font-medium">Ordenes</h1>
+      <span class="text-center font-bold text-2xl text-neutral-600"
+        >Ordenes</span
+      >
     </div>
     <div class="grid xl:grid-cols-3 gap-4 m-4">
       <div
-        class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
+        class="relative bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
         *ngFor="let item of ordersList"
       >
+        <div class="absolute top-2 right-2 m-1">
+          <button   class=" h-16 w-full mt-1" matTooltip="Detalles de la Orden">
+            <mat-icon
+            class="text-neutral-50 bg-neutral-500  focus:outline-none text-center  rounded-full w-full font-semibold text-sm md:text-basecursor-default flex py-1 items-center justify-center  outline-none"
+              (click)="openChangeStatus(item)"
+              >format_list_bulleted</mat-icon
+            >
+          </button>
+        </div>
         <div class="flex items-center">
           <svg
             width="85"
@@ -54,14 +65,6 @@
           <span class="text-sm"
             >{{ item.created_at | date: "dd/MM/YYYY, hh:mm a" }}
           </span>
-        </div>
-        <div class="flex justify-center items-center">
-          <button
-            mat-mini-fab
-            color="accent"
-            (click)="openChangeStatus(item)"
-          >
-        <mat-icon>edit</mat-icon></button>
         </div>
       </div>
     </div>

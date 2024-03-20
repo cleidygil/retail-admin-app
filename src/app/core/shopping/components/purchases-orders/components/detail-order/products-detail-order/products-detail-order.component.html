@@ -7,15 +7,8 @@
     *ngFor="let item of inputs.controls;let i = index;  "
   >
     <form 
-      class="bg-neutral-200 rounded-xl p-2 flex items-center justify-between leading-4 inputs-form-row " [formGroup]="item.value">
+      class="bg-neutral-200 rounded-xl p-2 flex items-center justify-between leading-4 inputs-form-row" >
       <div class="flex items-center gap-2">
-        <!-- <ng-container *ngIf="item.image != null; else SinImagen">
-          <img
-            alt="..."
-            [src]="item.image"
-            class="relative w-16 h-16 rounded-full mx-auto bg-neutral-400 text-white object-cover object-center"
-          />
-        </ng-container> -->
         <svg
           width="64"
           height="64"
@@ -39,10 +32,10 @@
         </svg>
         <div class="flex flex-col text-neutral-500">
           <span class="font-semibold text-neutral-600 uppercase">{{
-            item.value?.name
+            item.value?.product_name
           }}</span>
-          <span class="text-xs">Marca: {{ item.value?.brand_name }}</span>
-          <span class="text-xs">U.M: {{ item.value?.mu_name }}</span>
+          <span class="text-xs">Marca: {{ item.value?.proudct_brand_name }}</span>
+          <span class="text-xs">U.M: {{ item.value?.proudct_mu_name }}</span>
           <span class="text-xs">Cant: {{ item.value?.quantity }}</span>
         </div>
       </div>
@@ -55,6 +48,7 @@
                 type="number"
                 (change)="asignarValor($event, i, item.value)"
                [value]="item.value?.quantity"
+               [readOnly]="typeOrder !== 12"
                 class="bg-neutral-100 focus:outline-none text-center border-2 border-neutral-600 rounded-full w-full font-semibold text-md md:text-basecursor-default flex items-center text-gray-700 outline-none"
               />
              

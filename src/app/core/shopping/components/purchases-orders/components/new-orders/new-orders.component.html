@@ -147,9 +147,17 @@
       class="p-3 rounded-full text-white w-1/2 font-semibold text-xl"
       [ngClass]="supplierform.invalid ? 'bg-neutral-300' : 'bg-neutral-500'"
       [disabled]="supplierform.invalid"
-      (click)="onSubmit()"
+      (click)="onSubmit(12)"
     >
-      Hacer pedido
+      Guardar borrador
     </button>
+    <button
+    class="p-3 rounded-full text-white w-1/2 font-semibold text-xl"
+    [ngClass]="supplierform.invalid ? 'bg-neutral-300' : 'bg-neutral-600'"
+    [disabled]="supplierform.invalid"
+    (click)="onSubmit(3)"
+  >
+    Hacer pedido
+  </button>
   </div>
 </div>
