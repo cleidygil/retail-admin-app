@@ -16,7 +16,7 @@
         <div class="flex flex-col justify-center text-center">
           <input
             formControlName="select"
-            name="store"
+            name="select"
             type="radio"
             [id]="item.id"
             hidden="hidden"
@@ -71,5 +71,11 @@
     </div>
   </form>
 </ng-container>
-<ng-container *ngIf="selection.value.select == '1'"> 1 </ng-container>
-<ng-container *ngIf="selection.value.select == '2'"> 2 </ng-container>
+<ng-container *ngIf="selection.value.select == '1'"
+  ><app-payments-cash [value]="value"></app-payments-cash>
+  
+</ng-container>
+<ng-container *ngIf="selection.value.select == '2'"
+  ><app-payments-credit [value]="value"></app-payments-credit>
+</ng-container>
+

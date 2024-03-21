@@ -15,7 +15,7 @@ export class ShoppingService {
   private global = inject(GlobalService)
   url = environment.API_URL;
   user = this.global.User()
-  registerPurchasePrice = new BehaviorSubject<any>({})
+  registerPurchasePrice = new BehaviorSubject<any>([])
   constructor() { }
 
   getStatusOrder(params: Shopping): Promise<StatusOrder[]> {
@@ -48,6 +48,10 @@ export class ShoppingService {
   }
   patchPurchasesOrdersItems(body: any, id: number): Promise<any> {
     const obs$ = this.http.patch<any>(`${this.url}/api/inventory/purchases_order/items/${id}/`, body)
+    return lastValueFrom(obs$)
+  }
+  patchCostOrdersItems(body: any): Promise<any> {
+    const obs$ = this.http.patch<any>(`${this.url}/api/inventory/items/update_cost/`, body)
     return lastValueFrom(obs$)
   }
 }

@@ -1,0 +1,54 @@
+<h1 mat-dialog-title class="flex justify items-center">
+  <span class="text-center font-bold text-2xl text-neutral-600"
+    >Registra a tu proveedor</span
+  >
+</h1>
+<div mat-dialog-content>
+  <form [formGroup]="supplierform" class="grid grid-cols-1 gap-2 my-4">
+    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+      <input
+        class="pl-2 w-full outline-none border-none"
+        formControlName="name"
+        placeholder="Nombre del proveedor"
+      />
+    </div>
+    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+      <input
+        class="pl-2 w-full outline-none border-none"
+        formControlName="rif"
+        placeholder="J000000"
+      />
+    </div>
+    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+      <input
+        class="pl-2 w-full outline-none border-none"
+        formControlName="email"
+        placeholder="ejemplo@ejemplo.com"
+      />
+    </div>
+    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+      <input
+        class="pl-2 w-full outline-none border-none"
+        formControlName="address"
+        placeholder="Direccion"
+      />
+    </div>
+    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+        <textarea
+          class="pl-2 w-full outline-none border-none"
+          formControlName="observation"
+          placeholder="Agregue una breve observación "
+        ></textarea>
+      </div>
+  </form>
+</div>
+<div class="flex w-full justify-center my-2 gap-2 px-4" mat-dialog-actions>
+  <button
+    class="p-3 rounded-full text-white font-semibold text-xl w-full"
+    [ngClass]="supplierform.invalid ? 'bg-neutral-300' : 'bg-neutral-500'"
+    [disabled]="supplierform.invalid"
+    (click)="onSubmit()"
+  >
+    Agregar proveedor
+  </button>
+</div>

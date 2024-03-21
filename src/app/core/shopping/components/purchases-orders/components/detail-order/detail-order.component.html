@@ -63,12 +63,21 @@
     </div>
   </form>
   <ng-container *ngIf="orderItems.length > 0" class="grid my-4 gap-2">
-    <app-products-detail-order
-      [productsAll]="orderItems"
-      (valueForm)="valueForm = $event"
-      [typeOrder]="typeOrder"
-      [ordersId]="ordersId"
-    ></app-products-detail-order>
+    <div class=" my-4 p-2">
+      <form
+        [formGroup]="counters"
+        class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-auto"
+      > 
+        <app-products-detail-order
+          formArrayName="inputs"
+          *ngFor="let product of inputs.controls; let i = index"
+          [product]="product"
+          [typeOrder]="typeOrder"
+          [i]="i"
+        ></app-products-detail-order>
+      </form>
+    </div>
+  
     <div class="flex justify-center items-center space-x-4">
       <mat-paginator
         class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
@@ -91,12 +100,12 @@
     </button>
   </ng-container>
   <ng-container *ngIf="form.value.status == '10'">
-    <a
-      [routerLink]="['/home/shopping/purchases_orders/orders', data.id]"
+    <button
+      (click)="registerCost()"
       mat-dialog-close="false"
       class="p-3 rounded-full my-2 text-center gap-2 px-4 text-white w-full font-semibold text-xl bg-neutral-500"
     >
       Registrar costos
-    </a>
+    </button>
   </ng-container>
 </div>

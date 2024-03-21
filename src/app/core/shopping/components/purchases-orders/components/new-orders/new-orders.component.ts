@@ -31,12 +31,13 @@ export class NewOrdersComponent {
   allProdutcts: any[] = []
   image: string = ''
   mystores: AllStore[] = []
+  mybranch: AllStore[] = []
   supplierform = new FormGroup({
     'name': new FormControl({value:'', readonly:true},[Validators.required]),
     'rif': new FormControl({value:'', readonly:true}, [Validators.required, Validators.max(10)]),
     'address': new FormControl({value:'', readonly:true}, [Validators.required]),
     'email': new FormControl({value:'', readonly:true}, [Validators.required, Validators.email]),
-    'store': new FormControl<any>({value:'', readonly:true}, [Validators.required]),
+    'store': new FormControl<any>('', [Validators.required]),
   })
   constructor() {
     this.sub = this.activateRou.params.subscribe((data) => {
@@ -48,6 +49,7 @@ export class NewOrdersComponent {
       this.getSupplierID()
     }
     this.getAllStore()
+    this.getAllBranch()
   }
   getSupplierID() {
     this.services.getSuppliersId(Number(this.id)).then((result) => {
@@ -63,13 +65,21 @@ export class NewOrdersComponent {
   }
   getAllStore() {
     const params = new MyStoreParams()
-    params.parent = 'true'
+    params.parent = 'false'
     this.storeServices.getUserStores(params).then((result) => {
       this.mystores = result
     }).catch((err) => {
       console.log(err)
     });
-
+  }
+  getAllBranch() {
+    const params = new MyStoreParams()
+    params.parent = 'true'
+    this.storeServices.getUserStores(params).then((result) => {
+      this.mybranch = result
+    }).catch((err) => {
+      console.log(err)
+    });
   }
   onSubmit(status: number) {
     this.loading.showLoading()

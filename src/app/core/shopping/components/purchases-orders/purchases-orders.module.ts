@@ -15,10 +15,14 @@ import { ProductsDetailOrderComponent } from './components/detail-order/products
 import { PurchasePriceRecordComponent } from './components/purchase-price-record/purchase-price-record.component';
 import { AllPriceProductsComponent } from './components/purchase-price-record/all-price-products/all-price-products.component';
 import { PaymentsPurchasePriceComponent } from './components/payments-purchase-price/payments-purchase-price.component';
+import { PaymentsCashComponent } from './components/payments-purchase-price/payments-cash/payments-cash.component';
+import { PaymentsCreditComponent } from './components/payments-purchase-price/payments-credit/payments-credit.component';
+import { DialogNewSuppliersComponent } from './components/suppliers/dialog-new-suppliers/dialog-new-suppliers.component';
+import { DialogNewProductComponent } from './components/dialog-selected-products/dialog-new-product/dialog-new-product.component';
 
 
 @NgModule({
-  declarations: [PurchasesOrdersComponent, OrdersListComponent, NewOrdersComponent, SuppliersComponent, DialogSelectedProductsComponent, ProductsAllComponent, DetailOrderComponent, ProductsDetailOrderComponent, PurchasePriceRecordComponent, AllPriceProductsComponent, PaymentsPurchasePriceComponent],
+  declarations: [PurchasesOrdersComponent, OrdersListComponent, NewOrdersComponent, SuppliersComponent, DialogSelectedProductsComponent, ProductsAllComponent, DetailOrderComponent, ProductsDetailOrderComponent, PurchasePriceRecordComponent, AllPriceProductsComponent, PaymentsPurchasePriceComponent, PaymentsCashComponent, PaymentsCreditComponent, DialogNewSuppliersComponent, DialogNewProductComponent],
   imports: [
     CommonModule,
     PurchasesOrdersRoutingModule,

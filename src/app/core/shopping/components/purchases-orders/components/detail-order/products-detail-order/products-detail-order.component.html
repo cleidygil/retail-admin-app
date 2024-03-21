@@ -1,12 +1,5 @@
-<form
-  [formGroup]="counters"
-  class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-auto" *ngIf="this.inputs.length == this.productsAll.length"
->
-  <div
-    formArrayName="inputs"
-    *ngFor="let item of inputs.controls;let i = index;  "
-  >
-    <form 
+
+    <div [formGroup]="product"
       class="bg-neutral-200 rounded-xl p-2 flex items-center justify-between leading-4 inputs-form-row" >
       <div class="flex items-center gap-2">
         <svg
@@ -32,11 +25,11 @@
         </svg>
         <div class="flex flex-col text-neutral-500">
           <span class="font-semibold text-neutral-600 uppercase">{{
-            item.value?.product_name
+            product.value?.product_name
           }}</span>
-          <span class="text-xs">Marca: {{ item.value?.proudct_brand_name }}</span>
-          <span class="text-xs">U.M: {{ item.value?.proudct_mu_name }}</span>
-          <span class="text-xs">Cant: {{ item.value?.quantity }}</span>
+          <span class="text-xs">Marca: {{ product.value?.proudct_brand_name }}</span>
+          <span class="text-xs">U.M: {{ product.value?.proudct_mu_name }}</span>
+          <span class="text-xs">Cant: {{ product.value?.quantity }}</span>
         </div>
       </div>
       <div class="custom-number-input h-10 w-32 bg-transparent">
@@ -46,8 +39,8 @@
               <input
                 formControlName="quantity"
                 type="number"
-                (change)="asignarValor($event, i, item.value)"
-               [value]="item.value?.quantity"
+                (change)="asignarValor($event)"
+               [value]="product.value?.quantity"
                [readOnly]="typeOrder !== 12"
                 class="bg-neutral-100 focus:outline-none text-center border-2 border-neutral-600 rounded-full w-full font-semibold text-md md:text-basecursor-default flex items-center text-gray-700 outline-none"
               />
@@ -56,6 +49,5 @@
         </div>
       </div>
       </div>
-    </form>
-  </div>
-</form>
+    </div>
+

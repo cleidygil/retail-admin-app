@@ -4,6 +4,7 @@ export class Shopping {
     store?:string
     supplier?:string
     created_at_since?:string
+    created_at_until?:string
     created_by?:string
     finish_date_since?:string
     finish_date_until?:string

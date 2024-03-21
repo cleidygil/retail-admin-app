@@ -8,44 +8,11 @@ import { LoadingService } from 'src/app/global/services/loading.service';
   styleUrls: ['./products-all.component.css']
 })
 export class ProductsAllComponent {
-  [x: string]: any;
-  private formBuilder = inject(FormBuilder)
-  private loading = inject(LoadingService)
-  @Input() productsAll: any = []
-  @Output() valueForm = new EventEmitter()
-  nextPage: number = 1;
-  pageIndex: number = 10
-  counters!: FormGroup;
-  ngOnInit(): void {
-    this.counters = this.formBuilder.group({
-      inputs: this.formBuilder.array([])
-    });
-    this.agregarControles();
-  
-  }
+  @Input() product: any
+  @Input() i: any
 
-  get inputs() {
-    return (this.counters.controls["inputs"] as FormArray);
-  }
-  agregarControles() {
-    this.productsAll.map((item: any) => {
-      const lessonForm = this.formBuilder.group<any>({
-        quantity: 0 || item.quantity,
-        product: item.id,
-        name: item.name,
-        brand_name: item.brand_name,
-        mu_name: item.mu_name
-      });
-      this.inputs.push(lessonForm)
-    });
-  }
-
-  asignarValor(event: Event, index: number, item: any) {
+  asignarValor(event: Event) {
     const target = event.target as HTMLInputElement
-    (this.inputs).at(index).patchValue({ quantity: Number(target.value) });
-    this.inputs?.valueChanges.subscribe(data => {
-      this.valueForm.emit(data)
-    }) 
+    this.product.patchValue({ quantity: Number(target.value) });
   }
-
 }

@@ -127,7 +127,7 @@
         </button>
       </div>
       <form class="my-2 gap-3" [formGroup]="params">
-        <div class="mt-4 gap-4 w-full flex ">
+        <div class="mt-4 gap-4 w-full flex">
           <div class="relative w-full">
             <input
               formControlName="search"
@@ -161,11 +161,20 @@
     </div>
     <div>
       <div *ngIf="productsAll.length > 0" class="grid my-4 gap-2">
-        <app-products-all
-          [productsAll]="productsAll"
-          (valueForm)="valueForm = $event"
-        ></app-products-all>
-        <div class="flex justify-center items-center space-x-4">
+        <div class="sticky top-0 left-0 right-0 bg-white z-1 my-4 p-2">
+          <form
+            [formGroup]="counters"
+            class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-auto"
+          >
+            <app-products-all
+              formArrayName="inputs"
+              *ngFor="let product of inputs.controls; let i = index"
+              [product]="product"
+              [i]="i"
+            ></app-products-all>
+          </form>
+        </div>
+        <div class="flex justify-center items-center space-x-4 z-10">
           <mat-paginator
             class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
             [pageSizeOptions]="[10]"
@@ -179,11 +188,20 @@
     </div>
   </div>
 </mat-dialog-content>
-<div class="flex w-full justify-center my-2 gap-2 px-4" mat-dialog-actions>
+<div
+  class="flex flex-col w-full justify-center my-2 gap-2 px-4"
+  mat-dialog-actions
+>
   <button
     (click)="onSubmit()"
     class="p-3 rounded-full my-2 gap-2 px-4 text-white w-full font-semibold text-xl bg-neutral-500"
   >
     Cargar
+  </button>
+  <button
+    (click)="onSubmit()"
+    class="p-3 rounded-full my-2 gap-2 px-4 text-neutral-600 w-full font-semibold text-xl border border-neutral-500"
+  >
+    Agregar nuevo producto
   </button>
 </div>

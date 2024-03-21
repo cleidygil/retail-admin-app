@@ -76,7 +76,7 @@ export class PurchasePriceRecordComponent {
       this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")
     })
   }
-  get inputs() {
+  get inputs() { 
     return (this.counters.controls["inputs"] as FormArray);
   }
   agregarControles() {
@@ -86,13 +86,14 @@ export class PurchasePriceRecordComponent {
         product_name: item.product_name,
         proudct_mu_name: item.proudct_mu_name,
         proudct_brand_name: item.proudct_brand_name,
+        id: item.id,
         product: item.product,
         cost: item.cost || 0,
         quantity: item.quantity,
       });
       this.inputs.push(lessonForm)
     });
-  }
+  } 
 
 
   getOrderItems() {
@@ -113,15 +114,11 @@ export class PurchasePriceRecordComponent {
     this.getOrderItems()
   }
   onSubmit() {
-    let body = {
-      order: this.id,
-      items: this.inputs.value,
-    }
+    let body = this.inputs.value
     this.services.registerPurchasePrice.next(body)
     this.router.navigate(['/home/shopping/purchases_orders/payments', this.id])
   }
   deleteProduct(id: number) {
-
     // this.allProdutcts = this.allProdutcts.filter(item => item.product != id).map(item => item)
     this.inputs.removeAt(id)
   }

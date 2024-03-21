@@ -44,45 +44,87 @@
         Seleccionar productos
       </button>
     </div>
-    <div class="flex justify-center gap-2 my-2 text-xl text-neutral-600">
+    <span class="flex justify-center gap-2 my-2 text-xl text-neutral-600">
       Asigna al inventario de alguna sucursal
-    </div>
-    <div class="flex justify-center gap-4 my-4">
-      <div class="inline-block radio text-center" *ngFor="let item of mystores">
-        <div class="flex flex-col justify-center text-center">
-          <input
-            formControlName="store"
-            name="store"
-            type="radio"
-            [id]="item.id"
-            hidden="hidden"
-            [value]="item.id"
-          />
-          <label
-            [for]="item.id"
-            class="flex items-center w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white"
+    </span>
+    <span class="text-base text-center font-semibold text-neutral-600"
+    >Tienda Principal</span
+  >
+  <div class="flex justify-center gap-2">
+    <div class="inline-block radio text-center" *ngFor="let item of mystores">
+      <div class="flex flex-col justify-center text-center">
+        <input
+          formControlName="store"
+          name="store"
+          type="radio"
+          [id]="item.id"
+          hidden="hidden"
+          [value]="item.id"
+        />
+        <label
+          [for]="item.id"
+          class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-16 w-16 text-white rounded-full mx-auto"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="h-24 w-24 text-white rounded-full mx-auto"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
-              />
-            </svg>
-          </label>
-        </div>
-        <p class="pt-2 text-sm font-semibold text-gray-400">
-          {{ item.name }}
-        </p>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
+            />
+          </svg>
+        </label>
       </div>
+      <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
+        {{ item.name }}
+      </span>
     </div>
+  </div>
+  <span class="text-base font-semibold text-neutral-600 text-center"
+    >Sucursales</span
+  >
+  <div class="flex justify-center gap-2">
+    <div class="inline-block radio text-center" *ngFor="let item of mybranch">
+      <div class="flex flex-col justify-center text-center">
+        <input
+          formControlName="store"
+          name="store"
+          type="radio"
+          [id]="item.id"
+          hidden="hidden"
+          [value]="item.id"
+        />
+        <label
+          [for]="item.id"
+          class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-16 w-16 text-white rounded-full mx-auto"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
+            />
+          </svg>
+        </label>
+      </div>
+      <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
+        {{ item.name }}
+      </span>
+    </div>
+  </div>
   </form>
   <div class="relative my-4">
     <ng-container *ngIf="allProdutcts.length > 0">
@@ -92,10 +134,13 @@
             <div
               class="relative bg-neutral-200 rounded-xl p-2 w-full flex items-center justify-between leading-4"
             >
-              <button
-                class="absolute top-0 right-0  text-xs"
-              >
-                <mat-icon mat-icon-button class="text-neutral-600"  (click)="deleteProduct(product.product)">cancel</mat-icon>
+              <button class="absolute top-0 right-0 text-xs">
+                <mat-icon
+                  mat-icon-button
+                  class="text-neutral-600"
+                  (click)="deleteProduct(product.product)"
+                  >cancel</mat-icon
+                >
               </button>
               <div class="flex gap-2">
                 <svg
@@ -145,19 +190,27 @@
   <div class="flex justify-center gap-2">
     <button
       class="p-3 rounded-full text-white w-1/2 font-semibold text-xl"
-      [ngClass]="supplierform.invalid ? 'bg-neutral-300' : 'bg-neutral-500'"
-      [disabled]="supplierform.invalid"
+      [ngClass]="
+        supplierform.invalid && allProdutcts.length == 0
+          ? 'bg-neutral-300'
+          : 'bg-neutral-500'
+      "
+      [disabled]="supplierform.invalid && allProdutcts.length == 0"
       (click)="onSubmit(12)"
     >
       Guardar borrador
     </button>
     <button
-    class="p-3 rounded-full text-white w-1/2 font-semibold text-xl"
-    [ngClass]="supplierform.invalid ? 'bg-neutral-300' : 'bg-neutral-600'"
-    [disabled]="supplierform.invalid"
-    (click)="onSubmit(3)"
-  >
-    Hacer pedido
-  </button>
+      class="p-3 rounded-full text-white w-1/2 font-semibold text-xl"
+      [ngClass]="
+        supplierform.invalid && allProdutcts.length == 0
+          ? 'bg-neutral-300'
+          : 'bg-neutral-600'
+      "
+      [disabled]="supplierform.invalid && allProdutcts.length == 0"
+      (click)="onSubmit(3)"
+    >
+      Hacer pedido
+    </button>
   </div>
 </div>

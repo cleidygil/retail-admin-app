@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: 'purchases_orders',
     loadChildren: ()=> import('./components/purchases-orders/purchases-orders.module').then(m=> m.PurchasesOrdersModule)
+  },
+  {
+    path: 'orders_history',
+    loadChildren: ()=> import('./components/orders-history/orders-history.module').then(m=> m.OrdersHistoryModule)
   }
 ];
 

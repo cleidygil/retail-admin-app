@@ -24,8 +24,10 @@ export class OrdersListComponent {
 
   getPurchasesOrders() {
     const params: Shopping = new Shopping()
+    params.page= this.nextPage
     this.services.getPurchasesOrders(params).then((result) => {
       this.ordersList = result.results
+      this.count = result.count
     }).catch((error) => {
       console.log(error)
     })
