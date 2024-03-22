@@ -1,0 +1,45 @@
+<div mat-dialog-title>
+    <div
+      class="flex justify-center items-center text-center font-bold text-4xl text-neutral-600"
+    >
+      <svg
+        width="70"
+        height="61"
+        viewBox="0 0 70 61"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M32.0901 34.8571V17.4286C32.0901 15.831 33.3972 14.5238 34.9949 14.5238C36.5925 14.5238 37.8996 15.831 37.8996 17.4286V34.8571C37.8996 36.4548 36.5925 37.7619 34.9949 37.7619C33.3972 37.7619 32.0901 36.4548 32.0901 34.8571ZM34.9949 40.6667C32.5839 40.6667 30.6377 42.6129 30.6377 45.0238C30.6377 47.4348 32.5839 49.381 34.9949 49.381C37.4058 49.381 39.352 47.4348 39.352 45.0238C39.352 42.6129 37.4058 40.6667 34.9949 40.6667ZM68.632 54.8419C66.5987 58.7633 62.3287 61 56.9839 61H13.0349C7.66105 61 3.4201 58.7633 1.38677 54.8419C-0.675614 50.8914 -0.0946616 45.8371 2.83915 41.5962L26.1934 4.64762C28.2558 1.68476 31.5091 0 34.9949 0C38.4806 0 41.7339 1.68476 43.7092 4.56048L67.1796 41.6543C70.1134 45.8952 70.6653 50.9205 68.603 54.8419H68.632ZM62.3868 44.9076C62.3868 44.9076 62.3287 44.8495 62.3287 44.7914L38.8872 7.75571C38.0449 6.56476 36.5925 5.80952 34.9949 5.80952C33.3972 5.80952 31.9449 6.56476 31.0444 7.8719L7.66105 44.7914C5.8601 47.3476 5.45343 50.1362 6.49915 52.1405C7.51581 54.1157 9.83962 55.1905 13.0058 55.1905H56.9258C60.092 55.1905 62.4158 54.1157 63.4325 52.1405C64.4782 50.1362 64.0715 47.3476 62.3577 44.9076H62.3868Z"
+          fill="#7C7A7A"
+        />
+      </svg>
+    </div>
+  </div>
+  <div mat-dialog-content>
+    <div
+      class="flex flex-col justify-center items-center text-center font-bold text-2xl text-neutral-600 mx-auto p-4"
+    >
+      <span> Tienes productos bajos en existencia</span>
+      <span>¿Deseas hacer una orden de compra?</span>
+    </div>
+  </div>
+  <div
+    class="flex flex-col w-full justify-center gap-2 px-6 mx-auto "
+    mat-dialog-actions
+  >
+    <a
+      mat-dialog-close="true"
+      [routerLink]="['./home/shopping/purchases_orders/orders']"
+      class="p-2 rounded-full  px-4 text-white w-full text-center font-semibold text-base bg-neutral-500"
+    >
+      Generar orden de compra
+    </a>
+    <button
+      mat-dialog-close="true"
+      class="p-2 rounded-full  px-4 text-center text-neutral-600 w-full font-semibold text-base border border-neutral-500"
+    >
+      Cancelar
+    </button>
+  </div>
+  

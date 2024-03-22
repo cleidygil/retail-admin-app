@@ -1,6 +1,6 @@
 <ul
   role="list"
-  class="flex flex-col relative divide my-2 space-y-2 mx-0 text-neutral-600 overflow-auto "
+  class="flex flex-col relative divide my-2 space-y-2 mx-0 text-neutral-600 overflow-auto"
 >
   <li
     class="group flex w-full justify-start items-center py-4 px-2 cursor-pointer"
@@ -8,7 +8,7 @@
     routerLinkActive="bg-neutral-400 text-white"
     *ngIf="ruta.device == 'mobile/web' || ruta.device == 'web'"
   >
-    <a class="relative flex pointer py-2  mx-2" >
+    <a class="relative flex pointer py-2 mx-2">
       <svg
         width="35"
         height="35"
@@ -25,12 +25,12 @@
     <span class="flex justify-center text-center text-xl"> INICIO </span>
   </li>
   <li
-    class="mb-1 group flex w-full justify-start items-center py-2   px-2"
+    class="mb-1 group flex w-full justify-start items-center py-2 px-2"
     [routerLink]="['/home/store']"
     routerLinkActive="bg-neutral-400 text-white"
     *ngIf="ruta.device == 'mobile/web' || ruta.device == 'web'"
   >
-    <a class="relative flex pointer py-2    mx-2" style="cursor: pointer">
+    <a class="relative flex pointer py-2 mx-2" style="cursor: pointer">
       <svg
         width="35"
         height="35"
@@ -47,12 +47,12 @@
     <span class="flex justify-center text-center text-xl"> TIENDAS </span>
   </li>
   <li
-    class="mb-1 group flex w-full justify-start items-center py-2  px-2"
+    class="mb-1 group flex w-full justify-start items-center py-2 px-2"
     [routerLink]="['/home/users']"
     routerLinkActive="bg-neutral-400 text-white"
     *ngIf="ruta.device == 'mobile/web' || ruta.device == 'web'"
   >
-    <a class="relative flex pointer py-2   mx-2" style="cursor: pointer">
+    <a class="relative flex pointer py-2 mx-2" style="cursor: pointer">
       <svg
         width="35"
         height="35"
@@ -73,12 +73,12 @@
     <span class="flex justify-center text-center text-xl"> USUARIO </span>
   </li>
   <li
-    class="mb-1 group flex w-full justify-start items-center py-2  px-2"
+    class="mb-1 group flex w-full justify-start items-center py-2 px-2"
     [routerLink]="['/home/supplies']"
     routerLinkActive="bg-neutral-400 text-white"
     *ngIf="ruta.device == 'mobile/web' || ruta.device == 'web'"
   >
-    <a class="relative flex pointer py-2   mx-2" style="cursor: pointer">
+    <a class="relative flex pointer py-2 mx-2" style="cursor: pointer">
       <svg
         width="35"
         height="35"
@@ -95,12 +95,12 @@
     <span class="flex justify-center text-center text-xl"> INSUMOS </span>
   </li>
   <li
-    class="mb-1 group flex w-full justify-start items-center py-2  px-2"
+    class="mb-1 group flex w-full justify-start items-center py-2 px-2"
     [routerLink]="['/home/management']"
     routerLinkActive="bg-neutral-400 text-white"
     *ngIf="ruta.device == 'mobile/web' || ruta.device == 'web'"
   >
-    <a class="relative flex pointer py-2   mx-2" style="cursor: pointer">
+    <a class="relative flex pointer py-2 mx-2" style="cursor: pointer">
       <svg
         width="35"
         height="35"
@@ -117,12 +117,12 @@
     <span class="flex justify-center text-center text-xl"> GESTION </span>
   </li>
   <li
-    class="mb-1 group flex w-full justify-start items-center py-2  px-2"
+    class="mb-1 group flex w-full justify-start items-center py-2 px-2"
     [routerLink]="['/home/shopping']"
     routerLinkActive="bg-neutral-400 text-white"
     *ngIf="ruta.device == 'mobile/web' || ruta.device == 'web'"
   >
-    <a class="relative flex pointer py-2   mx-2" style="cursor: pointer">
+    <a class="relative flex pointer py-2 mx-2" style="cursor: pointer">
       <svg
         width="35"
         height="35"
@@ -139,12 +139,35 @@
     <span class="flex justify-center text-center text-xl"> COMPRAS </span>
   </li>
   <li
-    class="mb-1 group flex w-full justify-start items-center py-2  px-2"
+    class="mb-1 group flex w-full justify-start items-center py-2 px-2"
     [routerLink]="['/home/inventory']"
     routerLinkActive="bg-neutral-400 text-white"
     *ngIf="ruta.device == 'mobile/web' || ruta.device == 'web'"
   >
-    <a class="relative flex pointer py-2   mx-2" style="cursor: pointer">
+    <a class="relative flex pointer py-2 mx-2" style="cursor: pointer">
+      <svg
+        width="35"
+        height="35"
+        viewBox="0 0 25 25"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M21.2844 24.2002C19.6178 24.2002 18.2615 22.8439 18.2615 21.1773V13.1163C18.2615 12.5611 17.8101 12.1087 17.2539 12.1087H7.17763C6.62142 12.1087 6.17001 12.5611 6.17001 13.1163V21.1773C6.17001 22.8439 4.81375 24.2002 3.14714 24.2002C1.48053 24.2002 0.124268 22.8439 0.124268 21.1773V9.81536C0.124268 8.13767 0.954549 6.57686 2.34406 5.63876L9.39743 0.878748C11.1094 -0.275989 13.3221 -0.275989 15.0341 0.878748L22.0874 5.63876C23.477 6.57686 24.3072 8.13767 24.3072 9.81536V21.1773C24.3072 22.8439 22.951 24.2002 21.2844 24.2002ZM7.17763 10.0935H17.2539C18.9205 10.0935 20.2767 11.4497 20.2767 13.1163V21.1773C20.2767 21.7325 20.7282 22.1849 21.2844 22.1849C21.8406 22.1849 22.292 21.7325 22.292 21.1773V9.81536C22.292 8.80875 21.7942 7.87165 20.9599 7.3094L13.9065 2.54939C12.8788 1.85614 11.5527 1.85614 10.526 2.54939L3.47159 7.3094C2.63728 7.87165 2.13951 8.80875 2.13951 9.81536V21.1773C2.13951 21.7325 2.59093 22.1849 3.14714 22.1849C3.70335 22.1849 4.15476 21.7325 4.15476 21.1773V13.1163C4.15476 11.4497 5.51102 10.0935 7.17763 10.0935ZM11.2081 23.1926V21.1773C11.2081 20.6211 10.7577 20.1697 10.2005 20.1697H9.19288C8.63566 20.1697 8.18526 20.6211 8.18526 21.1773V23.1926C8.18526 23.7488 8.63566 24.2002 9.19288 24.2002H10.2005C10.7577 24.2002 11.2081 23.7488 11.2081 23.1926ZM11.2081 17.1468V15.1316C11.2081 14.5754 10.7577 14.124 10.2005 14.124H9.19288C8.63566 14.124 8.18526 14.5754 8.18526 15.1316V17.1468C8.18526 17.703 8.63566 18.1545 9.19288 18.1545H10.2005C10.7577 18.1545 11.2081 17.703 11.2081 17.1468ZM16.2462 23.1926V21.1773C16.2462 20.6211 15.7958 20.1697 15.2386 20.1697H14.231C13.6738 20.1697 13.2234 20.6211 13.2234 21.1773V23.1926C13.2234 23.7488 13.6738 24.2002 14.231 24.2002H15.2386C15.7958 24.2002 16.2462 23.7488 16.2462 23.1926Z"
+          fill="currentColor"
+        />
+      </svg>
+    </a>
+    <span class="flex justify-center text-center text-xl"> ALMACEN </span>
+  </li>
+
+  <li
+    class="mb-1 group flex w-full justify-start items-center py-2 px-2"
+    [routerLink]="['/home/inventory']"
+    routerLinkActive="bg-neutral-400 text-white"
+    *ngIf="ruta.device == 'mobile/web' || ruta.device == 'web'"
+  >
+    <a class="relative flex pointer py-2 mx-2" style="cursor: pointer">
       <svg
         width="35"
         height="35"
@@ -163,12 +186,12 @@
     <span class="flex justify-center text-center text-xl"> INVENTARIO </span>
   </li>
   <li
-    class="mb-1 group flex w-full justify-start items-center py-2  px-2"
+    class="mb-1 group flex w-full justify-start items-center py-2 px-2"
     [routerLink]="['/home/promotions']"
     routerLinkActive="bg-neutral-400 text-white"
     *ngIf="ruta.device == 'mobile/web' || ruta.device == 'web'"
   >
-    <a class="relative flex pointer py-2   mx-2" style="cursor: pointer">
+    <a class="relative flex pointer py-2 mx-2" style="cursor: pointer">
       <svg
         width="35"
         height="35"
@@ -185,12 +208,12 @@
     <span class="flex justify-center text-center text-xl">PROMOCIONES </span>
   </li>
   <li
-    class="mb-1 group flex w-full justify-start items-center py-2  px-2"
+    class="mb-1 group flex w-full justify-start items-center py-2 px-2"
     [routerLink]="['/home/settings']"
     routerLinkActive="bg-neutral-400 text-white"
     *ngIf="ruta.device == 'mobile/web' || ruta.device == 'web'"
   >
-    <a class="relative flex pointer py-2   mx-2" style="cursor: pointer">
+    <a class="relative flex pointer py-2 mx-2" style="cursor: pointer">
       <svg
         width="35"
         height="35"
