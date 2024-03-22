@@ -73,6 +73,7 @@ export class PaymentsCashComponent {
     console.log(values, 'values')
     let body = {
       ...this.value,
+      depot:true,
       invoice_number: data.nrofactura,
       finish_date: data.datepay,
     }

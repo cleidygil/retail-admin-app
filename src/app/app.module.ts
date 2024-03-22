@@ -11,15 +11,12 @@ import { AuthInterceptorInterceptor } from './helpers/auth-interceptor.intercept
 import { HeadersInterceptor } from './helpers/headers.interceptor';
 import { RouterModule } from '@angular/router';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { DepotComponent } from './core/depot/depot.component';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DepotComponent,
-  
-     ],
+    AppComponent],
   imports: [
     CommonModule,
     RouterModule.forRoot([]),

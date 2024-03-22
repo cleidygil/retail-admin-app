@@ -66,6 +66,7 @@ export class OrdersHistoryComponent {
       params.type = valor.type || '';
     params.search = valor.search || ''
     params.status= '4'
+    params.depot ='false'
     if (valor.start != null && valor.end != null) {
       params.created_at_since = new Date(valor?.start).toLocaleDateString("fr-CA",);
       params.created_at_until = new Date(valor?.end).toLocaleDateString("fr-CA",)

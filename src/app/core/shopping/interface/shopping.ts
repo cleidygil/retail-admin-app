@@ -12,6 +12,7 @@ export class Shopping {
     search?:string
     type?:string
     remove_pagination?:string
+    depot?:string
 }
 
 export interface PurchasesOrders {
