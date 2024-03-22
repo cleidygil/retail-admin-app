@@ -19,6 +19,7 @@ import { PaymentsCashComponent } from './components/payments-purchase-price/paym
 import { PaymentsCreditComponent } from './components/payments-purchase-price/payments-credit/payments-credit.component';
 import { DialogNewSuppliersComponent } from './components/suppliers/dialog-new-suppliers/dialog-new-suppliers.component';
 import { DialogNewProductComponent } from './components/dialog-selected-products/dialog-new-product/dialog-new-product.component';
+import { SuppliesModule } from 'src/app/core/supplies/supplies.module';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { DialogNewProductComponent } from './components/dialog-selected-products
     CommonModule,
     PurchasesOrdersRoutingModule,
     HomeModule,
-    MaterialDesignModule
+    MaterialDesignModule,
   ]
 })
 export class PurchasesOrdersModule { }

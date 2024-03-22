@@ -13,6 +13,7 @@ import { NewRecipesComponent } from './components/new-recipes/new-recipes.compon
 
 @NgModule({
   declarations: [SuppliesComponent, NewProductComponent, ProductsAllComponent, ProductSaleComponent, RecipesAllComponent, NewRecipesComponent],
+  exports:[ProductSaleComponent],
   imports: [
     CommonModule,
     SuppliesRoutingModule,

@@ -29,7 +29,7 @@ export class PaymentsCashComponent {
     'supplier': new FormControl<any>({ value: '', readonly: true }),
     'store': new FormControl<any>({ value: '', readonly: true }),
     'created_at': new FormControl<any>({ value: '', readonly: true }),
-    'nrofactura': new FormControl<any>('', [Validators.required]),
+    'nrofactura': new FormControl<any>('', [Validators.required, Validators.maxLength(10)]),
     'datepay': new FormControl<any>('', [Validators.required]),
     'method': new FormControl<any>('', [Validators.required]),
     'nroref': new FormControl<any>('', [Validators.required]),

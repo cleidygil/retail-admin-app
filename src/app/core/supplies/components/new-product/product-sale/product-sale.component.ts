@@ -8,6 +8,8 @@ import { SnackbarService } from 'src/app/global/services/snackbar.service';
 import { MeasurementUnit, ParamsGlobal } from '../../../interfaces/supplies';
 import { SuppliesService } from '../../../services/supplies.service';
 import { Subscription } from 'rxjs';
+import { ManageService } from 'src/app/core/manage/services/manege.service';
+import { Brand } from 'src/app/core/manage/interface/manege.interface';
 
 @Component({
   selector: 'app-product-sale',
@@ -18,6 +20,7 @@ export class ProductSaleComponent {
   @Input() myFiles: any[] = []
   @Input() files: any
   @Output() image = new EventEmitter<string>()
+  private manage = inject(ManageService)
   private services = inject(SuppliesService)
   private storeServices = inject(StoreService)
   private snack = inject(SnackbarService)
@@ -31,13 +34,15 @@ export class ProductSaleComponent {
   subcategories: any[] = []
   munits: MeasurementUnit[] = []
   mystores: AllStore[] = []
- 
+  mybranch: AllStore[] = []
+  brands: Brand[] = []
   productSale = new FormGroup({
     'name': new FormControl('', [Validators.required]),
     'unidadmedida': new FormControl<any>('', [Validators.required]),
     'category': new FormControl<any>('', [Validators.required]),
     'subcategory': new FormControl<any>('', [Validators.required]),
-    'store': new FormControl<any>('', [Validators.required])
+    'store': new FormControl<any>('', [Validators.required]),
+    'brand': new FormControl<any>('', [Validators.required]),
   })
   constructor() {
     this.sub = this.activateRou.params.subscribe((data) => {
@@ -48,9 +53,20 @@ export class ProductSaleComponent {
     this.getMU()
     this.getAllStore()
     this.getCategories()
+    this.getBrands()
+    this.getAllBranch()
     if (this.id != null) {
       this.getProductsID()
     }
+  }
+  getBrands() {
+    const params: ParamsGlobal = new ParamsGlobal()
+    params.remove_pagination = 'true'
+    this.manage.getBrands(params).then((result) => {
+      this.brands = result
+    }).catch((error) => {
+      console.log(error)
+    })
   }
   getMU() {
     const params: ParamsGlobal = new ParamsGlobal()
@@ -63,9 +79,18 @@ export class ProductSaleComponent {
   }
   getAllStore() {
     const params = new MyStoreParams()
-    params.parent = 'true'
+    params.parent = 'false'
     this.storeServices.getUserStores(params).then((result) => {
       this.mystores = result
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+  getAllBranch() {
+    const params = new MyStoreParams()
+    params.parent = 'true'
+    this.storeServices.getUserStores(params).then((result) => {
+      this.mybranch = result
     }).catch((err) => {
       console.log(err)
     });
@@ -101,6 +126,7 @@ export class ProductSaleComponent {
       "authorization": true,
       "image": this.files.url || this.files.file,
       "mu": valor?.unidadmedida,
+      "brand": valor?.brand,
       "subcategory": valor?.subcategory,
       "store": valor?.store,
     }
@@ -118,8 +144,8 @@ export class ProductSaleComponent {
         unidadmedida: result?.mu,
         category: result.subcategory.parent,
         subcategory: result.subcategory.id,
-        store: result.store.id
-
+        store: result.store.id,
+        brand: result.brand,
       })
       this.getMU()
       this.image.emit(result.image)
@@ -148,6 +174,7 @@ export class ProductSaleComponent {
       "authorization": true,
       "image": sendImag,
       "mu": valor?.unidadmedida,
+      "brand": valor?.brand,
       "subcategory": valor?.subcategory,
       "store": valor?.store,
     }

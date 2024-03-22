@@ -26,7 +26,7 @@ export class PaymentsCreditComponent {
     'supplier': new FormControl<any>({ value: '', readonly: true }),
     'store': new FormControl<any>({ value: '', readonly: true }),
     'created_at': new FormControl<any>({ value: '', readonly: true }),
-    'nrofactura': new FormControl<any>('', [Validators.required]),
+    'nrofactura': new FormControl<any>('', [Validators.required, Validators.maxLength(10)]),
     'datepay': new FormControl<any>('', [Validators.required]),
   })
   methodArr: any[] = []
