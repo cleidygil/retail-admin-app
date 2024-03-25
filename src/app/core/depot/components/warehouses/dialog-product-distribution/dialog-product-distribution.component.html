@@ -27,6 +27,8 @@
         formControlName="rawmaterial"
         placeholder="Materia prima"
         type="number"
+        min="0"
+        onkeypress="return event.charCode >= 48"
       />
     </div>
     <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
@@ -35,6 +37,8 @@
         formControlName="sales"
         placeholder="Ventas"
         type="number"
+        min="0"
+        onkeypress="return event.charCode >= 48"
       />
     </div>
   </form>

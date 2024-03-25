@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>
     <div class="flex flex-col text-center font-bold text-2xl text-neutral-600">
-      Transferir producto
+      Devolucion del producto
             <p class="text-xl">
         {{ data.item.product_name }}
       </p>
@@ -21,8 +21,12 @@
           class="pl-2 w-full outline-none border-none"
           formControlName="quantity"
           placeholder="Cantidad"
+          type="number"
+          max="0"
+          oninput="return event.charCode >= 45"
         />
       </div>
+      <mat-error class="text-xs">Para devolver la cantidad debe ser negativa</mat-error>
     </form>
   </div>
   <div

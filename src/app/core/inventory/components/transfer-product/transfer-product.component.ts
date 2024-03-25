@@ -17,7 +17,7 @@ export class TransferProductComponent {
   mybranch: AllStore[] = []
   form = new FormGroup({
     available: new FormControl(''),
-    quantity: new FormControl('', [Validators.required]),
+    quantity: new FormControl('', [Validators.required, Validators.min(0)]),
     type: new FormControl('', [Validators.required]),
     storetrans: new FormControl('', [Validators.required]),
   })

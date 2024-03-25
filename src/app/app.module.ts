@@ -11,12 +11,14 @@ import { AuthInterceptorInterceptor } from './helpers/auth-interceptor.intercept
 import { HeadersInterceptor } from './helpers/headers.interceptor';
 import { RouterModule } from '@angular/router';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { ProductionOrderComponent } from './core/production-order/production-order.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent],
+    AppComponent,
+    ProductionOrderComponent],
   imports: [
     CommonModule,
     RouterModule.forRoot([]),

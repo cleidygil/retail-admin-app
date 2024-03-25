@@ -87,7 +87,7 @@ export class SalesInventoryComponent {
   }
   openChangeStatus(item: any) {
     const dialogo = this.dialog.open(WarehouseReturnComponent, {
-      data: item,
+      data: {item, type:1},
       width: window.innerWidth > 430 ? '40%' : 'auto'
     })
     dialogo.afterClosed().subscribe(data => {

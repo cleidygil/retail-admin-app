@@ -85,7 +85,7 @@ export class RawMaterialComponent {
 
   openChangeStatus(item: any) {
     const dialogo = this.dialog.open(WarehouseReturnComponent, {
-      data: item,
+      data: {item, type:2},
       width: window.innerWidth > 430 ? '40%' : 'auto'
     })
     dialogo.afterClosed().subscribe(data => {

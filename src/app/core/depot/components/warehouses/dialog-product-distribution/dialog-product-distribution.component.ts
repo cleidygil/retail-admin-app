@@ -15,8 +15,8 @@ export class DialogProductDistributionComponent {
   private services = inject(InventoryService)
   form = new FormGroup({
     available: new FormControl(''),
-    rawmaterial: new FormControl('', [Validators.required]),
-    sales: new FormControl('', [Validators.required]),
+    rawmaterial: new FormControl('', [Validators.required, Validators.min(0)]),
+    sales: new FormControl('', [Validators.required, Validators.min(0)]),
   })
 
   ngOnInit(): void {

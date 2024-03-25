@@ -53,6 +53,10 @@ const routes: Routes = [
         loadChildren: () => import('../depot/depot.module').then(m => m.DepotModule)
       },
 
+      {
+        path: 'production_order',
+        loadChildren: () => import('../production-order/production-order.module').then(m => m.ProductionOrderModule)
+      },
 
     ]
   },
