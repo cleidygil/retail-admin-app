@@ -31,11 +31,12 @@ export class NewOrdersComponent {
   allProdutcts: any[] = []
   image: string = ''
   mystores: AllStore[] = []
+  mybranch: AllStore[] = []
   supplierform = new FormGroup({
-    'name': new FormControl('', [Validators.required]),
-    'rif': new FormControl('', [Validators.required, Validators.max(10)]),
-    'address': new FormControl('', [Validators.required]),
-    'email': new FormControl('', [Validators.required, Validators.email]),
+    'name': new FormControl({value:'', readonly:true},[Validators.required]),
+    'rif': new FormControl({value:'', readonly:true}, [Validators.required, Validators.max(10)]),
+    'address': new FormControl({value:'', readonly:true}, [Validators.required]),
+    'email': new FormControl({value:'', readonly:true}, [Validators.required, Validators.email]),
     'store': new FormControl<any>('', [Validators.required]),
   })
   constructor() {
@@ -48,6 +49,7 @@ export class NewOrdersComponent {
       this.getSupplierID()
     }
     this.getAllStore()
+    this.getAllBranch()
   }
   getSupplierID() {
     this.services.getSuppliersId(Number(this.id)).then((result) => {
@@ -63,25 +65,35 @@ export class NewOrdersComponent {
   }
   getAllStore() {
     const params = new MyStoreParams()
-    params.parent = 'true'
+    params.parent = 'false'
     this.storeServices.getUserStores(params).then((result) => {
       this.mystores = result
     }).catch((err) => {
       console.log(err)
     });
-
   }
-  onSubmit() {
+  getAllBranch() {
+    const params = new MyStoreParams()
+    params.parent = 'true'
+    this.storeServices.getUserStores(params).then((result) => {
+      this.mybranch = result
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+  onSubmit(status: number) {
     this.loading.showLoading()
     let valor = this.supplierform.value
     let body = {
       store: valor.store,
       items: this.allProdutcts,
       supplier: this.id,
+      status: status
     }
 
     this.shopServices.postPurchasesOrders(body).then((result) => {
       this.loading.hideLoading()
+      this.services.productsArr.next([])
       const dialogo = this.dialog.open(NotificationDialogComponent, {
         data: ['Tu order ha sido creada con exito.', 'Hemos enviado un PDF de la orden de compra a tu email y al prveedor.'],
         width: window.innerWidth > 432 ? '30%' : 'auto',
@@ -105,9 +117,33 @@ export class NewOrdersComponent {
     })
     dialogo.afterClosed().subscribe(data => {
       if (data) {
-        console.log(this.services.productsArr.value)
-        this.allProdutcts = this.services.productsArr.value
+        let newDate: any[] = []
+        this.services.productsArr.value?.map((product: any) => {
+          let body = {
+            product: product.product,
+            name: product.name,
+            cost: null,
+            purchase_order: null,
+            quantity: product.quantity
+          }
+          newDate.push(body)
+        });
+        let copias = [...this.allProdutcts, ...newDate]
+        let prueba = copias.reduce((acc: any[], obj: any) => {
+          let duplicado = acc.filter((it) => it.product === obj.product)
+          if (duplicado.length > 0) {
+            duplicado[0].quantity = obj.quantity
+          } else {
+            acc.push(obj);
+          }
+          return acc;
+        }, []);
+        this.allProdutcts = prueba.length > 0 ? prueba : this.allProdutcts
       }
     })
+  }
+
+  deleteProduct(id: number) {
+    this.allProdutcts = this.allProdutcts.filter(item => item.product != id).map(item => item)
   }
 }

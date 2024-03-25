@@ -4,7 +4,7 @@ import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { BrandsParams, Brands, Management, Taxes, Category, Categories } from '../interface/manege.interface';
+import { BrandsParams, Brands, Management, Taxes, Category, Categories, Brand } from '../interface/manege.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +19,9 @@ export class ManageService {
   productsArr = new BehaviorSubject<any[]>([])
   constructor() { }
 
-  getBrands(params: BrandsParams): Promise<Brands> {
+  getBrands(params: BrandsParams): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
-    const obs$ = this.http.get<Brands>(`${this.url}/api/stores/brands/`, { params: resparams })
+    const obs$ = this.http.get<Brands | Brand>(`${this.url}/api/stores/brands/`, { params: resparams })
     return lastValueFrom(obs$)
   }
   setBrands(body:any): Promise<any> {

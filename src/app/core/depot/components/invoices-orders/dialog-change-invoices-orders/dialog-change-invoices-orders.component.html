@@ -1,0 +1,102 @@
+<h1 mat-dialog-title>
+  <div class="flex flex-col text-center font-bold text-2xl text-neutral-600">
+    Detalle de Orden Nº {{ data.id }}
+    <p class="text-xl">
+      {{ data.store_name }}
+    </p>
+  </div>
+</h1>
+<div mat-dialog-content>
+  <form class="my-4 gap-3" [formGroup]="form">
+    <div class="mt-4 gap-4 w-full grid mx-auto">
+      <div class="relative inline-flex w-full m-y4">
+        <svg
+          class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 412 232"
+        >
+          <path
+            d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"
+            fill="#648299"
+            fill-rule="nonzero"
+          />
+        </svg>
+        <select
+          formControlName="depot"
+          class="w-full border border-neutral-300 rounded-full text-neutral-500 h-10 pl-5 pr-10 bg-white hover:border-neutral-400 focus:outline-none appearance-none"
+        >
+          <option value="false">Por llegar</option>
+          <option value="true">En almacen</option>
+        </select>
+      </div>
+      <div class="flex gap-4">
+        <div class="relative w-full">
+          <input
+            formControlName="search"
+            placeholder="Buscar"
+            (input)="getOrderItems(); nextPageProd = 1"
+            required
+            class="w-full rounded-full py-2.5 px-4 border text-base bg-neutral-300 outline-orange-500"
+          />
+          <div
+            class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+          >
+            <button
+              class="text-gray-500 focus:outline-none focus:text-gray-600 hover:text-gray-600"
+              mat-icon-button
+              matSuffix
+              (click)="getOrderItems()"
+            >
+              <mat-icon>search</mat-icon>
+            </button>
+          </div>
+        </div>
+        <button
+          mat-icon-button
+          color="accent"
+          (click)="form.reset(); getOrderItems(); nextPageProd = 1"
+        >
+          <mat-icon>filter_alt_off</mat-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+  <ng-container *ngIf="orderItems.length > 0" class="grid my-4 gap-2">
+    <div class="my-4 p-2">
+      <form
+        [formGroup]="counters"
+        class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-auto"
+      >
+        <app-products-detail-orders-history
+          formArrayName="inputs"
+          *ngFor="let product of inputs.controls; let i = index"
+          [product]="product"
+          [typeOrder]="typeOrder"
+          [i]="i"
+        ></app-products-detail-orders-history>
+      </form>
+    </div>
+
+    <div class="flex justify-center items-center space-x-4">
+      <mat-paginator
+        class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
+        [pageSizeOptions]="[10]"
+        showFirstLastButtons
+        [length]="countProd"
+        [hidePageSize]="true"
+        (page)="nextPageIndexProducts($event)"
+      ></mat-paginator>
+    </div>
+  </ng-container>
+</div>
+<div
+  class="flex flex-col w-full justify-center my-2 gap-2 px-4"
+  mat-dialog-actions
+>
+  <button
+    (click)="onSubmit()"
+    class="p-3 rounded-full my-2 gap-2 px-4 text-white w-full font-semibold text-xl bg-neutral-500"
+  >
+    Aceptar
+  </button>
+</div>

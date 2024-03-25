@@ -4,9 +4,15 @@ export class Shopping {
     store?:string
     supplier?:string
     created_at_since?:string
+    created_at_until?:string
     created_by?:string
     finish_date_since?:string
     finish_date_until?:string
+    purchase_order?:string
+    search?:string
+    type?:string
+    remove_pagination?:string
+    depot?:string
 }
 
 export interface PurchasesOrders {
@@ -35,4 +41,32 @@ export interface PurchasesOrders {
     created_by_name: string
     created_at: string
   }
+  
+  export interface OrderItems {
+    count: number
+    next: string
+    previous: string
+    results: OrderItem[]
+  }
+  
+  export interface OrderItem {
+    id: number
+    product: number
+    product_name: string
+    proudct_mu_name: string
+    proudct_brand_name: string
+    cost: string
+    total_cost: string
+    quantity: number
+    quantity_available: string
+    inventory_status: string
+    created_at: string
+  }
+  export interface StatusOrder {
+    id: number
+    name: string
+    description: string
+    type: string
+  }
+  
   

@@ -19,6 +19,7 @@ import { DialogDetailRecipesComponent } from './components/recipes-all/dialog-de
 
 @NgModule({
   declarations: [SuppliesComponent, NewProductComponent, ProductsAllComponent, ProductSaleComponent, RecipesAllComponent, NewRecipesComponent, RecipesSaleComponent, AvailableIngredientsComponent, SelectedIngredientsComponent, DialogQuantityUnitOfMeasurementComponent, DialogBranchRecipesComponent, DialogDetailRecipesComponent],
+  exports:[ProductSaleComponent],
   imports: [
     CommonModule,
     SuppliesRoutingModule,

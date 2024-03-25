@@ -1,0 +1,243 @@
+<div class="flex justify-between gap-2">
+  <a [routerLink]="['../']" mat-mini-fab color="primary">
+    <mat-icon>chevron_left</mat-icon>
+  </a>
+</div>
+<div class="max-w-4xl mx-auto">
+  <form [formGroup]="params" class="grid grid-cols-1 gap-4 my-2">
+    <div class="mt-4 w-full">
+      <label
+        class="block font-medium text-sm text-gray-700"
+        for="password"
+        value="Password"
+      ></label>
+      <div class="relative">
+        <input
+          formControlName="search"
+          placeholder="Buscar"
+          required
+          class="w-full rounded-full py-2.5 px-4 border text-base bg-neutral-300 outline-orange-500"
+        />
+
+        <div
+          class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+        >
+          <button
+            class="text-gray-500 focus:outline-none focus:text-gray-600 hover:text-gray-600"
+            mat-icon-button
+            matSuffix
+            (click)="getPurchasesOrders()"
+          >
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <span class="text-xl text-center font-semibold text-neutral-600"
+      >Tienda Principal</span
+    >
+    <div class="flex justify-center gap-2">
+      <div class="inline-block radio text-center" *ngFor="let item of mystores">
+        <div class="flex flex-col justify-center text-center">
+          <input
+            formControlName="store"
+            name="store"
+            type="radio"
+            [id]="item.id"
+            hidden="hidden"
+            [value]="item.id"
+          />
+          <label
+            (click)="getPurchasesOrders()"
+            [for]="item.id"
+            class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-16 w-16 text-white rounded-full mx-auto"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
+              />
+            </svg>
+          </label>
+        </div>
+        <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
+          {{ item.name }}
+        </span>
+      </div>
+    </div>
+    <span class="text-xl font-semibold text-neutral-600 text-center"
+      >Sucursales</span
+    >
+    <div class="flex justify-center gap-2">
+      <div class="inline-block radio text-center" *ngFor="let item of mybranch">
+        <div class="flex flex-col justify-center text-center">
+          <input
+            formControlName="store"
+            name="store"
+            type="radio"
+            [id]="item.id"
+            hidden="hidden"
+            [value]="item.id"
+          />
+          <label
+            [for]="item.id"
+            class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
+            (click)="getPurchasesOrders()"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-16 w-16 text-white rounded-full mx-auto"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
+              />
+            </svg>
+          </label>
+        </div>
+        <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
+          {{ item.name }}
+        </span>
+      </div>
+    </div>
+    <div class="flex justify-center gap-2">
+      <div class="inline-flex gap-2 radio text-center">
+        <div class="flex flex-col justify-center text-center text-xl">
+          <input
+            formControlName="type"
+            name="type"
+            type="radio"
+            id="1"
+            hidden="hidden"
+            value="1"
+          />
+          <label
+            for="1"
+            class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400"
+          >
+            Al contado
+          </label>
+        </div>
+        <div class="flex flex-col justify-center text-center text-xl">
+          <input
+            formControlName="type"
+            name="type"
+            type="radio"
+            id="2"
+            hidden="hidden"
+            value="2"
+          />
+          <label
+            for="2"
+            class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400 selection:text-neutral-800"
+          >
+            Credito
+          </label>
+        </div>
+      </div>
+      <div class="inline-flex items-center justify-center gap-2">
+        <mat-date-range-input
+          class="rounded-full text-center px-2 py-2 items-end bg-neutral-300 text-base focus:outline-none outline-none"
+          [rangePicker]="campaignOnePicker"
+          [comparisonStart]="params.value.start"
+          [comparisonEnd]="params.value.end"
+        >
+          <input matStartDate placeholder="Desde" formControlName="start" />
+          <input
+            matEndDate
+            placeholder="Hasta"
+            formControlName="end"
+            (dateChange)="getPurchasesOrders()"
+          />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="campaignOnePicker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker
+          touchUi
+          #campaignOnePicker
+        ></mat-date-range-picker>
+      </div>
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="params.reset(); getPurchasesOrders(); nextPage = 1"
+      >
+        <mat-icon>filter_alt_off</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>
+<div class="h-full mx-auto flex flex-col justify-center my-4 p-2">
+  <div class="flex justify-center">
+    <span class="text-center font-bold text-2xl text-neutral-600">Ordenes</span>
+  </div>
+  <div class="grid xl:grid-cols-3 gap-4 m-4">
+    <div
+      class="relative bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
+      *ngFor="let item of ordersList" (click)="openChangeStatus(item)"
+    >
+      <div class="flex items-center">
+        <svg
+          width="85"
+          height="85"
+          viewBox="0 0 82 82"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="0.368164"
+            y="0.698242"
+            width="80.7567"
+            height="80.7567"
+            rx="40.3783"
+            fill="#A8A8A8"
+          />
+          <path
+            d="M55.8902 35.3988C55.8902 33.4742 55.1755 31.7298 54.0323 30.3533C56.9866 29.7779 58.3887 27.131 58.7264 25.647L58.9187 24.8021L58.0586 24.7037C57.5499 24.6446 57.0623 24.6158 56.5974 24.6158C54.7439 24.6158 53.2358 25.0777 52.0986 25.9953C51.3308 26.6147 50.8811 27.3339 50.6085 27.9442C49.7711 27.6428 48.8808 27.4505 47.9404 27.4505C44.7484 27.4505 42.0076 29.3539 40.7447 32.0735L39.877 30.105C39.45 29.1359 39.2335 28.1092 39.2335 27.0508V25.9363H40.7477V22.9062H27.1195V25.9348H28.6337V27.0492C28.6337 28.1062 28.4172 29.1344 27.9902 30.1035L26.6334 33.182C26.0125 34.5857 25.6855 36.0727 25.6279 37.6021L22.5752 36.0303V54.704C22.5752 57.2086 24.6134 59.2468 27.1179 59.2468H54.3745C56.879 59.2468 58.9172 57.2086 58.9172 54.704V36.0303L55.495 37.7913C55.7388 37.0206 55.8887 36.218 55.8887 35.3973L55.8902 35.3988ZM47.9404 30.4775C50.654 30.4775 52.8617 32.6853 52.8617 35.3988C52.8617 36.3649 52.5634 37.2962 52.038 38.0942L49.0958 36.265L44.9225 38.8589L43.961 38.2623C43.3613 37.4294 43.0191 36.4331 43.0191 35.3988C43.0191 32.6853 45.2269 30.4775 47.9404 30.4775ZM29.406 34.404L30.7628 31.3255C31.3609 29.9687 31.6637 28.5302 31.6637 27.0508V25.9363H36.2065V27.0508C36.2065 28.5317 36.5093 29.9687 37.1075 31.3255L38.4642 34.404C38.8625 35.308 39.1048 36.2574 39.1926 37.2341L36.5744 38.8589L32.4012 36.265L28.6352 38.606V38.0669C28.6352 36.7965 28.8957 35.5639 29.4075 34.4024L29.406 34.404ZM25.6052 54.7055V40.997L28.2945 42.381L32.3997 39.831L36.5729 42.4219L40.7477 39.8295L41.8683 40.5261C41.8683 40.5261 41.8758 40.5382 41.8804 40.5427L41.8864 40.5367L43.7762 41.7102V54.704C43.7762 55.237 43.8853 55.7428 44.0548 56.2183H27.1195C26.2836 56.2183 25.6052 55.5414 25.6052 54.7055ZM55.8902 54.7055C55.8902 55.5414 55.2119 56.2198 54.376 56.2198H48.319C47.4831 56.2198 46.8047 55.5414 46.8047 54.7055V41.2544L49.0958 39.8326L53.2009 42.3825L55.8902 40.9985V54.7055Z"
+            fill="#FAFAFA"
+          />
+        </svg>
+      </div>
+      <div class="grid justify-start gap-2 text-neutral-500">
+        <span class="text-xl font-semibold text-neutral-600">
+          {{ item.id }}</span
+        >
+        <span class="text-sm">{{ item.status_name }}</span>
+        <span class="text-sm">{{ item.supplier_name }}</span>
+
+        <span class="text-sm">{{ item.store_name }} </span>
+        <span class="text-sm"
+          >{{ item.created_at | date: "dd/MM/YYYY, hh:mm a" }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="fixed sm:left-4 first-letter:my-4 bottom-4 md:left-1/2 flex justify-center items-center space-x-4"
+>
+  <mat-paginator
+    class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
+    [pageSizeOptions]="[10]"
+    showFirstLastButtons
+    [length]="count"
+    [hidePageSize]="true"
+    (page)="nextPageIndex($event)"
+  ></mat-paginator>
+</div>

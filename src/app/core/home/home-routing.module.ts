@@ -48,6 +48,15 @@ const routes: Routes = [
         path: 'settings',
         loadChildren: () => import('../setting/setting.module').then(m => m.SettingModule)
       },
+      {
+        path: 'warehouse',
+        loadChildren: () => import('../depot/depot.module').then(m => m.DepotModule)
+      },
+
+      {
+        path: 'production_order',
+        loadChildren: () => import('../production-order/production-order.module').then(m => m.ProductionOrderModule)
+      },
 
     ]
   },

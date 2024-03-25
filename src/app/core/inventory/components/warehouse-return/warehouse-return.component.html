@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>
+    <div class="flex flex-col text-center font-bold text-2xl text-neutral-600">
+      Devolucion del producto
+            <p class="text-xl">
+        {{ data.item.product_name }}
+      </p>
+    </div>
+  </h1>
+  <div mat-dialog-content>
+    <form [formGroup]="form" class="grid grid-cols-1 gap-2 my-4">
+      <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+        <input
+          class="pl-2 w-full outline-none border-none"
+          formControlName="available"
+          placeholder="Disponible"
+          readonly
+        />
+      </div>
+      <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+        <input
+          class="pl-2 w-full outline-none border-none"
+          formControlName="quantity"
+          placeholder="Cantidad"
+          type="number"
+          max="0"
+          oninput="return event.charCode >= 45"
+        />
+      </div>
+      <mat-error class="text-xs">Para devolver la cantidad debe ser negativa</mat-error>
+    </form>
+  </div>
+  <div
+    class="flex flex-col w-full justify-center gap-2 px-6 mx-auto"
+    mat-dialog-actions
+  >
+    <button
+      [ngClass]="form.invalid ? 'bg-neutral-300' : 'bg-neutral-600'"
+      [disabled]="form.invalid"
+      (click)="onSubmit()"
+      class="p-2 rounded-full px-4 text-white w-full text-center font-semibold text-xl bg-neutral-500"
+    >
+      Devolver a almacén
+    </button>
+  </div>
+  

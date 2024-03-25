@@ -22,9 +22,9 @@ export class SuppliesService {
     const obs$ = this.http.get<any>(`${this.url}/api/products/categories/`, {params: resparams})
     return lastValueFrom(obs$)
   }
-  getMeasurementUnits(params: ParamsGlobal): Promise<MeasurementUnits> {
+  getMeasurementUnits(params: ParamsGlobal): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
-    const obs$ = this.http.get<MeasurementUnits>(`${this.url}/api/stores/measurement_units/`, {params:resparams})
+    const obs$ = this.http.get<MeasurementUnits | MeasurementUnits[]>(`${this.url}/api/stores/measurement_units/`, {params:resparams})
     return lastValueFrom(obs$)
   }
   getAllProducts(params: ParamsGlobal): Promise<Products> {

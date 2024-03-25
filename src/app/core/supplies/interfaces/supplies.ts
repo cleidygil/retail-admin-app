@@ -1,16 +1,15 @@
 export interface Supplies {
 }
 
-export class ParamsGlobal{
-    category?:string
-    page?:number
-    parent?:string
-    search?:string
-    remove_pagination?:string
+export class ParamsGlobal {
+  category?: string
+  page?: number
+  parent?: string
+  search?: string
+  remove_pagination?: string
 }
 
 export interface MeasurementUnits {
-    count: number
     next: string
     previous: string
     results: MeasurementUnit[]
