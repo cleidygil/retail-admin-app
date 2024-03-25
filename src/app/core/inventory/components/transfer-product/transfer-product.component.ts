@@ -18,8 +18,8 @@ export class TransferProductComponent {
   form = new FormGroup({
     available: new FormControl(''),
     quantity: new FormControl('', [Validators.required]),
-    store: new FormControl('', [Validators.required]),
-    option: new FormControl('', [Validators.required]),
+    type: new FormControl('', [Validators.required]),
+    storetrans: new FormControl('', [Validators.required]),
   })
   constructor(
     public dialogRef: MatDialogRef<TransferProductComponent>,
@@ -54,10 +54,10 @@ export class TransferProductComponent {
   onSubmit() {
     const valor = this.form.value
     let body = {
-      "store": valor.store,
+      "store": valor.storetrans,
       "product": this.data.item.product,
       "quantity": Number(valor.quantity),
-      "inventory_type": this.data.type
+      "inventory_type": valor.type
     }
     this.services.patchInventoryTransaction(body).then((value) => {
       this.dialogRef.close(true)

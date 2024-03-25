@@ -1,11 +1,11 @@
-<div mat-dialog-title>
-  <div class="flex flex-col text-center font-bold text-4xl text-neutral-600">
+<h1 mat-dialog-title>
+  <div class="flex flex-col text-center font-bold text-2xl text-neutral-600">
     Detalle de Orden Nº {{ data.id }}
-    <p class="text-2xl">
+    <p class="text-xl">
       {{ data.store_name }}
     </p>
   </div>
-</div>
+</h1>
 <div mat-dialog-content>
   <form class="my-4 gap-3" [formGroup]="form">
     <div class="mt-4 gap-4 w-full grid mx-auto">
@@ -99,5 +99,4 @@
   >
     Aceptar
   </button>
-  >
 </div>

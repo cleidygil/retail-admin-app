@@ -1,8 +1,16 @@
 <div class="flex justify-between gap-2">
-    <a [routerLink]="['../']" mat-mini-fab color="primary">
-      <mat-icon>chevron_left</mat-icon>
-    </a>
+  <a [routerLink]="['../']" mat-mini-fab color="primary">
+    <mat-icon>chevron_left</mat-icon>
+  </a>
+  <div class="flex justify-center">
+    <span class="text-center font-bold text-2xl text-neutral-600"
+      >Ordenes facturadas
+    </span>
   </div>
+  <button mat-mini-fab color="primary">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
   <div class="max-w-4xl mx-auto">
     <form [formGroup]="params" class="grid grid-cols-1 gap-4 my-2">
       <div class="mt-4 w-full">
@@ -120,15 +128,15 @@
     <div class="flex justify-center">
       <span class="text-center font-bold text-2xl text-neutral-600">Seleccione la orden</span>
     </div>
-    <div class="grid xl:grid-cols-3 gap-4 m-4">
+    <div class=" grid xl:grid-cols-3 gap-4 m-4">
       <div
         class="relative bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
         *ngFor="let item of ordersList" (click)="openChangeStatus(item)"
       >
         <div class="flex items-center">
           <svg
-            width="85"
-            height="85"
+            width="70"
+            height="70"
             viewBox="0 0 82 82"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -147,11 +155,11 @@
             />
           </svg>
         </div>
-        <div class="grid justify-start gap-2 text-neutral-500">
-          <span class="text-xl font-semibold text-neutral-600">
+        <div class="grid  text-neutral-500">
+          <span class="text-base font-semibold text-neutral-600">
             {{ item.id }}</span
           >
-          <span class="text-sm">{{ item.status_name }}</span>
+          <span class="text-sm font-semibold"> {{ item.depot ? 'En almacen': 'Por llegar' }}</span>
           <span class="text-sm">{{ item.supplier_name }}</span>
   
           <span class="text-sm">{{ item.store_name }} </span>

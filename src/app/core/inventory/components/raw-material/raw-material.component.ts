@@ -9,6 +9,7 @@ import { Inventory, InventoryRes } from '../../interfaces/inventory';
 import { InventoryService } from '../../services/inventory.service';
 import { TransferProductComponent } from '../transfer-product/transfer-product.component';
 import { DialogAlertProductsComponent } from '../dialog-alert-products/dialog-alert-products.component';
+import { WarehouseReturnComponent } from '../warehouse-return/warehouse-return.component';
 
 @Component({
   selector: 'app-raw-material',
@@ -83,8 +84,8 @@ export class RawMaterialComponent {
   }
 
   openChangeStatus(item: any) {
-    const dialogo = this.dialog.open(TransferProductComponent, {
-      data: {item, type:2},
+    const dialogo = this.dialog.open(WarehouseReturnComponent, {
+      data: item,
       width: window.innerWidth > 430 ? '40%' : 'auto'
     })
     dialogo.afterClosed().subscribe(data => {

@@ -4,6 +4,7 @@ import { DepotComponent } from './depot.component';
 import { WarehousesComponent } from './components/warehouses/warehouses.component';
 import { InvoicesOrdersComponent } from './components/invoices-orders/invoices-orders.component';
 import { TransferOfItemsComponent } from './components/transfer-of-items/transfer-of-items.component';
+import { TransferHistoryComponent } from './components/transfer-history/transfer-history.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'transfer_items',
     component: TransferOfItemsComponent
+  },
+  {
+    path: 'transfer_history',
+    component: TransferHistoryComponent
   }
 ];
 
