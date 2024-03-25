@@ -9,10 +9,16 @@ import { ProductsAllComponent } from './components/products-all/products-all.com
 import { ProductSaleComponent } from './components/new-product/product-sale/product-sale.component';
 import { RecipesAllComponent } from './components/recipes-all/recipes-all.component';
 import { NewRecipesComponent } from './components/new-recipes/new-recipes.component';
+import { RecipesSaleComponent } from './components/new-recipes/recipes-sale/recipes-sale.component';
+import { AvailableIngredientsComponent } from './components/new-recipes/available-ingredients/available-ingredients.component';
+import { SelectedIngredientsComponent } from './components/new-recipes/available-ingredients/selected-ingredients/selected-ingredients.component';
+import { DialogQuantityUnitOfMeasurementComponent } from './components/new-recipes/dialog-quantity-unit-of-measurement/dialog-quantity-unit-of-measurement.component';
+import { DialogBranchRecipesComponent } from './components/new-recipes/dialog-branch-recipes/dialog-branch-recipes.component';
+import { DialogDetailRecipesComponent } from './components/recipes-all/dialog-detail-recipes/dialog-detail-recipes.component';
 
 
 @NgModule({
-  declarations: [SuppliesComponent, NewProductComponent, ProductsAllComponent, ProductSaleComponent, RecipesAllComponent, NewRecipesComponent],
+  declarations: [SuppliesComponent, NewProductComponent, ProductsAllComponent, ProductSaleComponent, RecipesAllComponent, NewRecipesComponent, RecipesSaleComponent, AvailableIngredientsComponent, SelectedIngredientsComponent, DialogQuantityUnitOfMeasurementComponent, DialogBranchRecipesComponent, DialogDetailRecipesComponent],
   imports: [
     CommonModule,
     SuppliesRoutingModule,

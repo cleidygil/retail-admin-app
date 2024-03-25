@@ -20,14 +20,10 @@
     <a *ngFor="let item of productsAll" [routerLink]="['../products', item.id]"
       class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 "
     >
-
       <div class="flex items-center">
         <ng-container *ngIf="item.image != null else SinImagen">
           <img alt="..." [src]="item.image" 
-          class="relative  w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white  object-cover object-center hover:z-10 focus:z-10"
-
-         
-          >
+          class="relative  w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white  object-cover object-center hover:z-10 focus:z-10">
 
         </ng-container>
         <ng-template #SinImagen>

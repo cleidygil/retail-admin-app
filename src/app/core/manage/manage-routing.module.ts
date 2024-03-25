@@ -9,6 +9,9 @@ import { SuppliersComponent } from './components/suppliers/suppliers.component';
 import { NewSuppliersComponent } from './components/new-suppliers/new-suppliers.component';
 import { TaxesComponent } from './components/taxes/taxes.component';
 import { NewTaxesComponent } from './components/new-taxes/new-taxes.component';
+import {EnvironmentsComponent} from './components/environments/environments.component';
+import {ManageEnvironmentsComponent} from './components/manage-environments/manage-environments.component'
+import {ManageTablesComponent} from './components/manage-tables/manage-tables.component';
 import { CategoryComponent } from './components/category/category.component';
 import { NewCategoryComponent } from './components/new-category/new-category.component';
 import { MyBranchComponent } from './components/my-branch/my-branch.component';
@@ -54,7 +57,18 @@ const routes: Routes = [
     path: 'new_taxes',
     component: NewTaxesComponent,
   },
-
+  {
+    path:'environments',
+    component: EnvironmentsComponent
+  },
+  {
+    path:'manage_environments',
+    component: ManageEnvironmentsComponent
+  },
+  {
+    path:'manage_tables',
+    component: ManageTablesComponent
+  }
 ];
 
 @NgModule({
