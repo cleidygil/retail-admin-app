@@ -4,7 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { MeasurementUnit, MeasurementUnits, ParamsGlobal, Product, ProductId, Products } from '../interfaces/supplies';
+import { MeasurementUnits, ParamsGlobal, Recipes, ProductId, Products , Tax, MeasurementUnit} from '../interfaces/supplies';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +42,19 @@ export class SuppliesService {
   }
   patchProduts(body: any, id:any): Promise<any> {
     const obs$ = this.http.patch<any>(`${this.url}/api/products/${id}/`, body)
+    return lastValueFrom(obs$)
+  }
+  getAllRecipes(params: ParamsGlobal): Promise<Recipes>{
+    const resparams = this.queryParams.buildQueryParams(params)
+    const obs$ = this.http.get<Recipes>(`${this.url}/api/recipes/`, {params:resparams})
+    return lastValueFrom(obs$)
+  }
+  getCategoryRecipe(params: ParamsGlobal){
+    const resparams = this.queryParams.buildQueryParams(params)
+
+  }
+  getAllTax(): Promise<any>{
+    const obs$ = this.http.get<Tax>(`${this.url}/api/services/taxes/?store=`+this.user.store)
     return lastValueFrom(obs$)
   }
 }
