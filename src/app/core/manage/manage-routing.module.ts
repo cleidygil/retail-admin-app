@@ -9,7 +9,7 @@ import { SuppliersComponent } from './components/suppliers/suppliers.component';
 import { NewSuppliersComponent } from './components/new-suppliers/new-suppliers.component';
 import { TaxesComponent } from './components/taxes/taxes.component';
 import { NewTaxesComponent } from './components/new-taxes/new-taxes.component';
-import {EnvironmentsComponent} from './components/environments/environments.component';
+import {EnvironmentComponent} from './components/environment/environment.component';
 import {ManageEnvironmentsComponent} from './components/manage-environments/manage-environments.component'
 import {ManageTablesComponent} from './components/manage-tables/manage-tables.component';
 import { CategoryComponent } from './components/category/category.component';
@@ -59,7 +59,7 @@ const routes: Routes = [
   },
   {
     path:'environments',
-    component: EnvironmentsComponent
+    component: EnvironmentComponent
   },
   {
     path:'manage_environments',
