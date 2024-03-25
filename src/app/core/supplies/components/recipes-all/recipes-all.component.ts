@@ -1,7 +1,10 @@
 import { Component , inject } from '@angular/core';
 import { SuppliesService } from '../../services/supplies.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MyStoreParams } from 'src/app/core/store/interfaces/store';
 import {DialogDetailRecipesComponent} from '../../components/recipes-all/dialog-detail-recipes/dialog-detail-recipes.component'
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-recipes-all',
   templateUrl: './recipes-all.component.html',
@@ -10,9 +13,16 @@ import {DialogDetailRecipesComponent} from '../../components/recipes-all/dialog-
 export class RecipesAllComponent {
   private services = inject(SuppliesService)
   private dialog = inject(MatDialog)
-
-  constructor() { }
+  private router = inject(Router)
   recipesAll: any = []
+
+  constructor(
+    // private router: Router
+  ) { }
+  ngOnInit(): void {
+    this.getAllRecipes()
+  }
+  
   dialogDetailRecipes(){
     const dialogo = this.dialog.open(DialogDetailRecipesComponent,{
       data:"",
@@ -25,10 +35,16 @@ export class RecipesAllComponent {
     })
   }
   
-  ngOnInit(): void {
-    // this.getAllProducts()
-  }
   getAllRecipes(){
-
+    const params = new MyStoreParams()
+    this.services.getAllRecipes(params).then((result) => {
+      this.recipesAll = result.results
+      if(this.recipesAll.length ===0){
+        this.router.navigate(['/home/supplies/recipes/new_recipes'])
+      }
+      console.log(this.recipesAll)
+    }).catch((err) => {
+      console.log(err)
+    });
   }
 }
