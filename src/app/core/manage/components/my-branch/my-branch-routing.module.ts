@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryComponent } from '../category/category.component';
-import { NewCategoryComponent } from '../new-category/new-category.component';
+import { NewCategoryComponent } from '../category/new-category/new-category.component';
 import { MyBranchComponent } from './my-branch.component';
 import { BrandsComponent } from '../brands/brands.component';
 import { NewBrandsComponent } from '../new-brands/new-brands.component';

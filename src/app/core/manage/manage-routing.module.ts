@@ -12,7 +12,7 @@ import { NewTaxesComponent } from './components/new-taxes/new-taxes.component';
 import { ManageEnvironmentsComponent } from './components/manage-environments/manage-environments.component'
 import { ManageTablesComponent } from './components/manage-tables/manage-tables.component';
 import { CategoryComponent } from './components/category/category.component';
-import { NewCategoryComponent } from './components/new-category/new-category.component';
+import { NewCategoryComponent } from './components/category/new-category/new-category.component';
 import { MyBranchComponent } from './components/my-branch/my-branch.component';
 
 const routes: Routes = [
@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'branch',
     loadChildren: () => import('./components/my-branch/my-branch.module').then(m => m.MyBranchModule)
+  },
+  {
+    path: 'categories',
+    loadChildren: () => import('./components/category/category.module').then(m => m.CategoryModule)
   },
   {
     path: 'measurement_units',

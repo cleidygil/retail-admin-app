@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs';
 import { AllStore, MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { StoreService } from 'src/app/core/store/services/store.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
-import { ManageService } from '../../services/manege.service';
-import { Categories, Category, Management } from '../../interface/manege.interface';
+import { ManageService } from '../../../services/manege.service';
+import { Categories, Category, Management } from '../../../interface/manege.interface';
 
 @Component({
   selector: 'app-new-category',
@@ -36,7 +36,6 @@ export class NewCategoryComponent {
     this.sub = this.activateRou.params.subscribe((data) => {
       console.log(data, 'params')
       this.id = Number(data['id']) || null
-      this.store = data['store'] || ''
     })
   }
   categform = new FormGroup({
