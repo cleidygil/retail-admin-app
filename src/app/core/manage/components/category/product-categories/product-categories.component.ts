@@ -20,6 +20,7 @@ export class ProductCategoriesComponent {
   nextPage: number = 1;
   count: number = 1
   constructor() {
+    this.services.typeCategories.next(1)
     }
   ngOnInit(): void {
     this.getCategories()
@@ -30,6 +31,9 @@ export class ProductCategoriesComponent {
     const params: Management = new Management()
     params.page = this.nextPage
     params.category = 'true'
+    params.type ='1'
+    params.store = this.services.user.principal_store
+
     this.services.getCategories(params).then((result) => {
       this.loading.hideLoading()
       this.categories = result.results

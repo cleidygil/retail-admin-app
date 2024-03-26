@@ -17,6 +17,7 @@ export class ManageService {
   user = this.global.User()
   store = new BehaviorSubject<string>('')
   productsArr = new BehaviorSubject<any[]>([])
+  typeCategories = new BehaviorSubject<number>(0)
   constructor() { }
 
   getBrands(params: BrandsParams): Promise<any> {

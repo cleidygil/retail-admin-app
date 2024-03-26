@@ -31,7 +31,7 @@ export class SitesComponent {
   sitesControl = new FormControl<AllStore | null>(null, Validators.required);
 
   ngOnInit(): void {
-  
+
     this.sites
       .getStores(this.user.id)
       .then((result) => {
@@ -51,21 +51,37 @@ export class SitesComponent {
       });
   }
 
-asignarStore(department:AllStore[]){
- let store = department[0].id
- let store_name = department[0].name
-  this.sites
-      .assignStore(this.user.id, store)
+  asignarStore(department: AllStore[]) {
+    let mainArr = department.filter((item) => item.parent == null).map(item => item)
+    let store: any = {}
+    let main: any = { main: mainArr[0].id, main_name: mainArr[0].name }
+    this.user.groups.map((item: string) => {
+      if (item == "ADMINISTRADOR") {
+        store = {
+          store: mainArr[0].id,
+          store_name: mainArr[0].name
+        }
+        return
+      }
+      store = {
+        store: this.user.store,
+        store_name: this.user.store_name
+      }
+      return
+    })
+    this.sites
+      .assignStore(this.user.id, store.id)
       .then((result) => {
-        this.global.formatearUser(true, 'store', { store, store_name });
+        this.global.formatearUser(true, 'store', store)
+        this.global.formatearUser(true, 'main', main);
         this.sites.LoginSites();
       })
       .catch((err) => {
         console.log(err)
         this.snack.openSnackBar("Ocurrio un error, intente nuevamente")
         this.loading.hideLoading()
-      }); 
-}
+      });
+  }
 
   onSubmit() {
     this.loading.showLoading();

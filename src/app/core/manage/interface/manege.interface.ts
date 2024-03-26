@@ -6,6 +6,7 @@ export class Management {
   category?:string
   parent?:string
   store?:string
+  type?:string
 }
 
 
