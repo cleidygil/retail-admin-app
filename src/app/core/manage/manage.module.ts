@@ -19,13 +19,14 @@ import { ManageEnvironmentsComponent } from './components/manage-environments/ma
 import { ManageTablesComponent } from './components/manage-tables/manage-tables.component';
 import { BranchEnvironmentComponent } from './components/manage-environments/branch-environment/branch-environment.component';
 import { QuantityTablesComponent } from './components/manage-tables/quantity-tables/quantity-tables.component';
+import { CategoryComponent } from './components/category/category.component';
 import { EnvironmentComponent } from './components/environment/environment.component';
 
 registerLocaleData(localeEs, 'es');
 
 
 @NgModule({
-  declarations: [ManageComponent, BrandsComponent, NewBrandsComponent, MeasurementunitsComponent, NewMeasurementunitsComponent, NewSuppliersComponent, SuppliersComponent, TaxesComponent, NewTaxesComponent, CategoryComponent, NewCategoryComponent, ManageEnvironmentsComponent, ManageTablesComponent, BranchEnvironmentComponent, QuantityTablesComponent, EnvironmentComponent],
+  declarations: [ManageComponent, BrandsComponent, NewBrandsComponent, MeasurementunitsComponent, NewMeasurementunitsComponent, NewSuppliersComponent, SuppliersComponent, TaxesComponent, NewTaxesComponent,ManageEnvironmentsComponent, ManageTablesComponent, BranchEnvironmentComponent, QuantityTablesComponent, EnvironmentComponent],
   imports: [
     CommonModule,
     ManageRoutingModule,
