@@ -72,8 +72,9 @@ export class AvailableIngredientsComponent {
   }
   selectInfo(data:any){
     this.selectIngredients =data;
-    this.selectProducts.push(data);
-    console.log(data.price)
-    this.costTotal= this.costTotal + parseInt(data.price)
+    if (!this.selectProducts.includes(data)){
+      this.selectProducts.push(data);
+      this.costTotal= this.costTotal + parseInt(data.price)
+    }
   }
 }
