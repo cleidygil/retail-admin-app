@@ -1,4 +1,4 @@
-import { Component , Inject, ViewChild, inject} from '@angular/core';
+import { Component , Inject,Input, ViewChild, inject} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogQuantityUnitOfMeasurementComponent } from '../../dialog-quantity-unit-of-measurement/dialog-quantity-unit-of-measurement.component';
@@ -13,7 +13,12 @@ import { Subscription } from 'rxjs';
 })
 export class SelectedIngredientsComponent {
   private dialog = inject(MatDialog)
+  @Input() info: any;
+  @Input() selectProducts: any[] =[];
   
+  ngOnInit(): void {
+    // console.log(this.info + " prueba")
+  }
   addQuantify(){
     const dialogo = this.dialog.open(DialogQuantityUnitOfMeasurementComponent,{
       data:"",
@@ -39,5 +44,7 @@ export class SelectedIngredientsComponent {
       }
     })
   }
-
+  deleteProducts(index: number){
+    this.selectProducts.splice(index,1)
+  }
 }
