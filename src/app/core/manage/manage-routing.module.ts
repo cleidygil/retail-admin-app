@@ -9,8 +9,9 @@ import { SuppliersComponent } from './components/suppliers/suppliers.component';
 import { NewSuppliersComponent } from './components/new-suppliers/new-suppliers.component';
 import { TaxesComponent } from './components/taxes/taxes.component';
 import { NewTaxesComponent } from './components/new-taxes/new-taxes.component';
-import { ManageEnvironmentsComponent } from './components/manage-environments/manage-environments.component'
-import { ManageTablesComponent } from './components/manage-tables/manage-tables.component';
+import {EnvironmentComponent} from './components/environment/environment.component';
+import {ManageEnvironmentsComponent} from './components/manage-environments/manage-environments.component'
+import {ManageTablesComponent} from './components/manage-tables/manage-tables.component';
 import { CategoryComponent } from './components/category/category.component';
 import { NewCategoryComponent } from './components/category/new-category/new-category.component';
 import { MyBranchComponent } from './components/my-branch/my-branch.component';
@@ -61,7 +62,11 @@ const routes: Routes = [
     component: NewTaxesComponent,
   },
   {
-    path: 'environments',
+    path:'environments',
+    component: EnvironmentComponent
+  },
+  {
+    path:'manage_environments',
     component: ManageEnvironmentsComponent
   },
   {

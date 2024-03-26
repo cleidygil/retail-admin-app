@@ -145,7 +145,7 @@ export class ProductSaleComponent {
         category: result.subcategory.parent,
         subcategory: result.subcategory.id,
         store: result.store.id,
-        brand: result.brand,
+        // brand: result.brand,
       })
       this.getMU()
       this.image.emit(result.image)
