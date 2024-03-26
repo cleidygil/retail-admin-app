@@ -5,8 +5,11 @@ import { Subscription } from 'rxjs';
 import { AllStore, MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { StoreService } from 'src/app/core/store/services/store.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
-import { ManageService } from '../../services/manege.service';
-import { Categories, Category, Management } from '../../interface/manege.interface';
+import { ManageService } from '../../../services/manege.service';
+import { Categories, Category, Management } from '../../../interface/manege.interface';
+import { GlobalService } from 'src/app/global/services/global.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/global/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-new-category',
@@ -15,11 +18,13 @@ import { Categories, Category, Management } from '../../interface/manege.interfa
 })
 export class NewCategoryComponent {
   private services = inject(ManageService)
-  private storeServices = inject(StoreService)
   private snack = inject(SnackbarService)
   private activateRou = inject(ActivatedRoute);
   private router = inject(Router)
-  store: string = ''
+  private global = inject(GlobalService)
+  private dialog = inject(MatDialog)
+  user: any = this.global.User()
+  store: number = this.user.main
   sub!: Subscription
   id: number | null = null
   myFiles: any[] = [];
@@ -32,11 +37,14 @@ export class NewCategoryComponent {
   image: string = ''
   mystores: AllStore[] = []
   subcategories: Category[] = []
+  typeCategories = this.services.typeCategories.value
   constructor() {
+    if (this.services.typeCategories.value == 0) {
+      this.router.navigate(['/home/management/categories'])
+      return
+    }
     this.sub = this.activateRou.params.subscribe((data) => {
-      console.log(data, 'params')
       this.id = Number(data['id']) || null
-      this.store = data['store'] || ''
     })
   }
   categform = new FormGroup({
@@ -47,9 +55,10 @@ export class NewCategoryComponent {
   // Sub categoria
   viewListSubCatf: boolean = false
   viewFormSubCatf: boolean = false
+  subCategArr: any = []
   subcategform = new FormGroup({
     'name': new FormControl('', [Validators.required]),
-    'description': new FormControl('', [Validators.required]),
+    // 'description': new FormControl('', [Validators.required]),
     // 'store': new FormControl('', [Validators.required])
   })
   filesSub = new FormGroup({
@@ -63,17 +72,56 @@ export class NewCategoryComponent {
   valueSubCat: string = 'new'
   idSubcat: number = 0
   ngOnInit(): void {
-    this.getSubCategories()
+
     if (this.id != null) {
       this.getCategoryID()
+      this.getSubCategories()
     }
 
   }
+  AddSubCateg() {
+    if (this.filesSub.value.file == '') {
+      return this.snack.openSnackBar("Por favor agregar la imagen a la categoria")
+    }
+    let sendImag = '';
+    if (this.filesSub.value.file != '') {
+      sendImag = this.myFilesSub[0].imageData
+    }
+    this.subCategArr.push({
+      ...this.subcategform.value,
+      "image": sendImag,
+      store: this.services.user.principal_store,
+      type: this.typeCategories,
+      description: '',
+    })
+    this.subcategform.reset()
+    this.formatSub = []
+    this.myFilesSub = []
+    this.filesSub.reset()
+  }
+  deleteSub(i: number) {
+    this.subCategArr = this.subCategArr.filter((item: any, index: number) => index != i).map((item: any) => item)
+  }
+  deleteCategory(i: number) {
+    const dialogo = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: "¿Seguro que quieres eliminar este ítems?" }
+    })
+    dialogo.afterClosed().subscribe(data => {
+      if (data) {
+        this.services.deletehCategoryID(i).then((value) => {
+          this.snack.openSnackBar("Items eliminadao con exito.")
+          this.getSubCategories()
+        }).catch((error) => {
+          this.snack.openSnackBar(error.errror.message)
+        })
 
+      }
+    })
+  }
   onSubmit() {
     const valor = this.categform.value
     if (this.files.value.file == '' && this.files.value.url == '') {
-      return this.snack.openSnackBar("Por favor agregar la imagen al producto o una URL de la imagen.")
+      return this.snack.openSnackBar("Por favor agregar la imagen a la categoria o una URL de la imagen.")
     }
     let sendImag;
     if (this.files.value.file != '') {
@@ -86,15 +134,17 @@ export class NewCategoryComponent {
       sendImag = this.image
     }
     let body = {
-      "parent": null,
+      "parent": this.typeCategories != 3 ? this.subCategArr : null,
       "image": sendImag,
-      store: this.store
+      store: this.services.user.principal_store,
+      type: this.typeCategories,
+      description: valor.description
     }
     let body2 = { ...valor, ...body }
     if (this.id != null) {
       this.services.patchCategoryID(body2, Number(this.id)).then((res) => {
         this.snack.openSnackBar("Categoria actualizado exitosamente");
-        this.router.navigate(['../categories'])
+        this.router.navigate(['../'])
         this.getCategoryID()
       }).catch((error) => {
         this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
@@ -103,8 +153,8 @@ export class NewCategoryComponent {
     }
     this.services.postCategory(body2).then((res) => {
       this.snack.openSnackBar("Categoria registrado exitosamente");
-      this.router.navigate(['../categories'])
-      this.getCategoryID()
+      this.router.navigate(['/home/management/categories'])
+
 
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
@@ -127,7 +177,7 @@ export class NewCategoryComponent {
 
       }, 2500)
     }).catch((error) => {
-      // this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")
+      this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")
     })
   }
 
@@ -184,40 +234,31 @@ export class NewCategoryComponent {
   }
   onSubmitSubCategory() {
     const valor = this.subcategform.value
-    if (this.filesSub.value.file == '' && this.filesSub.value.url == '') {
+    if (this.filesSub.value.file == '') {
       return this.snack.openSnackBar("Por favor agregar la imagen a la categoria o una URL de la imagen.")
     }
     let sendImag;
     if (this.filesSub.value.file != '') {
-      sendImag = this.myFiles[0].imageData
+      sendImag = this.myFilesSub[0].imageData
     }
-    if (this.filesSub.value.url != '') {
-      sendImag = this.filesSub.value.url
-    }
-    if (this.id != null && this.filesSub.value.file == '' && this.filesSub.value.url == '') {
+    if (this.id != null && this.filesSub.value.file == '') {
       sendImag = this.image
     }
     let body = {
       "parent": this.id,
       "image": sendImag,
-      store: this.store
+      store: this.services.user.principal_store,
+      type: this.typeCategories
     }
     let body2 = { ...valor, ...body }
-    if (this.valueSubCat == 'edit') {
-      this.services.patchCategoryID(body2, this.idSubcat).then((res) => {
-        this.snack.openSnackBar("Sub-categoria actualizado exitosamente");
-        this.router.navigate(['../categories'])
-        this.getSubCategories()
-      }).catch((error) => {
-        this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
-      })
-      return
-    }
+
     this.services.postCategory(body2).then((res) => {
       this.snack.openSnackBar("Sub-categoria registrado exitosamente");
-      this.router.navigate(['../categories'])
       this.getSubCategories()
-
+      this.subcategform.reset()
+      this.formatSub = []
+      this.myFilesSub = []
+      this.filesSub.reset()
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
     })
@@ -256,7 +297,6 @@ export class NewCategoryComponent {
     this.idSubcat = Number(elements.id)
     this.subcategform.patchValue({
       name: elements.name,
-      description: elements?.description,
     })
     this.imageSub = elements.image
     this.filesSub.patchValue({

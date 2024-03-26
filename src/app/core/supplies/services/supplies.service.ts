@@ -4,7 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { MeasurementUnits, ParamsGlobal, Recipes, ProductId, Products , Tax} from '../interfaces/supplies';
+import { MeasurementUnits, ParamsGlobal, Recipes, ProductId, Products , Tax, MeasurementUnit} from '../interfaces/supplies';
 
 @Injectable({
   providedIn: 'root'

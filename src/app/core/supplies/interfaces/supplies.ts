@@ -121,12 +121,42 @@ export interface MeasurementUnits {
     email: string
   }
 
-  export interface Recipes{
-    count: number,
-    next: String,
-    previus: String,
-    results: Recipe[]
-  }
+export interface Recipes {
+  count: number,
+  next: String,
+  previus: String,
+  results: Recipe[]
+}
+
+export interface Recipe {
+  id: number,
+  name: String,
+  price: String,
+  first_price: String,
+  last_price: String,
+  serial: String,
+  detail: String,
+  image: String,
+  is_base_recipe: boolean,
+  category: number,
+  category_name: Store,
+  tax: number,
+  tax_name: String,
+  created_by: number,
+  created_at: String
+}
+export interface Tax {
+  id: number,
+  store: number,
+  store_name: String,
+  name: String,
+  acronym: String,
+  percentage: String,
+  status: boolean
+}
+export interface ParamsTax {
+
+}
 
   export interface Recipe{
     id:number,
@@ -154,7 +184,5 @@ export interface MeasurementUnits {
     percentage:String,
     status:boolean
   }
-  export interface ParamsTax{
-    
-  }
+ 
   
