@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParamsGlobal } from '../../../interfaces/supplies';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
+import { MyStoreParams } from 'src/app/core/store/interfaces/store';
 
 @Component({
   selector: 'app-recipes-sale',
@@ -22,12 +23,14 @@ export class RecipesSaleComponent {
   recipe = new FormGroup({
     'nameRecipe': new FormControl('', [Validators.required]),
     'category': new FormControl<any>('', [Validators.required]),
-    'taxes': new FormControl<any>('', [Validators.required]),
     'costSale': new FormControl<any>('', [Validators.required]),
-    'serial': new FormControl<any>('', [Validators.required]),
-    'totalCostSale': new FormControl<any>('', [Validators.required]),
+    // 'totalCostSale': new FormControl<any>('', [Validators.required]),
     'description': new FormControl<any>('', [Validators.required])
   })
+  nextPage: number = 1;
+  productsAll: any = []
+  count: number = 1
+
   ngOnInit(): void{
     this.getCategories()
     this.getTaxes()
@@ -52,14 +55,23 @@ export class RecipesSaleComponent {
     })
    }
    onSubmit(){
+    const valor = this.recipe.value
+
+    const body ={
+      name :valor.nameRecipe,
+      price: valor.costSale,
+      detail:valor.description,
+      image:"falta",
+      is_base_recipe:"falta",
+      store:"falta",
+      category:valor.category,
+    }
+    
     // if (this.files.file == '' && this.files.url == '') {
     //   return this.snack.openSnackBar("Por favor agregar la imagen al producto o una URL de la imagen.")
     // }
-    const valor = this.recipe.value
     console.log(valor.category)
-    console.log(valor.serial)
     console.log(valor.nameRecipe)
-    console.log(valor.taxes)
-
    }
+   
 }
