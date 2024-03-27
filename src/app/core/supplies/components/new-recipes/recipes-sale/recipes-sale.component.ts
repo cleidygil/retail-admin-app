@@ -33,27 +33,18 @@ export class RecipesSaleComponent {
 
   ngOnInit(): void{
     this.getCategories()
-    this.getTaxes()
   }
   getCategories() {
     const params: ParamsGlobal = new ParamsGlobal()
     params.category = 'true'
+    params.type =3
     this.services.getCategories(params).then((result) => {
       this.categories = result.results
     }).catch((error) => {
       console.log(error)
     })
   }
-   getTaxes(){
-    const params: ParamsGlobal = new ParamsGlobal()
-    params.category = 'true'
-    this.services.getAllTax().then((result) =>{
-      this.taxes = result
-      console.log(this.taxes.length + " result")
-    }).catch((error) => {
-      console.log(error)
-    })
-   }
+
    onSubmit(){
     const valor = this.recipe.value
 

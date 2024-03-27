@@ -15,19 +15,24 @@ export class SelectedIngredientsComponent {
   private dialog = inject(MatDialog)
   @Input() info: any;
   @Input() selectProducts: any[] =[];
-  
+  @Input() sendProducts: any[] =[];
+  senRecipes:any[]= []
+
   ngOnInit(): void {
     // console.log(this.info + " prueba")
   }
-  addQuantify(){
+  addQuantify(id:number){
+    console.log(this.sendProducts)        
     const dialogo = this.dialog.open(DialogQuantityUnitOfMeasurementComponent,{
-      data:"",
+      data:id,
       width: window.innerWidth >100 ? '20%':'auto',
-    
     })
     dialogo.afterClosed().subscribe(data =>{
       if(data){
-        
+        console.log(data)        
+        const productoAModificar = this.sendProducts.find(item =>item.product ===data.id)
+        productoAModificar.quantity = data.quantity
+        console.log(this.sendProducts)        
       }
     })
   }
@@ -46,5 +51,6 @@ export class SelectedIngredientsComponent {
   }
   deleteProducts(index: number){
     this.selectProducts.splice(index,1)
+    this.sendProducts.splice(index,1)
   }
 }

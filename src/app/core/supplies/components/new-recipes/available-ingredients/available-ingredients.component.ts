@@ -24,7 +24,8 @@ export class AvailableIngredientsComponent {
   selectIngredients :any
   search:String =""
   selectProducts: any[] =[];
-  constructor()
+  sendProducts: any[]=[]
+    constructor()
   {  }  
   ngOnInit(): void{
     this.getAllProducts()
@@ -75,6 +76,11 @@ export class AvailableIngredientsComponent {
     if (!this.selectProducts.includes(data)){
       this.selectProducts.push(data);
       this.costTotal= this.costTotal + parseInt(data.price)
+      const body ={
+        product :data.id,
+        quantity:0
+      }
+      this.sendProducts.push(body)
     }
   }
 }

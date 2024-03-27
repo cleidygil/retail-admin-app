@@ -6,6 +6,7 @@ export class ParamsGlobal {
   page?: number
   parent?: string
   search?: string
+  type?:number
   remove_pagination?: string
 }
 
