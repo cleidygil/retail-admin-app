@@ -4,7 +4,7 @@ import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { BrandsParams, Brands, Management, Taxes, Category, Categories, Brand, Ambients } from '../interface/manege.interface';
+import { BrandsParams, Brands, Management, Taxes, Category, Categories, Brand, Ambients, Ambient } from '../interface/manege.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -95,11 +95,15 @@ export class ManageService {
   }
   getAmbients(params: Management): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
-    const obs$ = this.http.get<Ambients>(`${this.url}/api/stores/ambients/`, { params: resparams })
+    const obs$ = this.http.get<Ambients | Ambient>(`${this.url}/api/stores/ambients/`, { params: resparams })
     return lastValueFrom(obs$)
   }
   postAmbients(body:any): Promise<any> {
     const obs$ = this.http.post<any>(`${this.url}/api/stores/ambients/`,body)
+    return lastValueFrom(obs$)
+  }
+  deletehAmbientID(id:number): Promise<any> {
+    const obs$ = this.http.delete<any>(`${this.url}/api/stores/ambients/${id}/`)
     return lastValueFrom(obs$)
   }
   getTables(params: Management): Promise<any> {

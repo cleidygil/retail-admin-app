@@ -11,34 +11,5 @@ import { ManageService } from '../../services/manege.service';
   styleUrls: ['./manage-environments.component.css']
 })
 export class ManageEnvironmentsComponent {
-  private services = inject(ManageService)
-  private loading = inject(LoadingService);
-  private activateRou = inject(ActivatedRoute);
-  private router = inject(Router)
-
-  nextPage: number = 1;
-  count: number = 1
-  ambients: Ambient[] = []
-  ngOnInit(): void {
-    this.getAmbients()
-  }
-
-  getAmbients() {
-    this.loading.showLoading()
-    const params: Management = new Management()
-    params.page = this.nextPage
-    // params.store = this.services.user.principal_store
-
-    this.services.getAmbients(params).then((result) => {
-      this.loading.hideLoading()
-      this.ambients = result.results
-      this.count = result.count
-    }).catch((err) => {
-      this.loading.hideLoading()
-    });
-  }
-  nextPageIndex(event: PageEvent) {
-    this.nextPage = event.pageIndex + 1;
-    this.getAmbients()
-  }
+ 
 }

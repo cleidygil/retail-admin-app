@@ -6,7 +6,7 @@ import { TransferProductComponent } from 'src/app/core/inventory/components/tran
 import { AllStore, MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { StoreService } from 'src/app/core/store/services/store.service';
 import { GlobalService } from 'src/app/global/services/global.service';
-import { Warehouse, Depot } from '../../interfaces/depot';
+import { Warehouse, Depot, TransferHistory } from '../../interfaces/depot';
 import { DepotService } from '../../services/depot.service';
 import { DialogDetailTransferHistoryComponent } from './dialog-detail-transfer-history/dialog-detail-transfer-history.component';
 
@@ -28,7 +28,7 @@ export class TransferHistoryComponent {
   })
   nextPage: number = 1;
   count: number = 1
-  warehouses: Warehouse[] = []
+  warehouses: TransferHistory[] = []
   ngOnInit(): void {
     this.getAllBranch()
     this.getAllWarehouse()
@@ -50,8 +50,7 @@ export class TransferHistoryComponent {
     const valor = this.params.value
     const params: Depot = new Depot()
     params.page = this.nextPage
-    params.store = valor.store || ''
-    this.services.getAllWarehouses(params).then((result) => {
+    this.services.getTransferHistory(params, Number(valor.store)).then((result) => {
       this.warehouses = result.results
       this.count = result.count
     }).catch((error) => {

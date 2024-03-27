@@ -33,4 +33,25 @@ export interface Warehouses {
     store_name: string
     updated_by: string
   }
+  export interface TransfersHistory {
+    count: number
+    next: any
+    previous: any
+    results: TransferHistory[]
+  }
   
+  export interface TransferHistory {
+    id: number
+    depot_send: number
+    depot_send_store_name: string
+    depot_receive: number
+    depot_receive_store_name: string
+    product_name: string
+    product_brand_name: string
+    product_mu_name: string
+    quantity: number
+    description: string
+    created_at: string
+    created_by: number
+    created_by_name: string
+  }

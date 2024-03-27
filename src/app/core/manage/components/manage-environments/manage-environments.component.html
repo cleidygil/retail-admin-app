@@ -2,69 +2,10 @@
   <a [routerLink]="['../']" mat-mini-fab color="primary">
     <mat-icon>chevron_left</mat-icon>
   </a>
-  <div class="flex justify-center">
-    <span class="text-center font-bold text-2xl text-neutral-600"
-      >Ambientes
-    </span>
-  </div>
+ 
   <button mat-mini-fab color="primary">
     <mat-icon>delete</mat-icon>
   </button>
 </div>
-<div class="max-w-xl mx-auto flex flex-col justify-center my-4 p-2">
-  <div class="absolute bottom-4 right-4 first-letter:my-4">
-    <a mat-mini-fab color="primary" [routerLink]="['../new_ambients']">
-      <mat-icon>add</mat-icon>
-    </a>
-  </div>
-  <div></div>
-</div>
-<div class="grid xl:grid-cols-3 gap-4 m-4 mx-auto">
-  <a
-    [routerLink]="['../recipe_categories', item.id]"
-    *ngFor="let item of ambients"
-    class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
-  >
-    <div class="flex items-center">
-      <svg
-        width="70"
-        height="70"
-        viewBox="0 0 122 121"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect
-          x="0.506836"
-          width="120.991"
-          height="120.991"
-          rx="60.4953"
-          fill="#A8A8A8"
-        />
-        <path
-          d="M92.7786 80.7618L86.2452 65.8285H90.3359C91.8106 65.8285 93.0026 64.6365 93.0026 63.1618C93.0026 61.6871 91.8106 60.4951 90.3359 60.4951H83.9119L75.7466 41.8285H82.3359C83.8106 41.8285 85.0026 40.6365 85.0026 39.1618C85.0026 37.6871 83.8106 36.4951 82.3359 36.4951H39.6692C38.1946 36.4951 37.0026 37.6871 37.0026 39.1618C37.0026 40.6365 38.1946 41.8285 39.6692 41.8285H46.2586L38.0932 60.4951H31.6692C30.1946 60.4951 29.0026 61.6871 29.0026 63.1618C29.0026 64.6365 30.1946 65.8285 31.6692 65.8285H35.7599L29.2266 80.7618C28.6346 82.1111 29.2506 83.6818 30.6026 84.2711C30.9492 84.4258 31.3119 84.4951 31.6666 84.4951C32.6959 84.4951 33.6746 83.8978 34.1119 82.8951L41.5786 65.8285H80.4266L87.8932 82.8951C88.3306 83.8978 89.3092 84.4951 90.3386 84.4951C90.6959 84.4951 91.0586 84.4258 91.4026 84.2711C92.7546 83.6791 93.3679 82.1085 92.7786 80.7618ZM43.9119 60.4951L52.0772 41.8285H69.9252L78.0906 60.4951H43.9119Z"
-          fill="#FAFAFA"
-        />
-      </svg>
-    </div>
-    <div class="flex flex-col text-neutral-500">
-      <span class="text-xl font-semibold text-neutral-600">{{
-        item.name
-      }}</span>
-      <span class="text-sm">Asignado a:</span>
-      <span class="text-sm"> {{ item.store_name }}</span>
-      <span class="text-sm"> {{ item.description }}</span>
-    </div>
-  </a>
-</div>
-<div
-  class="absolute bottom-4 md:left-1/2 flex justify-center items-center space-x-4"
->
-  <mat-paginator
-    class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
-    [pageSizeOptions]="[10]"
-    showFirstLastButtons
-    [length]="count"
-    [hidePageSize]="true"
-    (page)="nextPageIndex($event)"
-  ></mat-paginator>
-</div>
+
+<app-new-manage-environments></app-new-manage-environments>
