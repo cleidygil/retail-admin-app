@@ -1,4 +1,4 @@
-import { Component ,Input, inject} from '@angular/core';
+import { Component ,Input, inject, Output,EventEmitter} from '@angular/core';
 import { MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { SuppliesService } from '../../../services/supplies.service';
 import { PageEvent } from '@angular/material/paginator';
@@ -11,6 +11,11 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class AvailableIngredientsComponent {
   private services = inject(SuppliesService)
+  @Input() datosRecibidos: any;
+  @Input() myFiles: any[] = []
+  @Input() files: any
+  @Output() image = new EventEmitter<string>()
+
   // @Input() data: any; // La propiedad que se enviará al componente hijo
   nextPage: number = 1;
   productsAll: any = []
@@ -25,11 +30,22 @@ export class AvailableIngredientsComponent {
   search:String =""
   selectProducts: any[] =[];
   sendProducts: any[]=[]
+  semdRecipes:any[]=[]
     constructor()
   {  }  
   ngOnInit(): void{
     this.getAllProducts()
   }
+  // recibirDatos(datos: any) {
+  //   const data ={
+  //     infoFomrs:datos,
+  //     image:this.files
+  //   }
+  //   this.datosRecibidos = data;
+  //   console.log(this.datosRecibidos)
+  //   console.log("this.datosRecibidos")
+
+  // }
   getAll(){
     if(this.activeButton){
       this.getAllProducts()
@@ -61,8 +77,12 @@ export class AvailableIngredientsComponent {
     }
   }
   getAllRecipes(){
+    const valor = this.params.value
     const params = new MyStoreParams();
     params.page = this.nextPage
+    if(valor.search !="" && valor.search!=null){
+      params.search = valor.search
+    }
     this.services.getAllRecipes(params).then((result) => {
       this.productsAll = result.results
       this.count = result.count
@@ -72,15 +92,28 @@ export class AvailableIngredientsComponent {
     });
   }
   selectInfo(data:any){
-    this.selectIngredients =data;
-    if (!this.selectProducts.includes(data)){
+    this.selectIngredients = data;
+    const foundIndex = this.selectProducts.findIndex(item => item.id === data.id);
+  
+    if (foundIndex === -1) {
       this.selectProducts.push(data);
-      this.costTotal= this.costTotal + parseInt(data.price)
-      const body ={
-        product :data.id,
-        quantity:0
-      }
-      this.sendProducts.push(body)
+      this.costTotal += parseInt(data.price, 10);
+  
+      let type = data.brand !== undefined ? "product" : "recipe";
+      const body = {
+        product: data.id,
+        quantity: 0,
+        type: type
+      };
+      this.sendProducts.push(body);
+    } else {
+      this.selectProducts.splice(foundIndex, 1);
+      this.sendProducts.splice(foundIndex, 1);
+  
+      this.costTotal -= parseInt(data.price, 10);
     }
+  }
+  isProductSelected(item: any): boolean {
+    return this.selectProducts.some(selectedItem => selectedItem.id === item.id);
   }
 }

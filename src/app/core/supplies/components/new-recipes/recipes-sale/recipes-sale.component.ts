@@ -1,6 +1,6 @@
-import { Component , inject, Input} from '@angular/core';
+import { Component , inject, Input, Output, EventEmitter } from '@angular/core';
 import { SuppliesService } from '../../../services/supplies.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParamsGlobal } from '../../../interfaces/supplies';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
@@ -14,26 +14,36 @@ import { MyStoreParams } from 'src/app/core/store/interfaces/store';
 export class RecipesSaleComponent {
   @Input() myFiles: any[] = []
   @Input() files: any
+  @Output() image = new EventEmitter<string>()
+  @Output() datosEnviados = new EventEmitter<any>();
+
   private services = inject(SuppliesService)
   private router = inject(Router)
   private activateRou = inject(ActivatedRoute);
   private snack = inject(SnackbarService)
   categories: any[] = []
   taxes:any[]=[]
-  recipe = new FormGroup({
-    'nameRecipe': new FormControl('', [Validators.required]),
-    'category': new FormControl<any>('', [Validators.required]),
-    'costSale': new FormControl<any>('', [Validators.required]),
-    // 'totalCostSale': new FormControl<any>('', [Validators.required]),
-    'description': new FormControl<any>('', [Validators.required])
-  })
+  recipe: FormGroup = new FormGroup({});
   nextPage: number = 1;
   productsAll: any = []
   count: number = 1
 
+  constructor(private formBuilder: FormBuilder){
+    this.recipe = this.formBuilder.group({
+      nameRecipe: '',
+      category: ['', Validators.required],
+      costSale: '',
+      description: '',
+    });
+    this.recipe.valueChanges.subscribe(value => {
+      this.datosEnviados.emit(value);
+    });
+  }
+
   ngOnInit(): void{
     this.getCategories()
   }
+
   getCategories() {
     const params: ParamsGlobal = new ParamsGlobal()
     params.category = 'true'
@@ -44,25 +54,4 @@ export class RecipesSaleComponent {
       console.log(error)
     })
   }
-
-   onSubmit(){
-    const valor = this.recipe.value
-
-    const body ={
-      name :valor.nameRecipe,
-      price: valor.costSale,
-      detail:valor.description,
-      image:"falta",
-      is_base_recipe:"falta",
-      store:"falta",
-      category:valor.category,
-    }
-    
-    // if (this.files.file == '' && this.files.url == '') {
-    //   return this.snack.openSnackBar("Por favor agregar la imagen al producto o una URL de la imagen.")
-    // }
-    console.log(valor.category)
-    console.log(valor.nameRecipe)
-   }
-   
 }

@@ -36,11 +36,8 @@
       />
   </div>
     <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-        <textarea class="pl-2 w-full outline-none border-none" rows="3" cols="50" placeholder="Descripción"></textarea>
+        <textarea class="pl-2 w-full outline-none border-none"         formControlName="description"
+        rows="3" cols="50" placeholder="Descripción"></textarea>
     </div>
-    <button 
-    [ngClass]="recipe.value ? 'bg-neutral-300' : 'bg-neutral-500'"
-    [disabled]="recipe.invalid"
-     class="bg-[#7C7A7A] text-white w-32 py-2 px-2 mx-auto w-32 rounded-2xl mt-5 " style="width: 300px;" (click)="onSubmit()">Cargar receta</button>
 </form>
 

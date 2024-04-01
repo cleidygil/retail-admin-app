@@ -115,8 +115,15 @@
          </form>
         </div>
     </div>
-    <app-recipes-sale></app-recipes-sale>
+    <app-recipes-sale 
+    (datosEnviados)="recibirDatos($event)"
+    ></app-recipes-sale>
 
 </div>
-<app-available-ingredients></app-available-ingredients>
+<app-available-ingredients
+    [myFiles]="myFiles"
+    [files]="files.value"
+    (image)="image = $event"
+[datosRecibidos]="datosEnviados"
+></app-available-ingredients>
 

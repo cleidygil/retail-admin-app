@@ -23,9 +23,9 @@ export class RecipesAllComponent {
     this.getAllRecipes()
   }
   
-  dialogDetailRecipes(){
+  dialogDetailRecipes(data:any){
     const dialogo = this.dialog.open(DialogDetailRecipesComponent,{
-      data:"",
+      data:data,
       width: window.innerWidth >100 ? '50%':'auto',
     })
     dialogo.afterClosed().subscribe(data =>{

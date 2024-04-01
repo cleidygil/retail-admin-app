@@ -14,6 +14,6 @@ export class DialogDetailRecipesComponent {
     public dialogRef: MatDialogRef<DialogDetailRecipesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){  }
-
+    
 
 }

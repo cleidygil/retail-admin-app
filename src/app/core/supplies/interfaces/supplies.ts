@@ -186,4 +186,31 @@ export interface ParamsTax {
     status:boolean
   }
  
-  
+  export class MyStoreParams {
+    search?: string
+    page?: number
+    status?: string
+    remove_pagination?: string
+    parent?: string
+    brands?: string
+  }
+
+  export interface AllStores {
+    count: number
+    next: string
+    previous: any
+    results: AllStore[]
+  }
+  export interface AllStore {
+    id: number
+    rif: string
+    name: string
+    address: string
+    phone: string
+    parent?: number
+    localphone: string
+    description: string
+    payment_methods: PaymentMethod[]
+    currency?: number
+    currency_name?: string
+  }

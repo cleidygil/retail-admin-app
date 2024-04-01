@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component,inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-recipes',
@@ -17,8 +19,15 @@ export class NewRecipesComponent {
   selectedFile: any = null;
   image:string = ''
   id: number | null = null
+  datosEnviados: any = {};
+  sub!: Subscription
+  private activateRou = inject(ActivatedRoute);
 
-
+  constructor(){
+    this.sub = this.activateRou.params.subscribe((data) => {
+      this.id = Number(data['id']) || null
+    })
+  }
 
 
   seleccionarArchivo(event: any) {
@@ -32,7 +41,6 @@ export class NewRecipesComponent {
       const isImageType = file.type.startsWith('image/');
       let imageUrl: any
       if (isImageType) {
-        //  imageUrl = this.convertirBase64AUrl(dataUrl);
         this.myFiles = [{ name: file.name, imageData: result, preview: result }];
       } else {
         this.myFiles = [{ name: file.name, imageData: result, preview: null }];
@@ -43,17 +51,24 @@ export class NewRecipesComponent {
           image_data: file.imageData
         }
       })
-
-
       this.format = files
+      this.datosEnviados.image = this.myFiles.length > 0 ? this.myFiles[0].imageData : "";
     };
     reader.readAsDataURL(file);
-
   }
   resetFile(indice: number): void {
     this.myFiles = this.myFiles.filter(
       (fil: string, i: number) => i !== indice
     );
     this.format = this.format.filter((fil: string, i: number) => i !== indice);
+  }
+  recibirDatos(datos: any) {
+    console.log(datos)
+    console.log("datos")
+    const data={
+      infoForms:datos,
+      image:this.myFiles[0].imageData !== undefined ? this.myFiles[0].imageData : ""
+    }
+    this.datosEnviados = data;
   }
 }
