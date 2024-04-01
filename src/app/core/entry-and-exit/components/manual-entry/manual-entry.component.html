@@ -1,0 +1,123 @@
+<div class="flex justify-between gap-2">
+  <a [routerLink]="['../options']" mat-mini-fab color="primary">
+    <mat-icon>chevron_left</mat-icon>
+  </a>
+
+  <div></div>
+</div>
+<div class="max-w-4xl mx-auto self-center">
+  <div
+    class="flex items-center self-center justify-between text-base text-neutral-500 dark:text-neutral-400 mt-16"
+  >
+    <div class="flex items-center">
+      <div
+        [ngClass]="paso1 ? 'bg-neutral-500' : 'bg-neutral-300'"
+        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        1
+      </div>
+    </div>
+    <div class="h-1 w-full bg-neutral-500"></div>
+    <div class="flex items-center">
+      <div
+        [ngClass]="paso2 ? 'bg-neutral-500' : 'bg-neutral-300'"
+        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        2
+      </div>
+    </div>
+    <div class="h-1 w-full bg-neutral-500"></div>
+
+    <div class="flex items-center">
+      <div
+        [ngClass]="pasoFinal ? 'bg-neutral-500' : 'bg-neutral-300'"
+        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        3
+      </div>
+    </div>
+  </div>
+</div>
+<div class="max-w-4xl self-center mx-auto">
+    <ng-container *ngIf="paso1">
+        <div class="flex flex-col gap-4">
+          <app-purchase-data (value1)="value1 = $event"></app-purchase-data>
+          <div class="max-w-xl self-center w-full gap-2 my-4">
+            <div class="flex justify-center gap-2">
+            <button
+              type="button"
+              [ngClass]="value1 == null ? 'bg-neutral-300' : 'bg-neutral-500'"
+              [disabled]="value1 == null"
+              (click)="paso1 = !paso1; paso2 = !paso2"
+              class="p-3 rounded-full text-white w-full font-semibold"
+            >
+            Siguiente
+            </button>
+          </div>
+        </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="paso2">
+        <div class="flex flex-col gap-4">
+          <app-product-selection (value2)="value2 = $event"></app-product-selection>
+          <div class="flex justify-between gap-2">
+            <button
+              type="button"
+              [ngClass]="value1 == null ? 'bg-neutral-300' : 'bg-neutral-500'"
+              [disabled]="value1 == null"
+              (click)="paso1 = !paso1; paso2 = !paso2"
+              class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+            >
+              <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+            <!-- <button
+              type="button"
+              (click)="paso2 = !paso2; pasoFinal = !pasoFinal"
+              class="p-3 bg-neutral-700 rounded-full text-white w-1/2 font-semibold"
+            >
+              Omitir
+            </button> -->
+            <button
+              type="button"
+              [ngClass]="value2 == null ? 'bg-neutral-300' : 'bg-neutral-500'"
+              [disabled]="value2 == null"
+              (click)="paso2 = !paso2; pasoFinal = !pasoFinal"
+              class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+            >
+              <mat-icon>arrow_forward_ios</mat-icon>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="pasoFinal">
+        <div class="flex flex-col gap-4">
+          <app-distribute-product (valueEnd)="valueEnd = $event"> </app-distribute-product>
+          <div class="flex bottom-4 justify-between gap-2">
+            <button
+              type="button"
+              (click)="paso2 = !paso2; pasoFinal = !pasoFinal"
+              class="w-12 h-12 rounded-full flex items-center bg-neutral-500 justify-center text-white text-xl"
+            >
+              <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+            <button
+              type="button"
+              (click)="pasoFinal = !pasoFinal"
+              class="p-3 bg-neutral-700 rounded-full text-white w-1/2 font-semibold"
+            >
+              Omitir
+            </button>
+            <button
+              type="button"
+              [ngClass]="valueEnd == null ? 'bg-neutral-300' : 'bg-neutral-500'"
+              [disabled]="valueEnd == null"
+              (click)="onSubmit()"
+              class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+            >
+              <mat-icon>arrow_forward_ios</mat-icon>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+
+</div>

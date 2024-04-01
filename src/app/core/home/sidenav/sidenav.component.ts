@@ -14,6 +14,6 @@ export class SidenavComponent {
   @Input()
   valid!: boolean
   @Output() classMain = new EventEmitter<string>();
-  classToggle: boolean = this.screenWidth < 768 ? false : true;
+  classToggle: boolean = this.screenWidth < 720 ? false : true;
   menus= JSON.parse(sessionStorage.getItem('menus') || '') 
 }
