@@ -3,6 +3,7 @@ import { MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { SuppliesService } from '../../../services/supplies.service';
 import { PageEvent } from '@angular/material/paginator';
 import { FormGroup, FormControl } from '@angular/forms';
+import { LoadingService } from 'src/app/global/services/loading.service';
 
 @Component({
   selector: 'app-available-ingredients',
@@ -11,19 +12,17 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class AvailableIngredientsComponent {
   private services = inject(SuppliesService)
+  private loading = inject(LoadingService);
   @Input() datosRecibidos: any;
   @Input() myFiles: any[] = []
   @Input() files: any
   @Output() image = new EventEmitter<string>()
-
-  // @Input() data: any; // La propiedad que se enviará al componente hijo
   nextPage: number = 1;
   productsAll: any = []
   count: number = 1
   activeButton:boolean=true
   params = new FormGroup({
     search: new FormControl(''),
-    // status: new FormControl('')
   })
   costTotal: number=0
   selectIngredients :any
@@ -36,16 +35,7 @@ export class AvailableIngredientsComponent {
   ngOnInit(): void{
     this.getAllProducts()
   }
-  // recibirDatos(datos: any) {
-  //   const data ={
-  //     infoFomrs:datos,
-  //     image:this.files
-  //   }
-  //   this.datosRecibidos = data;
-  //   console.log(this.datosRecibidos)
-  //   console.log("this.datosRecibidos")
 
-  // }
   getAll(){
     if(this.activeButton){
       this.getAllProducts()
@@ -54,6 +44,7 @@ export class AvailableIngredientsComponent {
     }
   }
   getAllProducts(){
+    this.loading.showLoading()
     const valor = this.params.value
     const params = new MyStoreParams();
     params.page = this.nextPage
@@ -61,10 +52,12 @@ export class AvailableIngredientsComponent {
       params.search = valor.search
     }
     this.services.getAllProducts(params).then((result) => {
+      this.loading.hideLoading()
       this.productsAll = result.results
       this.count = result.count
       this.activeButton = true
     }).catch((err) => {
+      this.loading.hideLoading()
       console.log(err)
     });
    }
@@ -77,6 +70,7 @@ export class AvailableIngredientsComponent {
     }
   }
   getAllRecipes(){
+    this.loading.showLoading()
     const valor = this.params.value
     const params = new MyStoreParams();
     params.page = this.nextPage
@@ -84,11 +78,13 @@ export class AvailableIngredientsComponent {
       params.search = valor.search
     }
     this.services.getAllRecipes(params).then((result) => {
+      this.loading.hideLoading()
       this.productsAll = result.results
       this.count = result.count
       this.activeButton = false
     }).catch((err) => {
-      console.log(err)
+      this.loading.hideLoading()
+      // console.log(err)
     });
   }
   selectInfo(data:any){
@@ -109,7 +105,6 @@ export class AvailableIngredientsComponent {
     } else {
       this.selectProducts.splice(foundIndex, 1);
       this.sendProducts.splice(foundIndex, 1);
-  
       this.costTotal -= parseInt(data.price, 10);
     }
   }

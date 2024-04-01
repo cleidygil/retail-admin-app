@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SuppliesService } from '../../../services/supplies.service';
 import { AllStore, MyStoreParams } from '../../../interfaces/supplies';
 import { FormGroup, FormControl } from '@angular/forms';
+import { LoadingService } from 'src/app/global/services/loading.service';
 
 @Component({
   selector: 'app-dialog-branch-recipes',
@@ -14,6 +15,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class DialogBranchRecipesComponent {
   private dialog = inject(MatDialog)
   private services = inject(SuppliesService)
+  private loading = inject(LoadingService);
   mystores: AllStore[] = []
   // mybranch: AllStore[] = []
   sendStore: any[]=[]
@@ -47,10 +49,11 @@ export class DialogBranchRecipesComponent {
     });
   }
   getAllBranch() {
+    this.loading.showLoading()
     const params = new MyStoreParams()
     params.parent = 'true'
     this.services.getUserStores(params).then((result) => {
-      // this.loading.hideLoading()
+      this.loading.hideLoading()
       result.forEach(element => {
         const body ={
           data : element,
@@ -60,7 +63,7 @@ export class DialogBranchRecipesComponent {
       });
 
     }).catch((err) => {
-      // this.loading.hideLoading()
+      this.loading.hideLoading()
     });
   }
   selectBranch(id:number){
@@ -75,6 +78,7 @@ export class DialogBranchRecipesComponent {
     }
   }
   onSubmit(){
+    this.loading.showLoading()
     const sendProducts = [];
     const sendRecipes=[];
     for (let i = 0; i < this.data.products.length; i++){
@@ -104,9 +108,10 @@ export class DialogBranchRecipesComponent {
       products:sendProducts
     }
     this.services.postRecipes(body).then((result) => {
+      this.loading.hideLoading()
       this.dialogRef.close("Receta agregada con éxito");
     }).catch((err) => {
-      // this.loading.hideLoading()
+      this.loading.hideLoading()
     });
   }
 }

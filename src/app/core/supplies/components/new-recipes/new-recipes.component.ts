@@ -63,8 +63,6 @@ export class NewRecipesComponent {
     this.format = this.format.filter((fil: string, i: number) => i !== indice);
   }
   recibirDatos(datos: any) {
-    console.log(datos)
-    console.log("datos")
     const data={
       infoForms:datos,
       image:this.myFiles[0].imageData !== undefined ? this.myFiles[0].imageData : ""

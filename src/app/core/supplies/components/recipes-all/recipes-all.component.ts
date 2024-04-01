@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MyStoreParams } from 'src/app/core/store/interfaces/store';
 import {DialogDetailRecipesComponent} from '../../components/recipes-all/dialog-detail-recipes/dialog-detail-recipes.component'
 import { Router } from '@angular/router';
+import { FormGroup, FormControl } from '@angular/forms';
+import { LoadingService } from 'src/app/global/services/loading.service';
 
 @Component({
   selector: 'app-recipes-all',
@@ -14,8 +16,12 @@ export class RecipesAllComponent {
   private services = inject(SuppliesService)
   private dialog = inject(MatDialog)
   private router = inject(Router)
-  recipesAll: any = []
+  private loading = inject(LoadingService);
 
+  recipesAll: any = []
+  params = new FormGroup({
+    search: new FormControl(''),
+  })
   constructor(
     // private router: Router
   ) { }
@@ -36,14 +42,20 @@ export class RecipesAllComponent {
   }
   
   getAllRecipes(){
+    this.loading.showLoading()
+    const valor = this.params.value
     const params = new MyStoreParams()
+    if(valor.search !="" && valor.search!=null){
+      params.search = valor.search
+    }
     this.services.getAllRecipes(params).then((result) => {
       this.recipesAll = result.results
+      this.loading.hideLoading()
       if(this.recipesAll.length ===0){
         this.router.navigate(['/home/supplies/recipes/new_recipes'])
       }
-      console.log(this.recipesAll)
     }).catch((err) => {
+      this.loading.hideLoading()
       console.log(err)
     });
   }
