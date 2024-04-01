@@ -4,6 +4,8 @@ import { SuppliesService } from '../../../services/supplies.service';
 import { PageEvent } from '@angular/material/paginator';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoadingService } from 'src/app/global/services/loading.service';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-available-ingredients',
@@ -30,9 +32,20 @@ export class AvailableIngredientsComponent {
   selectProducts: any[] =[];
   sendProducts: any[]=[]
   semdRecipes:any[]=[]
-    constructor()
-  {  }  
+  sub!: Subscription
+  id: number | null = null
+
+  private activateRou = inject(ActivatedRoute);
+
+    constructor(){ 
+    this.sub = this.activateRou.params.subscribe((data) => {
+      this.id = Number(data['id']) || null
+    })
+   }  
   ngOnInit(): void{
+    if(this.id!=null){
+      this.getRecipes()
+    }
     this.getAllProducts()
   }
 
@@ -92,9 +105,8 @@ export class AvailableIngredientsComponent {
     const foundIndex = this.selectProducts.findIndex(item => item.id === data.id);
   
     if (foundIndex === -1) {
-      this.selectProducts.push(data);
+      this.selectProducts.push(data)
       this.costTotal += parseInt(data.price, 10);
-  
       let type = data.brand !== undefined ? "product" : "recipe";
       const body = {
         product: data.id,
@@ -110,5 +122,41 @@ export class AvailableIngredientsComponent {
   }
   isProductSelected(item: any): boolean {
     return this.selectProducts.some(selectedItem => selectedItem.id === item.id);
+  }
+  getRecipes(){
+    this.loading.showLoading()
+
+    this.services.getRecipe(Number(this.id)).then((result) => {
+
+      console.log(result)
+      console.log("result")
+
+      if(result.previous_recipe.length>0){
+        for(let i =0; result.previous_recipe.length>i;i++){
+          const body={
+            id:result.previous_recipe[i].previus_recipe_id,
+            name:result.previous_recipe[i].name,
+            image: result.previous_recipe[i].image,
+            sku: result.previous_recipe[i].serial
+          }
+          this.selectProducts.push(body)
+        }
+      }
+      if(result.products_recipes.length>0){
+        for(let i =0; result.products_recipes.length>i;i++){
+           const body={
+            id:result.products_recipes[i].product.id,
+            name:result.products_recipes[i].product.name,
+            image: result.products_recipes[i].product.image,
+            sku: result.products_recipes[i].product.sku,
+            mu_name: result.products_recipes[i].product.mu_name,
+          }
+          this.selectProducts.push(body)
+        }
+      }
+      this.loading.hideLoading()
+    }).catch((err) => {
+      this.loading.hideLoading()
+    });
   }
 }

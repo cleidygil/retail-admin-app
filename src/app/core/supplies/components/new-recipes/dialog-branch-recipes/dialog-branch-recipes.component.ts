@@ -69,7 +69,10 @@ export class DialogBranchRecipesComponent {
   selectBranch(id:number){
     for(let i=0; this.mybranch.length>i;++i){
       if(this.mybranch[i].data.id===id){
-        this.sendStore.push(this.mybranch[i].data.id.toString())
+        const store ={
+          store:this.mybranch[i].data.id
+        }
+        this.sendStore.push(store)
       }
     }
     const selectBranch = this.mybranch.find(item =>item.data.id ===id)

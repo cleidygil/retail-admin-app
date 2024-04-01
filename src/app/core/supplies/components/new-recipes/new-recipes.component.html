@@ -116,6 +116,9 @@
         </div>
     </div>
     <app-recipes-sale 
+    [myFiles]="myFiles"
+    [files]="files.value"
+    (image)="image = $event"
     (datosEnviados)="recibirDatos($event)"
     ></app-recipes-sale>
 
@@ -124,6 +127,6 @@
     [myFiles]="myFiles"
     [files]="files.value"
     (image)="image = $event"
-[datosRecibidos]="datosEnviados"
+    [datosRecibidos]="datosEnviados"
 ></app-available-ingredients>
 

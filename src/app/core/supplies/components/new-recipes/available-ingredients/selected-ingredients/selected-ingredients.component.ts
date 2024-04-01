@@ -75,10 +75,12 @@ export class SelectedIngredientsComponent {
     this.sendProducts.splice(index,1)
   }
   selectBranch(): void {
+    console.log(this.infoForms)
+    console.log("this.infoForms")
     const { infoForms } = this.infoForms;
     const { nameRecipe, category, costSale, description } = infoForms ?? {};
   
-    if (this.infoForms.image ==="" || this.infoForms.image ===undefined || this.infoForms.image ===null) {
+      if (this.infoForms.image ==="" || this.infoForms.image ===undefined || this.infoForms.image ===null) {
       this.snack.openSnackBar("Por favor seleccionar una imagen.");
     } else if (!nameRecipe) {
       this.snack.openSnackBar("Por favor escribir un nombre.");
@@ -100,7 +102,6 @@ export class SelectedIngredientsComponent {
       infoForms: this.infoForms,
       products: this.sendProducts
     };
-  
     const dialog = this.dialog.open(DialogBranchRecipesComponent, {
       data: body,
       width: window.innerWidth > 100 ? '50%' : 'auto'

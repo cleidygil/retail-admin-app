@@ -49,9 +49,12 @@ export class SuppliesService {
     const obs$ = this.http.get<Recipes>(`${this.url}/api/recipes/`, {params:resparams})
     return lastValueFrom(obs$)
   }
+  getRecipe(id:any): Promise<any>{
+    const obs$ = this.http.get<ProductId>(`${this.url}/api/recipes/${id}/`)
+    return lastValueFrom(obs$)
+  }
   getCategoryRecipe(params: ParamsGlobal){
     const resparams = this.queryParams.buildQueryParams(params)
-
   }
   getAllTax(): Promise<any>{
     const obs$ = this.http.get<Tax>(`${this.url}/api/services/taxes/?store=`+this.user.store)

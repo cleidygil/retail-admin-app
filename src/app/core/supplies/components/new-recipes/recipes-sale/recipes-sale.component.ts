@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ParamsGlobal } from '../../../interfaces/supplies';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
 import { MyStoreParams } from 'src/app/core/store/interfaces/store';
+import { Subscription } from 'rxjs';
+import { LoadingService } from 'src/app/global/services/loading.service';
 
 @Component({
   selector: 'app-recipes-sale',
@@ -16,6 +18,7 @@ export class RecipesSaleComponent {
   @Input() files: any
   @Output() image = new EventEmitter<string>()
   @Output() datosEnviados = new EventEmitter<any>();
+  private loading = inject(LoadingService);
 
   private services = inject(SuppliesService)
   private router = inject(Router)
@@ -27,21 +30,29 @@ export class RecipesSaleComponent {
   nextPage: number = 1;
   productsAll: any = []
   count: number = 1
+  sub!: Subscription
+  id: number | null = null
 
   constructor(private formBuilder: FormBuilder){
     this.recipe = this.formBuilder.group({
-      nameRecipe: '',
+      nameRecipe:  '',
       category: ['', Validators.required],
-      costSale: '',
-      description: '',
+      costSale:  '',
+      description:  '',
     });
     this.recipe.valueChanges.subscribe(value => {
       this.datosEnviados.emit(value);
     });
+    this.sub = this.activateRou.params.subscribe((data) => {
+      this.id = Number(data['id']) || null
+    })
   }
 
   ngOnInit(): void{
     this.getCategories()
+    if(this.id !=null){
+      this.getRecipe()
+    }
   }
 
   getCategories() {
@@ -53,5 +64,21 @@ export class RecipesSaleComponent {
     }).catch((error) => {
       console.log(error)
     })
+  }
+  getRecipe(){
+    this.loading.showLoading()
+    this.services.getRecipe(Number(this.id)).then((result) => {
+      this.recipe.patchValue({
+        nameRecipe: result.name,
+        category:result.category_name,
+        costSale: result.price,
+        description:result.detail
+      })
+      this.image.emit(result.image)
+      this.loading.hideLoading()
+    }).catch((err) => {
+      this.loading.hideLoading()
+      console.log(err)
+    });
   }
 }

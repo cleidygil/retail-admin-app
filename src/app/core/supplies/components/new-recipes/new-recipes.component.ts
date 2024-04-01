@@ -2,7 +2,7 @@ import { Component,inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-
+import { SuppliesService } from '../../../supplies/services/supplies.service';
 @Component({
   selector: 'app-new-recipes',
   templateUrl: './new-recipes.component.html',
@@ -13,6 +13,7 @@ export class NewRecipesComponent {
     file: new FormControl(''),
     url: new FormControl(''),
   })
+  private services = inject(SuppliesService)
   accept: string = '.jpg,.png';
   myFiles: any[] = [];
   format: any = [];
@@ -21,6 +22,8 @@ export class NewRecipesComponent {
   id: number | null = null
   datosEnviados: any = {};
   sub!: Subscription
+  datos: any = null;
+  temporalInfoForms: any = null;
   private activateRou = inject(ActivatedRoute);
 
   constructor(){
@@ -29,11 +32,12 @@ export class NewRecipesComponent {
     })
   }
 
-
+  ngOnInit(): void{
+   this.actualizarDatosEnviados() 
+  }
   seleccionarArchivo(event: any) {
     const file = event.target.files[0];
     this.selectedFile = file;
-
     const reader = new FileReader();
     reader.onload = (event) => {
       const result = reader.result as string;
@@ -52,7 +56,7 @@ export class NewRecipesComponent {
         }
       })
       this.format = files
-      this.datosEnviados.image = this.myFiles.length > 0 ? this.myFiles[0].imageData : "";
+      this.actualizarDatosEnviados();
     };
     reader.readAsDataURL(file);
   }
@@ -63,10 +67,14 @@ export class NewRecipesComponent {
     this.format = this.format.filter((fil: string, i: number) => i !== indice);
   }
   recibirDatos(datos: any) {
-    const data={
-      infoForms:datos,
-      image:this.myFiles[0].imageData !== undefined ? this.myFiles[0].imageData : ""
-    }
+    this.temporalInfoForms = datos;
+    this.actualizarDatosEnviados();
+  }
+  actualizarDatosEnviados() { 
+    const data = {
+      infoForms: this.temporalInfoForms, 
+      image: this.myFiles.length > 0 ? this.myFiles[0].imageData : this.image
+    };
     this.datosEnviados = data;
   }
 }

@@ -30,15 +30,34 @@ export class RecipesAllComponent {
   }
   
   dialogDetailRecipes(data:any){
-    const dialogo = this.dialog.open(DialogDetailRecipesComponent,{
-      data:data,
-      width: window.innerWidth >100 ? '50%':'auto',
-    })
-    dialogo.afterClosed().subscribe(data =>{
-      if(data){
-        
-      }
-    })
+    this.loading.showLoading()
+    this.services.getRecipe(data.id).then((result) => {
+      const params = new MyStoreParams()
+      params.parent = 'false'
+      this.services.getUserStores(params).then((storeResult) => {
+        this.loading.hideLoading()
+        const body= {
+          recipe:result,
+          storeMain:storeResult
+        }
+        const dialogo = this.dialog.open(DialogDetailRecipesComponent,{
+          data:body,
+          width: window.innerWidth >100 ? '50%':'auto',
+        })
+        dialogo.afterClosed().subscribe(data =>{
+          if(data){
+            this.router.navigate(['/home/supplies/recipes/'+ result.id]);
+          }
+        })
+      }).catch((err) => {
+        this.loading.hideLoading()
+      });
+    }).catch((err) => {
+      this.loading.hideLoading()
+      console.log(err)
+    });
+
+ 
   }
   
   getAllRecipes(){
