@@ -39,15 +39,14 @@
       </option>
     </select>
   </div>
-  <ng-container
-    *ngIf="supplierform.value.method != '5' && supplierform.value.method != '4'"
-    class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl"
-  >
-    <input
-      class="pl-2 w-full outline-none border-none"
-      formControlName="nroref"
-      placeholder="Nro de referencia"
-    />
+  <ng-container *ngIf="supplierform.value.method != '5' && supplierform.value.method != '4'" >
+    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+      <input
+        class="pl-2 w-full outline-none border-none"
+        formControlName="nroref"
+        placeholder="Nro de referencia"
+      />
+    </div>
   </ng-container>
   <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
     <input

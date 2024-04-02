@@ -18,6 +18,7 @@ export class EntryAndExitService {
   paso1 = new BehaviorSubject<any | null>(null)
   paso2 = new BehaviorSubject<any | null>(null)
   pasoFinal = new BehaviorSubject<any | null>(null)
+  array = new BehaviorSubject<any[]>([])
   constructor() { }
 
   getStatusOrder(params: EntryAndExit): Promise<any> {

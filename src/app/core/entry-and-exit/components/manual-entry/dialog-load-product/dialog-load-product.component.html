@@ -1,1 +1,40 @@
-<p>dialog-load-product works!</p>
+<div mat-dialog-title>
+  <span class="flex justify-center font-bold text-2xl text-neutral-600 my-2">
+    {{ data?.name }}
+  </span>
+</div>
+<div mat-dialog-content>
+  <form [formGroup]="productsInfo" class="grid xl:grid-cols-2 gap-2 my-4">
+    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+      <input
+        class="pl-2 w-full outline-none border-none"
+        formControlName="quantity"
+        placeholder="Cantidad"
+        type="number"
+        min="0"
+        onkeypress="return event.charCode >= 48"
+      />
+    </div>
+    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+      <input
+        class="pl-2 w-full outline-none border-none"
+        formControlName="cost"
+        placeholder="Precio total"
+        type="number"
+        min="0"
+        onkeypress="return event.charCode >= 48"
+      />
+    </div>
+  </form>
+</div>
+<div
+  class="flex flex-col w-full justify-center my-2 gap-2 px-4"
+  mat-dialog-actions
+>
+  <button
+    (click)="onSubmit()"
+    class="p-3 rounded-full my-2 gap-2 px-4 text-white w-full font-semibold text-xl bg-neutral-500"
+  >
+    Cargar
+  </button>
+</div>

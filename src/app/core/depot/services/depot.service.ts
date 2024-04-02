@@ -27,5 +27,9 @@ export class DepotService {
     const ob = this.http.get<any>(`${this.url}/api/inventory/depot/${id}/transfer/`, { params: resparams })
     return lastValueFrom(ob)
   }
+  postDepot(body: any): Promise<any> {
+    const obs$ = this.http.post<any>(`${this.url}/api/inventory/depot/`, body)
+    return lastValueFrom(obs$)
+  }
   
 }

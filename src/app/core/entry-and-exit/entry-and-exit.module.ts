@@ -11,10 +11,11 @@ import { PurchaseDataComponent } from './components/manual-entry/purchase-data/p
 import { ProductSelectionComponent } from './components/manual-entry/product-selection/product-selection.component';
 import { DialogLoadProductComponent } from './components/manual-entry/dialog-load-product/dialog-load-product.component';
 import { DistributeProductComponent } from './components/manual-entry/distribute-product/distribute-product.component';
+import { ProductsListComponent } from './components/manual-entry/product-selection/products-list/products-list.component';
 
 
 @NgModule({
-  declarations: [EntryAndExitComponent, ComponentsComponent, ManualEgressComponent, ManualEntryComponent, PurchaseDataComponent, ProductSelectionComponent, DialogLoadProductComponent, DistributeProductComponent],
+  declarations: [EntryAndExitComponent, ComponentsComponent, ManualEgressComponent, ManualEntryComponent, PurchaseDataComponent, ProductSelectionComponent, DialogLoadProductComponent, DistributeProductComponent, ProductsListComponent],
   imports: [
     CommonModule,
     EntryAndExitRoutingModule,

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
@@ -9,6 +9,9 @@ import { MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { SuppliesService } from 'src/app/core/supplies/services/supplies.service';
 import { LoadingService } from 'src/app/global/services/loading.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
+import { EntryAndExitService } from '../../../services/entry-and-exit.service';
+import { DialogLoadProductComponent } from '../dialog-load-product/dialog-load-product.component';
+import { DepotService } from 'src/app/core/depot/services/depot.service';
 
 @Component({
   selector: 'app-product-selection',
@@ -18,11 +21,13 @@ import { SnackbarService } from 'src/app/global/services/snackbar.service';
 export class ProductSelectionComponent {
   private services = inject(SuppliesService)
   private brandServices = inject(ManageService)
+  private entryexitservices = inject(EntryAndExitService)
+  private depotServices = inject(DepotService)
   private snack = inject(SnackbarService)
   private loading = inject(LoadingService)
   private formBuilder = inject(FormBuilder)
   private dialog = inject(MatDialog)
-
+  @Output() value2 = new EventEmitter<any>()
   counters!: FormGroup;
   productsAll: any = []
   allProdutcts: any[] = []
@@ -41,7 +46,7 @@ export class ProductSelectionComponent {
     brand: new FormControl(''),
   })
   ngOnInit(): void {
-   
+
     this.getBrands()
     this.getAllProducts()
   }
@@ -54,7 +59,6 @@ export class ProductSelectionComponent {
     this.services.getAllProducts(params).then((result) => {
       this.loading.hideLoading()
       this.productsAll = result.results
-      this.allProdutcts = result.results
       this.countProd = result.count
     }).catch((err) => {
       console.log(err)
@@ -94,9 +98,16 @@ export class ProductSelectionComponent {
     this.getAllProducts()
   }
   onSubmit() {
-    let limpio:any =[] 
-    // this.inputs.value.filter((item: any) => Number(item.quantity) > 0).map((item: any) => item)
-    this.brandServices.productsArr.next(limpio)
+    this.allProdutcts.map((item) => {
+      this.depotServices.postDepot(item).then((result) => {
+        console.log(result, 'res')
+        this.value2.emit(result)
+      }).catch((error) => {
+        this.loading.hideLoading()
+        this.snack.openSnackBar(`Ocurrio un error con ${item.product_name}, intente de nuevo!`)
+      })
+    })
+
   }
   addProduct() {
     const dialogo = this.dialog.open(DialogNewProductComponent, {
@@ -107,6 +118,31 @@ export class ProductSelectionComponent {
     dialogo.afterClosed().subscribe(data => {
       if (data) {
         this.getAllProducts()
+      }
+    })
+  }
+  loadProduct(item: any) {
+    const dialogo = this.dialog.open(DialogLoadProductComponent, {
+      data: item,
+      width: window.innerWidth > 659 ? 'auto' : 'auto',
+      // height: '80%'
+    })
+    dialogo.afterClosed().subscribe(data => {
+      console.log(this.entryexitservices.array.value)
+      if (data) {
+        let newDate: any[] = this.entryexitservices.array.value
+
+        let copias = [...this.allProdutcts, ...newDate]
+        let prueba = copias.reduce((acc: any[], obj: any) => {
+          let duplicado = acc.filter((it) => it.product === obj.product)
+          if (duplicado.length > 0) {
+            duplicado[0].quantity = obj.quantity
+          } else {
+            acc.push(obj);
+          }
+          return acc;
+        }, []);
+        this.allProdutcts = prueba.length > 0 ? prueba : this.allProdutcts
       }
     })
   }
