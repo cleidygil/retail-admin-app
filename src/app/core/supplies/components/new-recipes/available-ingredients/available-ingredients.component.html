@@ -41,25 +41,25 @@
       </div>
     </div>
 
-    <div class="grid xl:grid-cols-3 gap-4 m-4 mx-auto">
-      <a *ngFor="let item of productsAll"  class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer" (click)="selectInfo(item)" >
+    <div class="grid xl:grid-cols-3 gap-4 m-4 mx-auto w-full">
+      <a *ngFor="let item of productsAll"  class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer w-full h-40" (click)="selectInfo(item)" >
         <div class="flex items-center">
           <ng-container *ngIf="item.image !== null && !isProductSelected(item); else SinImagen">
             <img alt="..."
             [src]="item.image"
-            class="relative  w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white  object-cover object-center hover:z-10 focus:z-10">
+            class="relative w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white  object-cover object-center hover:z-10 focus:z-10">
           </ng-container>
           <ng-template #SinImagen>
-            <svg width="90" height="90" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="90" height="90" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-32 h-32">
               <rect x="0.306641" y="0.36084" width="67.0192" height="67.0192" rx="33.5096" fill="#A8A8A8"/>
               <path d="M46.3822 27.5003C46.278 28.3382 45.7666 28.9203 45.1931 29.4907C40.9566 33.7024 36.731 37.9249 32.5069 42.1489C31.91 42.7458 31.2137 43.0505 30.3681 42.9759C29.8326 42.9285 29.3546 42.7303 28.9512 42.3697C28.8416 42.2717 28.7375 42.1676 28.6334 42.0642C26.5684 40.0039 24.5111 37.935 22.4337 35.8863C21.864 35.3244 21.3642 34.743 21.25 33.9192C21.25 33.7397 21.25 33.5601 21.25 33.3806C21.3938 33.0044 21.4769 32.5886 21.6922 32.2583C22.5199 30.9868 24.3052 30.7762 25.4383 31.7897C25.7422 32.0617 26.0235 32.3594 26.3127 32.6477C27.6774 34.0094 29.0422 35.371 30.4046 36.735C30.4675 36.7979 30.5087 36.8819 30.5593 36.9557C30.595 36.9604 30.6315 36.965 30.6673 36.9689C30.7209 36.8858 30.7613 36.7902 30.8297 36.7226C34.5455 33.0091 38.2659 29.3003 41.9786 25.5846C42.5553 25.0071 43.2275 24.7087 44.0459 24.7592C45.2094 24.8307 46.1568 25.6957 46.3402 26.8483C46.3488 26.9035 46.3682 26.9563 46.3822 27.0107V27.5003Z" fill="#FAFAFA"/>
               </svg>              
           </ng-template>
         </div>
-        <div class="grid justify-start gap-2 text-neutral-500">
+        <div class="grid justify-start gap-2 text-neutral-500 px-4">
           <span class="text-xl font-semibold text-neutral-600 text-left">{{item.name}}</span>
-          <span class="text-sm text-left">Serial {{item.sku}}</span>
-          <span class="text-sm text-left"><strong>UND:</strong> {{item.mu_name}}</span>
+          <span class="text-sm text-left">Serial {{item.serial ?? item.sku}}</span>
+          <span *ngIf="item.mu_name!=null" class="text-sm text-left"><strong>UND:</strong> {{item.mu_name}}</span>
         </div>
       </a>
     </div>
@@ -80,4 +80,5 @@
 [selectProducts]="selectProducts"
 [sendProducts]="sendProducts"
 [infoForms]="datosRecibidos"
+[listStore]="listStore"
 ></app-selected-ingredients>

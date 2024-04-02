@@ -29,6 +29,8 @@ export class DialogDetailRecipesComponent {
     const params = new MyStoreParams()
     params.parent = 'false'
     this.services.getUserStores(params).then((result) => {
+      console.log(result)
+      console.log("result")
       // this.loading.hideLoading()
       this.mystores = result
     }).catch((err) => {

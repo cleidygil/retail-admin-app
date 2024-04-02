@@ -34,30 +34,33 @@ export class AvailableIngredientsComponent {
   semdRecipes:any[]=[]
   sub!: Subscription
   id: number | null = null
+  listStore:any[]=[]
 
   private activateRou = inject(ActivatedRoute);
-
     constructor(){ 
     this.sub = this.activateRou.params.subscribe((data) => {
       this.id = Number(data['id']) || null
     })
    }  
   ngOnInit(): void{
+    this.loading.showLoading()
     if(this.id!=null){
       this.getRecipes()
     }
     this.getAllProducts()
+    this.loading.hideLoading()
   }
 
   getAll(){
+    this.loading.showLoading()
     if(this.activeButton){
       this.getAllProducts()
     }else{
       this.getAllRecipes()
     }
+    this.loading.hideLoading()
   }
   getAllProducts(){
-    this.loading.showLoading()
     const valor = this.params.value
     const params = new MyStoreParams();
     params.page = this.nextPage
@@ -65,13 +68,10 @@ export class AvailableIngredientsComponent {
       params.search = valor.search
     }
     this.services.getAllProducts(params).then((result) => {
-      this.loading.hideLoading()
       this.productsAll = result.results
       this.count = result.count
       this.activeButton = true
     }).catch((err) => {
-      this.loading.hideLoading()
-      console.log(err)
     });
    }
    nextPageIndex(event: PageEvent) {
@@ -83,7 +83,6 @@ export class AvailableIngredientsComponent {
     }
   }
   getAllRecipes(){
-    this.loading.showLoading()
     const valor = this.params.value
     const params = new MyStoreParams();
     params.page = this.nextPage
@@ -91,19 +90,16 @@ export class AvailableIngredientsComponent {
       params.search = valor.search
     }
     this.services.getAllRecipes(params).then((result) => {
-      this.loading.hideLoading()
       this.productsAll = result.results
       this.count = result.count
       this.activeButton = false
     }).catch((err) => {
-      this.loading.hideLoading()
-      // console.log(err)
+      console.log(err)
     });
   }
   selectInfo(data:any){
     this.selectIngredients = data;
     const foundIndex = this.selectProducts.findIndex(item => item.id === data.id);
-  
     if (foundIndex === -1) {
       this.selectProducts.push(data)
       this.costTotal += parseInt(data.price, 10);
@@ -111,7 +107,9 @@ export class AvailableIngredientsComponent {
       const body = {
         product: data.id,
         quantity: 0,
-        type: type
+        type: type,
+        id:this.id,
+        method:true
       };
       this.sendProducts.push(body);
     } else {
@@ -119,29 +117,15 @@ export class AvailableIngredientsComponent {
       this.sendProducts.splice(foundIndex, 1);
       this.costTotal -= parseInt(data.price, 10);
     }
+
   }
   isProductSelected(item: any): boolean {
     return this.selectProducts.some(selectedItem => selectedItem.id === item.id);
   }
   getRecipes(){
-    this.loading.showLoading()
-
     this.services.getRecipe(Number(this.id)).then((result) => {
-
-      console.log(result)
-      console.log("result")
-
-      if(result.previous_recipe.length>0){
-        for(let i =0; result.previous_recipe.length>i;i++){
-          const body={
-            id:result.previous_recipe[i].previus_recipe_id,
-            name:result.previous_recipe[i].name,
-            image: result.previous_recipe[i].image,
-            sku: result.previous_recipe[i].serial
-          }
-          this.selectProducts.push(body)
-        }
-      }
+     
+      this.listStore =result.store
       if(result.products_recipes.length>0){
         for(let i =0; result.products_recipes.length>i;i++){
            const body={
@@ -152,11 +136,39 @@ export class AvailableIngredientsComponent {
             mu_name: result.products_recipes[i].product.mu_name,
           }
           this.selectProducts.push(body)
+          const data = {
+            product: result.products_recipes[i].product.id,
+            quantity:result.products_recipes[i].quantity,
+            type:  "product" ,
+            id:this.id,
+            method:true
+          };
+          this.sendProducts.push(data);
         }
       }
-      this.loading.hideLoading()
+      if(result.previous_recipe.length>0){
+        for(let i =0; result.previous_recipe.length>i;i++){
+          const body={
+            id:result.previous_recipe[i].previus_recipe,
+            name:result.previous_recipe[i].name,
+            image: result.previous_recipe[i].image,
+            sku: result.previous_recipe[i].serial
+          }
+          this.selectProducts.push(body)
+          const data = {
+            product: result.previous_recipe[i].previus_recipe,
+            quantity: result.previous_recipe[i].quantity,
+            type:  "recipe" ,
+            id:this.id,
+            method:true
+          };
+          this.sendProducts.push(data);          
+        }
+      }
+      console.log(this.listStore)
+      console.log("result2")
     }).catch((err) => {
-      this.loading.hideLoading()
+      console.log(err)
     });
   }
 }

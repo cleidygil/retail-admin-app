@@ -2,9 +2,9 @@
     <div class="flex flex-col justify-center w-full text-center">
             <p class="text-3xl font-semibold">Ingredientes seleccionados</p>
             <!-- <p class="text-xl">Items seleccionados: 5</p> -->
-        <div class="grid xl:grid-cols-3 gap-4 m-4 justify-center">
-            <a *ngFor="let item of selectProducts; let i = index" class="w-1/3 sm:w-auto bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-center gap-2">
-                <div class="flex items-center">
+        <div class="grid xl:grid-cols-3 gap-4 m-4 justify-center ">
+            <a *ngFor="let item of selectProducts; let i = index" class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer w-full h-50 ">
+                <div class="flex items-center flex-none">
                     <ng-container  *ngIf="item.image != null; else SinImagen">
                         <img alt="..."
                         [src]="item.image"
@@ -20,8 +20,8 @@
                         </svg>
                     </ng-template>
                 </div>
-                <div class="flex flex-col gap-2 ">
-                    <div class="flex justify-end">
+                <div class="flex flex-col gap-2 flex-1 items-start h-full px-2">
+                    <div class="flex justify-end w-full">
                         <span class="inline-block bg-[#A8A8A8] rounded-full py-2 px-2 cursor-pointer" (click)="deleteProducts(i)"  >
                             <svg width="10" height="13" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8.33437 2.09976H7.09437C7.00154 1.64832 6.7559 1.24269 6.39888 0.951243C6.04185 0.659792 5.59526 0.500338 5.13437 0.499756H4.33437C3.87349 0.500338 3.4269 0.659792 3.06987 0.951243C2.71285 1.24269 2.46721 1.64832 2.37437 2.09976H1.13437C1.02829 2.09976 0.926547 2.1419 0.851532 2.21691C0.776518 2.29193 0.734375 2.39367 0.734375 2.49976C0.734375 2.60584 0.776518 2.70758 0.851532 2.7826C0.926547 2.85761 1.02829 2.89976 1.13437 2.89976H1.53437V8.09976C1.53501 8.62999 1.74593 9.13833 2.12086 9.51327C2.4958 9.8882 3.00414 10.0991 3.53437 10.0998H5.93437C6.46461 10.0991 6.97295 9.8882 7.34789 9.51327C7.72282 9.13833 7.93374 8.62999 7.93437 8.09976V2.89976H8.33437C8.44046 2.89976 8.5422 2.85761 8.61722 2.7826C8.69223 2.70758 8.73438 2.60584 8.73438 2.49976C8.73438 2.39367 8.69223 2.29193 8.61722 2.21691C8.5422 2.1419 8.44046 2.09976 8.33437 2.09976ZM4.33437 1.29976H5.13437C5.38248 1.30006 5.62443 1.37711 5.82702 1.52033C6.02961 1.66356 6.18294 1.86595 6.26597 2.09976H3.20277C3.28581 1.86595 3.43914 1.66356 3.64173 1.52033C3.84432 1.37711 4.08627 1.30006 4.33437 1.29976ZM7.13437 8.09976C7.13437 8.41802 7.00795 8.72324 6.7829 8.94829C6.55786 9.17333 6.25263 9.29976 5.93437 9.29976H3.53437C3.21612 9.29976 2.91089 9.17333 2.68585 8.94829C2.4608 8.72324 2.33437 8.41802 2.33437 8.09976V2.89976H7.13437V8.09976Z" fill="#FAFAFA"/>
@@ -44,6 +44,8 @@
                 </div>
             </a>   
         </div>
-        <button class="bg-[#7C7A7A] text-white w-32 py-2 px-2 mx-auto w-32 rounded-2xl mt-5 " style="width: 300px;" (click)="selectBranch()">Cargar receta</button>
+        <button class="bg-[#7C7A7A] text-white w-32 py-2 px-2 mx-auto w-32 rounded-2xl mt-5 " style="width: 300px;" (click)="selectBranch()">
+            {{ id != null ? "Actualizar" : "Cargar" }} receta
+        </button>
     </div>
 </div>

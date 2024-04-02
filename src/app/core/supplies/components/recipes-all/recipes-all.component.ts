@@ -40,6 +40,7 @@ export class RecipesAllComponent {
           recipe:result,
           storeMain:storeResult
         }
+        console.log(body)
         const dialogo = this.dialog.open(DialogDetailRecipesComponent,{
           data:body,
           width: window.innerWidth >100 ? '50%':'auto',

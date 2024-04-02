@@ -16,14 +16,25 @@ export class SelectedIngredientsComponent {
   private dialog = inject(MatDialog)
   private snack = inject(SnackbarService)
   private router = inject(Router)
+  private activateRou = inject(ActivatedRoute);
   @Input() info: any;
   @Input() selectProducts: any[] =[];
   @Input() sendProducts: any[] =[];
   @Input() infoForms: any;
-  senRecipes:any[]= []
+  @Input() listStore: any;
 
+  senRecipes:any[]= []
+  deleteProduct:any[]=[]
+  sub!: Subscription
+  id: number | null = null
+
+  constructor(){
+    this.sub = this.activateRou.params.subscribe((data) => {
+      this.id = Number(data['id']) || null
+    })
+  }
   ngOnInit(): void {
-    // console.log(this.info + " prueba")
+
   }
   addQuantify(id:number){
     
@@ -38,40 +49,14 @@ export class SelectedIngredientsComponent {
       }
     })
   }
-  // selectBranch(){
-  //   const body ={
-  //     infoForms:this.infoForms,
-  //     products: this.sendProducts
-  //   }
-  //   if(this.infoForms.image ==="" || this.infoForms.image ===undefined || this.infoForms.image ===null){
-  //     this.snack.openSnackBar("Por favor seleccionar una imagen.");
-  //   }else if(this.infoForms.infoForms ===null ||this.infoForms.infoForms===undefined || this.infoForms.infoForms.nameRecipe ===""   ){
-  //     this.snack.openSnackBar("Por favor escribir un nombre.");
-  //   }else if(this.infoForms.infoForms.category ===""){
-  //     this.snack.openSnackBar("Por favor escribir una categoria.");
-  //   }else if(this.infoForms.infoForms.costSale ===""){
-  //     this.snack.openSnackBar("Por favor escribir el precio.");
-  //   }else if(this.infoForms.infoForms.description ===""){
-  //     this.snack.openSnackBar("Por favor escribir la descripción.");
-  //   }else if (  this.sendProducts.length===0){
-  //     this.snack.openSnackBar("Por favor seleccionar un producto para la receta.");
-  //   }else{
-  //     const dialog = this.dialog.open(
-  //       DialogBranchRecipesComponent,{
-  //         data:body,
-  //         width: window.innerWidth >100 ? '50%':'auto',  
-  //       }
-  //     )
-  //     dialog.afterClosed().subscribe(data =>{
-  //       if(data){
-  //         this.snack.openSnackBar(data);
-  //         this.router.navigate(['/home/supplies/recipes'])
-  //       }
-  //     })
-  //   }
-  // }
   deleteProducts(index: number){
     this.selectProducts.splice(index,1)
+    const data = this.sendProducts[index]
+
+    const foundIndex = this.deleteProduct.findIndex(item => item.id === data.id);
+    if(foundIndex === -1 && this.id!=null){
+      this.deleteProduct.push(data)
+    }
     this.sendProducts.splice(index,1)
   }
   selectBranch(): void {
@@ -100,7 +85,10 @@ export class SelectedIngredientsComponent {
   openDialog(): void {
     const body = {
       infoForms: this.infoForms,
-      products: this.sendProducts
+      products: this.sendProducts,
+      id:this.id,
+      deleteProduct:this.deleteProduct,
+      listStore: this.listStore
     };
     const dialog = this.dialog.open(DialogBranchRecipesComponent, {
       data: body,

@@ -49,6 +49,7 @@ export class SuppliesService {
     const obs$ = this.http.get<Recipes>(`${this.url}/api/recipes/`, {params:resparams})
     return lastValueFrom(obs$)
   }
+
   getRecipe(id:any): Promise<any>{
     const obs$ = this.http.get<ProductId>(`${this.url}/api/recipes/${id}/`)
     return lastValueFrom(obs$)
@@ -72,6 +73,14 @@ export class SuppliesService {
   }
   postRecipes(body: any): Promise<any> {
     const obs$ = this.http.post<any>(`${this.url}/api/recipes/`, body)
+    return lastValueFrom(obs$)
+  }
+  patchRecipes(body: any, id:any): Promise<any> {
+    const obs$ = this.http.patch<any>(`${this.url}/api/recipes/${id}/`, body)
+    return lastValueFrom(obs$)
+  }
+  postUpdateRecipes(body: any[], id:any): Promise<any> {
+    const obs$ = this.http.post<any>(`${this.url}/api/recipes/${id}/records/`, body)
     return lastValueFrom(obs$)
   }
 }
