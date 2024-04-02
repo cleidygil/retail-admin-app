@@ -39,6 +39,7 @@ export class RecipesSaleComponent {
       category: ['', Validators.required],
       costSale:  '',
       description:  '',
+      image:  '',
     });
     this.recipe.valueChanges.subscribe(value => {
       this.datosEnviados.emit(value);
@@ -72,7 +73,8 @@ export class RecipesSaleComponent {
         nameRecipe: result.name,
         category:result.category_name,
         costSale: result.price,
-        description:result.detail
+        description:result.detail,
+        image:result.image
       })
       this.image.emit(result.image)
       this.loading.hideLoading()

@@ -1,4 +1,10 @@
 <form  [formGroup]="recipe" class="grid grid-cols-1 gap-2 my-4">
+      <input
+      class="pl-2 w-full outline-none border-none"
+      formControlName="image"
+      placeholder="Nombre de la receta"
+      type="hidden"
+    />
     <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
         <input
           class="pl-2 w-full outline-none border-none"
@@ -36,7 +42,7 @@
       />
   </div>
     <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-        <textarea class="pl-2 w-full outline-none border-none"         formControlName="description"
+        <textarea class="pl-2 w-full outline-none border-none"   formControlName="description"
         rows="3" cols="50" placeholder="Descripción"></textarea>
     </div>
 </form>

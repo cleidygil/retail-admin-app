@@ -73,7 +73,7 @@ export class NewRecipesComponent {
   actualizarDatosEnviados() { 
     const data = {
       infoForms: this.temporalInfoForms, 
-      image: this.myFiles.length > 0 ? this.myFiles[0].imageData : this.image
+      image: this.myFiles.length > 0 ? this.myFiles[0].imageData : this.temporalInfoForms.image
     };
     this.datosEnviados = data;
   }
