@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AllStore, MyStoreParams } from '../../../interfaces/supplies';
 import { SuppliesService } from '../../../services/supplies.service';
+import {DialogDeleteRecipeComponent} from '../dialog-delete-recipe/dialog-delete-recipe.component'
+import { SnackbarService } from 'src/app/global/services/snackbar.service';
 
 @Component({
   selector: 'app-dialog-detail-recipes',
@@ -13,6 +15,7 @@ import { SuppliesService } from '../../../services/supplies.service';
 export class DialogDetailRecipesComponent {
   private dialog = inject(MatDialog)
   private services = inject(SuppliesService)
+  private snack = inject(SnackbarService)
   mystores: AllStore[] = []
   params = new FormGroup({
     costSale: new FormControl(''),
@@ -22,22 +25,35 @@ export class DialogDetailRecipesComponent {
     public dialogRef: MatDialogRef<DialogDetailRecipesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){  }
-  nInit(): void {
+  ngOnInit(): void {
     this.getAllStore()
   }
   getAllStore() {
     const params = new MyStoreParams()
     params.parent = 'false'
     this.services.getUserStores(params).then((result) => {
-      console.log(result)
-      console.log("result")
-      // this.loading.hideLoading()
       this.mystores = result
     }).catch((err) => {
       // this.loading.hideLoading()
     });
   }
   editRecipes(){
-    this.dialogRef.close(true);
+    this.dialogRef.close("edit");
+  }
+  deleteRecipe(){
+    const dialogo = this.dialog.open(DialogDeleteRecipeComponent,{
+      data:"",
+      width: window.innerWidth >100 ? '20%':'auto',
+    })
+    dialogo.afterClosed().subscribe(data =>{
+      if(data){
+        this.services.deleteRecipes(this.data.recipe.id).then((result) =>{  
+          this.snack.openSnackBar("Receta eliminada con éxito.");
+          this.dialogRef.close("delete")
+        }).catch((err:any) => {
+           this.snack.openSnackBar(err);
+        });
+      }
+    })
   }
 }

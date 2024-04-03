@@ -1,54 +1,61 @@
 <div class="max-w-xl mx-auto flex flex-col justify-center my-4 p-2">
     <div class="absolute top-4 right-4 first-letter:my-4">
-      <a mat-mini-fab color="primary" (click)="editRecipes()">
-        <mat-icon>edit</mat-icon>
-      </a>
+        <a mat-mini-fab color="primary" (click)="editRecipes()">
+            <mat-icon>edit</mat-icon>
+        </a>
     </div>
-    <div></div>
-  </div>
-
+</div>
+<div class="max-w-xl mx-auto flex flex-col justify-center my-4 p-2">
+    <div class="absolute right-4 first-letter:my-4" style="top: 60px;">
+        <a mat-mini-fab color="primary" (click)="deleteRecipe()">
+            <mat-icon>delete</mat-icon>
+        </a>
+    </div>
+</div>
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 p-8">
     <div class="flex flex-col justify-center w-full text-center">
         <a class="flex items-center w-24 h-24 rounded-full mx-auto bg-neutral-400 text-white">
-            <img alt="..."
-            [src]="data.recipe.image"
-              class="relative w-24 h-24 rounded-full mx-auto bg-neutral-400 text-white  object-cover object-center hover:z-10 focus:z-10">
+            <img alt="..." [src]="data.recipe.image"
+                class="relative w-24 h-24 rounded-full mx-auto bg-neutral-400 text-white  object-cover object-center hover:z-10 focus:z-10">
         </a>
         <p class="text-xl">{{data.recipe.name}} </p>
         <div class="flex items-center justify-center gap-4">
-            <div class="w-16 py-2 max-w-20">
+            <div class="w-60 py-2">
+                Costo de producción
+            </div>
+            <div class="py-2 border-2 px-6 rounded-2xl">
+                {{data.recipe.total_production_cost}}$
+            </div>
+        </div>
+        <div class="flex items-center justify-center gap-4 mt-2">
+            <div class="w-60 py-2">
                 Precios
             </div>
             <div class="py-2 border-2 px-6 rounded-2xl">
                 {{data.recipe.price}}$
             </div>
         </div>
-        <form
-        class="flex flex-col gap-4 mb-2 justify-center w-full mt-2" [formGroup]="params">
+       
+        <form class="flex flex-col gap-4 mb-2 justify-center w-full mt-2" [formGroup]="params">
             <div class="flex flex-col justify-center text-center">
+                <!-- <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+                    <input class="pl-2 w-full outline-none border-none" placeholder="Costo de venta"
+                        value="Costo de producción: {{data.recipe.total_production_cost}}" readonly />
+                </div> -->
                 <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-                    <input
-                      class="pl-2 w-full outline-none border-none"
-                      placeholder="Costo de ventah"
-                      value="{{data.recipe.price}}"
-                      readonly
-                    />
+                    <textarea class="pl-2 w-full outline-none border-none" rows="3" cols="50" placeholder="Descripción"
+                        readonly>{{data.recipe.detail}} </textarea>
                 </div>
-                <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-                    <textarea class="pl-2 w-full outline-none border-none" rows="3" cols="50" placeholder="Descripción" readonly >{{data.recipe.detail}} </textarea>
-                </div>            
             </div>
         </form>
     </div>
-
-
     <ng-container>
         <div class="mx-auto text-center w-60 gap-4 my-4">
             <div class="flex justify-center gap-2 my-2 text-xl text-neutral-600">
                 Tienda Principal
-              </div>
+            </div>
             <div class="flex justify-center gap-4 my-4">
-           
+
                 <div class="flex flex-col justify-center text-center">
                     <div class="flex flex-col justify-center text-center" *ngFor="let item of data.storeMain">
                         <a class="flex items-center w-24 h-24 rounded-full mx-auto bg-neutral-400 text-white">
@@ -70,7 +77,7 @@
         <form class="grid grid-cols-1 gap-2 my-4">
             <div class="flex justify-center gap-2 my-2 text-xl text-neutral-600">
                 Asignado a estas sucursales
-              </div>
+            </div>
             <div class="flex justify-center flex-wrap gap-4 my-4">
                 <div *ngFor="let item of data.recipe.store" class="inline-block radio text-center">
                     <div class="flex flex-col justify-center text-center">

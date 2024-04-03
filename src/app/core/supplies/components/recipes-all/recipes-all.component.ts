@@ -6,6 +6,8 @@ import {DialogDetailRecipesComponent} from '../../components/recipes-all/dialog-
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoadingService } from 'src/app/global/services/loading.service';
+import { PageEvent } from '@angular/material/paginator';
+import { ParamsGlobal ,MyRecipeParams } from '../../interfaces/supplies';
 
 @Component({
   selector: 'app-recipes-all',
@@ -17,8 +19,19 @@ export class RecipesAllComponent {
   private dialog = inject(MatDialog)
   private router = inject(Router)
   private loading = inject(LoadingService);
+  nextPage: number = 1;
+  nextPageCategory: number = 1;
 
-  recipesAll: any = []
+  count: number = 1
+  countCategory: number = 1
+
+  categorySelect = new FormGroup({
+    category: new FormControl<any>(''),
+  })
+  nextPageProd: number = 1;
+  pageIndex: number = 10
+  recipesAll:any = []
+  categoryAll:any =[]
   params = new FormGroup({
     search: new FormControl(''),
   })
@@ -27,6 +40,7 @@ export class RecipesAllComponent {
   ) { }
   ngOnInit(): void {
     this.getAllRecipes()
+    this.getCategory()
   }
   
   dialogDetailRecipes(data:any){
@@ -41,13 +55,17 @@ export class RecipesAllComponent {
           storeMain:storeResult
         }
         console.log(body)
+        console.log("body")
         const dialogo = this.dialog.open(DialogDetailRecipesComponent,{
           data:body,
           width: window.innerWidth >100 ? '50%':'auto',
         })
         dialogo.afterClosed().subscribe(data =>{
-          if(data){
+          if(data==="edit"){
             this.router.navigate(['/home/supplies/recipes/'+ result.id]);
+          }else if(data ==="delete"){
+            this.recipesAll.splice(0, this.recipesAll.length)
+            this.getAllRecipes()
           }
         })
       }).catch((err) => {
@@ -55,28 +73,68 @@ export class RecipesAllComponent {
       });
     }).catch((err) => {
       this.loading.hideLoading()
-      console.log(err)
-    });
-
- 
+    }); 
   }
-  
-  getAllRecipes(){
-    this.loading.showLoading()
-    const valor = this.params.value
-    const params = new MyStoreParams()
-    if(valor.search !="" && valor.search!=null){
-      params.search = valor.search
+  getCategory(){
+    const params: ParamsGlobal = new ParamsGlobal()
+    params.page = this.nextPageCategory
+    params.category = 'true'
+    params.type =3
+    this.services.getCategories(params).then((result) => {
+      console.log(result)
+      console.log("result2")
+      this.categoryAll = result.results
+      this.countCategory = result.count
+      this.pageIndex = Math.ceil(Number(result.count) / 10)
+    }).catch((error) => {
+      console.log("result")
+      console.log(error)
+    })
+  }
+  prevPageIndex() {
+    if (this.nextPageCategory > 1) {
+      this.nextPageCategory = 1
+      this.getCategory()
+      return
     }
+  }
+  getAllRecipes(id:number =0){
+    this.loading.showLoading()
+    const params = new MyRecipeParams()
+    params.page = this.nextPage
+    // if(this.categorySelect.value.category  !==""){
+    //   params.category =this.categorySelect.value?.category ||""
+    // }
+    if(id !=0){
+      params.category =id 
+    }
+    params.search = this.params.value?.search|| '';
+    console.log(this.categorySelect.value?.category)
+    console.log(params)
+    console.log("params")
     this.services.getAllRecipes(params).then((result) => {
       this.recipesAll = result.results
+      this.count = result.count
       this.loading.hideLoading()
-      if(this.recipesAll.length ===0){
-        this.router.navigate(['/home/supplies/recipes/new_recipes'])
-      }
+      // if(this.recipesAll.length ===0){
+      //   this.router.navigate(['/home/supplies/recipes/new_recipes'])
+      // }
     }).catch((err) => {
       this.loading.hideLoading()
       console.log(err)
     });
+  }
+
+
+  nextPageIndex(event: PageEvent) {
+    this.nextPage = event.pageIndex + 1;
+    this.getAllRecipes()
+  }
+  pageNext() {
+    if (this.nextPageCategory < this.pageIndex) {
+      this.nextPageCategory = this.nextPageCategory + 1
+      this.getCategory()
+      return
+    }
   }
 }
