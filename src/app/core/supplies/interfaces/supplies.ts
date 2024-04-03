@@ -8,6 +8,7 @@ export class ParamsGlobal {
   search?: string
   type?:number
   remove_pagination?: string
+  only_prices?:boolean
 }
 
 export interface MeasurementUnits {
@@ -213,4 +214,13 @@ export interface ParamsTax {
     payment_methods: PaymentMethod[]
     currency?: number
     currency_name?: string
+  }
+  export class MyRecipeParams{
+    search?: string
+    page?: number
+    status?: string
+    remove_pagination?: string
+    parent?: string
+    only_prices?:boolean
+    category?:number
   }

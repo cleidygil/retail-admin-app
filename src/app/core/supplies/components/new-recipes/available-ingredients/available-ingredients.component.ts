@@ -1,11 +1,11 @@
 import { Component ,Input, inject, Output,EventEmitter} from '@angular/core';
-import { MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { SuppliesService } from '../../../services/supplies.service';
 import { PageEvent } from '@angular/material/paginator';
 import { FormGroup, FormControl } from '@angular/forms';
 import { LoadingService } from 'src/app/global/services/loading.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ParamsGlobal ,MyRecipeParams } from '../../../interfaces/supplies';
 
 @Component({
   selector: 'app-available-ingredients',
@@ -43,27 +43,29 @@ export class AvailableIngredientsComponent {
     })
    }  
   ngOnInit(): void{
-    this.loading.showLoading()
+    // this.loading.showLoading()
     if(this.id!=null){
       this.getRecipes()
     }
     this.getAllProducts()
-    this.loading.hideLoading()
+    // this.loading.hideLoading()
   }
 
   getAll(){
-    this.loading.showLoading()
+    // this.loading.showLoading()
     if(this.activeButton){
       this.getAllProducts()
     }else{
       this.getAllRecipes()
     }
-    this.loading.hideLoading()
+    // this.loading.hideLoading()
   }
   getAllProducts(){
+    this.loading.showLoading()
     const valor = this.params.value
-    const params = new MyStoreParams();
+    const params = new ParamsGlobal();
     params.page = this.nextPage
+    params.only_prices= true
     if(valor.search !="" && valor.search!=null){
       params.search = valor.search
     }
@@ -71,7 +73,9 @@ export class AvailableIngredientsComponent {
       this.productsAll = result.results
       this.count = result.count
       this.activeButton = true
+      this.loading.hideLoading()
     }).catch((err) => {
+      this.loading.hideLoading()
     });
    }
    nextPageIndex(event: PageEvent) {
@@ -83,8 +87,9 @@ export class AvailableIngredientsComponent {
     }
   }
   getAllRecipes(){
+    this.loading.showLoading()
     const valor = this.params.value
-    const params = new MyStoreParams();
+    const params = new MyRecipeParams();
     params.page = this.nextPage
     if(valor.search !="" && valor.search!=null){
       params.search = valor.search
@@ -93,7 +98,9 @@ export class AvailableIngredientsComponent {
       this.productsAll = result.results
       this.count = result.count
       this.activeButton = false
+      this.loading.hideLoading()
     }).catch((err) => {
+      this.loading.hideLoading()
       console.log(err)
     });
   }
@@ -109,7 +116,8 @@ export class AvailableIngredientsComponent {
         quantity: 0,
         type: type,
         id:this.id,
-        method:true
+        method:true,
+        price:parseInt(data.price, 10)
       };
       this.sendProducts.push(body);
     } else {
@@ -123,8 +131,8 @@ export class AvailableIngredientsComponent {
     return this.selectProducts.some(selectedItem => selectedItem.id === item.id);
   }
   getRecipes(){
-    this.services.getRecipe(Number(this.id)).then((result) => {
-     
+    this.loading.showLoading()
+    this.services.getRecipe(Number(this.id)).then((result) => { 
       this.listStore =result.store
       if(result.products_recipes.length>0){
         for(let i =0; result.products_recipes.length>i;i++){
@@ -144,6 +152,7 @@ export class AvailableIngredientsComponent {
             method:true
           };
           this.sendProducts.push(data);
+          this.costTotal += parseInt(result.products_recipes[i].product.price, 10);
         }
       }
       if(result.previous_recipe.length>0){
@@ -162,13 +171,18 @@ export class AvailableIngredientsComponent {
             id:this.id,
             method:true
           };
-          this.sendProducts.push(data);          
+          this.sendProducts.push(data);     
+          this.costTotal += parseInt(result.products_recipes[i].product.price, 10);     
         }
       }
-      console.log(this.listStore)
-      console.log("result2")
+      this.loading.hideLoading()
     }).catch((err) => {
+      this.loading.hideLoading()
       console.log(err)
     });
+  }
+  actualizarCostoTotal(nuevoCosto: number) {
+    // Actualizar la variable costTotal con el nuevo valor
+    this.costTotal = nuevoCosto;
   }
 }

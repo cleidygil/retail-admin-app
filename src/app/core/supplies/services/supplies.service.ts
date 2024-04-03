@@ -4,7 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { QueryParamsService } from 'src/app/global/services/query-params.service';
 import { environment } from 'src/environments/environment.prod';
-import { MeasurementUnits, ParamsGlobal, Recipes, ProductId, Products , Tax, MeasurementUnit, MyStoreParams, AllStore, AllStores} from '../interfaces/supplies';
+import { MeasurementUnits, ParamsGlobal, Recipes, ProductId, Products , Tax, MeasurementUnit, MyStoreParams, AllStore, AllStores, MyRecipeParams} from '../interfaces/supplies';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +44,7 @@ export class SuppliesService {
     const obs$ = this.http.patch<any>(`${this.url}/api/products/${id}/`, body)
     return lastValueFrom(obs$)
   }
-  getAllRecipes(params: ParamsGlobal): Promise<Recipes>{
+  getAllRecipes(params: MyRecipeParams): Promise<Recipes>{
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<Recipes>(`${this.url}/api/recipes/`, {params:resparams})
     return lastValueFrom(obs$)
@@ -81,6 +81,10 @@ export class SuppliesService {
   }
   postUpdateRecipes(body: any[], id:any): Promise<any> {
     const obs$ = this.http.post<any>(`${this.url}/api/recipes/${id}/records/`, body)
+    return lastValueFrom(obs$)
+  }
+  deleteRecipes(id:any): Promise<any> {
+    const obs$ = this.http.delete<any>(`${this.url}/api/recipes/${id}/`)
     return lastValueFrom(obs$)
   }
 }

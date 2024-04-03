@@ -50,10 +50,12 @@ export class RecipesSaleComponent {
   }
 
   ngOnInit(): void{
+    // this.loading.showLoading()
     this.getCategories()
     if(this.id !=null){
       this.getRecipe()
     }
+    // this.loading.hideLoading()
   }
 
   getCategories() {
@@ -63,7 +65,6 @@ export class RecipesSaleComponent {
     this.services.getCategories(params).then((result) => {
       this.categories = result.results
     }).catch((error) => {
-      console.log(error)
     })
   }
   getRecipe(){
@@ -78,6 +79,7 @@ export class RecipesSaleComponent {
       })
       this.image.emit(result.image)
       this.loading.hideLoading()
+
     }).catch((err) => {
       this.loading.hideLoading()
       console.log(err)

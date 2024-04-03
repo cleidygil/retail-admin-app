@@ -1,4 +1,4 @@
-import { Component , Inject,Input, ViewChild, inject} from '@angular/core';
+import { Component , Inject,Input, ViewChild, inject,Output,EventEmitter} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogQuantityUnitOfMeasurementComponent } from '../../dialog-quantity-unit-of-measurement/dialog-quantity-unit-of-measurement.component';
@@ -22,6 +22,8 @@ export class SelectedIngredientsComponent {
   @Input() sendProducts: any[] =[];
   @Input() infoForms: any;
   @Input() listStore: any;
+  @Input() costTotal:any
+  @Output() costTotalChange = new EventEmitter<number>();
 
   senRecipes:any[]= []
   deleteProduct:any[]=[]
@@ -52,16 +54,15 @@ export class SelectedIngredientsComponent {
   deleteProducts(index: number){
     this.selectProducts.splice(index,1)
     const data = this.sendProducts[index]
-
     const foundIndex = this.deleteProduct.findIndex(item => item.id === data.id);
     if(foundIndex === -1 && this.id!=null){
       this.deleteProduct.push(data)
     }
+    this.costTotal -= data.price;
+    this.costTotalChange.emit(this.costTotal);
     this.sendProducts.splice(index,1)
   }
   selectBranch(): void {
-    console.log(this.infoForms)
-    console.log("this.infoForms")
     const { infoForms } = this.infoForms;
     const { nameRecipe, category, costSale, description } = infoForms ?? {};
   
