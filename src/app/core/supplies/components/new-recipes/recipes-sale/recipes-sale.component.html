@@ -28,8 +28,8 @@
         formControlName="category"
           class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
         >
-        <option selected >Categorías</option>
-        <option *ngFor="let item of categories"  [value]="item.id">
+        <option  [selected]="id === null"  value="">Categorías</option>
+        <option *ngFor="let item of categories"  [value]="item.id" [selected]="item.id === idCategory">
           {{ item.name }}
         </option>
         </select> 

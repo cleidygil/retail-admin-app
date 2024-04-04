@@ -71,10 +71,18 @@ export class NewRecipesComponent {
     this.actualizarDatosEnviados();
   }
   actualizarDatosEnviados() { 
-    const data = {
-      infoForms: this.temporalInfoForms, 
-      image: this.myFiles.length > 0 ? this.myFiles[0].imageData : this.temporalInfoForms.image
-    };
-    this.datosEnviados = data;
+    if(this.files.value.url!="") {
+      const data = {
+        infoForms: this.temporalInfoForms, 
+        image:  this.files.value.url
+      };
+      this.datosEnviados = data;
+    }else{
+      const data = {
+        infoForms: this.temporalInfoForms, 
+        image: this.myFiles.length > 0 ? this.myFiles[0].imageData : this.temporalInfoForms.image
+      };
+      this.datosEnviados = data;
+    }
   }
 }

@@ -39,13 +39,14 @@ export class SelectedIngredientsComponent {
 
   }
   addQuantify(id:number){
-    
     const dialogo = this.dialog.open(DialogQuantityUnitOfMeasurementComponent,{
       data:id,
-      width: window.innerWidth >100 ? '20%':'auto',
+      width: window.innerWidth >100 ? '300px':'auto',
     })
     dialogo.afterClosed().subscribe(data =>{
       if(data){
+        console.log(data)
+        console.log("data")
         const productoAModificar = this.sendProducts.find(item =>item.product ===data.id)
         productoAModificar.quantity = data.quantity      
       }
@@ -65,7 +66,7 @@ export class SelectedIngredientsComponent {
   selectBranch(): void {
     const { infoForms } = this.infoForms;
     const { nameRecipe, category, costSale, description } = infoForms ?? {};
-  
+    const foundIndex = this.sendProducts.some(item => item.quantity === 0)
       if (this.infoForms.image ==="" || this.infoForms.image ===undefined || this.infoForms.image ===null) {
       this.snack.openSnackBar("Por favor seleccionar una imagen.");
     } else if (!nameRecipe) {
@@ -78,6 +79,8 @@ export class SelectedIngredientsComponent {
       this.snack.openSnackBar("Por favor escribir la descripción.");
     } else if (this.sendProducts.length === 0) {
       this.snack.openSnackBar("Por favor seleccionar un producto para la receta.");
+    }else if (foundIndex) {
+      this.snack.openSnackBar("Por favor agregarle la cantidad a algunos de los productos.");
     } else {
       this.openDialog();
     }
@@ -93,7 +96,7 @@ export class SelectedIngredientsComponent {
     };
     const dialog = this.dialog.open(DialogBranchRecipesComponent, {
       data: body,
-      width: window.innerWidth > 100 ? '50%' : 'auto'
+      width: window.innerWidth > 100 ? '500px' : 'auto'
     });
   
     dialog.afterClosed().subscribe(data => {

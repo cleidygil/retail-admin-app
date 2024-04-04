@@ -58,7 +58,7 @@ export class RecipesAllComponent {
         console.log("body")
         const dialogo = this.dialog.open(DialogDetailRecipesComponent,{
           data:body,
-          width: window.innerWidth >100 ? '50%':'auto',
+          width: window.innerWidth >100 ? '500px':'auto',
         })
         dialogo.afterClosed().subscribe(data =>{
           if(data==="edit"){
@@ -102,6 +102,7 @@ export class RecipesAllComponent {
     this.loading.showLoading()
     const params = new MyRecipeParams()
     params.page = this.nextPage
+    this.categorySelect.get('category')?.setValue(null)
     // if(this.categorySelect.value.category  !==""){
     //   params.category =this.categorySelect.value?.category ||""
     // }
@@ -109,9 +110,6 @@ export class RecipesAllComponent {
       params.category =id 
     }
     params.search = this.params.value?.search|| '';
-    console.log(this.categorySelect.value?.category)
-    console.log(params)
-    console.log("params")
     this.services.getAllRecipes(params).then((result) => {
       this.recipesAll = result.results
       this.count = result.count

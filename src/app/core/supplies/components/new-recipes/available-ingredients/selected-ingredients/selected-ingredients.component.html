@@ -2,8 +2,8 @@
     <div class="flex flex-col justify-center w-full text-center">
             <p class="text-3xl font-semibold">Ingredientes seleccionados</p>
             <!-- <p class="text-xl">Items seleccionados: 5</p> -->
-        <div class="grid xl:grid-cols-3 gap-4 m-4 justify-center ">
-            <a *ngFor="let item of selectProducts; let i = index" class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer w-full h-50 ">
+        <div class="grid xl:grid-cols-3  lg:grid-cols-3 md:grid-cols-2 gap-4 m-4 mx-auto w-full">
+            <a *ngFor="let item of sendProducts; let i = index" class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer w-full h-50 ">
                 <div class="flex items-center flex-none">
                     <ng-container  *ngIf="item.image != null; else SinImagen">
                         <img alt="..."
@@ -31,7 +31,9 @@
                         </span>
                     </div>
                     <span class="text-xl font-semibold text-neutral-600 text-left">{{item.name}} </span>
-                    <span class="text-sm text-left">Serial {{item.serial ?? item.sku}}</span>
+                    <span class="text-sm text-left">Serial {{item.serial}}</span>
+                    <span class="text-sm text-left">Cantidad {{item.quantity}}</span>
+
                     <div class="flex justify-start">
                         <span class="flex  gap-2 text-sm text-left bg-[#A8A8A8] text-white px-3 py-1 rounded-2xl cursor-pointer" (click)="addQuantify(item.id)"><strong>UND:</strong> {{item.mu_name}}  
                             <span class="mt-1">

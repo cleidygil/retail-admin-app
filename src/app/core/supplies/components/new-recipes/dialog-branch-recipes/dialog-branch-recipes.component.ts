@@ -19,21 +19,20 @@ export class DialogBranchRecipesComponent {
   mystores: AllStore[] = []
   // mybranch: AllStore[] = []
   sendStore: any[] = []
+  deleteStore:any[]=[]
   sendProducts: any[] = []
   mybranch: any[] = []
   params = new FormGroup({
     search: new FormControl(''),
     status: new FormControl('')
   })
+
   constructor(
     public dialogRef: MatDialogRef<DialogBranchRecipesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
   }
   ngOnInit(): void {
-    console.log(this.data)
-    console.log("this.data")
-
     this.getAllStore()
     this.getAllBranch()
   }
@@ -77,16 +76,19 @@ export class DialogBranchRecipesComponent {
     });
   }
   selectBranch(id: number) {
-    console.log(id)
-    console.log("id")
     const index = this.sendStore.findIndex(store => store.store === id);
     if (index !== -1) {
+      this.deleteStore.push(this.sendStore[index])
       this.sendStore.splice(index, 1); // Elimina el elemento con el ID dado
     }else{
       for (let i = 0; this.mybranch.length > i; ++i) {
         if (this.mybranch[i].data.id === id) {
           const store = {
             store: this.mybranch[i].data.id
+          }
+          const data = this.deleteStore.findIndex(item=>item.store === this.mybranch[i].data.id)
+          if(data !== -1){
+            this.deleteStore.splice(data, 1); // Elimina el elemento con el ID dado
           }
           this.sendStore.push(store)
         }
@@ -99,45 +101,25 @@ export class DialogBranchRecipesComponent {
     }
   }
   onSubmit() {
-    this.loading.showLoading()
-    const sendProducts = [];
-    const sendRecipes = [];
+     // this.loading.showLoading()
+    let sendProducts = [];
+    let sendRecipes = [];
     const bodyUpdate:any[] =[];
     const deleteProduct=[]
     const deleteRecipe=[]
+    sendProducts = this.data.products
+    .filter((item:any) => item.type === "product")
+    .map((item:any) => ({
+        [this.data.id != null ? "id" : "product"]: item.product,
+        quantity: item.quantity
+    }));
+    sendRecipes = this.data.products
+    .filter((item:any) => item.type !== "product")
+    .map((item:any) => ({
+        [this.data.id != null ? "id" : "previus_recipe"]:item.product,
+        quantity: item.quantity
+    }));
 
-    for (let i = 0; i < this.data.products.length; i++) {
-      if (this.data.products[i].type === "product") {
-        if(this.data.id!=null){
-          const data = {
-            id: this.data.products[i].product,
-            quantity: this.data.products[i].quantity
-          }
-          sendProducts.push(data)
-        }else{
-          const data = {
-            product: this.data.products[i].product,
-            quantity: this.data.products[i].quantity
-          }
-          sendProducts.push(data)
-        }
-       
-      } else {
-        if(this.data.id!=null){
-          const data = {
-            id: this.data.products[i].product,
-            quantity: this.data.products[i].quantity
-          }
-          sendRecipes.push(data)
-        }else{
-          const data = {
-            previus_recipe: this.data.products[i].product,
-            quantity: this.data.products[i].quantity
-          }
-          sendRecipes.push(data)
-        }
-      }
-    }
     if (this.data.id == null) {
       const body = {
         name: this.data.infoForms.infoForms.nameRecipe,
@@ -154,6 +136,8 @@ export class DialogBranchRecipesComponent {
         this.loading.hideLoading()
         this.dialogRef.close("Receta agregada con éxito");
       }).catch((err) => {
+        console.log(err)
+        console.log("err")
         this.loading.hideLoading()
       });
     } else {
@@ -171,23 +155,26 @@ export class DialogBranchRecipesComponent {
       bodyUpdate.push(bodyUpdateProducts)
       const bodyUpdateRecipes ={
         method:true,
-        prev_recipes: sendRecipes
+        previus_recipe: sendRecipes
       }
       bodyUpdate.push(bodyUpdateRecipes)
 
       for(let i = 0; this.data.deleteProduct.length>i;i++){
-        if(this.data.deleteProduct[i].type ==="product"){
-          const body ={
-            id:this.data.deleteProduct[i].product,
-            quantity:this.data.deleteProduct[i].quantity
+        const validateProduct = sendProducts.some((item:any)=>item.id===this.data.deleteProduct[i].product)
+        if(!validateProduct){
+          if(this.data.deleteProduct[i].type ==="product"){
+            const body ={
+              id:this.data.deleteProduct[i].product,
+              quantity:this.data.deleteProduct[i].quantity
+            }
+            deleteProduct.push(body)
+          }else{
+            const body ={
+              id:this.data.deleteProduct[i].id,
+              quantity:this.data.deleteProduct[i].quantity
+            }
+            deleteRecipe.push(body)
           }
-          deleteProduct.push(body)
-        }else{
-          const body ={
-            id:this.data.deleteProduct[i].id,
-            quantity:this.data.deleteProduct[i].quantity
-          }
-          deleteRecipe.push(body)
         }
       }
       const bodyDeleteProduct ={
@@ -196,36 +183,37 @@ export class DialogBranchRecipesComponent {
       }
       const bodyDeleteRecipe ={
         method:false,
-        prev_recipes:deleteRecipe
+        previus_recipe:deleteRecipe
       }
-      for(let i =0; this.data.listStore.length>i;i++){
-        const store = this.sendStore.find((item:any)=>item.store === this.data.listStore[i].id)
-        if(store){
+      for(let i=0; this.deleteStore.length >i;i++){
+        const data = this.data.listStore.find((item:any)=>item.id ===this.deleteStore[i].store)
+        if(data){
           const body={
-            method:true,
-            store:{
-              id:store.store
+                    method:false,
+                    stores:{
+                      id:data.id
+                    }
             }
-          }
-          bodyUpdate.push(body)
-        }else{
-          const body ={
-            method:false,
-            store:{
-              id:this.data.listStore[i].id
-            }
-          }
           bodyUpdate.push(body)
         }
       }
+      for(let i=0; this.sendStore.length >i;i++){
+        const data = this.data.listStore.find((item:any)=>item.id ===this.sendStore[i].store)
+        if(!data){
+          const body={
+                    method:true,
+                    stores:{
+                      id:this.sendStore[i].store
+                    }
+            }
+          bodyUpdate.push(body)
+        }
+      }
+
       bodyUpdate.push(bodyDeleteProduct)
       bodyUpdate.push(bodyDeleteRecipe)
       this.services.patchRecipes(patchBody, this.data.id).then((result) => {
-        console.log(result)
-        console.log("result")
         this.services.postUpdateRecipes(bodyUpdate, this.data.id).then((resultUpdate) => {
-          console.log(resultUpdate)
-          console.log("resultUpdate")
           this.loading.hideLoading()
           this.dialogRef.close("Receta actualizada con éxito.");
         }).catch((err) => {

@@ -32,7 +32,7 @@ export class RecipesSaleComponent {
   count: number = 1
   sub!: Subscription
   id: number | null = null
-
+  idCategory?: number
   constructor(private formBuilder: FormBuilder){
     this.recipe = this.formBuilder.group({
       nameRecipe:  '',
@@ -68,20 +68,21 @@ export class RecipesSaleComponent {
     })
   }
   getRecipe(){
-    this.loading.showLoading()
+    // this.loading.showLoading()
     this.services.getRecipe(Number(this.id)).then((result) => {
       this.recipe.patchValue({
         nameRecipe: result.name,
-        category:result.category_name,
+        category:result.category,
         costSale: result.price,
         description:result.detail,
         image:result.image
       })
+      this.idCategory=result.category
       this.image.emit(result.image)
-      this.loading.hideLoading()
+      // this.loading.hideLoading()
 
     }).catch((err) => {
-      this.loading.hideLoading()
+      // this.loading.hideLoading()
       console.log(err)
     });
   }

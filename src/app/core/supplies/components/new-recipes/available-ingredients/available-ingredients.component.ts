@@ -61,7 +61,7 @@ export class AvailableIngredientsComponent {
     // this.loading.hideLoading()
   }
   getAllProducts(){
-    this.loading.showLoading()
+    // this.loading.showLoading()
     const valor = this.params.value
     const params = new ParamsGlobal();
     params.page = this.nextPage
@@ -73,9 +73,9 @@ export class AvailableIngredientsComponent {
       this.productsAll = result.results
       this.count = result.count
       this.activeButton = true
-      this.loading.hideLoading()
+      // this.loading.hideLoading()
     }).catch((err) => {
-      this.loading.hideLoading()
+      // this.loading.hideLoading()
     });
    }
    nextPageIndex(event: PageEvent) {
@@ -87,7 +87,7 @@ export class AvailableIngredientsComponent {
     }
   }
   getAllRecipes(){
-    this.loading.showLoading()
+    // this.loading.showLoading()
     const valor = this.params.value
     const params = new MyRecipeParams();
     params.page = this.nextPage
@@ -98,9 +98,9 @@ export class AvailableIngredientsComponent {
       this.productsAll = result.results
       this.count = result.count
       this.activeButton = false
-      this.loading.hideLoading()
+      // this.loading.hideLoading()
     }).catch((err) => {
-      this.loading.hideLoading()
+      // this.loading.hideLoading()
       console.log(err)
     });
   }
@@ -115,8 +115,12 @@ export class AvailableIngredientsComponent {
         product: data.id,
         quantity: 0,
         type: type,
-        id:this.id,
+        id:data.id,
         method:true,
+        name:data.name,
+        image:data.image,
+        mu_name: data.mu_name,
+        serial: data.brand !== undefined ? data.sku : data.serial,
         price:parseInt(data.price, 10)
       };
       this.sendProducts.push(body);
@@ -131,7 +135,7 @@ export class AvailableIngredientsComponent {
     return this.selectProducts.some(selectedItem => selectedItem.id === item.id);
   }
   getRecipes(){
-    this.loading.showLoading()
+    // this.loading.showLoading()
     this.services.getRecipe(Number(this.id)).then((result) => { 
       this.listStore =result.store
       if(result.products_recipes.length>0){
@@ -148,8 +152,13 @@ export class AvailableIngredientsComponent {
             product: result.products_recipes[i].product.id,
             quantity:result.products_recipes[i].quantity,
             type:  "product" ,
-            id:this.id,
-            method:true
+            id:result.products_recipes[i].product.id,
+            // id: result.products_recipes[i].product.id,
+            method:true,
+            image: result.products_recipes[i].product.image,
+            serial: result.products_recipes[i].product.sku,
+            name:result.products_recipes[i].product.name,
+            mu_name: result.products_recipes[i].product.mu_name,
           };
           this.sendProducts.push(data);
           this.costTotal += parseInt(result.products_recipes[i].product.price, 10);
@@ -168,16 +177,22 @@ export class AvailableIngredientsComponent {
             product: result.previous_recipe[i].previus_recipe,
             quantity: result.previous_recipe[i].quantity,
             type:  "recipe" ,
-            id:this.id,
-            method:true
+            id: result.previous_recipe[i].previus_recipe,
+            // id:result.previous_recipe[i].previus_recipe,
+            method:true,
+            name:result.previous_recipe[i].name,
+            image: result.previous_recipe[i].image,
+            sku: result.previous_recipe[i].serial
           };
           this.sendProducts.push(data);     
           this.costTotal += parseInt(result.products_recipes[i].product.price, 10);     
         }
       }
-      this.loading.hideLoading()
+      // this.loading.hideLoading()
     }).catch((err) => {
-      this.loading.hideLoading()
+      // this.loading.hideLoading()
+      // this.snack.openSnackBar("Ocurrió un error, por favor intente de nuevo.");
+
       console.log(err)
     });
   }

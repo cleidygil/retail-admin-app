@@ -36,12 +36,12 @@
         <h1
         (click)="getAllRecipes()"
         [ngClass]="!activeButton ? 'bg-[#7C7A7A] text-white' : 'bg-transparent text-[#7C7A7A] border-[#7C7A7A]'"
-          class="px-8 py-2 shadow-lg shadow-gray-500/50  text-[20px] cursor-pointer active:scale-[.97] rounded-[32px]">
+          class="px-8 py-2 shadow-lg shadow-gray-500/50  text-[20px] cursor-pointer active:scale-[.97] border-2 rounded-[32px]">
           Recetas</h1>
       </div>
     </div>
 
-    <div class="grid xl:grid-cols-3 gap-4 m-4 mx-auto w-full">
+    <div class="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2  gap-4 m-4 mx-auto w-full">
       <a *ngFor="let item of productsAll"  class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer w-full h-40" (click)="selectInfo(item)" >
         <div class="flex items-center">
           <ng-container *ngIf="item.image !== null && !isProductSelected(item); else SinImagen">
