@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { BrandsParams } from 'src/app/core/manage/interface/manege.interface';
@@ -12,6 +12,7 @@ import { SnackbarService } from 'src/app/global/services/snackbar.service';
 import { EntryAndExitService } from '../../../services/entry-and-exit.service';
 import { DialogLoadProductComponent } from '../dialog-load-product/dialog-load-product.component';
 import { DepotService } from 'src/app/core/depot/services/depot.service';
+import { ShoppingService } from 'src/app/core/shopping/services/shopping.service';
 
 @Component({
   selector: 'app-product-selection',
@@ -22,7 +23,7 @@ export class ProductSelectionComponent {
   private services = inject(SuppliesService)
   private brandServices = inject(ManageService)
   private entryexitservices = inject(EntryAndExitService)
-  private depotServices = inject(DepotService)
+  private shopServices = inject(ShoppingService)
   private snack = inject(SnackbarService)
   private loading = inject(LoadingService)
   private formBuilder = inject(FormBuilder)
@@ -31,17 +32,18 @@ export class ProductSelectionComponent {
   counters!: FormGroup;
   productsAll: any = []
   allProdutcts: any[] = []
-
+  delete: number | any
   brands: any = []
   nextPage: number = 1;
   nextPageProd: number = 1;
   pageIndex: number = 10
   count: number = 0
   countProd: number = 0
+  id: number | null = null
   params = new FormGroup({
     search: new FormControl(''),
   })
-  items: any = []
+  items: any[] = []
   brandsSelect = new FormGroup({
     brand: new FormControl(''),
   })
@@ -49,6 +51,15 @@ export class ProductSelectionComponent {
 
     this.getBrands()
     this.getAllProducts()
+    this.counters = this.formBuilder.group({
+      inputs: this.formBuilder.array([])
+    });
+    this.inputs?.valueChanges.subscribe(data => {
+      this.value2.emit(data)
+    })
+  }
+  get inputs() {
+    return (this.counters.controls["inputs"] as FormArray);
   }
   getAllProducts() {
     this.loading.showLoading()
@@ -97,23 +108,50 @@ export class ProductSelectionComponent {
     this.nextPageProd = event.pageIndex + 1;
     this.getAllProducts()
   }
-  onSubmit() {
-    this.allProdutcts.map((item) => {
-      this.depotServices.postDepot(item).then((result) => {
-        console.log(result, 'res')
-        this.value2.emit(result)
-      }).catch((error) => {
-        this.loading.hideLoading()
-        this.snack.openSnackBar(`Ocurrio un error con ${item.product_name}, intente de nuevo!`)
-      })
+  onSubmitAllProducts() {
+    this.loading.showLoading()
+    const value: any[] = []
+    this.allProdutcts.map((valor) => {
+      value.push({
+        quantity: valor.quantity,
+        product: valor.product,
+        store: valor.store,
+        purchase_order: null,
+      });
+    })
+    let body = {
+      store: this.services.user?.store,
+      items: value,
+      supplier: 5,
+      status: 10
+    }
+    this.shopServices.postPurchasesOrders(body).then((result) => {
+      this.loading.hideLoading()
+      this.items = result.items
+      this.id = result.id
+      this.getOrderID()
+      this.snack.openSnackBar('Tu order ha sido creada con exito.');
+      this.allProdutcts = []
+    }).catch((error) => {
+      this.loading.hideLoading()
+      this.snack.openSnackBar("Ocurrio un error, intente de nuevo!")
     })
 
+  }
+
+  getOrderID() {
+    let dataNew: any[] = []
+    this.allProdutcts.map((valor, i: number) => {
+      dataNew.push(this.items[i] = { ...valor, purchase_order: this.id, ...valor.cost, id: this.items[i].id })
+    })
+    this.items = dataNew
+    this.value2.next(this.items)
+  
   }
   addProduct() {
     const dialogo = this.dialog.open(DialogNewProductComponent, {
       data: '',
       width: window.innerWidth > 659 ? 'auto' : 'auto',
-      // height: '80%'
     })
     dialogo.afterClosed().subscribe(data => {
       if (data) {
@@ -125,13 +163,10 @@ export class ProductSelectionComponent {
     const dialogo = this.dialog.open(DialogLoadProductComponent, {
       data: item,
       width: window.innerWidth > 659 ? 'auto' : 'auto',
-      // height: '80%'
     })
     dialogo.afterClosed().subscribe(data => {
-      console.log(this.entryexitservices.array.value)
       if (data) {
         let newDate: any[] = this.entryexitservices.array.value
-
         let copias = [...this.allProdutcts, ...newDate]
         let prueba = copias.reduce((acc: any[], obj: any) => {
           let duplicado = acc.filter((it) => it.product === obj.product)
@@ -148,5 +183,8 @@ export class ProductSelectionComponent {
   }
   deleteProduct(id: number) {
     this.allProdutcts = this.allProdutcts.filter(item => item.product != id).map(item => item)
+  }
+  deleteItem(id: number) {
+    this.items = this.items.filter(item => item.product != id).map(item => item)
   }
 }

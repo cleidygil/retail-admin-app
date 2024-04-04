@@ -34,12 +34,10 @@
       formControlName="method"
       class="w-full border border-neutral-300 rounded-full text-neutral-500 h-10 pl-5 pr-10 bg-white hover:border-neutral-400 focus:outline-none appearance-none"
     >
-      <option *ngFor="let item of methodArr" [value]="item.id">
-        {{ item.name }}
-      </option>
+      <option value="1"> AL CONTADO </option>
+      <option value="2"> CREDITO </option>
     </select>
   </div>
-  <ng-container *ngIf="supplierform.value.method != '5' && supplierform.value.method != '4'" >
     <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
       <input
         class="pl-2 w-full outline-none border-none"
@@ -47,7 +45,6 @@
         placeholder="Nro de referencia"
       />
     </div>
-  </ng-container>
   <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
     <input
       class="pl-2 w-full outline-none border-none"

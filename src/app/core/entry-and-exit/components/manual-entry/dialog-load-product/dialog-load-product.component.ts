@@ -29,7 +29,7 @@ export class DialogLoadProductComponent {
       brand_name: this.data.brand_name,
       mu_name: this.data.mu_name,
       store: this.data.store,
-      method:true
+      purchase_order: null,
     }
     Array.push(body)
     this.services.array.next(Array)

@@ -11,7 +11,7 @@
           <form [formGroup]="brandsSelect" class="flex gap-4 ml-10">
             <div
               class="inline-block radio text-center"
-              *ngFor="let item of brands"
+              *ngFor="let item of brands" (click)="getAllProducts()"
             >
               <div class="flex flex-col justify-center text-center">
                 <input
@@ -21,9 +21,9 @@
                   [id]="item.id"
                   hidden="hidden"
                   [value]="item.id"
-                  (click)="getAllProducts()"
                 />
-                <label
+                <label 
+                  
                   [for]="item.id"
                   class="flex items-center w-32 h-32 rounded-md mx-auto bg-neutral-400 text-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
                 >

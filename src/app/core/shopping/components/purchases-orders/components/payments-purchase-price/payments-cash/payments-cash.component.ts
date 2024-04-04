@@ -67,7 +67,7 @@ export class PaymentsCashComponent {
       console.log(error)
     })
   }
-  onSubmit() {
+  onSubmit() { 
     const data = this.supplierform.value
     const values = this.services.registerPurchasePrice.value;
     console.log(values, 'values')

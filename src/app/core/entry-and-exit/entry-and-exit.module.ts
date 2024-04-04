@@ -12,6 +12,7 @@ import { ProductSelectionComponent } from './components/manual-entry/product-sel
 import { DialogLoadProductComponent } from './components/manual-entry/dialog-load-product/dialog-load-product.component';
 import { DistributeProductComponent } from './components/manual-entry/distribute-product/distribute-product.component';
 import { ProductsListComponent } from './components/manual-entry/product-selection/products-list/products-list.component';
+import { PurchasesOrdersModule } from '../shopping/components/purchases-orders/purchases-orders.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ProductsListComponent } from './components/manual-entry/product-selecti
   imports: [
     CommonModule,
     EntryAndExitRoutingModule,
-    MaterialDesignModule
+    MaterialDesignModule,
+    PurchasesOrdersModule
   ]
 })
 export class EntryAndExitModule { }

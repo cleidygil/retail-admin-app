@@ -14,8 +14,6 @@ export class PurchaseDataComponent {
   @Output() value1 = new EventEmitter<any>()
   private services = inject(EntryAndExitService)
 
-  private snack = inject(SnackbarService)
-  private store = inject(StoreService)
   supplierform = new FormGroup({
     'nrofactura': new FormControl<any>('', [Validators.required, Validators.maxLength(10)]),
     'datepay': new FormControl<any>('', [Validators.required]),
@@ -23,9 +21,8 @@ export class PurchaseDataComponent {
     'nroref': new FormControl<any>('',),
     'amount': new FormControl<any>('', [Validators.required, Validators.minLength(0)]),
   })
-  methodArr: any[] = []
+
   ngOnInit(): void {
-    this.getMethods()
     if (this.services.paso1.value != null) {
       let valor = this.services.paso1.value
       this.supplierform.patchValue({
@@ -38,24 +35,19 @@ export class PurchaseDataComponent {
       })
     }
     this.supplierform.valueChanges.subscribe(valor => {
+
       if (this.supplierform.valid) {
-        this.value1.emit(valor)
-        this.services.paso1.next(valor)
+        let body = {
+          depot: 'true',
+          manual: 'true',
+          store: this.services.user.store,
+          "invoice_number": valor.nrofactura,
+          "date_payment": valor.datepay,
+          "method_payment": valor.method,
+        }
+        this.value1.emit(body)
+        this.services.paso1.next(body)
       }
     })
-
-  }
-  getMethods() {
-    const params: Shopping = new Shopping()
-    this.store.getPaymentMethods(params).then((result) => {
-      this.methodArr = result
-    }).catch((error) => {
-      console.log(error)
-    })
-  }
-  onSubmit() {
-    const data = this.supplierform.value
-    this.value1.emit(data)
-    this.services.paso1.next(data)
   }
 }
