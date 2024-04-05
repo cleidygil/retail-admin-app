@@ -34,6 +34,9 @@ export class WarehousesComponent {
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   })
+  options = new FormGroup({
+    type: new FormControl(''),
+  })
   ngOnInit(): void {
     this.getAllStore()
     this.getAllBranch()

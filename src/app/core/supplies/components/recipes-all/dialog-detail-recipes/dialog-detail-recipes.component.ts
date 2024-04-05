@@ -12,7 +12,8 @@ import { SnackbarService } from 'src/app/global/services/snackbar.service';
   templateUrl: './dialog-detail-recipes.component.html',
   styleUrls: ['./dialog-detail-recipes.component.css']
 })
-export class DialogDetailRecipesComponent {
+export class 
+DialogDetailRecipesComponent {
   private dialog = inject(MatDialog)
   private services = inject(SuppliesService)
   private snack = inject(SnackbarService)

@@ -11,7 +11,7 @@
        
     </div>
   </div>
-  <div class="flex justify-center gap-2">
+  <form  [formGroup]="options" class="flex justify-center gap-2">
     <div class="inline-flex gap-2 radio text-center">
       <div class="flex flex-col justify-center text-center text-xl">
         <input
@@ -45,12 +45,12 @@
           for="2"
           class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400 selection:text-neutral-800"
         >
-          Egresoss
+          Egresos
         </label>
       </div>
     </div>
    
-  </div>
+  </form>
   <div class="max-w-xl h-full mx-auto flex flex-col justify-center my-4 p-2 z-10 relative">
     <div class="fixed  bottom-4 right-4 first-letter:my-4">
       <a mat-mini-fab color="primary" [routerLink]="['../options']">
@@ -201,7 +201,7 @@
               for="2"
               class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400 selection:text-neutral-800"
             >
-              Egresoss
+              Egresos
             </label>
           </div>
         </div>
