@@ -37,7 +37,7 @@ export class DialogSelectedProductsComponent {
   })
   items: any = []
   brandsSelect = new FormGroup({
-    brand: new FormControl(''),
+    brand: new FormControl<any>(''),
   })
   // valueForm: any[] = []
 
@@ -57,10 +57,11 @@ export class DialogSelectedProductsComponent {
     return (this.counters.controls["inputs"] as FormArray);
   }
   getAllProducts() {
+    console.log(this.brandsSelect.get('brand')?.value, 'value')
     this.inputs.controls = []
     this.loading.showLoading()
     const params = new MyStoreParams()
-    params.brands = this.brandsSelect.value?.brand || '';
+    params.brands = this.brandsSelect.value?.brand ;
     params.page = this.nextPageProd;
     params.search = this.params.value?.search || '';
     this.services.getAllProducts(params).then((result) => {
@@ -73,7 +74,9 @@ export class DialogSelectedProductsComponent {
       this.loading.hideLoading()
     });
   }
-
+  Validations(e:any){
+    e ?? this.getAllProducts
+  }
 
   getBrands() {
     const params = new BrandsParams()

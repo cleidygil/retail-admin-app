@@ -30,5 +30,6 @@ import { DialogDetailTransferHistoryComponent } from './components/transfer-hist
     MaterialDesignModule,
     OrdersHistoryModule
   ]
+
 })
 export class DepotModule { }

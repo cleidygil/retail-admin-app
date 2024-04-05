@@ -26,8 +26,8 @@ export class OrdersHistoryComponent {
     search: new FormControl(''),
     store: new FormControl(''),
     type: new FormControl(''),
-    start: new FormControl<Date>(new Date()),
-    end: new FormControl<Date>(new Date()),
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date  | null>(null),
   })
   nextPage: number = 1;
   count: number = 1

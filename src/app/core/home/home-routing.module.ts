@@ -57,6 +57,11 @@ const routes: Routes = [
         path: 'production_order',
         loadChildren: () => import('../production-order/production-order.module').then(m => m.ProductionOrderModule)
       },
+       {
+        path: 'income_egress',
+        loadChildren: () => import('../entry-and-exit/entry-and-exit.module').then(m => m.EntryAndExitModule)
+      },
+      
 
     ]
   },

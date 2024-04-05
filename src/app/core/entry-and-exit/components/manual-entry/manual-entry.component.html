@@ -1,0 +1,111 @@
+<div class="flex justify-between gap-2">
+  <a [routerLink]="['../options']" mat-mini-fab color="primary">
+    <mat-icon>chevron_left</mat-icon>
+  </a>
+
+  <div></div>
+</div>
+<div class="max-w-5xl mx-auto self-center">
+  <div
+    class="flex items-center self-center justify-between text-base text-neutral-500 dark:text-neutral-400 mt-16"
+  >
+    <div class="flex items-center">
+      <div
+        [ngClass]="paso1 ? 'bg-neutral-500' : 'bg-neutral-300'"
+        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        1
+      </div>
+    </div>
+    <div class="h-1 w-full bg-neutral-300"></div>
+    <div class="flex items-center">
+      <div
+        [ngClass]="paso2 ? 'bg-neutral-500' : 'bg-neutral-300'"
+        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        2
+      </div>
+    </div>
+    <div class="h-1 w-full bg-neutral-300"></div>
+
+    <div class="flex items-center">
+      <div
+        [ngClass]="pasoFinal ? 'bg-neutral-500' : 'bg-neutral-300'"
+        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        3
+      </div>
+    </div>
+  </div>
+</div>
+<div class="max-w-5xl self-center mx-auto">
+  <ng-container *ngIf="paso1">
+    <div class="flex flex-col gap-4">
+      <app-purchase-data (value1)="value1 = $event"></app-purchase-data>
+      <div class="max-w-xl self-center w-full gap-2 my-4">
+        <div class="flex justify-center gap-2">
+          <button
+            type="button"
+            [ngClass]="value1 == null ? 'bg-neutral-300' : 'bg-neutral-500'"
+            [disabled]="value1 == null"
+            (click)="paso1 = !paso1; paso2 = !paso2"
+            class="p-3 rounded-full text-white w-full font-semibold"
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="paso2">
+    <div class="flex justify-between gap-2 py-4">
+      <button
+        matTooltip="Volver a Paso 1"
+        type="button"
+        [ngClass]="value1 == null ? 'bg-neutral-300' : 'bg-neutral-500'"
+        [disabled]="value1 == null"
+        (click)="paso1 = !paso1; paso2 = !paso2"
+        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+    </div>
+    <div class="flex flex-col gap-4">
+      <app-product-selection (value2)="value2 = $event"></app-product-selection>
+      <div class="flex justify-between items-center gap-2">
+       <button
+          type="button"
+          [ngClass]="value2 == null ? 'bg-neutral-300' : 'bg-neutral-500'"
+          [disabled]="value2 == null"
+          (click)="onSubmit()"
+          class="p-3 rounded-full my-2 gap-2 px-4 text-white w-full font-semibold text-xl"
+        >
+          Registrar ingreso
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="pasoFinal">
+    <div class="flex flex-col gap-4">
+      <app-distribute-product [valueEnd]="valueEnd"> </app-distribute-product>
+      <div class="flex bottom-4 items-center justify-between gap-2">
+        <!-- <button
+          type="button"
+          (click)="paso2 = !paso2; pasoFinal = !pasoFinal"
+          class="w-12 h-12 rounded-full flex items-center bg-neutral-500 justify-center text-white text-xl"
+        >
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button> -->
+
+        <a
+          type="button"
+          [ngClass]="valueEnd == null ? 'bg-neutral-300' : 'bg-neutral-500'"
+          [routerLink]="['/home/income_egress/']"
+          class="flex text-center justify-center p-3 rounded-full my-2 gap-2 px-4 text-white w-full font-semibold text-xl"
+        >
+          Terminar
+        </a>
+      </div>
+    </div>
+  </ng-container>
+</div>

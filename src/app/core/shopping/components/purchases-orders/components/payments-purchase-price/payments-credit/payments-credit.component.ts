@@ -65,7 +65,7 @@ export class PaymentsCreditComponent {
   onSubmit() {
     const data = this.supplierform.value
     const values = this.services.registerPurchasePrice.value;
-    console.log(values, 'values')
+    console.log(values, 'values') 
     let body = {
       ...this.value,
       depot:true,
@@ -90,7 +90,13 @@ export class PaymentsCreditComponent {
         this.snack.openSnackBar("Ocurrio un error, intente de nuevo!")
       })
     }).catch((error) => {
+      if (error.status ==400) {
+        this.snack.openSnackBar(error.error?.cost ?? '')
+        return
+      }
       this.snack.openSnackBar("Ocurrio un error, intente de nuevo!")
+      return
+
     })
   }
 }

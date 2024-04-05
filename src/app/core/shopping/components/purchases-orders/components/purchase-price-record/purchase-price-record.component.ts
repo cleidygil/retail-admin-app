@@ -20,7 +20,7 @@ export class PurchasePriceRecordComponent {
   private router = inject(Router)
   private formBuilder = inject(FormBuilder)
 
-  counters!: FormGroup;
+  counters!: FormGroup; 
   sub!: Subscription
   id: number | null = null
   allProdutcts: OrderItem[] = []

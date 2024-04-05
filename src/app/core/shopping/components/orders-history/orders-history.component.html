@@ -124,7 +124,7 @@
             hidden="hidden"
             value="1"
           />
-          <label
+          <label (click)="getPurchasesOrders()"
             for="1"
             class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400"
           >
@@ -140,7 +140,7 @@
             hidden="hidden"
             value="2"
           />
-          <label
+          <label (click)="getPurchasesOrders()"
             for="2"
             class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400 selection:text-neutral-800"
           >
@@ -217,13 +217,14 @@
         <span class="text-xl font-semibold text-neutral-600">
           {{ item.id }}</span
         >
-        <span class="text-sm">{{ item.status_name }}</span>
-        <span class="text-sm">{{ item.supplier_name }}</span>
+        <span class="text-sm font-semibold">{{ item.status_name }}</span>
+        <span class="text-sm"
+          >Fecha:  {{ item.created_at | date: "dd/MM/YYYY, hh:mm a" }}
+        </span>
+        <span class="text-sm">Motivo:</span>
+        <span class="text-sm">Precio:</span>
 
         <span class="text-sm">{{ item.store_name }} </span>
-        <span class="text-sm"
-          >{{ item.created_at | date: "dd/MM/YYYY, hh:mm a" }}
-        </span>
       </div>
     </div>
   </div>

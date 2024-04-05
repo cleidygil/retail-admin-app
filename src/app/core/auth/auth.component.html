@@ -1,70 +1,112 @@
 <!-- component -->
-<div class="font-sans text-gray-900 antialiased">
-  <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-200">
-      <div>
-          <a href="/">
-              <span class="font-bold text-3xl">RETAIL <span class="bg-orange-500 text-white px-2 rounded-md">ADMIN</span></span>
-          </a>
+<!-- component -->
+<div class="h-screen flex bg-neutral-200">
+  <div class="flex flex-col items-center w-1/2 justify-center">
+    <form
+      [formGroup]="loginForm"
+      (submit)="onSubmit()"
+      class="w-1/2 bg-transparent mx-auto  text-xl "
+    >
+      <p class="text-gray-800 font-bold text-4xl my-4 text-center">
+        Iniciar sesión
+      </p>
+      <div
+        class="flex items-center border-2 border-neutral-500  py-2 px-3 rounded-2xl mb-4 outline-none bg-transparent"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000F/svg"
+          class="h-5 w-5 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+          />
+        </svg>
+        <input
+          class="pl-2 outline-none border-none w-full bg-transparent"
+          type="email"
+          formControlName="email"
+          placeholder="ejemplo@gsoftve.com"
+        />
       </div>
-
-      <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-          <form [formGroup]="loginForm"  (submit)="onSubmit()">
-
-              <div class="py-4">
-                  <span class="flex justify-center">
-                      <span class="text-xl font-semibold">Ingresar</span>
-                  </span>
-              </div>
-
-              <div>
-                  <label class="block font-medium text-sm text-gray-700" for="email" value="Email">Email</label>
-                  <input type='email' 
-                      formControlName='email'
-                      placeholder='ejemplo@gsoftve.com'
-                      class="w-full rounded-md py-2.5 px-4 border text-sm outline-orange-500" />                        
-              </div>
-
-
-              <div class="mt-4">
-                  <label class="block font-medium text-sm text-gray-700" for="password" value="Password" >Password</label>
-                  <div class="relative">
-                      <input id="password"  [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="" required autocomplete="current-password" class = 'w-full rounded-md py-2.5 px-4 border text-sm outline-orange-500'>
-
-                      <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
-                        <span
-                        class="text-gray-500 focus:outline-none focus:text-gray-600 hover:text-gray-600"
-                                   mat-icon-button
-                        matSuffix
-                        (click)="hide = !hide"
-                        [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hide"
-                      >
-                        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-                      </span>
-                   </div>
-                  </div>
-              </div>
-
-              <!-- <div class="block mt-4">
-                  <label for="remember_me" class="flex items-center">
-                      <input type="checkbox" id="remember_me" name="remember" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
-                      <span class="ms-2 text-sm text-gray-600">Remem</span>
-                  </label>
-              </div> -->
-
-              <!-- <div class="flex items-center justify-end mt-4">
-                      <a class="hover:underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="#">
-                         ¿Olvido su contraseña?
-                      </a>
-                </div>   -->
-                <div class=" text-center sm:text-right whitespace-nowrap my-4">
-                <button [disabled]="loginForm.invalid" type="submit" class="ms-4 inline-flex items-center px-4 py-2  {{loginForm.invalid ? 'bg-orange-200': 'bg-orange-500'}} border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                  INGRESAR
-                </button>
-
-              </div>
-              
-          </form>                
+      <div
+        class="relative flex items-center border-2 border-neutral-500 rounded-2xl py-2 px-3 bg-transparent"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 text-gray-400"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <input
+          class="pl-2 outline-none border-none w-full bg-none"
+          id="password"
+          [type]="hide ? 'password' : 'text'"
+          formControlName="password"
+          required
+          autocomplete="current-password"
+          placeholder="Password"
+        />
+        <div
+          class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+        >
+          <span
+            class="text-gray-500 focus:outline-none focus:text-gray-600 hover:text-gray-600"
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </span>
+        </div>
       </div>
+      <button
+        [disabled]="loginForm.invalid"
+        [ngClass]="loginForm.invalid ? 'bg-neutral-300 ' : 'bg-neutral-500 '"
+        type="submit"
+        class="block w-full mt-4 py-2 rounded-full text-2xl text-white font-semibold mb-2"
+      >
+        Ingresar
+      </button>
+    </form>
+    <span class=" ml-2 text-xl cursor-pointer"
+      >¿Olvidaste tu contraseña?</span
+    >
+    <button
+      type="submit"
+      class="block w-1/2 mt-4 py-2 rounded-full text-2xl text-neutral-500 font-semibold mb-2 border-2 border-neutral-500"
+    >
+      Recuperar contraseña
+    </button>
+  </div>
+  <div class="flex w-1/2 justify-center items-center bg-neutral-300">
+    <div class="bg-none my-4 max-w-xl mx-auto text-center justify-center">
+      <p class="text-neutral-700 font-bold text-4xl font-sans">
+        Transforma tu restaurante con nuestro administrador de negocios:
+      </p>
+      <p class="text-neutral-600 mt-1 text-2xl">
+        Gestión simplificada de mesas, cuentas de pago y pedidos en la cocina.
+        Controla costos, mejora calidad y aumenta tus ganancias.
+      </p>
+      <button
+        type="submit"
+        class="block w-full mt-4 py-2 rounded-full text-2xl text-white font-semibold mb-2 bg-neutral-600"
+      >
+        Registrate con nosotros
+      </button>
+    </div>
   </div>
 </div>

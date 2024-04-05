@@ -29,6 +29,9 @@ import { SuppliesModule } from 'src/app/core/supplies/supplies.module';
     PurchasesOrdersRoutingModule,
     HomeModule,
     MaterialDesignModule,
+  ],
+  exports:[
+    ProductsAllComponent
   ]
 })
 export class PurchasesOrdersModule { }
