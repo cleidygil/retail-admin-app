@@ -31,9 +31,9 @@ export class NewProductComponent {
       this.id = Number(data['id']) || null
     })
   }
-ngOnInit(): void {
+    ngOnInit(): void {
 
-}
+    }
   
   seleccionarArchivo(event: any) {
     const file = event.target.files[0];

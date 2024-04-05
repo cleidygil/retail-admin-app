@@ -1,10 +1,11 @@
-import { Component , Inject,Input, ViewChild, inject} from '@angular/core';
+import { Component , Inject,Input, ViewChild, inject,Output,EventEmitter} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogQuantityUnitOfMeasurementComponent } from '../../dialog-quantity-unit-of-measurement/dialog-quantity-unit-of-measurement.component';
 import {DialogBranchRecipesComponent} from '../../dialog-branch-recipes/dialog-branch-recipes.component'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { SnackbarService } from 'src/app/global/services/snackbar.service';
 
 @Component({
   selector: 'app-selected-ingredients',
@@ -13,38 +14,100 @@ import { Subscription } from 'rxjs';
 })
 export class SelectedIngredientsComponent {
   private dialog = inject(MatDialog)
+  private snack = inject(SnackbarService)
+  private router = inject(Router)
+  private activateRou = inject(ActivatedRoute);
   @Input() info: any;
   @Input() selectProducts: any[] =[];
-  
-  ngOnInit(): void {
-    // console.log(this.info + " prueba")
+  @Input() sendProducts: any[] =[];
+  @Input() infoForms: any;
+  @Input() listStore: any;
+  @Input() costTotal:any
+  @Output() costTotalChange = new EventEmitter<number>();
+
+  senRecipes:any[]= []
+  deleteProduct:any[]=[]
+  sub!: Subscription
+  id: number | null = null
+
+  constructor(){
+    this.sub = this.activateRou.params.subscribe((data) => {
+      this.id = Number(data['id']) || null
+    })
   }
-  addQuantify(){
+  ngOnInit(): void {
+
+  }
+  addQuantify(id:number){
     const dialogo = this.dialog.open(DialogQuantityUnitOfMeasurementComponent,{
-      data:"",
-      width: window.innerWidth >100 ? '20%':'auto',
-    
+      data:id,
+      width: window.innerWidth >100 ? '300px':'auto',
     })
     dialogo.afterClosed().subscribe(data =>{
       if(data){
-        
-      }
-    })
-  }
-  selectBranch(){
-    const dialog = this.dialog.open(
-      DialogBranchRecipesComponent,{
-        data:"",
-        width: window.innerWidth >100 ? '50%':'auto',  
-      }
-    )
-    dialog.afterClosed().subscribe(data =>{
-      if(data){
-        
+        console.log(data)
+        console.log("data")
+        const productoAModificar = this.sendProducts.find(item =>item.product ===data.id)
+        productoAModificar.quantity = data.quantity      
       }
     })
   }
   deleteProducts(index: number){
     this.selectProducts.splice(index,1)
+    const data = this.sendProducts[index]
+    const foundIndex = this.deleteProduct.findIndex(item => item.id === data.id);
+    if(foundIndex === -1 && this.id!=null){
+      this.deleteProduct.push(data)
+    }
+    this.costTotal -= data.price;
+    this.costTotalChange.emit(this.costTotal);
+    this.sendProducts.splice(index,1)
+  }
+  selectBranch(): void {
+    const { infoForms } = this.infoForms;
+    const { nameRecipe, category, costSale, description } = infoForms ?? {};
+    const foundIndex = this.sendProducts.some(item => item.quantity === 0)
+      if (this.infoForms.image ==="" || this.infoForms.image ===undefined || this.infoForms.image ===null) {
+      this.snack.openSnackBar("Por favor seleccionar una imagen.");
+    } else if (!nameRecipe) {
+      this.snack.openSnackBar("Por favor escribir un nombre.");
+    } else if (!category) {
+      this.snack.openSnackBar("Por favor escribir una categoria.");
+    } else if (!costSale) {
+      this.snack.openSnackBar("Por favor escribir el precio.");
+    } else if (!description) {
+      this.snack.openSnackBar("Por favor escribir la descripción.");
+    } else if (this.sendProducts.length === 0) {
+      this.snack.openSnackBar("Por favor seleccionar un producto para la receta.");
+    }else if (foundIndex) {
+      this.snack.openSnackBar("Por favor agregarle la cantidad a algunos de los productos.");
+    } else {
+      this.openDialog();
+    }
+  }
+  
+  openDialog(): void {
+    const body = {
+      infoForms: this.infoForms,
+      products: this.sendProducts,
+      id:this.id,
+      deleteProduct:this.deleteProduct,
+      listStore: this.listStore
+    };
+    const dialog = this.dialog.open(DialogBranchRecipesComponent, {
+      data: body,
+      width: window.innerWidth > 100 ? '500px' : 'auto'
+    });
+  
+    dialog.afterClosed().subscribe(data => {
+      if (data) {
+        this.handleDialogClose(data);
+      }
+    });
+  }
+  
+  handleDialogClose(data: any): void {
+    this.snack.openSnackBar(data);
+    this.router.navigate(['/home/supplies/recipes']);
   }
 }

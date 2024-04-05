@@ -1,33 +1,6 @@
 
-<form class="grid grid-cols-1 p-8 justify-center">
+<form [formGroup]="quantity"  class="grid grid-cols-1 p-8 justify-center w-full ">
     <p class="text-center text-xl">Selecciona la cantidad de tu producto.</p>
-    <ul class="w-48 text-sm font-medium text-gray-900 bg-white dark:bg-gray-700 dark:text-white mx-auto">
-        <li class="w-full">
-            <div class="flex items-center justify-center">
-                <input id="list-radio-license" type="radio" value="" name="list-radio" class="h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                <label for="list-radio-license" class="py-2 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Medida</label>
-            </div>
-        </li>
-        <li class="w-full">
-            <div class="flex items-center justify-center">
-                <input id="list-radio-id" type="radio" value="" name="list-radio" class="h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                <label for="list-radio-id" class="py-2 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Medida</label>
-            </div>
-        </li>
-        <li class="w-full">
-            <div class="flex items-center justify-center">
-                <input id="list-radio-military" type="radio" value="" name="list-radio" class="h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                <label for="list-radio-military" class="py-2 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Medida</label>
-            </div>
-        </li>
-        <li class="w-full">
-            <div class="flex items-center justify-center">
-                <input id="list-radio-passport" type="radio" value="" name="list-radio" class="h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                <label for="list-radio-passport" class="py-2 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Medida</label>
-            </div>
-        </li>
-    </ul>
-
     <div class="flex items-center border-2 py-2 px-3 rounded-2xl">
         <input
         type="number"
@@ -36,5 +9,5 @@
           placeholder="Cantidad"
         />
     </div>
-    <button class="w-full bg-[#7C7A7A] text-white w-32 py-2 px-2 w-32 rounded-2xl mt-5" >Aceptar</button>
+    <button class="w-full bg-[#7C7A7A] text-white w-full py-2 px-2 w-32 rounded-2xl mt-5" (click)="onSubmit()">Aceptar</button>
 </form>

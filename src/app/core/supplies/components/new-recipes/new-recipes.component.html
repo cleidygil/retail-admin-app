@@ -112,11 +112,43 @@
                     Formatos admitidos JPG y PNG
                   </p>
             </div>
+            <div class="flex flex-col justify-center text-center">
+              <span>o carga la URL de la imagen</span>
+              <div>
+                <!-- <label for="company-website" class="block text-sm font-medium leading-6 text-gray-900">Company Website</label> -->
+                <div class="mt-2 border-2 my-2 py-2 px-3 rounded-2xl">
+                  <div class="flex pl-2 outline-none border-none sm:max-w-md">
+                    <span
+                      class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"
+                      >http://</span
+                    >
+                    <input
+                      formControlName="url"
+                      type="text"
+                      name="company-website"
+                      id="company-website"
+                      class="block flex-1 outline-none border-none bg-transparent text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                      placeholder="www.example.com"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
          </form>
         </div>
     </div>
-    <app-recipes-sale></app-recipes-sale>
+    <app-recipes-sale 
+    [myFiles]="myFiles"
+    [files]="files.value"
+    (image)="image = $event"
+    (datosEnviados)="recibirDatos($event)"
+    ></app-recipes-sale>
 
 </div>
-<app-available-ingredients></app-available-ingredients>
+<app-available-ingredients
+    [myFiles]="myFiles"
+    [files]="files.value"
+    (image)="image = $event"
+    [datosRecibidos]="datosEnviados"
+></app-available-ingredients>
 

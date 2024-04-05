@@ -1,5 +1,6 @@
 import { Component, Inject, ViewChild, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog-quantity-unit-of-measurement',
@@ -7,10 +8,23 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog-quantity-unit-of-measurement.component.css']
 })
 export class DialogQuantityUnitOfMeasurementComponent {
+  quantity = new FormGroup({
+    'quantity': new FormControl('', [Validators.required]),
+  })
   constructor(
     public dialogRef: MatDialogRef<DialogQuantityUnitOfMeasurementComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
    ){}
-
-   
+   ngOnInit(): void{
+   }
+   onConfirmClick() {
+    this.dialogRef.close(this.quantity); // Close the dialog and emit the selected quantity
+  }
+   onSubmit(){
+    const body ={
+      id: this.data,
+      quantity:this.quantity.value.quantity
+    }
+    this.dialogRef.close(body);
+   }
 }

@@ -15,10 +15,11 @@ import { SelectedIngredientsComponent } from './components/new-recipes/available
 import { DialogQuantityUnitOfMeasurementComponent } from './components/new-recipes/dialog-quantity-unit-of-measurement/dialog-quantity-unit-of-measurement.component';
 import { DialogBranchRecipesComponent } from './components/new-recipes/dialog-branch-recipes/dialog-branch-recipes.component';
 import { DialogDetailRecipesComponent } from './components/recipes-all/dialog-detail-recipes/dialog-detail-recipes.component';
+import { DialogDeleteRecipeComponent } from './components/recipes-all/dialog-delete-recipe/dialog-delete-recipe.component';
 
 
 @NgModule({
-  declarations: [SuppliesComponent, NewProductComponent, ProductsAllComponent, ProductSaleComponent, RecipesAllComponent, NewRecipesComponent, RecipesSaleComponent, AvailableIngredientsComponent, SelectedIngredientsComponent, DialogQuantityUnitOfMeasurementComponent, DialogBranchRecipesComponent, DialogDetailRecipesComponent],
+  declarations: [SuppliesComponent, NewProductComponent, ProductsAllComponent, ProductSaleComponent, RecipesAllComponent, NewRecipesComponent, RecipesSaleComponent, AvailableIngredientsComponent, SelectedIngredientsComponent, DialogQuantityUnitOfMeasurementComponent, DialogBranchRecipesComponent, DialogDetailRecipesComponent, DialogDeleteRecipeComponent],
   exports:[ProductSaleComponent],
   imports: [
     CommonModule,

@@ -24,7 +24,6 @@ export class SuppliersComponent {
     this.loading.showLoading()
     const params:Management = new Management()
     params.page = this.nextPage
- 
     this.services.getSuppliers(params).then((result) => {
       this.loading.hideLoading()
       this.suppliers = result.results
