@@ -42,16 +42,16 @@
     </div>
     <div class=" top-0 left-0 right-0 bg-white z-10 my-4 p-2">
       <div class="flex flex-col bg-white m-auto p-auto">
-        <div class="overflow-x-scroll">
+        <div class="overflow-auto touch-pan-x">
           <form [formGroup]="categorySelect" class="flex gap-4 ml-10">
             <div class="inline-block radio text-center" *ngFor="let item of categoryAll">
               <div class="flex flex-col justify-center text-center">
                 <input formControlName="category" name="category" type="radio" [id]="item.id" hidden="hidden"  checked="false"
                   [value]="item.id" />
                 <label [for]="item.id" (click)="getAllRecipes(item.id)"
-                  class="flex items-center w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                  class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img *ngIf="item.image != null; else SinImagen" alt="..." [src]="item.image"
-                    class="block rounded-full mx-auto w-20 h-20 object-cover object-center" />
+                    class="block rounded-full mx-auto w-16 h-16 object-cover object-center" />
                   <ng-template #SinImagen>
                     <svg width="80" height="80" viewBox="0 0 122 121" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect x="0.841553" width="120.991" height="120.991" rx="60.4953" fill="#A8A8A8" />
@@ -101,14 +101,14 @@
         </span>
       </button>
     </div>
-    <div class="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 gap-4 m-4 mx-auto">
+    <div class="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 gap-4 m-4 ">
       <a *ngFor="let item of recipesAll"
         class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer"
         (click)="dialogDetailRecipes(item)">
         <div class="flex items-center">
           <ng-container *ngIf="item.image != null else SinImagen">
             <img alt="..." [src]="item.image"
-              class="relative  w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white  object-cover object-center hover:z-10 focus:z-10">
+              class="relative  w-24 h-24 rounded-full mx-auto bg-neutral-400 text-white  object-cover object-center hover:z-10 focus:z-10">
 
           </ng-container>
           <ng-template #SinImagen>
