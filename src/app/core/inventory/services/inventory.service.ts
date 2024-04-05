@@ -21,9 +21,13 @@ export class InventoryService {
     const resparams = this.queryParams.buildQueryParams(params)
     const ob = this.http.get<any>(`${this.url}/api/inventory/`, { params: resparams })
     return lastValueFrom(ob)
-  } 
+  }
   patchInventoryTransaction(body: any): Promise<any> {
     const obs$ = this.http.post<any>(`${this.url}/api/inventory/transaction/`, body)
+    return lastValueFrom(obs$)
+  }
+   postTransferProduct(body: any, id:number): Promise<any> {
+    const obs$ = this.http.post<any>(`${this.url}/api/inventory/depot/${id}/transfer/`, body)
     return lastValueFrom(obs$)
   }
 }

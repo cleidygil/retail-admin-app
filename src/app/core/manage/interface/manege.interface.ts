@@ -3,10 +3,10 @@ export class Management {
   page?: number
   status?: string
   remove_pagination?: string
-  category?:string
-  parent?:string
-  store?:string
-  type?:string
+  category?: string
+  parent?: string
+  store?: string
+  type?: string
 }
 
 
@@ -31,7 +31,7 @@ export class BrandsParams {
   search?: string
   page?: number
   status?: string
-  store?:string
+  store?: string
   remove_pagination?: string
 
 }
@@ -59,4 +59,37 @@ export interface Category {
   store: number
   store_name: string
   status: boolean
+}
+export interface Ambients {
+  count: number
+  next: string
+  previous: string
+  results: Ambient[]
+}
+
+export interface Ambient {
+  id: number
+  name: string
+  description: string
+  store: number
+  store_name: string
+  status: boolean
+  created_by: number
+  created_by_name: string
+  created_at: string
+}
+export interface Tables {
+  count: number
+  next: string
+  previous: string
+  results: Table[]
+}
+
+export interface Table {
+  id: number
+  number: number
+  store: number
+  store_name: string
+  status: number
+  status_name: string
 }

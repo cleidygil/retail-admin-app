@@ -119,8 +119,8 @@
           <span class="text-xs flex-col"
             ><b>Cantidad</b>:{{ warehouse.quantity }}</span
           >
-          <span class="text-xs flex-col"><b>Fecha</b>: Fecha </span>
-          <span class="text-xs"><b>Sucursal</b>: {{ warehouse.store_name }}</span>
+          <span class="text-xs flex-col"><b>Fecha</b>: {{warehouse.created_at |date:'dd/MM/YYYY, hh:mm a'}} </span>
+          <span class="text-xs"><b>Sucursal</b>: {{ warehouse.depot_receive_store_name }}</span>
         </div>
       </div>
     </div>

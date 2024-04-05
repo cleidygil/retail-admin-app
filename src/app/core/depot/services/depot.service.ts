@@ -22,5 +22,10 @@ export class DepotService {
     const ob = this.http.get<Warehouses>(`${this.url}/api/inventory/depot/`, { params: resparams })
     return lastValueFrom(ob)
   }
-
+  getTransferHistory(params: Depot, id:number): Promise<any> {
+    const resparams = this.queryParams.buildQueryParams(params)
+    const ob = this.http.get<any>(`${this.url}/api/inventory/depot/${id}/transfer/`, { params: resparams })
+    return lastValueFrom(ob)
+  }
+  
 }

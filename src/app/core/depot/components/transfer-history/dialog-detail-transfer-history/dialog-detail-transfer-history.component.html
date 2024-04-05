@@ -15,27 +15,34 @@
     <div
       class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl pl-2 w-full outline-none"
     >
-      <span>Marca{{ data.product_name }}</span>
+      <span>{{ data.product_brand_name }}</span>
     </div>
     <div
       class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl pl-2 w-full outline-none"
     >
-      <span>UND{{ data.product_name }}</span>
+      <span>{{ data.product_mu_name }}</span>
     </div>
     <div
       class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl pl-2 w-full outline-none"
     >
       <span>{{ data.quantity }}</span>
     </div>
+    <span>Almacen enviado</span>
     <div
     class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl pl-2 w-full outline-none "
   >
-    <span>{{ data.store_name }}</span>
+    <span>{{ data.depot_send_store_name }}</span>
   </div>
+  <span>Almacen recibido</span>
   <div
   class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl pl-2 w-full outline-none "
 >
-  <span>Fecha {{ data.product_name }}</span>
+  <span>{{ data.depot_receive_store_name }}</span>
+</div>
+  <div
+  class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl pl-2 w-full outline-none "
+>
+  <span>{{data.created_at |date:'dd/MM/YYYY, hh:mm a'}}</span>
 </div>
   </div>
 </div>
