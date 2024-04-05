@@ -40,16 +40,6 @@
         </div>
       </form>
     </div>
-    <div class="top-0 left-0 right-0 bg-white z-10 my-4 p-2">
-        <div class="flex flex-col m-auto p-auto relative h-40 bg-indigo-500 w-full">
-          <div class="absolute top-[50%] left-0" style="transform: translate(-50%, -50%);">
-            <p class="text-3xl"><</p>
-          </div>
-          <div class="absolute top-[50%] right-0" style="transform: translate(-50%, -50%);">
-            <p class="text-3xl">></p>
-          </div>
-        </div>
-    </div>
     <div class=" top-0 left-0 right-0 bg-white z-10 my-4 p-2">
       <div class="flex flex-col bg-white m-auto p-auto">
         <div class="overflow-x-scroll">
@@ -95,10 +85,6 @@
           <span class="hidden">Previous</span>
         </span>
       </button>
-      <div>
-        <span class="rounded-full py-2 px-2.5 font-mono bg-neutral-300 hover:shadow-xl">
-          {{ nextPage }}/{{ pageIndex }} - Items: {{ countCategory }}</span>
-      </div>
       <button matTooltip="Siguiente" (click)="pageNext()" type="button"
         class="flex top-0 right-0 z-30 justify-center items-center px-0 h-full cursor-pointer group focus:outline-none">
         <span
