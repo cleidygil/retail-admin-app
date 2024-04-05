@@ -7,9 +7,12 @@
       class="pl-2 w-full outline-none border-none"
       formControlName="nrofactura"
       maxLength="10"
+     pattern="[0-9]*"
+      onkeypress="return event.charCode >= 48"
       placeholder="Nro de factura"
     />
   </div>
+  <mat-error *ngIf="supplierform.get('nrofactura')?.hasError('pattern')" class="text-xs">Solo caracteres numéricos </mat-error>
   <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
     <input
       class="pl-2 w-full outline-none border-none"
@@ -38,13 +41,13 @@
       <option value="2"> CREDITO </option>
     </select>
   </div>
-    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-      <input
-        class="pl-2 w-full outline-none border-none"
-        formControlName="nroref"
-        placeholder="Nro de referencia"
-      />
-    </div>
+  <!-- <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+    <input
+    class="pl-2 w-full outline-none border-none"
+    formControlName="nroref"
+    placeholder="Nro de referencia"
+    />
+  </div>
   <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
     <input
       class="pl-2 w-full outline-none border-none"
@@ -53,15 +56,6 @@
       minlength="0"
       placeholder="Monto de compra"
     />
-  </div>
+  </div> -->
 </form>
-<!-- <div class="flex justify-center gap-2">
-  <button
-    class="p-3 rounded-full text-white w-1/2 font-semibold text-xl"
-    [ngClass]="supplierform.invalid ? 'bg-neutral-300' : 'bg-neutral-500'"
-    [disabled]="supplierform.invalid"
-    (click)="onSubmit()"
-  >
-    Aceptar
-  </button>
-</div> -->
+

@@ -13,14 +13,16 @@ import { DialogLoadProductComponent } from './components/manual-entry/dialog-loa
 import { DistributeProductComponent } from './components/manual-entry/distribute-product/distribute-product.component';
 import { ProductsListComponent } from './components/manual-entry/product-selection/products-list/products-list.component';
 import { PurchasesOrdersModule } from '../shopping/components/purchases-orders/purchases-orders.module';
+import { InventoryComponent } from './components/inventory/inventory.component';
+import { WarehousesComponent } from './components/warehouses/warehouses.component';
 
 
 @NgModule({
-  declarations: [EntryAndExitComponent, ComponentsComponent, ManualEgressComponent, ManualEntryComponent, PurchaseDataComponent, ProductSelectionComponent, DialogLoadProductComponent, DistributeProductComponent, ProductsListComponent],
+  declarations: [EntryAndExitComponent, ComponentsComponent, ManualEgressComponent, ManualEntryComponent, PurchaseDataComponent, ProductSelectionComponent, DialogLoadProductComponent, DistributeProductComponent, ProductsListComponent, WarehousesComponent, InventoryComponent],
   imports: [
+    MaterialDesignModule,
     CommonModule,
     EntryAndExitRoutingModule,
-    MaterialDesignModule,
     PurchasesOrdersModule
   ]
 })

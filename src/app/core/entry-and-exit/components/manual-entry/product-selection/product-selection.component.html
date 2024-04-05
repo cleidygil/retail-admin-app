@@ -1,5 +1,5 @@
 <div>
-  <span class="flex justify-center font-bold text-4xl text-neutral-600">
+  <span class="flex justify-center font-bold text-2xl text-neutral-600 my-4">
     Selecciona los productos a pedir
   </span>
 </div>
@@ -7,7 +7,7 @@
   <div class="relative my-4">
     <div class="sticky top-0 left-0 right-0 bg-white z-10 my-4 p-2">
       <div class="flex flex-col bg-white m-auto p-auto">
-        <div class="overflow-x-scroll">
+        <div class="overflow-auto touch-pan-x">
           <form [formGroup]="brandsSelect" class="flex gap-4 ml-10">
             <div
               class="inline-block radio text-center"
@@ -25,13 +25,13 @@
                 />
                 <label
                   [for]="item.id"
-                  class="flex items-center w-32 h-32 rounded-md mx-auto bg-neutral-400 text-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                  class="flex items-center w-20 h-20 rounded-full mx-auto  text-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
                 >
                   <img
                     *ngIf="item.image != null; else SinImagen"
                     alt="..."
                     [src]="item.image"
-                    class="block rounded-full mx-auto w-20 h-20 object-cover object-center"
+                    class="block rounded-full mx-auto w-16 h-16 object-cover object-center"
                   />
                   <ng-template #SinImagen>
                     <svg
@@ -183,6 +183,14 @@
       </div>
     </div>
   </div>
+  <div class="flex flex-col w-full justify-center my-2 gap-2 px-4">
+    <button
+      (click)="addProduct()"
+      class="p-3 rounded-full my-2 gap-2 px-4 text-neutral-600 w-full font-semibold text-xl border border-neutral-500"
+    >
+      Agregar nuevo producto
+    </button>
+  </div>
   <span class="flex justify-center font-bold text-2xl text-neutral-600">
     Productos seleccionados
   </span>
@@ -231,15 +239,16 @@
                 }}</span>
                 <span class="text-xs">Marca: {{ product?.brand_name }}</span>
                 <span class="text-xs">U.M: {{ product?.mu_name }}</span>
-               
+                <span class="text-xs font-semibold">Cantidad:</span>
+                <span class="text-xs">{{ product?.quantity }}</span>
               </div>
               <div class="flex items-center bg-transparent">
                 <div class="flex flex-col text-center gap-y-2">
-                  <span class="text-sm">Cantidad</span>
+                  <span class="text-sm">Precio</span>
                   <div
                     class="bg-neutral-100 px-4 py-1.5 focus:outline-none text-center border border-neutral-400 rounded-full w-full font-semibold text-md md:text-basecursor-default flex items-center text-gray-400 outline-none"
                   >
-                    {{ product?.quantity }}
+                    {{ product?.cost }}
                   </div>
                 </div>
               </div>
@@ -250,23 +259,7 @@
     </div>
   </ng-container>
 </div>
-<div class="flex flex-col w-full justify-center my-2 gap-2 px-4">
-  <button
-  [ngClass]="allProdutcts.length == 0 ? 'bg-neutral-300' : 'bg-neutral-500'"
-  [disabled]="allProdutcts.length == 0"
-  (click)="onSubmitAllProducts()"
-  class="p-3 rounded-full my-2 gap-2 px-4 text-white w-full font-semibold text-xl"
->
-  Cargar
-</button>
-  <button
-    (click)="addProduct()"
-    class="p-3 rounded-full my-2 gap-2 px-4 text-neutral-600 w-full font-semibold text-xl border border-neutral-500"
-  >
-    Agregar nuevo producto
-  </button>
-</div>
-<div class="relative my-4 w-full">
+<!-- <div class="relative my-4 w-full">
   <span class="flex justify-center font-bold text-2xl text-neutral-600">
     Registro de precios de compra
   </span>
@@ -327,6 +320,4 @@
       </div>
     </div>
   </ng-container>
-</div>
-
-
+</div> -->

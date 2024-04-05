@@ -26,10 +26,8 @@ export class ProductSelectionComponent {
   private shopServices = inject(ShoppingService)
   private snack = inject(SnackbarService)
   private loading = inject(LoadingService)
-  private formBuilder = inject(FormBuilder)
   private dialog = inject(MatDialog)
   @Output() value2 = new EventEmitter<any>()
-  counters!: FormGroup;
   productsAll: any = []
   allProdutcts: any[] = []
   delete: number | any
@@ -48,36 +46,9 @@ export class ProductSelectionComponent {
     brand: new FormControl(''),
   })
   ngOnInit(): void {
-
     this.getBrands()
     this.getAllProducts()
-    this.counters = this.formBuilder.group({
-      inputs: this.formBuilder.array([])
-    });
-    this.inputs?.valueChanges.subscribe(data => {
-      this.value2.emit(data)
-    })
   }
-  get inputs() {
-    return (this.counters.controls["inputs"] as FormArray);
-  }
-  getAllProducts() {
-    this.loading.showLoading()
-    const params = new MyStoreParams()
-    params.brands = this.brandsSelect.value?.brand || '';
-    params.page = this.nextPageProd;
-    params.search = this.params.value?.search || '';
-    this.services.getAllProducts(params).then((result) => {
-      this.loading.hideLoading()
-      this.productsAll = result.results
-      this.countProd = result.count
-    }).catch((err) => {
-      console.log(err)
-      this.loading.hideLoading()
-    });
-  }
-
-
   getBrands() {
     const params = new BrandsParams()
     params.page = this.nextPage
@@ -104,49 +75,24 @@ export class ProductSelectionComponent {
       return
     }
   }
+  getAllProducts() {
+    this.loading.showLoading()
+    const params = new MyStoreParams()
+    params.brands = this.brandsSelect.value?.brand || '';
+    params.page = this.nextPageProd;
+    params.search = this.params.value?.search || '';
+    this.services.getAllProducts(params).then((result) => {
+      this.loading.hideLoading()
+      this.productsAll = result.results
+      this.countProd = result.count
+    }).catch((err) => {
+      console.log(err)
+      this.loading.hideLoading()
+    });
+  }
   nextPageIndexProducts(event: PageEvent) {
     this.nextPageProd = event.pageIndex + 1;
     this.getAllProducts()
-  }
-  onSubmitAllProducts() {
-    this.loading.showLoading()
-    const value: any[] = []
-    this.allProdutcts.map((valor) => {
-      value.push({
-        quantity: valor.quantity,
-        product: valor.product,
-        store: valor.store,
-        purchase_order: null,
-      });
-    })
-    let body = {
-      store: this.services.user?.store,
-      items: value,
-      supplier: 5,
-      status: 10
-    }
-    this.shopServices.postPurchasesOrders(body).then((result) => {
-      this.loading.hideLoading()
-      this.items = result.items
-      this.id = result.id
-      this.getOrderID()
-      this.snack.openSnackBar('Tu order ha sido creada con exito.');
-      this.allProdutcts = []
-    }).catch((error) => {
-      this.loading.hideLoading()
-      this.snack.openSnackBar("Ocurrio un error, intente de nuevo!")
-    })
-
-  }
-
-  getOrderID() {
-    let dataNew: any[] = []
-    this.allProdutcts.map((valor, i: number) => {
-      dataNew.push(this.items[i] = { ...valor, purchase_order: this.id, ...valor.cost, id: this.items[i].id })
-    })
-    this.items = dataNew
-    this.value2.next(this.items)
-  
   }
   addProduct() {
     const dialogo = this.dialog.open(DialogNewProductComponent, {
@@ -178,13 +124,23 @@ export class ProductSelectionComponent {
           return acc;
         }, []);
         this.allProdutcts = prueba.length > 0 ? prueba : this.allProdutcts
+        const value: any[] = []
+        this.allProdutcts.map((valor) => {
+          value.push({
+            cost: valor.cost,
+            quantity: valor.quantity,
+            product: valor.product,
+            purchase_order: null,
+          });
+        })
+        this.value2.emit(value)
       }
     })
   }
-  deleteProduct(id: number) {
+  
+
+   deleteProduct(id: number) {
     this.allProdutcts = this.allProdutcts.filter(item => item.product != id).map(item => item)
   }
-  deleteItem(id: number) {
-    this.items = this.items.filter(item => item.product != id).map(item => item)
-  }
+ 
 }

@@ -1,281 +1,36 @@
 <div class="flex justify-between gap-2">
-  <a [routerLink]="['../']" mat-mini-fab color="primary">
+  <a [routerLink]="['/home/store/store']" mat-mini-fab color="primary">
     <mat-icon>chevron_left</mat-icon>
   </a>
-  <div class="flex justify-center">
-    <span class="text-center font-bold text-2xl text-neutral-600"
-      >Ingreso y Egresos</span
-    >
-  </div>
-  <div></div>
 </div>
-<div class="max-w-xl h-full mx-auto flex flex-col justify-center my-4 p-2 z-10 relative">
-  <div class="fixed  bottom-4 right-4 first-letter:my-4">
-    <a mat-mini-fab color="primary" [routerLink]="['./options']">
-      <mat-icon>add</mat-icon>
-    </a>
-  </div>
-</div>
-<div class="max-w-4xl mx-auto">
-  <form [formGroup]="params" class="grid grid-cols-1 gap-4 my-2">
-    <div class="mt-4 w-full">
-      <label
-        class="block font-medium text-sm text-gray-700"
-        for="password"
-        value="Password"
-      ></label>
-      <div class="relative">
-        <input
-          formControlName="search"
-          placeholder="Buscar"
-          required
-          class="w-full rounded-full py-2.5 px-4 border text-base bg-neutral-300 outline-orange-500"
-        />
-
-        <div
-          class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-        >
-          <button
-            class="text-gray-500 focus:outline-none focus:text-gray-600 hover:text-gray-600"
-            mat-icon-button
-            matSuffix
-            (click)="getEntryAndExit()"
-          >
-            <mat-icon>search</mat-icon>
-          </button>
-        </div>
-      </div>
-    </div>
-    <span class="text-xl text-center font-semibold text-neutral-600"
-      >Tienda Principal</span
-    >
-    <div class="flex justify-center gap-2">
-      <div class="inline-block radio text-center" *ngFor="let item of mystores">
-        <div class="flex flex-col justify-center text-center">
-          <input
-            formControlName="store"
-            name="store"
-            type="radio"
-            [id]="item.id"
-            hidden="hidden"
-            [value]="item.id"
-          />
-          <label (click)="getEntryAndExit()"
-            [for]="item.id"
-            class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="h-16 w-16 text-white rounded-full mx-auto"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
-              />
-            </svg>
-          </label>
-        </div>
-        <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
-          {{ item.name }}
-        </span>
-      </div>
-    </div>
-    <span class="text-xl font-semibold text-neutral-600 text-center"
-      >Sucursales</span
-    >
-    <div class="flex justify-center gap-2">
-      <div class="inline-block radio text-center" *ngFor="let item of mybranch">
-        <div class="flex flex-col justify-center text-center">
-          <input
-            formControlName="store"
-            name="store"
-            type="radio"
-            [id]="item.id"
-            hidden="hidden"
-            [value]="item.id"
-          />
-          <label
-            [for]="item.id"
-            class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
-            
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="h-16 w-16 text-white rounded-full mx-auto"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
-              />
-            </svg>
-          </label>
-        </div>
-        <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
-          {{ item.name }}
-        </span>
-      </div>
-    </div>
-    <div class="flex justify-center gap-2">
-      <div class="inline-flex gap-2 radio text-center">
-        <div class="flex flex-col justify-center text-center text-xl">
-          <input
-            formControlName="type"
-            name="type"
-            type="radio"
-            id="1"
-            hidden="hidden"
-            value="1"
-          />
-          <label
-            (click)="getEntryAndExit()"
-            for="1"
-            class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400"
-          >
-            Ingresos
-          </label>
-        </div>
-        <div class="flex flex-col justify-center text-center text-xl">
-          <input
-            formControlName="type"
-            name="type"
-            s
-            type="radio"
-            id="2"
-            hidden="hidden"
-            value="2"
-          />
-          <label
-            (click)="getEntryAndExit()"
-            for="2"
-            class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400 selection:text-neutral-800"
-          >
-            Egresoss
-          </label>
-        </div>
-      </div>
-      <div class="inline-flex items-center justify-center gap-2">
-        <mat-date-range-input
-          class="rounded-full text-center px-2 py-2 items-end bg-neutral-300 text-base focus:outline-none outline-none"
-          [rangePicker]="campaignOnePicker"
-          [comparisonStart]="params.value.start"
-          [comparisonEnd]="params.value.end"
-        >
-          <input matStartDate placeholder="Desde" formControlName="start" />
-          <input
-            matEndDate
-            placeholder="Hasta"
-            formControlName="end"
-            (dateChange)="getEntryAndExit()"
-          />
-        </mat-date-range-input>
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="campaignOnePicker"
-        ></mat-datepicker-toggle>
-        <mat-date-range-picker
-          touchUi
-          #campaignOnePicker
-        ></mat-date-range-picker>
-      </div>
-      <button
-        mat-icon-button
-        color="accent"
-        (click)="params.reset(); getEntryAndExit(); nextPage = 1"
+<div class="overflow-hidden flex items-center justify-center my-4">
+  <div class="flex justify-center gap-x-8 my-4">
+    <div class="flex flex-col justify-center text-center">
+      <a
+        [routerLink]="['./warehouses']"
+        class="flex items-center w-32 h-32 rounded-full mx-auto text-white"
       >
-        <mat-icon>filter_alt_off</mat-icon>
-      </button>
+      <svg width="122" height="122" viewBox="0 0 122 122" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.254272" y="0.111328" width="120.991" height="120.991" rx="60.4953" fill="#A8A8A8"/>
+        <path d="M80.7495 71.2741C80.7495 72.7488 79.5575 73.9408 78.0828 73.9408H72.7495C71.2748 73.9408 70.0828 72.7488 70.0828 71.2741C70.0828 69.7994 71.2748 68.6074 72.7495 68.6074H78.0828C79.5575 68.6074 80.7495 69.7994 80.7495 71.2741ZM92.7495 68.6074V81.9408C92.7495 87.8234 87.9655 92.6074 82.0828 92.6074H39.4162C33.5335 92.6074 28.7495 87.8234 28.7495 81.9408V68.6074C28.7495 62.7248 33.5335 57.9408 39.4162 57.9408H42.0828V39.2741C42.0828 33.3914 46.8668 28.6074 52.7495 28.6074H68.7495C74.6322 28.6074 79.4162 33.3914 79.4162 39.2741V57.9408H82.0828C87.9655 57.9408 92.7495 62.7248 92.7495 68.6074ZM47.4162 57.9408H74.0828V39.2741C74.0828 36.3328 71.6908 33.9408 68.7495 33.9408H52.7495C49.8082 33.9408 47.4162 36.3328 47.4162 39.2741V57.9408ZM39.4162 87.2741H58.0828V63.2741H39.4162C36.4748 63.2741 34.0828 65.6661 34.0828 68.6074V81.9408C34.0828 84.8821 36.4748 87.2741 39.4162 87.2741ZM87.4162 68.6074C87.4162 65.6661 85.0242 63.2741 82.0828 63.2741H63.4162V87.2741H82.0828C85.0242 87.2741 87.4162 84.8821 87.4162 81.9408V68.6074ZM48.7495 68.6074H43.4162C41.9415 68.6074 40.7495 69.7994 40.7495 71.2741C40.7495 72.7488 41.9415 73.9408 43.4162 73.9408H48.7495C50.2242 73.9408 51.4162 72.7488 51.4162 71.2741C51.4162 69.7994 50.2242 68.6074 48.7495 68.6074ZM66.0828 41.9408C66.0828 40.4661 64.8908 39.2741 63.4162 39.2741H58.0828C56.6082 39.2741 55.4162 40.4661 55.4162 41.9408C55.4162 43.4154 56.6082 44.6074 58.0828 44.6074H63.4162C64.8908 44.6074 66.0828 43.4154 66.0828 41.9408Z" fill="#FAFAFA"/>
+        </svg>
+        
+      </a>
+      <p class="pt-2 text-lg font-semibold text-gray-400">Almacenes</p>
     </div>
-  </form>
-</div>
-<div class=" mx-auto flex flex-col justify-center my-4 p-2">
+    <div class="flex flex-col justify-center text-center">
+      <a
+        [routerLink]="['./inventories']"
+        class="flex items-center w-32 h-32 rounded-full mx-auto text-white"
+      >
+      <svg width="122" height="122" viewBox="0 0 122 122" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.244751" y="0.111328" width="120.991" height="120.991" rx="60.4953" fill="#A8A8A8"/>
+        <path d="M55.542 89.1955C55.542 90.6327 54.3776 91.7945 52.943 91.7945H42.5469C35.3814 91.7945 29.5518 85.9649 29.5518 78.7994V47.6111C29.5518 40.4456 35.3814 34.616 42.5469 34.616H42.9913C44.0647 31.5908 46.9548 29.418 50.3439 29.418H55.542C58.9311 29.418 61.8212 31.5908 62.8946 34.616H63.339C70.5045 34.616 76.3341 40.4456 76.3341 47.6111V55.4082C76.3341 56.8428 75.1724 58.0072 73.7351 58.0072C72.2979 58.0072 71.1361 56.8428 71.1361 55.4082V47.6111C71.1361 43.3123 67.6378 39.8141 63.339 39.8141H60.74C59.3054 39.8141 58.141 38.6497 58.141 37.215C58.141 35.7804 56.974 34.616 55.542 34.616H50.3439C48.9119 34.616 47.7449 35.783 47.7449 37.215C47.7449 38.6471 46.5805 39.8141 45.1459 39.8141H42.5469C38.2481 39.8141 34.7498 43.3123 34.7498 47.6111V78.7994C34.7498 83.0982 38.2481 86.5964 42.5469 86.5964H52.943C54.3776 86.5964 55.542 87.7582 55.542 89.1955ZM52.405 46.8652L46.6169 52.6532C46.4142 52.8585 46.0867 52.8663 45.8736 52.6688L43.0017 50.036C41.9439 49.0666 40.2987 49.1419 39.3293 50.1971C38.3598 51.2549 38.43 52.9001 39.4904 53.8696L42.3623 56.5024C43.4643 57.5134 44.8522 58.015 46.2375 58.015C47.7059 58.015 49.1718 57.451 50.292 56.3308L56.08 50.5428C57.0962 49.5266 57.0962 47.884 56.08 46.8678C55.0638 45.8516 53.4212 45.8516 52.405 46.8678V46.8652ZM52.405 62.6673L46.6169 68.4553C46.4142 68.6606 46.0867 68.6658 45.8736 68.4709L43.0017 65.8381C41.9439 64.8686 40.2987 64.9414 39.3293 65.9992C38.3598 67.057 38.43 68.7022 39.4904 69.6716L42.3623 72.3044C43.4643 73.3154 44.8522 73.8171 46.2375 73.8171C47.7059 73.8171 49.1718 73.2505 50.292 72.1329L56.08 66.3449C57.0962 65.3287 57.0962 63.6861 56.08 62.6698C55.0638 61.6536 53.4212 61.651 52.405 62.6673ZM91.9283 72.3018V82.6979C91.9283 87.714 87.8478 91.7945 82.8317 91.7945H69.8366C64.8205 91.7945 60.74 87.714 60.74 82.6979V72.3018C60.74 67.2857 64.8205 63.2052 69.8366 63.2052H82.8317C87.8478 63.2052 91.9283 67.2857 91.9283 72.3018ZM86.7302 72.3018C86.7302 70.1524 84.9811 68.4033 82.8317 68.4033H69.8366C67.6872 68.4033 65.9381 70.1524 65.9381 72.3018V82.6979C65.9381 84.8473 67.6872 86.5964 69.8366 86.5964H82.8317C84.9811 86.5964 86.7302 84.8473 86.7302 82.6979V72.3018ZM78.9332 73.6013H73.7351C72.2979 73.6013 71.1361 74.7631 71.1361 76.2004C71.1361 77.6376 72.2979 78.7994 73.7351 78.7994H78.9332C80.3704 78.7994 81.5322 77.6376 81.5322 76.2004C81.5322 74.7631 80.3704 73.6013 78.9332 73.6013ZM65.9381 55.4082C65.9381 53.9735 64.7763 52.8092 63.339 52.8092H59.4405C58.0058 52.8092 56.8415 53.9735 56.8415 55.4082C56.8415 56.8428 58.0058 58.0072 59.4405 58.0072H63.339C64.7763 58.0072 65.9381 56.8428 65.9381 55.4082Z" fill="#FAFAFA"/>
+        </svg>
+        
+      </a>
+      <p class="pt-2 text-lg font-semibold text-gray-400">Inventarios</p>
+    </div>
   
-  <div class="grid xl:grid-cols-3 gap-4 m-4">
-    <div
-      class="relative bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
-      *ngFor="let item of data"
-      (click)="openDetail(item)"
-    >
-      <div class="flex items-center">
-        <ng-container *ngIf="params.value.type === '2'; else Type1">
-          <svg
-            width="82"
-            height="82"
-            viewBox="0 0 82 82"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="0.36792"
-              y="0.832031"
-              width="80.7567"
-              height="80.7567"
-              rx="40.3783"
-              fill="#A8A8A8"
-            />
-            <path
-              d="M40.7464 65.4364C39.6319 65.4364 38.7275 64.532 38.7275 63.4175V35.08L32.1801 41.6273C31.3907 42.4167 30.1148 42.4167 29.3254 41.6273C28.9317 41.2337 28.7338 40.7168 28.7338 40.2C28.7338 39.6831 28.9317 39.1663 29.3254 38.7726L37.8916 30.2063C39.4664 28.6316 42.0264 28.6316 43.6011 30.2063L52.1674 38.7726C52.9568 39.562 52.9568 40.838 52.1674 41.6273C51.378 42.4167 50.102 42.4167 49.3126 41.6273L42.7653 35.08V63.4175C42.7653 64.532 41.8608 65.4364 40.7464 65.4364ZM34.5523 62.6382C34.9581 61.5965 34.4433 60.4275 33.4056 60.0237C25.6005 56.9752 20.5572 49.592 20.5572 41.2115C20.5572 30.0791 29.6141 21.0223 40.7464 21.0223C51.8787 21.0223 60.9356 30.0771 60.9356 41.2094C60.9356 49.59 55.8923 56.9752 48.0872 60.0217C47.0494 60.4275 46.5366 61.5924 46.9404 62.6362C47.3462 63.6759 48.5172 64.1888 49.5549 63.7829C58.9207 60.1267 64.9734 51.2657 64.9734 41.2094C64.9734 27.8503 54.1056 16.9824 40.7464 16.9824C27.3872 16.9824 16.5194 27.8503 16.5194 41.2094C16.5194 51.2657 22.5721 60.1267 31.9358 63.785C32.9756 64.1908 34.1445 63.678 34.5503 62.6382H34.5523Z"
-              fill="#FAFAFA"
-            />
-          </svg>
-        </ng-container>
-        <ng-template #Type1>
-          <svg
-            width="82"
-            height="82"
-            viewBox="0 0 82 82"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="0.36792"
-              y="0.832031"
-              width="80.7567"
-              height="80.7567"
-              rx="40.3783"
-              fill="#A8A8A8"
-            />
-            <path
-              d="M40.7463 16.9835C41.8607 16.9835 42.7652 17.888 42.7652 19.0024L42.7652 47.3399L49.3126 40.7926C50.102 40.0032 51.3779 40.0032 52.1673 40.7926C52.561 41.1863 52.7589 41.7031 52.7589 42.2199C52.7589 42.7368 52.561 43.2536 52.1673 43.6473L43.601 52.2136C42.0263 53.7883 39.4663 53.7883 37.8916 52.2136L29.3253 43.6473C28.5359 42.8579 28.5359 41.582 29.3253 40.7926C30.1147 40.0032 31.3906 40.0032 32.18 40.7926L38.7274 47.3399L38.7274 19.0024C38.7274 17.888 39.6319 16.9835 40.7463 16.9835ZM46.9403 19.7817C46.5345 20.8235 47.0494 21.9924 48.0871 22.3962C55.8922 25.4448 60.9355 32.8279 60.9355 41.2085C60.9355 52.3408 51.8786 61.3976 40.7463 61.3976C29.614 61.3976 20.5571 52.3428 20.5571 41.2105C20.5571 32.83 25.6004 25.4448 33.4055 22.3982C34.4432 21.9924 34.956 20.8275 34.5523 19.7837C34.1465 18.744 32.9755 18.2312 31.9378 18.637C22.572 22.2932 16.5193 31.1543 16.5193 41.2105C16.5193 54.5697 27.3871 65.4375 40.7463 65.4375C54.1055 65.4375 64.9733 54.5697 64.9733 41.2105C64.9733 31.1543 58.9206 22.2932 49.5569 18.635C48.5171 18.2292 47.3482 18.742 46.9424 19.7817L46.9403 19.7817Z"
-              fill="#FAFAFA"
-            />
-          </svg>
-        </ng-template>
-      </div>
-      <div class="grid justify-start gap-2 text-neutral-500">
-        <span class="text-xl font-semibold text-neutral-600">
-          {{ item.product_name }}</span
-        >
-        <span class="text-sm">{{ item.status_name }}</span>
-        <span class="text-sm">{{ item.supplier_name }}</span>
-
-        <span class="text-sm">{{ item.store_name }} </span>
-        <span class="text-sm"
-          >{{ item.created_at | date: "dd/MM/YYYY, hh:mm a" }}
-        </span>
-      </div>
-    </div>
   </div>
-</div>
-
-<div
-  class="fixed sm:left-4 first-letter:my-4 bottom-4 md:left-1/2 flex justify-center items-center space-x-4"
->
-  <mat-paginator
-    class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
-    [pageSizeOptions]="[10]"
-    showFirstLastButtons
-    [length]="count"
-    [hidePageSize]="true"
-    (page)="nextPageIndex($event)"
-  ></mat-paginator>
 </div>

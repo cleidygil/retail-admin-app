@@ -4,6 +4,8 @@ import { EntryAndExitComponent } from './entry-and-exit.component';
 import { ComponentsComponent } from './components/components.component';
 import { ManualEgressComponent } from './components/manual-egress/manual-egress.component';
 import { ManualEntryComponent } from './components/manual-entry/manual-entry.component';
+import { InventoryComponent } from './components/inventory/inventory.component';
+import { WarehousesComponent } from './components/warehouses/warehouses.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,14 @@ const routes: Routes = [
   {
     path: 'income',
     component: ManualEntryComponent
+  },
+  {
+    path: 'warehouses',
+    component: WarehousesComponent
+  },
+  {
+    path: 'inventories',
+    component: InventoryComponent
   },
 ];
 

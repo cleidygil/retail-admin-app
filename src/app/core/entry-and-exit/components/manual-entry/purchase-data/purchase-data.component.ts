@@ -15,22 +15,19 @@ export class PurchaseDataComponent {
   private services = inject(EntryAndExitService)
 
   supplierform = new FormGroup({
-    'nrofactura': new FormControl<any>('', [Validators.required, Validators.maxLength(10)]),
+    'nrofactura': new FormControl<any>('', [Validators.required, Validators.maxLength(10), Validators.pattern('[0-9]*')]),
     'datepay': new FormControl<any>('', [Validators.required]),
     'method': new FormControl<any>('', [Validators.required]),
-    'nroref': new FormControl<any>('',),
-    'amount': new FormControl<any>('', [Validators.required, Validators.minLength(0)]),
   })
 
   ngOnInit(): void {
     if (this.services.paso1.value != null) {
       let valor = this.services.paso1.value
+      console.log(valor)
       this.supplierform.patchValue({
-        nrofactura: valor.nrofactura,
-        datepay: valor.datepay,
-        method: valor.method,
-        nroref: valor.nroref,
-        amount: valor.amount,
+        nrofactura: valor.invoice_number,
+        datepay: valor.date_payment,
+        method: valor.method_payment,
 
       })
     }
@@ -40,6 +37,7 @@ export class PurchaseDataComponent {
         let body = {
           depot: 'true',
           manual: 'true',
+          supplier: 1,
           store: this.services.user.store,
           "invoice_number": valor.nrofactura,
           "date_payment": valor.datepay,

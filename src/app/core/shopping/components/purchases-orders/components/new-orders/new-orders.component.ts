@@ -85,6 +85,7 @@ export class NewOrdersComponent {
     this.loading.showLoading()
     let valor = this.supplierform.value
     let body = {
+      manual: 'false',
       store: valor.store,
       items: this.allProdutcts,
       supplier: this.id,
