@@ -51,6 +51,7 @@ export class DialogDetailRecipesComponent {
           this.snack.openSnackBar("Receta eliminada con éxito.");
           this.dialogRef.close("delete")
         }).catch((err:any) => {
+          this.snack.openSnackBar("Ocurrió un error, por favor intente de nuevo.");
            this.snack.openSnackBar(err);
         });
       }

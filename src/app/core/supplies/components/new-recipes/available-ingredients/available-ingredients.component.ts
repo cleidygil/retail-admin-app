@@ -6,6 +6,7 @@ import { LoadingService } from 'src/app/global/services/loading.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ParamsGlobal ,MyRecipeParams } from '../../../interfaces/supplies';
+import { SnackbarService } from 'src/app/global/services/snackbar.service';
 
 @Component({
   selector: 'app-available-ingredients',
@@ -15,6 +16,8 @@ import { ParamsGlobal ,MyRecipeParams } from '../../../interfaces/supplies';
 export class AvailableIngredientsComponent {
   private services = inject(SuppliesService)
   private loading = inject(LoadingService);
+  private snack = inject(SnackbarService)
+
   @Input() datosRecibidos: any;
   @Input() myFiles: any[] = []
   @Input() files: any
@@ -138,61 +141,59 @@ export class AvailableIngredientsComponent {
     // this.loading.showLoading()
     this.services.getRecipe(Number(this.id)).then((result) => { 
       this.listStore =result.store
-      if(result.products_recipes.length>0){
-        for(let i =0; result.products_recipes.length>i;i++){
-           const body={
-            id:result.products_recipes[i].product.id,
-            name:result.products_recipes[i].product.name,
-            image: result.products_recipes[i].product.image,
-            sku: result.products_recipes[i].product.sku,
-            mu_name: result.products_recipes[i].product.mu_name,
-          }
-          this.selectProducts.push(body)
-          const data = {
-            product: result.products_recipes[i].product.id,
-            quantity:result.products_recipes[i].quantity,
-            type:  "product" ,
-            id:result.products_recipes[i].product.id,
-            // id: result.products_recipes[i].product.id,
-            method:true,
-            image: result.products_recipes[i].product.image,
-            serial: result.products_recipes[i].product.sku,
-            name:result.products_recipes[i].product.name,
-            mu_name: result.products_recipes[i].product.mu_name,
-          };
-          this.sendProducts.push(data);
-          this.costTotal += parseInt(result.products_recipes[i].product.price, 10);
-        }
-      }
-      if(result.previous_recipe.length>0){
-        for(let i =0; result.previous_recipe.length>i;i++){
-          const body={
-            id:result.previous_recipe[i].previus_recipe,
-            name:result.previous_recipe[i].name,
-            image: result.previous_recipe[i].image,
-            sku: result.previous_recipe[i].serial
-          }
-          this.selectProducts.push(body)
-          const data = {
-            product: result.previous_recipe[i].previus_recipe,
-            quantity: result.previous_recipe[i].quantity,
-            type:  "recipe" ,
-            id: result.previous_recipe[i].previus_recipe,
-            // id:result.previous_recipe[i].previus_recipe,
-            method:true,
-            name:result.previous_recipe[i].name,
-            image: result.previous_recipe[i].image,
-            sku: result.previous_recipe[i].serial
-          };
-          this.sendProducts.push(data);     
-          this.costTotal += parseInt(result.products_recipes[i].product.price, 10);     
-        }
-      }
+      result.products_recipes.forEach((item:any)=>{
+        const { product } = item;
+        const { id, name, image, sku, mu_name } = product;
+        const body = {
+          id:id,
+          name:name,
+          image:image,
+          sku: sku,
+          mu_name:mu_name
+        };
+        this.selectProducts.push(body);
+        const data = {
+          product: id,
+          quantity: item.quantity,
+          type: "product",
+          id:id,
+          method: true,
+          image:image,
+          serial: sku,
+          name:name,
+          mu_name:mu_name
+        };
+        this.sendProducts.push(data);
+        this.costTotal += parseInt(product.price, 10);
+      })
+      result.previous_recipe.forEach((item:any) => {
+        const { previus_recipe, name, image, serial } = item;
+        
+        const body = {
+          id: previus_recipe,
+          name:name,
+          image:image,
+          sku: serial
+        };
+        this.selectProducts.push(body);
+  
+        const data = {
+          product: previus_recipe,
+          quantity: item.quantity,
+          type: "recipe",
+          id: previus_recipe,
+          method: true,
+          name:name,
+          image:image,
+          sku: serial
+        };
+        this.sendProducts.push(data);     
+        this.costTotal += parseInt(item.price, 10);     
+      });
       // this.loading.hideLoading()
     }).catch((err) => {
       // this.loading.hideLoading()
-      // this.snack.openSnackBar("Ocurrió un error, por favor intente de nuevo.");
-
+      this.snack.openSnackBar("Ocurrió un error, por favor intente de nuevo.");
       console.log(err)
     });
   }

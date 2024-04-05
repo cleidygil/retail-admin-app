@@ -31,7 +31,7 @@
                         </span>
                     </div>
                     <span class="text-xl font-semibold text-neutral-600 text-left">{{item.name}} </span>
-                    <span class="text-sm text-left">Serial {{item.serial}}</span>
+                    <span class="text-sm text-left">Serial {{item.serial  ?? item.sku }}</span>
                     <span class="text-sm text-left">Cantidad {{item.quantity}}</span>
 
                     <div class="flex justify-start">

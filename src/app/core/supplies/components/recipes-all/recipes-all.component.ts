@@ -54,8 +54,6 @@ export class RecipesAllComponent {
           recipe:result,
           storeMain:storeResult
         }
-        console.log(body)
-        console.log("body")
         const dialogo = this.dialog.open(DialogDetailRecipesComponent,{
           data:body,
           width: window.innerWidth >100 ? '500px':'auto',
@@ -87,7 +85,6 @@ export class RecipesAllComponent {
       this.countCategory = result.count
       this.pageIndex = Math.ceil(Number(result.count) / 10)
     }).catch((error) => {
-      console.log("result")
       console.log(error)
     })
   }

@@ -82,7 +82,7 @@ export class RecipesSaleComponent {
       // this.loading.hideLoading()
 
     }).catch((err) => {
-      // this.loading.hideLoading()
+      this.snack.openSnackBar("Ocurrió un error, por favor intente de nuevo.");
       console.log(err)
     });
   }
