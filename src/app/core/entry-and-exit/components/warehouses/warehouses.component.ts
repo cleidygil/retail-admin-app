@@ -9,6 +9,7 @@ import { GlobalService } from 'src/app/global/services/global.service';
 import { EntryAndExit } from '../../interfaces/entry-and-exit';
 import { EntryAndExitService } from '../../services/entry-and-exit.service';
 import { DialogDetailEntryExitComponent } from '../dialog-detail-entry-exit/dialog-detail-entry-exit.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-warehouses',
@@ -21,7 +22,7 @@ export class WarehousesComponent {
   private depot = inject(DepotService)
   private dialog = inject(MatDialog)
   private global = inject(GlobalService)
-
+  private router = inject(Router)
   mystores: AllStore[] = []
   mybranch: AllStore[] = []
   data: any[] = []
@@ -34,15 +35,13 @@ export class WarehousesComponent {
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   })
-  options = new FormGroup({
-    type: new FormControl(''),
-  })
+
   ngOnInit(): void {
     this.getAllStore()
     this.getAllBranch()
     this.getEntryAndExit()
+    this.services.idStore.value == 0 && (this.router.navigate(['../egress']))
   }
-
   getAllStore() {
     const params = new MyStoreParams()
     params.parent = 'false'
@@ -65,16 +64,15 @@ export class WarehousesComponent {
     const valor = this.params.value
     const params: EntryAndExit = new EntryAndExit()
     params.page = this.nextPage
-    params.store = valor.store || '',
-      params.type = valor.type || '';
+    params.depot__store = valor.store || '',
+      params.depot_entry = valor.type || '';
     params.search = valor.search || ''
-    // params.status = '4'
-    // params.depot = 'false'
+
     if (valor.start != null && valor.end != null) {
       params.created_at_since = new Date(valor?.start).toLocaleDateString("fr-CA",);
       params.created_at_until = new Date(valor?.end).toLocaleDateString("fr-CA",)
     }
-    this.depot.getAllWarehouses(params).then((result) => {
+    this.services.getDepotInventory(params).then((result) => {
       this.data = result.results
       this.count = result.count
     }).catch((error) => {

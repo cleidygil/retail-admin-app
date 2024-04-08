@@ -3,7 +3,7 @@
     Selecciona los productos a pedir
   </span>
 </div>
-<mat-dialog-content>
+<mat-dialog-content> 
   <div class="relative my-4">
     <div class="sticky top-0 left-0 right-0 bg-white z-10 my-4 p-2">
       <div class="flex flex-col bg-white m-auto p-auto">
@@ -25,13 +25,13 @@
                 <label 
                   
                   [for]="item.id"
-                  class="flex items-center w-32 h-32 rounded-md mx-auto bg-neutral-400 text-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                  class="flex items-center w-16 h-16 rounded-full mx-auto bg-neutral-400 text-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
                 >
                   <img
                     *ngIf="item.image != null; else SinImagen"
                     alt="..."
                     [src]="item.image"
-                    class="block rounded-full mx-auto w-20 h-20 object-cover object-center"
+                    class="block rounded-full mx-auto w-12 h-12 object-cover object-center"
                   />
                   <ng-template #SinImagen>
                     <svg

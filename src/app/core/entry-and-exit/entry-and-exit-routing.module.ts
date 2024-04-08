@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'egress',
-    component: ManualEgressComponent
+    loadChildren: ()=>import("../entry-and-exit/components/manual-egress/manual-egress.module").then((m) => m.ManualEgressModule)
   },
   {
     path: 'income',

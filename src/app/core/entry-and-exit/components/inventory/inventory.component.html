@@ -16,6 +16,45 @@
       </a>
     </div>
   </div>
+  <form  [formGroup]="options" class="flex justify-center gap-2">
+    <div class="inline-flex gap-2 radio text-center">
+      <div class="flex flex-col justify-center text-center text-xl">
+        <input
+          formControlName="typeinv"
+          name="typeinv"
+          type="radio"
+          id="prima"
+          hidden="hidden"
+          value="false"
+        />
+        <label
+          (click)="getEntryAndExit()"
+          for="prima"
+          class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400"
+        >
+          Ingresos
+        </label>
+      </div>
+      <div class="flex flex-col justify-center text-center text-xl">
+        <input
+          formControlName="typeinv"
+          name="typeinv"
+          type="radio"
+          id="sale"
+          hidden="hidden"
+          value="true"
+        />
+        <label
+          (click)="getEntryAndExit()"
+          for="sale"
+          class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400 selection:text-neutral-800"
+        >
+          Egresos
+        </label>
+      </div>
+    </div>
+   
+  </form>
   <div class="max-w-4xl mx-auto">
     <form [formGroup]="params" class="grid grid-cols-1 gap-4 my-2">
       <div class="mt-4 w-full">
@@ -134,7 +173,7 @@
               type="radio"
               id="1"
               hidden="hidden"
-              value="1"
+              value="true"
             />
             <label
               (click)="getEntryAndExit()"
@@ -152,14 +191,14 @@
               type="radio"
               id="2"
               hidden="hidden"
-              value="2"
+              value="false"
             />
             <label
               (click)="getEntryAndExit()"
               for="2"
               class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400 selection:text-neutral-800"
             >
-              Egresoss
+              Egresos
             </label>
           </div>
         </div>
@@ -206,7 +245,7 @@
         (click)="openDetail(item)"
       >
         <div class="flex items-center">
-          <ng-container *ngIf="params.value.type === '2'; else Type1">
+          <ng-container *ngIf="item.add ; else Type1">
             <svg
               width="82"
               height="82"

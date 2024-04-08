@@ -34,6 +34,9 @@ export class InventoryComponent {
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   })
+  options = new FormGroup({
+    type: new FormControl(''),
+  })
   ngOnInit(): void {
     this.getAllStore()
     this.getAllBranch()
@@ -62,16 +65,15 @@ export class InventoryComponent {
     const valor = this.params.value
     const params: EntryAndExit = new EntryAndExit()
     params.page = this.nextPage
-    params.store = valor.store || '',
-      params.type = valor.type || '';
+    params.inventory__store = valor.store || '',
+    params.inventory_entry = valor.type || '';
     params.search = valor.search || ''
-    // params.status = '4'
-    // params.depot = 'false'
+   
     if (valor.start != null && valor.end != null) {
       params.created_at_since = new Date(valor?.start).toLocaleDateString("fr-CA",);
       params.created_at_until = new Date(valor?.end).toLocaleDateString("fr-CA",)
     }
-    this.depot.getAllWarehouses(params).then((result) => {
+    this.services.getDepotInventory(params).then((result) => {
       this.data = result.results
       this.count = result.count
     }).catch((error) => {
