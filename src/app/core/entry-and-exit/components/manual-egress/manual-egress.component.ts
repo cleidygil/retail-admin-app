@@ -22,7 +22,8 @@ export class ManualEgressComponent {
   mystores: AllStore[] = []
   mybranch: AllStore[] = []
   options = new FormGroup({
-    store: new FormControl('')
+    store: new FormControl(''),
+    search: new FormControl('')
   })
   ngOnInit(): void {
     this.getAllStore()
@@ -35,6 +36,7 @@ export class ManualEgressComponent {
   getAllStore() {
     const params = new MyStoreParams()
     params.parent = 'false'
+    params.search = this.options.value.search || ''
     this.storeServices.getUserStores(params).then((result) => {
       this.mystores = result
     }).catch((err) => {
@@ -44,6 +46,8 @@ export class ManualEgressComponent {
   getAllBranch() {
     const params = new MyStoreParams()
     params.parent = 'true'
+    params.search = this.options.value.search || ''
+
     this.storeServices.getUserStores(params).then((result) => {
       this.mybranch = result
     }).catch((err) => {

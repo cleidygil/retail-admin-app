@@ -11,6 +11,7 @@ import { Depot, Warehouse } from 'src/app/core/depot/interfaces/depot';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DialogProductEgressComponent } from '../dialog-product-egress/dialog-product-egress.component';
+import { SnackbarService } from 'src/app/global/services/snackbar.service';
 
 @Component({
   selector: 'app-warehouses',
@@ -21,7 +22,7 @@ export class WarehousesComponent {
   private services = inject(EntryAndExitService)
   private depot = inject(DepotService)
   private dialog = inject(MatDialog)
-  private global = inject(GlobalService)
+  private snack = inject(SnackbarService)
   private router = inject(Router)
   store: number = 0;
 
@@ -34,7 +35,6 @@ export class WarehousesComponent {
   warehouses: Warehouse[] = []
   selectionProducts: any[] = []
   ngOnInit(): void {
-    console.log(this.services.idStore.value)
     this.services.idStore.value == 0 ? (this.router.navigate(['home/income_egress/egress/'])) : (this.store = this.services.idStore.value)
     this.getAllWarehouse()
   }
@@ -58,13 +58,34 @@ export class WarehousesComponent {
   }
   openProductEgress(item: any) {
     const dialogo = this.dialog.open(DialogProductEgressComponent, {
-      data: item,
+      data: { item, type: null },
       width: window.innerWidth > 430 ? '40%' : 'auto'
     })
     dialogo.afterClosed().subscribe(data => {
       if (data) {
-        this.getAllWarehouse()
+        this.selectionProducts.push(this.services.loadProduct.value)
+        let prueba = this.selectionProducts.reduce((acc: any[], obj: any) => {
+          let duplicado = acc.filter((it) => it.product === obj.product)
+          if (duplicado.length > 0) {
+            duplicado[0].quantity = obj.quantity
+          } else {
+            acc.push(obj);
+          }
+          return acc;
+        }, []);
+        this.selectionProducts = prueba.length > 0 ? prueba : this.selectionProducts
       }
     })
+  }
+  onSubmit() {
+    this.services.postTrash(this.selectionProducts).then((value) => {
+      this.router.navigate(['../home/income_egress/'])
+    }).catch((error) => {
+      console.log(error)
+      if (error.status == 400) {
+        this.snack.openSnackBar(error.error.message)
+      }
+    })
+    return
   }
 }

@@ -18,18 +18,12 @@ export class DialogProductEgressComponent {
   private snack = inject(SnackbarService);
   private services = inject(EntryAndExitService)
   private formBuilder = inject(FormBuilder)
-  private activateRouter = inject(ActivatedRoute)
   id: number = 0
-  sub!: Subscription
   create: boolean = false
   constructor(
     public dialogRef: MatDialogRef<DialogProductEgressComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: { item: any, type: any },
   ) {
-    this.activateRouter.params.subscribe(data => {
-      console.log(data['id'])
-      this.id = data['id'] !== undefined ? Number(data['id']) : 0
-    })
   }
 
   productsInfo!: FormGroup;
@@ -46,14 +40,14 @@ export class DialogProductEgressComponent {
 
   ngOnInit(): void {
     this.productsInfo = this.formBuilder.group({
-      options: new FormControl('', [Validators.required]),
+      options: new FormControl<any>('', [Validators.required]),
       available: new FormControl(''),
       product: new FormControl(''),
       quantity: new FormControl('', [Validators.required, Validators.min(0)]),
     })
     this.productsInfo.patchValue({
-      product: this.data.product_name,
-      available: this.data.quantity
+      product: this.data.item.product_name,
+      available: this.data.item.quantity
     })
     this.getOptions()
   }
@@ -63,6 +57,7 @@ export class DialogProductEgressComponent {
     params.type = '1'
     this.services.getOptionsInventory(params).then((value) => {
       this.options = value
+      this.optionsArr = value
     }).catch((error) => {
       console.log(error)
     })
@@ -70,22 +65,26 @@ export class DialogProductEgressComponent {
   onSubmit() {
     const valor = this.productsInfo.value
     let body = {
-      "store": this.services.idStore.value,
-      "product": this.data.product,
-      "quantity": Number(valor.quantity),
-      option: valor.options,
-      "inventory_type": this.id == 0 ?? this.id,
+      ...this.data.item, 
+      quantity: Number(valor.quantity),
+      option: valor.options?.id,
+      option_name: valor.options?.name,
+      depot: this.data.type == null ? this.data.item.id : null,
+      inventory: this.data.type != null ? this.data.item.id : null,
+      description: '',
     }
-    this.servicesInv.patchInventoryTransaction(body).then((value) => {
-      this.dialogRef.close(true)
-      this.snack.openSnackBar("La operacion se ha realizado con exito!")
-    }).catch((error) => {
-      console.log(error)
-      if (error.status == 400) {
-        this.snack.openSnackBar(error.error.message)
-      }
-    })
-    return
+    this.services.loadProduct.next(body)
+    this.dialogRef.close(true)
+    // this.servicesInv.patchInventoryTransaction(body).then((value) => {
+    //   this.dialogRef.close(true)
+    //   this.snack.openSnackBar("La operacion se ha realizado con exito!")
+    // }).catch((error) => {
+    //   console.log(error)
+    //   if (error.status == 400) {
+    //     this.snack.openSnackBar(error.error.message)
+    //   }
+    // })
+    // return
   }
   addOptions() {
     const valor = this.newOptions.value
@@ -94,9 +93,11 @@ export class DialogProductEgressComponent {
       "store": this.services.user.store,
       "type": 1
     }
+
     this.services.postOptions(body).then((res) => {
       this.snack.openSnackBar("Opcion agreda con exito!");
       this.getOptions()
+      this.newOptions.reset()
     }).catch((error) => {
       console.log(error)
       if (error.status == 400) {

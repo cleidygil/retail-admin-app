@@ -49,7 +49,7 @@
 <div class="h-full mx-auto flex flex-col justify-center my-4 p-2">
   <div class="grid xl:grid-cols-3 gap-4 m-4">
     <div
-      (click)="openProductEgress(warehouse)"
+      (click)="openProductEgress(warehouse)" 
       class="relative bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-between gap-2"
       *ngFor="let warehouse of warehouses"
     >
@@ -153,8 +153,7 @@
           }}</span>
           <span class="text-xs">{{ warehouse.store_name }}</span>
           <span class="text-xs flex-col"
-            ><b>Cantidad</b>: {{ warehouse.quantity_initial }} /
-            {{ warehouse.quantity }}</span
+            ><b>Motivo</b>: {{ warehouse.option_name }}</span
           >
         </div>
       </div>
@@ -162,19 +161,30 @@
         <div class="flex flex-col text-center gap-y-2">
           <span class="text-xs">Precio</span>
           <div
-            class="bg-neutral-100 px-4 focus:outline-none text-center border border-neutral-400 rounded-full w-full font-semibold text-md md:text-basecursor-default flex items-center text-gray-400 outline-none"
+            class="bg-neutral-100 px-4 focus:outline-none text-center border border-neutral-400 rounded-full w-full justify-center font-semibold text-md md:text-basecursor-default flex items-center text-gray-400 outline-none"
           >
             {{ warehouse.cost }}
           </div>
+          <span class="text-xs">Cantidad</span>
           <div
-            class="px-4 focus:outline-none text-center bg-neutral-500 rounded-full w-full font-semibold text-md md:text-basecursor-default flex items-center text-white outline-none"
+            class="bg-neutral-500 text-center px-4 focus:outline-none rounded-full w-full font-semibold text-md md:text-basecursor-default flex justify-center items-center text-gray-50 outline-none"
           >
-            estado??
+            <span>{{ warehouse.quantity }}</span>
           </div>
-
-          <!-- (click)="product.status != 7 ? openChangeStatus(product) : openAlert()" -->
         </div>
       </div>
     </div>
   </div>
+</div>
+<div class="flex w-full mx-auto justify-center my-2 gap-2 px-4">
+  <button
+    [ngClass]="
+      selectionProducts.length == 0 ? 'bg-neutral-300' : 'bg-neutral-500'
+    "
+    [disabled]="selectionProducts.length == 0"
+    (click)="onSubmit()"
+    class="p-3 rounded-full my-2 gap-2 px-4 text-white w-1/2 font-semibold text-xl"
+  >
+    Registrar Egreso
+  </button>
 </div>

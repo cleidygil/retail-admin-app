@@ -19,7 +19,9 @@ export class EntryAndExitService {
   paso2 = new BehaviorSubject<any | null>(null)
   pasoFinal = new BehaviorSubject<any | null>(null)
   array = new BehaviorSubject<any[]>([])
-  idStore= new BehaviorSubject<number>(0)
+  loadProduct = new BehaviorSubject<any>(null)
+  loadProductShow = new BehaviorSubject<any>(null)
+  idStore = new BehaviorSubject<number>(0)
   constructor() { }
 
   getStatusOrder(params: EntryAndExit): Promise<any> {
@@ -37,8 +39,12 @@ export class EntryAndExitService {
     const ob = this.http.get<any>(`${this.url}/api/inventory/depot/options/`, { params: resparams })
     return lastValueFrom(ob)
   }
-  postOptions(body:any): Promise<any>{
-    const ob = this.http.post<any>(`${this.url}/api/inventory/depot/options/`,body)
+  postOptions(body: any): Promise<any> {
+    const ob = this.http.post<any>(`${this.url}/api/inventory/depot/options/`, body)
+    return lastValueFrom(ob)
+  }
+  postTrash(body: any): Promise<any> {
+    const ob = this.http.post<any>(`${this.url}/api/inventory/depot/trash/`, body)
     return lastValueFrom(ob)
   }
 }
