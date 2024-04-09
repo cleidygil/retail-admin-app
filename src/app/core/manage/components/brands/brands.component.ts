@@ -5,6 +5,7 @@ import { LoadingService } from 'src/app/global/services/loading.service';
 import { Brand, BrandsParams } from '../../interface/manege.interface';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-brands',
@@ -14,6 +15,7 @@ import { Subscription } from 'rxjs';
 export class BrandsComponent {
   private brandServices = inject(ManageService)
   private loading = inject(LoadingService);
+  private router = inject(Router)
   private activateRou = inject(ActivatedRoute);
   store: number | null = null
   nextPage: number = 1;
@@ -46,5 +48,7 @@ export class BrandsComponent {
     this.nextPage = event.pageIndex + 1;
     this.getBrands()
   }
-
+  detailBrands(id:any){
+    this.router.navigate(["/home/management/branch/"+this.store+'/brands/'+ id]);
+  }
 }

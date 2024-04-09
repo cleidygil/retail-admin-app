@@ -45,8 +45,6 @@ export class SelectedIngredientsComponent {
     })
     dialogo.afterClosed().subscribe(data =>{
       if(data){
-        console.log(data)
-        console.log("data")
         const productoAModificar = this.sendProducts.find(item =>item.product ===data.id)
         productoAModificar.quantity = data.quantity      
       }

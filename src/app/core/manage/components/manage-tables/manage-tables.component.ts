@@ -38,18 +38,21 @@ export class ManageTablesComponent {
   count: number = 1
   tables: Table[] = []
   ambients: Ambient[] = []
+
   ngOnInit(): void {
     this.getTables()
     this.getAllStore()
     this.getAllBranch()
   }
 
-  getTables() {
+  getTables(id:any=0) {
     this.loading.showLoading()
     const params: Management = new Management()
     params.page = this.nextPage
-    params.store = this.tablesForm.value.store || ''
+    params.store = id ==0?"":id
     this.services.getTables(params).then((result) => {
+      console.log(result.results)
+      console.log("result.results")
       this.loading.hideLoading()
       this.tables = result.results
       this.count = result.count
@@ -104,13 +107,20 @@ export class ManageTablesComponent {
   //   this.tablesArr = this.tablesArr.filter((item: any, index: number) => index != i).map((item: any) => item)
   // }
   onSubmit() {
+    let lista=[]
     this.tablesForm.patchValue({
       description: this.tablesForm.value.number
     })
-    let body = {
-      ...this.tablesForm.value,
+
+    lista.push({
+      number: this.tablesForm.value.number,
+      store: this.tablesForm.value.store,
+    })
+    const data ={
+      data:lista
     }
-    this.services.postTables(body).then((result) => {
+
+    this.services.postTables(data).then((result) => {
       this.router.navigate(['./manage_tables'])
       this.getTables()
       this.snack.openSnackBar("Mesas creado con exito!")

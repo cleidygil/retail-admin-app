@@ -21,12 +21,19 @@ export class RecipesAllComponent {
   private loading = inject(LoadingService);
   nextPage: number = 1;
   nextPageCategory: number = 1;
-
+  listTest:any=[
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+  ]
   count: number = 1
   countCategory: number = 1
-
   categorySelect = new FormGroup({
-    category: new FormControl<any>(''),
+    category: new FormControl<string | null>(null) 
   })
   nextPageProd: number = 1;
   pageIndex: number = 10
@@ -79,8 +86,6 @@ export class RecipesAllComponent {
     params.category = 'true'
     params.type =3
     this.services.getCategories(params).then((result) => {
-      console.log(result)
-      console.log("result2")
       this.categoryAll = result.results
       this.countCategory = result.count
       this.pageIndex = Math.ceil(Number(result.count) / 10)
@@ -100,12 +105,10 @@ export class RecipesAllComponent {
     const params = new MyRecipeParams()
     params.page = this.nextPage
     this.categorySelect.get('category')?.setValue(null)
-    // if(this.categorySelect.value.category  !==""){
-    //   params.category =this.categorySelect.value?.category ||""
-    // }
     if(id !=0){
       params.category =id 
     }
+    this.categorySelect.value?.category
     params.search = this.params.value?.search|| '';
     this.services.getAllRecipes(params).then((result) => {
       this.recipesAll = result.results

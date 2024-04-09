@@ -91,5 +91,6 @@ export interface Table {
   store: number
   store_name: string
   status: number
-  status_name: string
+  status_name: string,
+  ambient_name:string
 }

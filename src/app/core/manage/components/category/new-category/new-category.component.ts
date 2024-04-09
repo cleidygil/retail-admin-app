@@ -144,7 +144,7 @@ export class NewCategoryComponent {
     if (this.id != null) {
       this.services.patchCategoryID(body2, Number(this.id)).then((res) => {
         this.snack.openSnackBar("Categoria actualizado exitosamente");
-        this.router.navigate(['../'])
+        this.router.navigate(['/home/management/categories/recipe_categories'])
         this.getCategoryID()
       }).catch((error) => {
         this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
