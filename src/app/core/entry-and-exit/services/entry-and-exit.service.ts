@@ -43,6 +43,11 @@ export class EntryAndExitService {
     const ob = this.http.post<any>(`${this.url}/api/inventory/depot/options/`, body)
     return lastValueFrom(ob)
   }
+  getrash(params: EntryAndExit): Promise<any> {
+    const resparams = this.queryParams.buildQueryParams(params)
+    const ob = this.http.get<any>(`${this.url}/api/inventory/depot/trash/`, { params: resparams })
+    return lastValueFrom(ob)
+  }
   postTrash(body: any): Promise<any> {
     const ob = this.http.post<any>(`${this.url}/api/inventory/depot/trash/`, body)
     return lastValueFrom(ob)

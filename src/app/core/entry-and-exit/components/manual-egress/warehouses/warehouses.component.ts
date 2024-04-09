@@ -79,7 +79,10 @@ export class WarehousesComponent {
   }
   onSubmit() {
     this.services.postTrash(this.selectionProducts).then((value) => {
-      this.router.navigate(['../home/income_egress/'])
+      this.getAllWarehouse()
+      this.selectionProducts = []
+      this.snack.openSnackBar("La operacion se ha realizado con exito!")
+
     }).catch((error) => {
       console.log(error)
       if (error.status == 400) {

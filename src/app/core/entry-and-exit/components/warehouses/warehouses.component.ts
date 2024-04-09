@@ -37,10 +37,18 @@ export class WarehousesComponent {
   })
 
   ngOnInit(): void {
+    this.getEntryAndExit()
     this.getAllStore()
     this.getAllBranch()
-    this.getEntryAndExit()
-    this.services.idStore.value == 0 && (this.router.navigate(['../egress']))
+    this.params.valueChanges.subscribe(data => {
+      console.log(data)
+      if (data.type == 'false') {
+        this.getEntryAndExitDepot()
+        return
+      }
+      this.getEntryAndExit()
+      return
+    })
   }
   getAllStore() {
     const params = new MyStoreParams()
@@ -64,13 +72,32 @@ export class WarehousesComponent {
     const valor = this.params.value
     const params: EntryAndExit = new EntryAndExit()
     params.page = this.nextPage
-    params.depot__store = valor.store || '',
-      params.depot_entry = valor.type || '';
+    params.store = valor.store || '',
+      params.depot_exit = valor.type || '';
     params.search = valor.search || ''
 
     if (valor.start != null && valor.end != null) {
-      params.created_at_since = new Date(valor?.start).toLocaleDateString("fr-CA",);
-      params.created_at_until = new Date(valor?.end).toLocaleDateString("fr-CA",)
+      params.since = new Date(valor?.start).toLocaleDateString("fr-CA",);
+      params.until = new Date(valor?.end).toLocaleDateString("fr-CA",)
+    }
+    this.services.getrash(params).then((result) => {
+      this.data = result.results
+      this.count = result.count
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+  getEntryAndExitDepot() {
+    const valor = this.params.value
+    const params: EntryAndExit = new EntryAndExit()
+    params.page = this.nextPage
+    params.store = valor.store || '',
+      params.depot_exit = valor.type || '';
+    params.search = valor.search || ''
+
+    if (valor.start != null && valor.end != null) {
+      params.since = new Date(valor?.start).toLocaleDateString("fr-CA",);
+      params.until = new Date(valor?.end).toLocaleDateString("fr-CA",)
     }
     this.services.getDepotInventory(params).then((result) => {
       this.data = result.results
@@ -81,7 +108,12 @@ export class WarehousesComponent {
   }
   nextPageIndex(event: PageEvent) {
     this.nextPage = event.pageIndex + 1;
+    if (this.params.value.type == 'false') {
+      this.getEntryAndExitDepot()
+      return
+    }
     this.getEntryAndExit()
+    return
   }
   openDetail(item: any) {
     const dialogo = this.dialog.open(DialogDetailEntryExitComponent, {

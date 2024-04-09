@@ -54,7 +54,9 @@ export class DialogProductDistributionComponent {
         "store": this.data.store || valor.store,
         "product": this.data.product,
         "quantity": Number(valor.rawmaterial),
-        "inventory_type": 2
+        "inventory_type": 2,
+        option:null
+
       }
       this.services.patchInventoryTransaction(material).then((value) => {
         this.snack.openSnackBar("Operacion realizada exitosamente")
@@ -69,7 +71,9 @@ export class DialogProductDistributionComponent {
         "store": this.data.store || valor.store,
         "product": this.data.product,
         "quantity": Number(valor.sales),
-        "inventory_type": 1
+        "inventory_type": 1,
+        option:null
+
       }
       this.services.patchInventoryTransaction(material).then((value) => {
         this.snack.openSnackBar("Operacion realizada exitosamente")

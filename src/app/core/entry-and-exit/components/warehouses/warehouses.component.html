@@ -1,5 +1,5 @@
 <div class="flex justify-between gap-2">
-  <a [routerLink]="['../income_egress']" mat-mini-fab color="primary">
+  <a [routerLink]="['../']" mat-mini-fab color="primary">
     <mat-icon>chevron_left</mat-icon>
   </a>
   <div class="flex justify-center">
@@ -62,9 +62,9 @@
             [id]="item.id"
             hidden="hidden"
             [value]="item.id"
+            checked
           />
           <label
-            (click)="getEntryAndExit()"
             [for]="item.id"
             class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
           >
@@ -102,6 +102,7 @@
             [id]="item.id"
             hidden="hidden"
             [value]="item.id"
+            checked
           />
           <label
             [for]="item.id"
@@ -130,17 +131,15 @@
     </div>
     <div class="flex justify-center gap-2">
       <div class="inline-flex gap-2 radio text-center">
-        <div
-          class="flex flex-col justify-center text-center text-xl"
-          (click)="getEntryAndExit()"
-        >
+        <div class="flex flex-col justify-center text-center text-xl">
           <input
             formControlName="type"
             name="type"
             type="radio"
             id="1"
             hidden="hidden"
-            value="true"
+            value="false"
+            checked
           />
           <label
             for="1"
@@ -149,18 +148,15 @@
             Ingresos
           </label>
         </div>
-        <div
-          class="flex flex-col justify-center text-center text-xl"
-          (click)="getEntryAndExit()"
-        >
+        <div class="flex flex-col justify-center text-center text-xl">
           <input
             formControlName="type"
             name="type"
-            s
+            checked
             type="radio"
             id="2"
             hidden="hidden"
-            value="false"
+            value="true"
           />
           <label
             for="2"
@@ -182,7 +178,6 @@
             matEndDate
             placeholder="Hasta"
             formControlName="end"
-            (dateChange)="getEntryAndExit()"
           />
         </mat-date-range-input>
         <mat-datepicker-toggle
@@ -212,8 +207,8 @@
       (click)="openDetail(item)"
     >
       <div class="flex items-center">
-        <ng-container *ngIf="item.add; else Type1">
-         <svg
+        <ng-container *ngIf="params.value.type =='true'; else Type1">
+          <svg
             width="82"
             height="82"
             viewBox="0 0 82 82"
@@ -235,7 +230,7 @@
           </svg>
         </ng-container>
         <ng-template #Type1>
-            <svg
+          <svg
             width="82"
             height="82"
             viewBox="0 0 82 82"
@@ -255,22 +250,19 @@
               fill="#FAFAFA"
             />
           </svg>
-         
         </ng-template>
       </div>
       <div class="grid justify-start gap-2 text-neutral-500">
         <span class="text-xl font-semibold text-neutral-600">
           {{ item.product_name }}</span
         >
-        <span class="text-sm">{{
-          item.add ? "Egreso Manual" : "Ingreso Manual"
-        }}</span>
-        <span class="text-sm">Almacen: {{ item.inventory_store_name }}</span>
+        <span class="text-sm">{{ item.inventory_type_name }}</span>
+        <span class="text-sm">Motivo: {{ item.option_name }}</span>
 
-        <span class="text-sm">Inventario: {{ item.depot_store_name }} </span>
-        <!-- <span class="text-sm"
-            >{{ item.created_at | date: "dd/MM/YYYY, hh:mm a" }}
-          </span> -->
+        <span class="text-sm">{{ item.store_name }} </span>
+        <span class="text-sm"
+          >{{ item.created_at | date: "dd/MM/YYYY, hh:mm a" }}
+        </span>
       </div>
     </div>
   </div>

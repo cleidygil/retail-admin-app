@@ -35,12 +35,18 @@ export class InventoryComponent {
     end: new FormControl<Date | null>(null),
   })
   options = new FormGroup({
-    type: new FormControl(''),
+    typeinv: new FormControl('1'),
   })
   ngOnInit(): void {
     this.getAllStore()
     this.getAllBranch()
     this.getEntryAndExit()
+    this.options.valueChanges.subscribe(data=>{
+      this.getEntryAndExit()
+    })
+    this.params.valueChanges.subscribe(data=>{
+      this.getEntryAndExit()
+    })
   }
 
   getAllStore() {
@@ -65,15 +71,16 @@ export class InventoryComponent {
     const valor = this.params.value
     const params: EntryAndExit = new EntryAndExit()
     params.page = this.nextPage
-    params.inventory__store = valor.store || '',
-    params.inventory_entry = valor.type || '';
+    params.store = valor.store || '',
+    params.inventory_exit = valor.type || '';
+    params.inventory__type = this.options.value.typeinv || '';
     params.search = valor.search || ''
    
     if (valor.start != null && valor.end != null) {
-      params.created_at_since = new Date(valor?.start).toLocaleDateString("fr-CA",);
-      params.created_at_until = new Date(valor?.end).toLocaleDateString("fr-CA",)
+      params.since = new Date(valor?.start).toLocaleDateString("fr-CA",);
+      params.until = new Date(valor?.end).toLocaleDateString("fr-CA",)
     }
-    this.services.getDepotInventory(params).then((result) => {
+    this.services.getrash(params).then((result) => {
       this.data = result.results
       this.count = result.count
     }).catch((error) => {

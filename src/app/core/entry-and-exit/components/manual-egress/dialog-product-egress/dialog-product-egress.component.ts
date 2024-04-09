@@ -54,7 +54,7 @@ export class DialogProductEgressComponent {
   getOptions() {
     const params: EntryAndExit = new EntryAndExit()
     params.remove_pagination = 'true'
-    params.type = '1'
+    params.type = '2'
     this.services.getOptionsInventory(params).then((value) => {
       this.options = value
       this.optionsArr = value

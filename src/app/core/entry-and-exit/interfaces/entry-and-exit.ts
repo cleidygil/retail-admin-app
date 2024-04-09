@@ -18,6 +18,12 @@ export class EntryAndExit {
     inventory_entry?:string
     depot__store?: string
     inventory__store?: string
+    depot_exit?: string
+    inventory__type?: string
+    inventory_exit?: string
+    option?: string
+    since?: string
+    until?: string
 }
 
 export interface WarehousesEandE {

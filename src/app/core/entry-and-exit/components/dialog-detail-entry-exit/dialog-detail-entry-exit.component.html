@@ -1,5 +1,7 @@
 <h1 mat-dialog-title>
-  <span class="flex flex-col text-center font-bold text-2xl text-neutral-600 py-4">
+  <span
+    class="flex flex-col text-center font-bold text-2xl text-neutral-600 py-4"
+  >
     Detalle de Ingreso/Egreso
   </span>
 </h1>
@@ -19,9 +21,10 @@
     </div>
 
     <div
-      class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl pl-2 w-full  overflow-auto outline-none"
+      class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl pl-2 w-full overflow-auto outline-none"
     >
-      <span class="py-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, nihil laborum maxime eos soluta, ducimus, vero animi dolor incidunt laboriosam adipisci ut sit? Atque ipsum soluta dicta blanditiis necessitatibus quisquam.</span>
+      <span class="py-2">{{ data.option_name }} </span>
+      <span class="py-2">{{ data.description }}</span>
     </div>
   </div>
 </div>
@@ -29,8 +32,8 @@
   class="flex flex-col w-full justify-center gap-2 px-6 mx-auto py-4"
   mat-dialog-actions
 >
-  <button
-    mat-dialog-close="true"
+  <button (click)="onNoClick()"
+    type="button"
     class="p-2 outline-none rounded-full px-4 text-white w-full text-center font-semibold text-xl bg-neutral-500"
   >
     Aceptar
