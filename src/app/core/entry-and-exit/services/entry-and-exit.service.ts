@@ -37,4 +37,8 @@ export class EntryAndExitService {
     const ob = this.http.get<any>(`${this.url}/api/inventory/depot/options/`, { params: resparams })
     return lastValueFrom(ob)
   }
+  postOptions(body:any): Promise<any>{
+    const ob = this.http.post<any>(`${this.url}/api/inventory/depot/options/`,body)
+    return lastValueFrom(ob)
+  }
 }

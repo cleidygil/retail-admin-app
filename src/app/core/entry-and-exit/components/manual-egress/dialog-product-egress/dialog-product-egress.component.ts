@@ -31,31 +31,26 @@ export class DialogProductEgressComponent {
       this.id = data['id'] !== undefined ? Number(data['id']) : 0
     })
   }
+
   productsInfo!: FormGroup;
   options: any[] = []
-
+  optionsArr: any[] = []
   newOptions = new FormGroup({
     name: new FormControl('', [Validators.required]),
   })
-  ngOnInit(): void {
-    console.log(this.data)
-    if (this.id == 0) {
-      this.productsInfo = this.formBuilder.group({
-        product: new FormControl(''),
-        available: new FormControl(''),
-        options: new FormControl('', [Validators.required]),
-        inventory_type: new FormControl('', [Validators.required]),
-        quantity: new FormControl('', [Validators.required, Validators.min(0)]),
-      });
-    } else {
-      this.productsInfo = this.formBuilder.group({
-        options: new FormControl('', [Validators.required]),
-        available: new FormControl(''),
-        product: new FormControl(''),
-        quantity: new FormControl('', [Validators.required, Validators.min(0)]),
-      })
-    }
+  ambientsForm = new FormGroup({
+    'name': new FormControl('', [Validators.required, Validators.maxLength(200)]),
+    'description': new FormControl(''),
+    'store': new FormControl<any>('', [Validators.required]),
+  })
 
+  ngOnInit(): void {
+    this.productsInfo = this.formBuilder.group({
+      options: new FormControl('', [Validators.required]),
+      available: new FormControl(''),
+      product: new FormControl(''),
+      quantity: new FormControl('', [Validators.required, Validators.min(0)]),
+    })
     this.productsInfo.patchValue({
       product: this.data.product_name,
       available: this.data.quantity
@@ -79,7 +74,7 @@ export class DialogProductEgressComponent {
       "product": this.data.product,
       "quantity": Number(valor.quantity),
       option: valor.options,
-      "inventory_type": this.id == 0 ? valor?.inventory_type : this.id,
+      "inventory_type": this.id == 0 ?? this.id,
     }
     this.servicesInv.patchInventoryTransaction(body).then((value) => {
       this.dialogRef.close(true)
@@ -99,6 +94,17 @@ export class DialogProductEgressComponent {
       "store": this.services.user.store,
       "type": 1
     }
-    console.log(body)
+    this.services.postOptions(body).then((res) => {
+      this.snack.openSnackBar("Opcion agreda con exito!");
+      this.getOptions()
+    }).catch((error) => {
+      console.log(error)
+      if (error.status == 400) {
+        this.snack.openSnackBar(error.error.message)
+      }
+    })
+  }
+  deleteSub(i: number) {
+    this.optionsArr = this.optionsArr.filter((item: any, index: number) => index != i).map((item: any) => item)
   }
 }
