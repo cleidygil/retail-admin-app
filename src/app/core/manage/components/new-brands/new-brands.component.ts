@@ -44,6 +44,7 @@ export class NewBrandsComponent {
   }
   ngOnInit(): void {
     if (this.id != null) {
+      this.brandsform.disable()
       this.getProductsID()
     }
     this.getAllStore()
@@ -100,9 +101,9 @@ export class NewBrandsComponent {
       this.brandsform.patchValue({
         name: result.name,
         store: result.store.id
-
       })
       this.image = result.image
+      this.files.value.file= this.image 
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")
     })
@@ -138,7 +139,6 @@ export class NewBrandsComponent {
     this.format = this.format.filter((fil: string, i: number) => i !== indice);
   }
   convertirBase64AUrl(base64Data: string): string {
-    console.log(base64Data)
     const byteCharacters = JSON.parse(window.atob(base64Data));
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {

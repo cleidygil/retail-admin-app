@@ -60,15 +60,6 @@ export class NewManageTablesComponent {
 
   getAmbients(id:any=0) {
     const params: Management = new Management()
-    console.log(id)
-    console.log("id")
-    console.log(this.tablesForm.value.store)
-    console.log("this.tablesForm.value.store")
-    // if(id==0){
-    //   params.store = this.tablesForm.value.store || ''
-    // }else{
-    //   params.store = id
-    // }
     params.store = id ==0 ? "":id
 
     this.services.getAmbients(params).then((result) => {
