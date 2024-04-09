@@ -36,7 +36,7 @@ export class ManageTablesComponent {
   })
   nextPage: number = 1;
   count: number = 1
-  tables: Table[] = []
+  tables: any[] = []
   ambients: Ambient[] = []
 
   ngOnInit(): void {
@@ -50,15 +50,15 @@ export class ManageTablesComponent {
     const params: Management = new Management()
     params.page = this.nextPage
     params.store = id ==0?"":id
-    this.services.getTables(params).then((result) => {
-      console.log(result.results)
-      console.log("result.results")
+    params.tables=true
+    this.services.getAmbientsTables(params).then((result) => {
       this.loading.hideLoading()
       this.tables = result.results
       this.count = result.count
     }).catch((err) => {
       this.loading.hideLoading()
     });
+
   }
 
   getAmbients() {
@@ -94,18 +94,7 @@ export class ManageTablesComponent {
       console.log(err)
     });
   }
-  // addAmbients() {
-  //   this.tablesForm.patchValue({
-  //     description: this.tablesForm.value.number
-  //   })
-  //   this.tablesArr.push({
-  //     ...this.tablesForm.value,
-  //   })
-  //   this.tablesForm.reset()
-  // }
-  // deleteSub(i: number) {
-  //   this.tablesArr = this.tablesArr.filter((item: any, index: number) => index != i).map((item: any) => item)
-  // }
+
   onSubmit() {
     let lista=[]
     this.tablesForm.patchValue({
@@ -143,5 +132,8 @@ export class ManageTablesComponent {
 
       }
     })
+  }
+  detailTables(id:any){
+    this.router.navigate(["/home/management/manage_tables/"+id]);
   }
 }

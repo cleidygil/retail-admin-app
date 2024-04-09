@@ -21,15 +21,6 @@ export class RecipesAllComponent {
   private loading = inject(LoadingService);
   nextPage: number = 1;
   nextPageCategory: number = 1;
-  listTest:any=[
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7"
-  ]
   count: number = 1
   countCategory: number = 1
   categorySelect = new FormGroup({

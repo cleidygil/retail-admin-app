@@ -37,6 +37,10 @@ export class ManageService {
     const obs$ = this.http.patch<any>(`${this.url}/api/stores/brands/${id}/`,body)
     return lastValueFrom(obs$)
   }
+  deleteBrandId(id:number): Promise<any> {
+    const obs$ = this.http.delete<any>(`${this.url}/api/stores/brands/${id}/`)
+    return lastValueFrom(obs$)
+  }
   getMeasurementunits(params: Management): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<any>(`${this.url}/api/stores/measurement_units/`, { params: resparams })
@@ -68,8 +72,20 @@ export class ManageService {
     const obs$ = this.http.get<Taxes[]>(`${this.url}/api/services/taxes/`, {params: resparams})
     return lastValueFrom(obs$)
   }
+  getTaxesId(id:any): Promise<any> {
+    const obs$ = this.http.get<Taxes[]>(`${this.url}/api/services/taxes/${id}/`)
+    return lastValueFrom(obs$)
+  }
   postTaxes(body:any,): Promise<any> {
     const obs$ = this.http.post<any>(`${this.url}/api/services/taxes/`,body)
+    return lastValueFrom(obs$)
+  }
+  patchTaxes(body:any,id:any): Promise<any>{
+    const obs$ = this.http.patch<any>(`${this.url}/api/services/taxes/${id}/`,body)
+    return lastValueFrom(obs$)
+  }
+  deleteTaxesID(id:number): Promise<any> {
+    const obs$ = this.http.delete<any>(`${this.url}/api/services/taxes/${id}/`)
     return lastValueFrom(obs$)
   }
   getCategories(params: Management): Promise<Categories> {
@@ -98,6 +114,10 @@ export class ManageService {
     const obs$ = this.http.get<Ambients | Ambient>(`${this.url}/api/stores/ambients/`, { params: resparams })
     return lastValueFrom(obs$)
   }
+  getAmbientsID(id:any): Promise<any> {
+    const obs$ = this.http.get<any>(`${this.url}/api/stores/ambients/${id}/`)
+    return lastValueFrom(obs$)
+  }
   postAmbients(body:any): Promise<any> {
     const obs$ = this.http.post<any>(`${this.url}/api/stores/ambients/`,body)
     return lastValueFrom(obs$)
@@ -109,6 +129,15 @@ export class ManageService {
   getTables(params: Management): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<any>(`${this.url}/api/stores/tables/`, { params: resparams })
+    return lastValueFrom(obs$)
+  }
+  getTablesID(id:any):Promise<any>{
+    const obs$ = this.http.get<any>(`${this.url}/api/stores/tables/${id}`)
+    return lastValueFrom(obs$)
+  }
+  getAmbientsTables(params: Management): Promise<any> {
+    const resparams = this.queryParams.buildQueryParams(params)
+    const obs$ = this.http.get<any>(`${this.url}/api/stores/ambients/`, { params: resparams })
     return lastValueFrom(obs$)
   }
   postTables(body:any): Promise<any> {

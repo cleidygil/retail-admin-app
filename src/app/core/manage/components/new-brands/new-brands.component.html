@@ -6,7 +6,7 @@
     <button mat-mini-fab color="primary" *ngIf="this.id!=null" (click)="brandsform.enable()">
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-mini-fab color="primary" *ngIf="this.id!=null">
+    <button mat-mini-fab color="primary" *ngIf="this.id!=null" (click)="deleteBrand()">
       <mat-icon>delete</mat-icon>
     </button>
   </div>
@@ -116,7 +116,7 @@
 
   <div class="flex justify-center gap-2">
     <button class="p-3 rounded-full text-white w-1/2 font-semibold text-xl "
-      [ngClass]="brandsform.invalid ? 'bg-neutral-300' : 'bg-neutral-500'" [disabled]="brandsform.invalid"
+      [ngClass]="brandsform.disabled || brandsform.invalid ? 'bg-neutral-300' : 'bg-neutral-500'" [disabled]="brandsform.disabled || brandsform.invalid  "
       (click)="onSubmit()">
       {{id !=null ? 'Actualizar': 'Crear'}} marca
     </button>

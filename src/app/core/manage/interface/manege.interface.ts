@@ -7,6 +7,7 @@ export class Management {
   parent?: string
   store?: string
   type?: string
+  tables?:boolean
 }
 
 
