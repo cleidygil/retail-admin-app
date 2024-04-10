@@ -32,7 +32,10 @@ export class WarehousesComponent {
   ngOnInit(): void {
     this.getAllBranch()
     this.getAllWarehouse()
-      }
+    this.params.valueChanges.subscribe(data => {
+      this.getAllWarehouse()
+    })
+  }
 
 
   getAllBranch() {
@@ -51,6 +54,7 @@ export class WarehousesComponent {
     const params: Depot = new Depot()
     params.page = this.nextPage
     params.store = valor.store || ''
+    params.search = valor.search || ''
     this.services.getAllWarehouses(params).then((result) => {
       this.warehouses = result.results
       this.count = result.count

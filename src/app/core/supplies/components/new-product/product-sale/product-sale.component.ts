@@ -5,7 +5,7 @@ import { AllStore, MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { StoreService } from 'src/app/core/store/services/store.service';
 import { GlobalService } from 'src/app/global/services/global.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
-import { MeasurementUnit, ParamsGlobal } from '../../../interfaces/supplies';
+import { MeasurementUnit, ParamsGlobal, Tax } from '../../../interfaces/supplies';
 import { SuppliesService } from '../../../services/supplies.service';
 import { Subscription } from 'rxjs';
 import { ManageService } from 'src/app/core/manage/services/manege.service';
@@ -36,6 +36,7 @@ export class ProductSaleComponent {
   mystores: AllStore[] = []
   mybranch: AllStore[] = []
   brands: Brand[] = []
+  taxes:Tax[]=[]
   productSale = new FormGroup({
     'name': new FormControl('', [Validators.required]),
     'unidadmedida': new FormControl<any>('', [Validators.required]),
@@ -43,6 +44,7 @@ export class ProductSaleComponent {
     'subcategory': new FormControl<any>('', [Validators.required]),
     'store': new FormControl<any>('', [Validators.required]),
     'brand': new FormControl<any>('', [Validators.required]),
+    impuesto: new FormControl<any>('', [Validators.required]),
   })
   constructor() {
     this.sub = this.activateRou.params.subscribe((data) => {
@@ -55,6 +57,7 @@ export class ProductSaleComponent {
     this.getCategories()
     this.getBrands()
     this.getAllBranch()
+    this.getTax()
     if (this.id != null) {
       this.getProductsID()
     }
@@ -73,6 +76,15 @@ export class ProductSaleComponent {
     params.remove_pagination = 'true'
     this.services.getMeasurementUnits(params).then((result) => {
       this.munits = result
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+  getTax() {
+    const params: ParamsGlobal = new ParamsGlobal()
+    params.remove_pagination = 'true'
+    this.services.getAllTax().then((result) => {
+      this.taxes = result
     }).catch((error) => {
       console.log(error)
     })
@@ -129,6 +141,7 @@ export class ProductSaleComponent {
       "brand": valor?.brand,
       "subcategory": valor?.subcategory,
       "store": valor?.store,
+      "taxes": valor?.impuesto
     }
     this.services.postProduts(body).then((res) => {
       this.snack.openSnackBar("Producto creado exitosamente");

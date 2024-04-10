@@ -29,27 +29,26 @@ export class ManageTablesComponent {
 
 
   tablesForm = new FormGroup({
-    'ambients': new FormControl('', [Validators.required, Validators.maxLength(200)]),
-    'number': new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
-    'description': new FormControl(''),
     'store': new FormControl<any>('', [Validators.required]),
   })
   nextPage: number = 1;
   count: number = 1
   tables: any[] = []
-  ambients: Ambient[] = []
 
   ngOnInit(): void {
     this.getTables()
     this.getAllStore()
     this.getAllBranch()
+    this.tablesForm.valueChanges.subscribe(data=>{
+      this.getTables()
+    })
   }
 
   getTables(id:any=0) {
     this.loading.showLoading()
     const params: Management = new Management()
     params.page = this.nextPage
-    params.store = id ==0?"":id
+    params.store = this.tablesForm.value.store
     params.tables=true
     this.services.getAmbientsTables(params).then((result) => {
       this.loading.hideLoading()
@@ -61,17 +60,7 @@ export class ManageTablesComponent {
 
   }
 
-  getAmbients() {
-    const params: Management = new Management()
-    // params.page = this.nextPage
-    params.store = this.tablesForm.value.store || ''
 
-    this.services.getAmbients(params).then((result) => {
-      this.ambients = result.results
-      this.count = result.count
-    }).catch((err) => {
-    });
-  }
   nextPageIndex(event: PageEvent) {
     this.nextPage = event.pageIndex + 1;
     this.getTables()
@@ -95,29 +84,7 @@ export class ManageTablesComponent {
     });
   }
 
-  onSubmit() {
-    let lista=[]
-    this.tablesForm.patchValue({
-      description: this.tablesForm.value.number
-    })
-
-    lista.push({
-      number: this.tablesForm.value.number,
-      store: this.tablesForm.value.store,
-    })
-    const data ={
-      data:lista
-    }
-
-    this.services.postTables(data).then((result) => {
-      this.router.navigate(['./manage_tables'])
-      this.getTables()
-      this.snack.openSnackBar("Mesas creado con exito!")
-      this.tablesArr = []
-    }).catch((error) => {
-      this.snack.openSnackBar("Ocurrio un error, intente de nuevo!")
-    })
-  }
+ 
   delete(i: number) {
     const dialogo = this.dialog.open(ConfirmDialogComponent, {
       data: { message: "¿Seguro que quieres eliminar este ítems?" }

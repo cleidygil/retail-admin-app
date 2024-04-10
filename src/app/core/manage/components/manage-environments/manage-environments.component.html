@@ -1,11 +1,11 @@
-<div class="flex justify-between gap-2">
-  <a [routerLink]="['../']" mat-mini-fab color="primary">
+<div class="flex justify-between gap-2 items-center">
+  <a [routerLink]="['../environments']" mat-mini-fab color="primary">
     <mat-icon>chevron_left</mat-icon>
   </a>
- 
-  <button mat-mini-fab color="primary">
-    <mat-icon>delete</mat-icon>
-  </button>
+  <div class="flex  justify-center text-center">
+    <p class="text-3xl font-semibold">Gestión de ambientes</p>
+  </div>
+  <div> </div>
 </div>
 <div class="max-w-xl mx-auto flex flex-col justify-center my-4 p-2">
   <div class="fixed  bottom-4 right-4 first-letter:my-4">
@@ -15,81 +15,68 @@
   </div>
 </div>
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 p-2">
-  <div class="flex flex-col justify-center w-full text-center">
-    <p class="text-3xl font-semibold">Gestión de ambientes</p>
-    <form [formGroup]="ambientsForm" class="grid grid-cols-1 gap-2 my-4">
-      <span class="text-base text-center font-semibold text-neutral-600"
-        >Principal</span
-      >
-      <div class="flex justify-center gap-4 my-4">
-        <div class="flex flex-col justify-center text-center" *ngFor="let item of mystores">
-            <a class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white cursor-pointer" (click)="getAmbients()"> 
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="h-20 w-16 text-white rounded-full mx-auto">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
-                </svg>
-            </a>
-            <p class="pt-2 text-lg font-semibold text-gray-400">
-                {{ item.name }}
-            </p>
-        </div>
-    </div>
-      <span class="text-base text-center font-semibold text-neutral-600">
-        Sucursales
-      </span>
-      <div class="flex justify-center gap-2">
-        <div class="inline-block radio text-center" *ngFor="let item of mybranch">
-          <div class="flex flex-col justify-center text-center">
-            <input
-              formControlName="store"
-              name="store"
-              type="radio"
-              [id]="item.id"
-              hidden="hidden"
-              [value]="item.id"
-              (click)="getAmbients(item.id)"
-            />
-            <label
-              [for]="item.id"
-              class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white cursor-pointer" 
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-16 w-16 text-white rounded-full mx-auto"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
-                />
-              </svg>
-            </label>
-          </div>
-          <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
-            {{ item.name }}
-          </span>
-        </div>
-      </div>
-    </form>
-    <div class="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 gap-4 m-4 w-full">
-      <a class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer" style="height: 150px;" *ngFor="let item of ambients">
-        <div class="flex items-center">
-          <svg width="82" height="82" viewBox="0 0 82 82" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="0.436523" y="0.417969" width="80.7567" height="80.7567" rx="40.3783" fill="#A8A8A8"/>
-            <path d="M64.8727 56.14L59.9263 44.8341H63.0233C64.1398 44.8341 65.0423 43.9316 65.0423 42.8152C65.0423 41.6987 64.1398 40.7962 63.0233 40.7962H58.1598L51.9778 26.6638H56.9666C58.083 26.6638 58.9855 25.7614 58.9855 24.6449C58.9855 23.5284 58.083 22.626 56.9666 22.626H24.6639C23.5474 22.626 22.645 23.5284 22.645 24.6449C22.645 25.7614 23.5474 26.6638 24.6639 26.6638H29.6526L23.4707 40.7962H18.6071C17.4907 40.7962 16.5882 41.6987 16.5882 42.8152C16.5882 43.9316 17.4907 44.8341 18.6071 44.8341H21.7042L16.7578 56.14C16.3096 57.1616 16.776 58.3507 17.7996 58.7969C18.062 58.914 18.3366 58.9665 18.6051 58.9665C19.3844 58.9665 20.1254 58.5143 20.4565 57.7551L26.1094 44.8341H55.521L61.174 57.7551C61.5051 58.5143 62.2461 58.9665 63.0254 58.9665C63.2959 58.9665 63.5705 58.914 63.8309 58.7969C64.8545 58.3487 65.3188 57.1596 64.8727 56.14ZM27.876 40.7962L34.0579 26.6638H47.5705L53.7525 40.7962H27.876Z" fill="#FAFAFA"/>
+
+  <form [formGroup]="ambientsForm" class="grid grid-cols-1 gap-2 my-4">
+    <span class="text-base text-center font-semibold text-neutral-600">Principal</span>
+    <div class="flex justify-center gap-2">
+      <div class="inline-block radio text-center" *ngFor="let item of mystores">
+        <div class="flex flex-col justify-center text-center">
+          <input formControlName="store" type="radio" [id]="item.id" hidden="hidden" [value]="item.id" checked />
+          <label [for]="item.id"
+            class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="h-16 w-16 text-white rounded-full mx-auto">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
             </svg>
+          </label>
         </div>
-        <div class="grid justify-start gap-2 text-neutral-500">
-          <span class="text-xl font-semibold text-neutral-600 text-left">{{item.name}} </span>
-        </div>
-      </a>
+        <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
+          {{ item.name }}
+        </span>
+      </div>
     </div>
-  </div>  
+    <span class="text-base text-center font-semibold text-neutral-600">
+      Sucursales
+    </span>
+    <div class="flex justify-center gap-2">
+      <div class="inline-block radio text-center" *ngFor="let item of mybranch">
+        <div class="flex flex-col justify-center text-center">
+          <input formControlName="store" checked type="radio" [id]="item.id" hidden="hidden" [value]="item.id"
+            />
+          <label [for]="item.id"
+            class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="h-16 w-16 text-white rounded-full mx-auto">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+            </svg>
+          </label>
+        </div>
+        <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
+          {{ item.name }}
+        </span>
+      </div>
+    </div>
+  </form>
+  <div class="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 gap-4 m-4 w-full">
+    <a [routerLink]="['/home/management/manage_environments/'+item.id]" class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer"
+      style="height: 150px;" *ngFor="let item of ambients">
+      <div class="flex items-center">
+        <svg width="82" height="82" viewBox="0 0 82 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.436523" y="0.417969" width="80.7567" height="80.7567" rx="40.3783" fill="#A8A8A8" />
+          <path
+            d="M64.8727 56.14L59.9263 44.8341H63.0233C64.1398 44.8341 65.0423 43.9316 65.0423 42.8152C65.0423 41.6987 64.1398 40.7962 63.0233 40.7962H58.1598L51.9778 26.6638H56.9666C58.083 26.6638 58.9855 25.7614 58.9855 24.6449C58.9855 23.5284 58.083 22.626 56.9666 22.626H24.6639C23.5474 22.626 22.645 23.5284 22.645 24.6449C22.645 25.7614 23.5474 26.6638 24.6639 26.6638H29.6526L23.4707 40.7962H18.6071C17.4907 40.7962 16.5882 41.6987 16.5882 42.8152C16.5882 43.9316 17.4907 44.8341 18.6071 44.8341H21.7042L16.7578 56.14C16.3096 57.1616 16.776 58.3507 17.7996 58.7969C18.062 58.914 18.3366 58.9665 18.6051 58.9665C19.3844 58.9665 20.1254 58.5143 20.4565 57.7551L26.1094 44.8341H55.521L61.174 57.7551C61.5051 58.5143 62.2461 58.9665 63.0254 58.9665C63.2959 58.9665 63.5705 58.914 63.8309 58.7969C64.8545 58.3487 65.3188 57.1596 64.8727 56.14ZM27.876 40.7962L34.0579 26.6638H47.5705L53.7525 40.7962H27.876Z"
+            fill="#FAFAFA" />
+        </svg>
+      </div>
+      <div class="grid justify-start gap-2 text-neutral-500">
+        <span class="text-xl font-semibold text-neutral-600 text-left">{{item.name}} </span>
+        <span class="text-neutral-600 text-left">Sucursal: {{item.store_name}} </span>
+
+      </div>
+    </a>
+  </div>
 </div>
 
 <!-- <app-new-manage-environments></app-new-manage-environments> -->
