@@ -18,7 +18,6 @@ export class NewBrandsComponent {
   private snack = inject(SnackbarService)
   private activateRou = inject(ActivatedRoute);
   private router = inject(Router)
-
   sub!: Subscription
   id: number | null = null
   selectedFile: any = null;
@@ -65,7 +64,7 @@ export class NewBrandsComponent {
     }
     let sendImag;
     const valor = this.brandsform.value
-    if (this.files.value.file != '') {
+    if (this.files.value.file != '' ) {
       sendImag = this.myFiles[0].imageData
     }
     if (this.files.value.url != '') {
@@ -79,12 +78,22 @@ export class NewBrandsComponent {
       "image": sendImag,
       "store": valor.store,
     }
-    this.services.setBrands(body).then((res) => {
-      this.router.navigate(['../'])
-      this.snack.openSnackBar("Marca creada exitosamente");
-    }).catch((error) => {
-      this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
-    })
+    if (this.id != null){
+      this.services.patchBrandID(body, Number(this.id)).then((res) => {
+            this.snack.openSnackBar("Marca actualizada exitosamente");
+            this.router.navigate(["/home/management/branch/"+this.store+'/brands/']);
+          }).catch((error) => {
+            this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
+          })
+    }else{
+      this.services.setBrands(body).then((res) => {
+        this.router.navigate(['../'])
+        this.snack.openSnackBar("Marca creada exitosamente");
+      }).catch((error) => {
+        this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
+      })
+    }
+
     // return
     // if (this.id != null) {
     //   this.services.patchBrandID(body, Number(this.id)).then((res) => {
@@ -103,7 +112,8 @@ export class NewBrandsComponent {
         store: result.store.id
       })
       this.image = result.image
-      this.files.value.file= this.image 
+      this.files.value.url= this.image 
+      // this.myFiles[0].imageData= this.image 
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")
     })
@@ -150,5 +160,13 @@ export class NewBrandsComponent {
     // Crear una URL a partir del blob
     const objectURL = URL.createObjectURL(blob);
     return objectURL;
+  }
+  deleteBrand(){
+    this.services.deleteBrandId(Number(this.id)).then((result) => {
+      this.snack.openSnackBar("Marca Eliminada exitosamente");
+      this.router.navigate(["/home/management/branch/"+this.store+'/brands/']);
+    }).catch((error) => {
+      this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")
+    })
   }
 }

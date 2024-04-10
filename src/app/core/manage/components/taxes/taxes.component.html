@@ -19,7 +19,7 @@
     </div>
     <div class="grid xl:grid-cols-2 gap-4 m-4">
       <div
-        class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2" *ngFor="let item of taxes"
+        class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer"  *ngFor="let item of taxes" (click)="editTaxes(item.id)"
       >
         <div class="flex items-center">
           <svg width="120" height="120" viewBox="0 0 121 121" fill="none" xmlns="http://www.w3.org/2000/svg">

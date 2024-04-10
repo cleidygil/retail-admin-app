@@ -64,6 +64,10 @@ const routes: Routes = [
     component: NewTaxesComponent,
   },
   {
+    path: 'taxes/:id',
+    component: NewTaxesComponent,
+  },
+  {
     path: 'environments',
     component: EnvironmentComponent
   },
@@ -74,6 +78,10 @@ const routes: Routes = [
   {
     path: 'manage_tables',
     component: ManageTablesComponent
+  },
+  {
+    path: 'manage_tables/:id',
+    component: NewManageTablesComponent
   },
   {
     path: 'new_ambients',

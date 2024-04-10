@@ -10,6 +10,8 @@ import { AllStore, MyStoreParams } from 'src/app/core/store/interfaces/store';
 import { StoreService } from 'src/app/core/store/services/store.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
 import { ConfirmDialogComponent } from 'src/app/global/components/confirm-dialog/confirm-dialog.component';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-new-manage-tables',
   templateUrl: './new-manage-tables.component.html',
@@ -22,6 +24,8 @@ export class NewManageTablesComponent {
   private router = inject(Router)
   private snack = inject(SnackbarService)
   private dialog = inject(MatDialog)
+  private activateRou = inject(ActivatedRoute);
+
   mystores: AllStore[] = []
   mybranch: AllStore[] = []
   tablesArr: any[] = []
@@ -35,13 +39,23 @@ export class NewManageTablesComponent {
   count: number = 1
   tables: Table[] = []
   ambients: Ambient[] = []
-  constructor(){
+  sub!: Subscription
+  id: number | null = null
+  store: number | null = null
 
+  constructor(){
+    this.sub = this.activateRou.params.subscribe((data) => {
+      this.id = Number(data['id']) || null
+      this.store = Number(data['store']) || null
+    })
   }
   ngOnInit(): void {
-    this.getTables()
     this.getAllStore()
     this.getAllBranch()
+    if(this.id!=null){
+      this.GetAmbientsID()
+      this.tablesForm.disable()
+    }
   }
 
   getTables() {
@@ -58,16 +72,30 @@ export class NewManageTablesComponent {
     });
   }
 
-  getAmbients(id:any=0) {
+  getAmbients(id:any=0, tables:boolean=false) {
     const params: Management = new Management()
     params.store = id ==0 ? "":id
-
+    params.tables=tables
     this.services.getAmbients(params).then((result) => {
       this.ambients = result.results
       this.count = result.count
     }).catch((err) => {
     });
   }
+  GetAmbientsID(){
+    this.services.getAmbientsID(this.id).then((result) => {
+      this.tablesForm.patchValue({
+        ambients:result.id,
+        store:result.store.id,
+        number: result.tables_count
+      })
+      this.getAmbients(result.store.id, true)
+
+    }).catch((err) => {
+    });
+  }
+
+
   nextPageIndex(event: PageEvent) {
     this.nextPage = event.pageIndex + 1;
     this.getTables()
@@ -90,41 +118,22 @@ export class NewManageTablesComponent {
       console.log(err)
     });
   }
+
   onSubmit() {
-    let lista=[]
     this.tablesForm.patchValue({
       description: this.tablesForm.value.number
     })
-    lista.push({
-      number: this.tablesForm.value.number,
-      store: this.tablesForm.value.store,
-      ambient:this.tablesForm.value.ambients
-    })
     const data ={
-      data:lista
+      number: Number(this.tablesForm.value.number),
+      store: this.tablesForm.value.store,
+      ambient:Number(this.tablesForm.value.ambients)
     }
     this.services.postTables(data).then((result) => {
-      this.router.navigate(['./manage_tables'])
-      this.getTables()
+      this.router.navigate(['home/management/manage_tables'])
       this.snack.openSnackBar("Mesas creado con exito!")
-      this.tablesArr = []
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error, intente de nuevo!")
     })
   }
-  delete(i: number) {
-    const dialogo = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: "¿Seguro que quieres eliminar este ítems?" }
-    })
-    dialogo.afterClosed().subscribe(data => {
-      if (data) {
-        this.services.deletehAmbientID(i).then((value) => {
-          this.snack.openSnackBar("Items eliminadao con exito.")
-        }).catch((error) => {
-          this.snack.openSnackBar(error.errror.message)
-        })
 
-      }
-    })
-  }
 }
