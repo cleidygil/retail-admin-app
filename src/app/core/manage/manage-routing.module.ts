@@ -76,6 +76,10 @@ const routes: Routes = [
     component: ManageEnvironmentsComponent
   },
   {
+    path: 'manage_environments/:id',
+    component: NewManageEnvironmentsComponent
+  },
+  {
     path: 'manage_tables',
     component: ManageTablesComponent
   },

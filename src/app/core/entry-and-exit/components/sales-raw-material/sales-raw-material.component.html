@@ -1,5 +1,5 @@
 <div class="flex justify-between gap-2">
-  <a [routerLink]="['../']" mat-mini-fab color="primary">
+  <a [routerLink]="['../../']" mat-mini-fab color="primary">
     <mat-icon>chevron_left</mat-icon>
   </a>
   <div class="flex justify-center">
@@ -12,16 +12,13 @@
   </button>
 </div>
 <div class="flex justify-center">
-  <span class="text-center font-bold text-2xl text-neutral-600">Almacén</span>
+  <span class="text-center font-bold text-2xl text-neutral-600"
+    >Inventario de {{ id == 1 ? "Venta" : "Materia prima" }}</span
+  >
 </div>
 <div class="max-w-4xl mx-auto">
   <form [formGroup]="params" class="grid grid-cols-1 gap-4 my-2">
     <div class="mt-4 w-full">
-      <label
-        class="block font-medium text-sm text-gray-700"
-        for="password"
-        value="Password"
-      ></label>
       <div class="relative">
         <input
           formControlName="search"
@@ -37,7 +34,7 @@
             class="text-gray-500 focus:outline-none focus:text-gray-600 hover:text-gray-600"
             mat-icon-button
             matSuffix
-            (click)="getAllWarehouse()"
+            (click)="getAllProducts()"
           >
             <mat-icon>search</mat-icon>
           </button>
@@ -49,9 +46,8 @@
 <div class="h-full mx-auto flex flex-col justify-center my-4 p-2">
   <div class="grid xl:grid-cols-3 gap-4 m-4">
     <div
-      (click)="openProductEgress(warehouse)" 
       class="relative bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-between gap-2"
-      *ngFor="let warehouse of warehouses"
+      *ngFor="let product of productsAll"    (click)="openProductEgress(product)" 
     >
       <div class="flex items-center gap-2">
         <svg
@@ -76,47 +72,40 @@
         </svg>
         <div class="flex flex-col text-neutral-500">
           <span class="font-semibold text-neutral-600 uppercase">{{
-            warehouse.product_name
+            product.product_name
           }}</span>
-          <span class="text-xs">{{ warehouse.store_name }}</span>
+          <span class="text-xs">Marca: {{ product.product_brand_name }}</span>
+          <span class="text-xs"><b>UND</b>: {{ product.product_mu_name }}</span>
           <span class="text-xs flex-col"
-            ><b>Cantidad</b>: {{ warehouse.quantity_initial }} /
-            {{ warehouse.quantity }}</span
+            ><b>Cantidad</b>: {{ product.quantity }}</span
           >
         </div>
       </div>
       <div class="flex items-center self-center bg-transparent">
         <div class="flex flex-col text-center gap-y-2">
-          <span class="text-xs">Precio</span>
-          <div
-            class="bg-neutral-100 px-4 focus:outline-none text-center border border-neutral-400 rounded-full w-full font-semibold text-md md:text-basecursor-default flex items-center text-gray-400 outline-none"
-          >
-            {{ warehouse.cost }}
-          </div>
           <div
             class="px-4 focus:outline-none text-center bg-neutral-500 rounded-full w-full font-semibold text-md md:text-basecursor-default flex items-center text-white outline-none"
           >
-            estado??
+            {{ product.status_name }}
           </div>
 
-          <!-- (click)="product.status != 7 ? openChangeStatus(product) : openAlert()" -->
         </div>
       </div>
     </div>
   </div>
   <div
-    class="sm:left-4 first-letter:my-4 bottom-4 md:left-1/2 flex justify-center items-center space-x-4"
-  >
-    <mat-paginator
-      class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
-      [pageSizeOptions]="[10]"
-      showFirstLastButtons
-      [length]="count"
-      [hidePageSize]="true"
-      (page)="nextPageIndex($event)"
-    ></mat-paginator>
-  </div>
-  <div class="flex justify-center p-4">
+  class=" sm:left-4 first-letter:my-4 bottom-4 md:left-1/2 flex justify-center items-center space-x-4"
+>
+  <mat-paginator
+    class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
+    [pageSizeOptions]="[10]"
+    showFirstLastButtons
+    [length]="count"
+    [hidePageSize]="true"
+    (page)="nextPageIndex($event)"
+  ></mat-paginator>
+</div>
+<div class="flex justify-center p-4">
     <span class="text-center font-bold text-2xl text-neutral-600"
       >Productos cargados</span
     >
@@ -159,32 +148,28 @@
       </div>
       <div class="flex items-center self-center bg-transparent">
         <div class="flex flex-col text-center gap-y-2">
-          <span class="text-xs">Precio</span>
+            <span class="text-xs">Cantidad</span>
           <div
             class="bg-neutral-100 px-4 focus:outline-none text-center border border-neutral-400 rounded-full w-full justify-center font-semibold text-md md:text-basecursor-default flex items-center text-gray-400 outline-none"
           >
-            {{ warehouse.cost }}
+            {{ warehouse.quantity }}
           </div>
-          <span class="text-xs">Cantidad</span>
-          <div
-            class="bg-neutral-500 text-center px-4 focus:outline-none rounded-full w-full font-semibold text-md md:text-basecursor-default flex justify-center items-center text-gray-50 outline-none"
-          >
-            <span>{{ warehouse.quantity }}</span>
-          </div>
+          
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="flex w-full mx-auto justify-center my-2 gap-2 px-4">
-  <button
-    [ngClass]="
-      selectionProducts.length == 0 ? 'bg-neutral-300' : 'bg-neutral-500'
-    "
-    [disabled]="selectionProducts.length == 0"
-    (click)="onSubmit()"
-    class="p-3 rounded-full my-2 gap-2 px-4 text-white w-1/2 font-semibold text-xl"
-  >
-    Registrar Egreso
-  </button>
-</div>
+    <button
+      [ngClass]="
+        selectionProducts.length == 0 ? 'bg-neutral-300' : 'bg-neutral-500'
+      "
+      [disabled]="selectionProducts.length == 0"
+      (click)="onSubmit()"
+      class="p-3 rounded-full my-2 gap-2 px-4 text-white w-1/2 font-semibold text-xl"
+    >
+      Registrar Egreso
+    </button>
+  </div>
+

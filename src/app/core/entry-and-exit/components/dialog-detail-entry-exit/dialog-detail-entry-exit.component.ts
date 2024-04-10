@@ -11,4 +11,8 @@ export class DialogDetailEntryExitComponent {
     public dialogRef: MatDialogRef<DialogDetailEntryExitComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 }

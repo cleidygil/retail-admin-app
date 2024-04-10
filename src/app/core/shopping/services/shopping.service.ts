@@ -41,6 +41,10 @@ export class ShoppingService {
     const obs$ = this.http.patch<any>(`${this.url}/api/inventory/purchases_order/${id}/`, body)
     return lastValueFrom(obs$)
   }
+  deletePurchasesOrdersID(id: number): Promise<any> {
+    const obs$ = this.http.delete<any>(`${this.url}/api/inventory/purchases_order/${id}/`)
+    return lastValueFrom(obs$)
+  }
   getPurchasesOrdersItems(params: Shopping): Promise<OrderItems> {
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<OrderItems>(`${this.url}/api/inventory/purchases_order/items/`, { params: resparams })

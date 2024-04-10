@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Ambient, Management } from '../../interface/manege.interface';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { AllStore, MyStoreParams } from 'src/app/core/store/interfaces/store';
 export class ManageEnvironmentsComponent {
   private services = inject(ManageService)
   private storeServices = inject(StoreService)
-  list:any[]=[]
+  list: any[] = []
   mystores: AllStore[] = []
   mybranch: AllStore[] = []
   ambientsForm = new FormGroup({
@@ -28,17 +28,25 @@ export class ManageEnvironmentsComponent {
   ambients: Ambient[] = []
   count: number = 1
 
-  constructor(){
+  constructor() {
+
+
+  }
+
+  ngOnInit(): void {
     this.getAllStore()
     this.getAllBranch()
     this.getAmbients()
+    this.ambientsForm.valueChanges.subscribe(data => {
+      this.getAmbients()
+    })
   }
   getAllStore() {
     const params = new MyStoreParams()
     params.parent = 'false'
     this.storeServices.getUserStores(params).then((result) => {
       this.mystores = result
-      }).catch((err) => {
+    }).catch((err) => {
       console.log(err)
     });
   }
@@ -51,10 +59,10 @@ export class ManageEnvironmentsComponent {
       console.log(err)
     });
   }
-  getAmbients(id:any=0) {
+  getAmbients(id: any = 0) {
     const params: Management = new Management()
     params.page = this.nextPage
-    params.store = id ==0?"":id
+    params.store = this.ambientsForm.value.store
     this.services.getAmbients(params).then((result) => {
       this.ambients = result.results
       this.count = result.count

@@ -40,3 +40,6 @@ table {
   background-color: rgb(163 163 163 / var(--tw-bg-opacity));
   color: white;
 }
+::-webkit-scrollbar {
+  display: none;
+  }

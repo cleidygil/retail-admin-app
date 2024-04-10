@@ -9,6 +9,7 @@ import { GlobalService } from 'src/app/global/services/global.service';
 import { EntryAndExit } from '../../interfaces/entry-and-exit';
 import { EntryAndExitService } from '../../services/entry-and-exit.service';
 import { DialogDetailEntryExitComponent } from '../dialog-detail-entry-exit/dialog-detail-entry-exit.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-warehouses',
@@ -21,7 +22,7 @@ export class WarehousesComponent {
   private depot = inject(DepotService)
   private dialog = inject(MatDialog)
   private global = inject(GlobalService)
-
+  private router = inject(Router)
   mystores: AllStore[] = []
   mybranch: AllStore[] = []
   data: any[] = []
@@ -34,12 +35,21 @@ export class WarehousesComponent {
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   })
+
   ngOnInit(): void {
+    this.getEntryAndExit()
     this.getAllStore()
     this.getAllBranch()
-    this.getEntryAndExit()
+    this.params.valueChanges.subscribe(data => {
+      console.log(data)
+      if (data.type == 'false') {
+        this.getEntryAndExitDepot()
+        return
+      }
+      this.getEntryAndExit()
+      return
+    })
   }
-
   getAllStore() {
     const params = new MyStoreParams()
     params.parent = 'false'
@@ -63,15 +73,33 @@ export class WarehousesComponent {
     const params: EntryAndExit = new EntryAndExit()
     params.page = this.nextPage
     params.store = valor.store || '',
-      params.type = valor.type || '';
+      params.depot_exit = valor.type || '';
     params.search = valor.search || ''
-    // params.status = '4'
-    // params.depot = 'false'
+
     if (valor.start != null && valor.end != null) {
-      params.created_at_since = new Date(valor?.start).toLocaleDateString("fr-CA",);
-      params.created_at_until = new Date(valor?.end).toLocaleDateString("fr-CA",)
+      params.since = new Date(valor?.start).toLocaleDateString("fr-CA",);
+      params.until = new Date(valor?.end).toLocaleDateString("fr-CA",)
     }
-    this.depot.getAllWarehouses(params).then((result) => {
+    this.services.getrash(params).then((result) => {
+      this.data = result.results
+      this.count = result.count
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+  getEntryAndExitDepot() {
+    const valor = this.params.value
+    const params: EntryAndExit = new EntryAndExit()
+    params.page = this.nextPage
+    params.store = valor.store || '',
+      params.depot_exit = valor.type || '';
+    params.search = valor.search || ''
+
+    if (valor.start != null && valor.end != null) {
+      params.since = new Date(valor?.start).toLocaleDateString("fr-CA",);
+      params.until = new Date(valor?.end).toLocaleDateString("fr-CA",)
+    }
+    this.services.getDepotInventory(params).then((result) => {
       this.data = result.results
       this.count = result.count
     }).catch((error) => {
@@ -80,7 +108,12 @@ export class WarehousesComponent {
   }
   nextPageIndex(event: PageEvent) {
     this.nextPage = event.pageIndex + 1;
+    if (this.params.value.type == 'false') {
+      this.getEntryAndExitDepot()
+      return
+    }
     this.getEntryAndExit()
+    return
   }
   openDetail(item: any) {
     const dialogo = this.dialog.open(DialogDetailEntryExitComponent, {

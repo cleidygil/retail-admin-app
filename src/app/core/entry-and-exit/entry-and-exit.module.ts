@@ -5,7 +5,6 @@ import { EntryAndExitRoutingModule } from './entry-and-exit-routing.module';
 import { EntryAndExitComponent } from './entry-and-exit.component';
 import { MaterialDesignModule } from 'src/app/components-iu/material-design.module';
 import { ComponentsComponent } from './components/components.component';
-import { ManualEgressComponent } from './components/manual-egress/manual-egress.component';
 import { ManualEntryComponent } from './components/manual-entry/manual-entry.component';
 import { PurchaseDataComponent } from './components/manual-entry/purchase-data/purchase-data.component';
 import { ProductSelectionComponent } from './components/manual-entry/product-selection/product-selection.component';
@@ -15,10 +14,12 @@ import { ProductsListComponent } from './components/manual-entry/product-selecti
 import { PurchasesOrdersModule } from '../shopping/components/purchases-orders/purchases-orders.module';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { WarehousesComponent } from './components/warehouses/warehouses.component';
+import { OptionInventoryComponent } from './components/option-inventory/option-inventory.component';
+import { SalesRawMaterialComponent } from './components/sales-raw-material/sales-raw-material.component';
 
 
 @NgModule({
-  declarations: [EntryAndExitComponent, ComponentsComponent, ManualEgressComponent, ManualEntryComponent, PurchaseDataComponent, ProductSelectionComponent, DialogLoadProductComponent, DistributeProductComponent, ProductsListComponent, WarehousesComponent, InventoryComponent],
+  declarations: [EntryAndExitComponent, ComponentsComponent, ManualEntryComponent, PurchaseDataComponent, ProductSelectionComponent, DialogLoadProductComponent, DistributeProductComponent, ProductsListComponent, WarehousesComponent, InventoryComponent, OptionInventoryComponent, SalesRawMaterialComponent],
   imports: [
     MaterialDesignModule,
     CommonModule,

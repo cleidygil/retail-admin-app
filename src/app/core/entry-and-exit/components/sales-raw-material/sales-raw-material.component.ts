@@ -1,64 +1,70 @@
 import { Component, inject } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DepotService } from 'src/app/core/depot/services/depot.service';
-import { AllStore, MyStoreParams } from 'src/app/core/store/interfaces/store';
-import { StoreService } from 'src/app/core/store/services/store.service';
-import { GlobalService } from 'src/app/global/services/global.service';
-import { EntryAndExitService } from '../../../services/entry-and-exit.service';
+import { EntryAndExitService } from '../../services/entry-and-exit.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
-import { DialogProductDistributionComponent } from 'src/app/core/depot/components/warehouses/dialog-product-distribution/dialog-product-distribution.component';
-import { Depot, Warehouse } from 'src/app/core/depot/interfaces/depot';
+import { InventoryRes, Inventory } from 'src/app/core/inventory/interfaces/inventory';
+import { InventoryService } from 'src/app/core/inventory/services/inventory.service';
+import { DialogProductEgressComponent } from '../manual-egress/dialog-product-egress/dialog-product-egress.component';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { DialogProductEgressComponent } from '../dialog-product-egress/dialog-product-egress.component';
+import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-warehouses',
-  templateUrl: './warehouses.component.html',
-  styleUrls: ['./warehouses.component.css']
+  selector: 'app-sales-raw-material',
+  templateUrl: './sales-raw-material.component.html',
+  styleUrls: ['./sales-raw-material.component.css']
 })
-export class WarehousesComponent {
+export class SalesRawMaterialComponent {
   private services = inject(EntryAndExitService)
-  private depot = inject(DepotService)
+  private servicesInv = inject(InventoryService)
   private dialog = inject(MatDialog)
   private snack = inject(SnackbarService)
   private router = inject(Router)
+  private activateRouter = inject(ActivatedRoute)
+  id: number = 0
+  sub!: Subscription
   store: number = 0;
-
-  mybranch: AllStore[] = []
+  productsAll: InventoryRes[] = []
+  selectionProducts: any[] = []
+  nextPage: number = 1;
+  count: number = 1
   params = new FormGroup({
     search: new FormControl(''),
   })
-  nextPage: number = 1;
-  count: number = 1
-  warehouses: Warehouse[] = []
-  selectionProducts: any[] = []
+  constructor(){
+    this.activateRouter.params.subscribe(data => {
+      console.log(data['id'])
+      this.id = data['id'] !== undefined ? Number(data['id']) : 0
+    })
+  }
   ngOnInit(): void {
     this.services.idStore.value == 0 ? (this.router.navigate(['home/income_egress/egress/'])) : (this.store = this.services.idStore.value)
-    this.getAllWarehouse()
+    this.getAllProducts()
   }
 
-  getAllWarehouse() {
+  getAllProducts() {
     const valor = this.params.value
-    const params: Depot = new Depot()
+    const params: Inventory = new Inventory()
+    params.type = this.id == 0 ? '':  this.id.toString();
     params.page = this.nextPage
     params.search = valor.search || ''
-    params.store = this.services.idStore.value.toString()
-    this.depot.getAllWarehouses(params).then((result) => {
-      this.warehouses = result.results
+    params.store = this.store.toString() || '';
+    this.servicesInv.getAllInventory(params).then((result) => {
+      this.productsAll = result.results
       this.count = result.count
-    }).catch((error) => {
-      console.log(error)
-    })
+    }).catch((err) => {
+      console.log(err)
+      // this.loading.hideLoading()
+    });
   }
   nextPageIndex(event: PageEvent) {
     this.nextPage = event.pageIndex + 1;
-    this.getAllWarehouse()
+    this.getAllProducts()
   }
   openProductEgress(item: any) {
     const dialogo = this.dialog.open(DialogProductEgressComponent, {
-      data: { item, type: null },
+      data: { item, type: this.id },
       width: window.innerWidth > 430 ? '40%' : 'auto'
     })
     dialogo.afterClosed().subscribe(data => {
@@ -74,15 +80,15 @@ export class WarehousesComponent {
           return acc;
         }, []);
         this.selectionProducts = prueba.length > 0 ? prueba : this.selectionProducts
+        console.log(this.selectionProducts)
       }
     })
   }
   onSubmit() {
     this.services.postTrash(this.selectionProducts).then((value) => {
-      this.getAllWarehouse()
+      this.getAllProducts()
       this.selectionProducts = []
       this.snack.openSnackBar("La operacion se ha realizado con exito!")
-
     }).catch((error) => {
       console.log(error)
       if (error.status == 400) {

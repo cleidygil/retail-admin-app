@@ -113,7 +113,7 @@ export class NewOrdersComponent {
   addProduct() {
     const dialogo = this.dialog.open(DialogSelectedProductsComponent, {
       data: '',
-      width: window.innerWidth > 432 ? '50%' : 'auto',
+      width: 'auto',
       // height: '80%'
     })
     dialogo.afterClosed().subscribe(data => {

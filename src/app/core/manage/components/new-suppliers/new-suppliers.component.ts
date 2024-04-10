@@ -39,6 +39,7 @@ export class NewSuppliersComponent {
   }
   ngOnInit(): void {
     if (this.id != null) {
+      this.supplierform.disable()
       this.getSupplierID()
     }
     this.getAllStore()
@@ -98,5 +99,12 @@ export class NewSuppliersComponent {
       this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")
     })
   }
-
+  deleteSupplier(){
+    this.services.deleteSuppliersId(Number(this.id)).then((result) => {
+      this.snack.openSnackBar("Proveedor eliminado exitosamente");
+      this.router.navigate(['/home/management/suppliers']);
+    }).catch((error) => {
+      this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")
+    })
+  }
 }

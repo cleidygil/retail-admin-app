@@ -3,9 +3,11 @@
     <mat-icon>chevron_left</mat-icon>
   </a>
   <div class="flex flex-col gap-2 m-2">
-    <button mat-mini-fab color="primary" *ngIf="this.id!=null" >
-      <!-- (click)="tablesForm.enable()" -->
+    <button mat-mini-fab color="primary" *ngIf="this.id!=null" (click)="muform.enable()">
       <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-mini-fab color="primary" *ngIf="this.id!=null" (click)="deleteMU()">
+      <mat-icon>delete</mat-icon>
     </button>
   </div>
 </div>

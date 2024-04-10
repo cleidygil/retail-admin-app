@@ -50,8 +50,16 @@ export class ManageService {
     const obs$ = this.http.post<any>(`${this.url}/api/stores/measurement_units/`,body)
     return lastValueFrom(obs$)
   }
-  getMeasurementunitsID(id:any): Promise<any> {
+  getMeasurementunitsId(id:number): Promise<any> {
     const obs$ = this.http.get<any>(`${this.url}/api/stores/measurement_units/${id}/`)
+    return lastValueFrom(obs$)
+  }
+  patchMeasurementunits(body:any, id:number): Promise<any> {
+    const obs$ = this.http.patch<any>(`${this.url}/api/stores/measurement_units/${id}/`,body)
+    return lastValueFrom(obs$)
+  }
+  deleteMeasurementunits(id:number): Promise<any> {
+    const obs$ = this.http.delete<any>(`${this.url}/api/stores/measurement_units/${id}/`)
     return lastValueFrom(obs$)
   }
   getSuppliers(params: BrandsParams): Promise<any> {
@@ -69,6 +77,10 @@ export class ManageService {
   }
   patchSuppliersID(body:any, id:number): Promise<any> {
     const obs$ = this.http.patch<any>(`${this.url}/api/stores/suppliers/${id}/`,body)
+    return lastValueFrom(obs$)
+  }
+  deleteSuppliersId(id:number): Promise<any> {
+    const obs$ = this.http.delete<any>(`${this.url}/api/stores/suppliers/${id}/`)
     return lastValueFrom(obs$)
   }
   getTaxes(params: Management): Promise<Taxes[]> {
@@ -124,6 +136,10 @@ export class ManageService {
   }
   postAmbients(body:any): Promise<any> {
     const obs$ = this.http.post<any>(`${this.url}/api/stores/ambients/`,body)
+    return lastValueFrom(obs$)
+  }
+  patchAmbients(body:any, id:number): Promise<any> {
+    const obs$ = this.http.patch<any>(`${this.url}/api/stores/ambients/${id}/`,body)
     return lastValueFrom(obs$)
   }
   deletehAmbientID(id:number): Promise<any> {

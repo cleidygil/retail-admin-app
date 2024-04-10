@@ -1,282 +1,321 @@
 <div class="flex justify-between gap-2">
-    <a [routerLink]="['../']" mat-mini-fab color="primary">
-      <mat-icon>chevron_left</mat-icon>
+  <a [routerLink]="['../']" mat-mini-fab color="primary">
+    <mat-icon>chevron_left</mat-icon>
+  </a>
+  <div class="flex justify-center">
+    <span class="text-center font-bold text-2xl text-neutral-600"
+      >Ingreso y Egresos de inventario</span
+    >
+  </div>
+  <div></div>
+</div>
+<div
+  class="max-w-xl h-full mx-auto flex flex-col justify-center my-4 p-2 z-10 relative"
+>
+  <div class="fixed bottom-4 right-4 first-letter:my-4">
+    <a mat-mini-fab color="primary" [routerLink]="['../options']">
+      <mat-icon>add</mat-icon>
     </a>
-    <div class="flex justify-center">
-      <span class="text-center font-bold text-2xl text-neutral-600"
-        >Ingreso y Egresos de inventario</span
-      >
-    </div>
-    <div></div>
   </div>
-  <div class="max-w-xl h-full mx-auto flex flex-col justify-center my-4 p-2 z-10 relative">
-    <div class="fixed  bottom-4 right-4 first-letter:my-4">
-      <a mat-mini-fab color="primary" [routerLink]="['../options']">
-        <mat-icon>add</mat-icon>
-      </a>
-    </div>
-  </div>
-  <div class="max-w-4xl mx-auto">
-    <form [formGroup]="params" class="grid grid-cols-1 gap-4 my-2">
-      <div class="mt-4 w-full">
-        <label
-          class="block font-medium text-sm text-gray-700"
-          for="password"
-          value="Password"
-        ></label>
-        <div class="relative">
-          <input
-            formControlName="search"
-            placeholder="Buscar"
-            required
-            class="w-full rounded-full py-2.5 px-4 border text-base bg-neutral-300 outline-orange-500"
-          />
-  
-          <div
-            class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-          >
-            <button
-              class="text-gray-500 focus:outline-none focus:text-gray-600 hover:text-gray-600"
-              mat-icon-button
-              matSuffix
-              (click)="getEntryAndExit()"
-            >
-              <mat-icon>search</mat-icon>
-            </button>
-          </div>
-        </div>
-      </div>
-      <span class="text-xl text-center font-semibold text-neutral-600"
-        >Tienda Principal</span
-      >
-      <div class="flex justify-center gap-2">
-        <div class="inline-block radio text-center" *ngFor="let item of mystores">
-          <div class="flex flex-col justify-center text-center">
-            <input
-              formControlName="store"
-              name="store"
-              type="radio"
-              [id]="item.id"
-              hidden="hidden"
-              [value]="item.id"
-            />
-            <label (click)="getEntryAndExit()"
-              [for]="item.id"
-              class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-16 w-16 text-white rounded-full mx-auto"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
-                />
-              </svg>
-            </label>
-          </div>
-          <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
-            {{ item.name }}
-          </span>
-        </div>
-      </div>
-      <span class="text-xl font-semibold text-neutral-600 text-center"
-        >Sucursales</span
-      >
-      <div class="flex justify-center gap-2">
-        <div class="inline-block radio text-center" *ngFor="let item of mybranch">
-          <div class="flex flex-col justify-center text-center">
-            <input
-              formControlName="store"
-              name="store"
-              type="radio"
-              [id]="item.id"
-              hidden="hidden"
-              [value]="item.id"
-            />
-            <label
-              [for]="item.id"
-              class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
-              
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-16 w-16 text-white rounded-full mx-auto"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
-                />
-              </svg>
-            </label>
-          </div>
-          <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
-            {{ item.name }}
-          </span>
-        </div>
-      </div>
-      <div class="flex justify-center gap-2">
-        <div class="inline-flex gap-2 radio text-center">
-          <div class="flex flex-col justify-center text-center text-xl">
-            <input
-              formControlName="type"
-              name="type"
-              type="radio"
-              id="1"
-              hidden="hidden"
-              value="1"
-            />
-            <label
-              (click)="getEntryAndExit()"
-              for="1"
-              class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400"
-            >
-              Ingresos
-            </label>
-          </div>
-          <div class="flex flex-col justify-center text-center text-xl">
-            <input
-              formControlName="type"
-              name="type"
-              s
-              type="radio"
-              id="2"
-              hidden="hidden"
-              value="2"
-            />
-            <label
-              (click)="getEntryAndExit()"
-              for="2"
-              class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400 selection:text-neutral-800"
-            >
-              Egresoss
-            </label>
-          </div>
-        </div>
-        <div class="inline-flex items-center justify-center gap-2">
-          <mat-date-range-input
-            class="rounded-full text-center px-2 py-2 items-end bg-neutral-300 text-base focus:outline-none outline-none"
-            [rangePicker]="campaignOnePicker"
-            [comparisonStart]="params.value.start"
-            [comparisonEnd]="params.value.end"
-          >
-            <input matStartDate placeholder="Desde" formControlName="start" />
-            <input
-              matEndDate
-              placeholder="Hasta"
-              formControlName="end"
-              (dateChange)="getEntryAndExit()"
-            />
-          </mat-date-range-input>
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="campaignOnePicker"
-          ></mat-datepicker-toggle>
-          <mat-date-range-picker
-            touchUi
-            #campaignOnePicker
-          ></mat-date-range-picker>
-        </div>
-        <button
-          mat-icon-button
-          color="accent"
-          (click)="params.reset(); getEntryAndExit(); nextPage = 1"
-        >
-          <mat-icon>filter_alt_off</mat-icon>
-        </button>
-      </div>
-    </form>
-  </div>
-  <div class=" mx-auto flex flex-col justify-center my-4 p-2">
-    
-    <div class="grid xl:grid-cols-3 gap-4 m-4">
-      <div
-        class="relative bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
-        *ngFor="let item of data"
-        (click)="openDetail(item)"
-      >
-        <div class="flex items-center">
-          <ng-container *ngIf="params.value.type === '2'; else Type1">
-            <svg
-              width="82"
-              height="82"
-              viewBox="0 0 82 82"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="0.36792"
-                y="0.832031"
-                width="80.7567"
-                height="80.7567"
-                rx="40.3783"
-                fill="#A8A8A8"
-              />
-              <path
-                d="M40.7464 65.4364C39.6319 65.4364 38.7275 64.532 38.7275 63.4175V35.08L32.1801 41.6273C31.3907 42.4167 30.1148 42.4167 29.3254 41.6273C28.9317 41.2337 28.7338 40.7168 28.7338 40.2C28.7338 39.6831 28.9317 39.1663 29.3254 38.7726L37.8916 30.2063C39.4664 28.6316 42.0264 28.6316 43.6011 30.2063L52.1674 38.7726C52.9568 39.562 52.9568 40.838 52.1674 41.6273C51.378 42.4167 50.102 42.4167 49.3126 41.6273L42.7653 35.08V63.4175C42.7653 64.532 41.8608 65.4364 40.7464 65.4364ZM34.5523 62.6382C34.9581 61.5965 34.4433 60.4275 33.4056 60.0237C25.6005 56.9752 20.5572 49.592 20.5572 41.2115C20.5572 30.0791 29.6141 21.0223 40.7464 21.0223C51.8787 21.0223 60.9356 30.0771 60.9356 41.2094C60.9356 49.59 55.8923 56.9752 48.0872 60.0217C47.0494 60.4275 46.5366 61.5924 46.9404 62.6362C47.3462 63.6759 48.5172 64.1888 49.5549 63.7829C58.9207 60.1267 64.9734 51.2657 64.9734 41.2094C64.9734 27.8503 54.1056 16.9824 40.7464 16.9824C27.3872 16.9824 16.5194 27.8503 16.5194 41.2094C16.5194 51.2657 22.5721 60.1267 31.9358 63.785C32.9756 64.1908 34.1445 63.678 34.5503 62.6382H34.5523Z"
-                fill="#FAFAFA"
-              />
-            </svg>
-          </ng-container>
-          <ng-template #Type1>
-            <svg
-              width="82"
-              height="82"
-              viewBox="0 0 82 82"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="0.36792"
-                y="0.832031"
-                width="80.7567"
-                height="80.7567"
-                rx="40.3783"
-                fill="#A8A8A8"
-              />
-              <path
-                d="M40.7463 16.9835C41.8607 16.9835 42.7652 17.888 42.7652 19.0024L42.7652 47.3399L49.3126 40.7926C50.102 40.0032 51.3779 40.0032 52.1673 40.7926C52.561 41.1863 52.7589 41.7031 52.7589 42.2199C52.7589 42.7368 52.561 43.2536 52.1673 43.6473L43.601 52.2136C42.0263 53.7883 39.4663 53.7883 37.8916 52.2136L29.3253 43.6473C28.5359 42.8579 28.5359 41.582 29.3253 40.7926C30.1147 40.0032 31.3906 40.0032 32.18 40.7926L38.7274 47.3399L38.7274 19.0024C38.7274 17.888 39.6319 16.9835 40.7463 16.9835ZM46.9403 19.7817C46.5345 20.8235 47.0494 21.9924 48.0871 22.3962C55.8922 25.4448 60.9355 32.8279 60.9355 41.2085C60.9355 52.3408 51.8786 61.3976 40.7463 61.3976C29.614 61.3976 20.5571 52.3428 20.5571 41.2105C20.5571 32.83 25.6004 25.4448 33.4055 22.3982C34.4432 21.9924 34.956 20.8275 34.5523 19.7837C34.1465 18.744 32.9755 18.2312 31.9378 18.637C22.572 22.2932 16.5193 31.1543 16.5193 41.2105C16.5193 54.5697 27.3871 65.4375 40.7463 65.4375C54.1055 65.4375 64.9733 54.5697 64.9733 41.2105C64.9733 31.1543 58.9206 22.2932 49.5569 18.635C48.5171 18.2292 47.3482 18.742 46.9424 19.7817L46.9403 19.7817Z"
-                fill="#FAFAFA"
-              />
-            </svg>
-          </ng-template>
-        </div>
-        <div class="grid justify-start gap-2 text-neutral-500">
-          <span class="text-xl font-semibold text-neutral-600">
-            {{ item.product_name }}</span
-          >
-          <span class="text-sm">{{ item.status_name }}</span>
-          <span class="text-sm">{{ item.supplier_name }}</span>
-  
-          <span class="text-sm">{{ item.store_name }} </span>
-          <span class="text-sm"
-            >{{ item.created_at | date: "dd/MM/YYYY, hh:mm a" }}
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-  
+</div>
+<form [formGroup]="options" class="flex justify-center gap-2">
   <div
-    class="fixed sm:left-4 first-letter:my-4 bottom-4 md:left-1/2 flex justify-center items-center space-x-4"
+    class="inline-flex gap-2 radio text-center"
+    (selectionchange)="getEntryAndExit()"
   >
-    <mat-paginator
-      class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
-      [pageSizeOptions]="[10]"
-      showFirstLastButtons
-      [length]="count"
-      [hidePageSize]="true"
-      (page)="nextPageIndex($event)"
-    ></mat-paginator>
+    <div class="flex flex-col justify-center text-center text-xl">
+      <input
+        formControlName="typeinv"
+        name="typeinv"
+        type="radio"
+        id="prima"
+        hidden="hidden"
+        value="1"
+        cheked
+      />
+      <label
+        for="prima"
+        class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400"
+      >
+        Ventas
+      </label>
+    </div>
+    <div class="flex flex-col justify-center text-center text-xl">
+      <input
+        formControlName="typeinv"
+        type="radio"
+        id="sale"
+        hidden="hidden"
+        value="2"
+        cheked
+      />
+      <label
+        for="sale"
+        class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400 selection:text-neutral-800"
+      >
+        Materia prima
+      </label>
+    </div>
   </div>
-  
+</form>
+<div class="max-w-4xl mx-auto">
+  <form [formGroup]="params" class="grid grid-cols-1 gap-4 my-2">
+    <div class="mt-4 w-full">
+      <label
+        class="block font-medium text-sm text-gray-700"
+        for="password"
+        value="Password"
+      ></label>
+      <div class="relative">
+        <input
+          formControlName="search"
+          placeholder="Buscar"
+          required
+          class="w-full rounded-full py-2.5 px-4 border text-base bg-neutral-300 outline-orange-500"
+        />
+
+        <div
+          class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+        >
+          <button
+            class="text-gray-500 focus:outline-none focus:text-gray-600 hover:text-gray-600"
+            mat-icon-button
+            matSuffix
+          >
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <span class="text-xl text-center font-semibold text-neutral-600"
+      >Tienda Principal</span
+    >
+    <div class="flex justify-center gap-2">
+      <div class="inline-block radio text-center" *ngFor="let item of mystores">
+        <div class="flex flex-col justify-center text-center">
+          <input
+            formControlName="store"
+            name="store"
+            type="radio"
+            [id]="item.id"
+            hidden="hidden"
+            [value]="item.id"
+            checked
+          />
+          <label
+            [for]="item.id"
+            class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-16 w-16 text-white rounded-full mx-auto"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
+              />
+            </svg>
+          </label>
+        </div>
+        <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
+          {{ item.name }}
+        </span>
+      </div>
+    </div>
+    <span class="text-xl font-semibold text-neutral-600 text-center"
+      >Sucursales</span
+    >
+    <div class="flex justify-center gap-2">
+      <div class="inline-block radio text-center" *ngFor="let item of mybranch">
+        <div class="flex flex-col justify-center text-center">
+          <input
+            formControlName="store"
+            name="store"
+            type="radio"
+            [id]="item.name"
+            hidden="hidden"
+            [value]="item.id"
+            checked
+          />
+          <label
+            [for]="item.name"
+            class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-16 w-16 text-white rounded-full mx-auto"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
+              />
+            </svg>
+          </label>
+        </div>
+        <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
+          {{ item.name }}
+        </span>
+      </div>
+    </div>
+    <div class="flex justify-center gap-2">
+      <div class="inline-flex gap-2 radio text-center">
+        <div class="flex flex-col justify-center text-center text-xl">
+          <input
+            formControlName="type"
+            name="type"
+            type="radio"
+            id="1"
+            hidden="hidden"
+            value="false"
+            checked
+          />
+          <label
+            for="1"
+            class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400"
+          >
+            Ingresos
+          </label>
+        </div>
+        <div class="flex flex-col justify-center text-center text-xl">
+          <input
+            formControlName="type"
+            name="type"
+            checked
+            type="radio"
+            id="2"
+            hidden="hidden"
+            value="true"
+          />
+          <label
+            for="2"
+            class="flex items-center font-semibold rounded-full px-4 py-2 mx-auto bg-neutral-400 selection:text-neutral-800"
+          >
+            Egresos
+          </label>
+        </div>
+      </div>
+      <div class="inline-flex items-center justify-center gap-2">
+        <mat-date-range-input
+          class="rounded-full text-center px-2 py-2 items-end bg-neutral-300 text-base focus:outline-none outline-none"
+          [rangePicker]="campaignOnePicker"
+          [comparisonStart]="params.value.start"
+          [comparisonEnd]="params.value.end"
+        >
+          <input matStartDate placeholder="Desde" formControlName="start" />
+          <input
+            matEndDate
+            placeholder="Hasta"
+            formControlName="end"
+            (dateChange)="getEntryAndExit()"
+          />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="campaignOnePicker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker
+          touchUi
+          #campaignOnePicker
+        ></mat-date-range-picker>
+      </div>
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="params.reset(); getEntryAndExit(); nextPage = 1"
+      >
+        <mat-icon>filter_alt_off</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>
+<div class="mx-auto flex flex-col justify-center my-4 p-2">
+  <div class="grid xl:grid-cols-3 gap-4 m-4">
+    <div
+      class="relative bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
+      *ngFor="let item of data"
+      (click)="openDetail(item)"
+    >
+      <div class="flex items-center">
+        <ng-container *ngIf="params.value.type == 'true'; else TypeExit">
+          <svg
+            width="82"
+            height="82"
+            viewBox="0 0 82 82"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="0.36792"
+              y="0.832031"
+              width="80.7567"
+              height="80.7567"
+              rx="40.3783"
+              fill="#A8A8A8"
+            />
+            <path
+              d="M40.7464 65.4364C39.6319 65.4364 38.7275 64.532 38.7275 63.4175V35.08L32.1801 41.6273C31.3907 42.4167 30.1148 42.4167 29.3254 41.6273C28.9317 41.2337 28.7338 40.7168 28.7338 40.2C28.7338 39.6831 28.9317 39.1663 29.3254 38.7726L37.8916 30.2063C39.4664 28.6316 42.0264 28.6316 43.6011 30.2063L52.1674 38.7726C52.9568 39.562 52.9568 40.838 52.1674 41.6273C51.378 42.4167 50.102 42.4167 49.3126 41.6273L42.7653 35.08V63.4175C42.7653 64.532 41.8608 65.4364 40.7464 65.4364ZM34.5523 62.6382C34.9581 61.5965 34.4433 60.4275 33.4056 60.0237C25.6005 56.9752 20.5572 49.592 20.5572 41.2115C20.5572 30.0791 29.6141 21.0223 40.7464 21.0223C51.8787 21.0223 60.9356 30.0771 60.9356 41.2094C60.9356 49.59 55.8923 56.9752 48.0872 60.0217C47.0494 60.4275 46.5366 61.5924 46.9404 62.6362C47.3462 63.6759 48.5172 64.1888 49.5549 63.7829C58.9207 60.1267 64.9734 51.2657 64.9734 41.2094C64.9734 27.8503 54.1056 16.9824 40.7464 16.9824C27.3872 16.9824 16.5194 27.8503 16.5194 41.2094C16.5194 51.2657 22.5721 60.1267 31.9358 63.785C32.9756 64.1908 34.1445 63.678 34.5503 62.6382H34.5523Z"
+              fill="#FAFAFA"
+            />
+          </svg>
+        </ng-container>
+        <ng-template #TypeExit>
+          <svg
+            width="82"
+            height="82"
+            viewBox="0 0 82 82"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="0.36792"
+              y="0.832031"
+              width="80.7567"
+              height="80.7567"
+              rx="40.3783"
+              fill="#A8A8A8"
+            />
+            <path
+              d="M40.7463 16.9835C41.8607 16.9835 42.7652 17.888 42.7652 19.0024L42.7652 47.3399L49.3126 40.7926C50.102 40.0032 51.3779 40.0032 52.1673 40.7926C52.561 41.1863 52.7589 41.7031 52.7589 42.2199C52.7589 42.7368 52.561 43.2536 52.1673 43.6473L43.601 52.2136C42.0263 53.7883 39.4663 53.7883 37.8916 52.2136L29.3253 43.6473C28.5359 42.8579 28.5359 41.582 29.3253 40.7926C30.1147 40.0032 31.3906 40.0032 32.18 40.7926L38.7274 47.3399L38.7274 19.0024C38.7274 17.888 39.6319 16.9835 40.7463 16.9835ZM46.9403 19.7817C46.5345 20.8235 47.0494 21.9924 48.0871 22.3962C55.8922 25.4448 60.9355 32.8279 60.9355 41.2085C60.9355 52.3408 51.8786 61.3976 40.7463 61.3976C29.614 61.3976 20.5571 52.3428 20.5571 41.2105C20.5571 32.83 25.6004 25.4448 33.4055 22.3982C34.4432 21.9924 34.956 20.8275 34.5523 19.7837C34.1465 18.744 32.9755 18.2312 31.9378 18.637C22.572 22.2932 16.5193 31.1543 16.5193 41.2105C16.5193 54.5697 27.3871 65.4375 40.7463 65.4375C54.1055 65.4375 64.9733 54.5697 64.9733 41.2105C64.9733 31.1543 58.9206 22.2932 49.5569 18.635C48.5171 18.2292 47.3482 18.742 46.9424 19.7817L46.9403 19.7817Z"
+              fill="#FAFAFA"
+            />
+          </svg>
+        </ng-template>
+      </div>
+      <div class="grid justify-start gap-2 text-neutral-500">
+        <span class="text-xl font-semibold text-neutral-600">
+          {{ item.product_name }}</span
+        >
+        <span class="text-sm">{{ item.inventory_type_name }}</span>
+        <span class="text-sm">Motivo: {{ item.option_name }}</span>
+
+        <span class="text-sm">{{ item.store_name }} </span>
+        <span class="text-sm"
+          >{{ item.created_at | date: "dd/MM/YYYY, hh:mm a" }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="fixed sm:left-4 first-letter:my-4 bottom-4 md:left-1/2 flex justify-center items-center space-x-4"
+>
+  <mat-paginator
+    class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
+    [pageSizeOptions]="[10]"
+    showFirstLastButtons
+    [length]="count"
+    [hidePageSize]="true"
+    (page)="nextPageIndex($event)"
+  ></mat-paginator>
+</div>

@@ -1,3 +1,12 @@
+<div class="flex justify-between items-center gap-2">
+  <a [routerLink]="['../environments']" mat-mini-fab color="primary">
+    <mat-icon>chevron_left</mat-icon>
+  </a>
+  <div class="flex  justify-center text-center">
+    <p class="text-3xl font-semibold">Gestión de ambientes</p>
+  </div>
+  <div> </div>
+</div>
 <div class="max-w-xl mx-auto flex flex-col justify-center my-4 p-2">
   <div class="fixed  bottom-4 right-4 first-letter:my-4">
     <a mat-mini-fab color="primary" [routerLink]="['../new_tables']">
@@ -5,218 +14,71 @@
     </a>
   </div>
 </div>
-<div class="mx-auto max-w-7xl self-center mx-auto bg-white p-2">
-  <div class="flex flex-col justify-center w-full text-center">
-    <p class="text-3xl font-semibold">Gestión de mesas</p>
-    <form [formGroup]="tablesForm" class="grid grid-cols-1 gap-2 my-4">
-      <span class="text-base text-center font-semibold text-neutral-600"
-        >Tienda Principal</span
-      >
-      <div class="flex justify-center gap-2">
-        <div class="inline-block radio text-center" *ngFor="let item of mystores">
-          <div class="flex flex-col justify-center text-center">
-            <a class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white cursor-pointer" (click)="getTables()"> 
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" class="h-20 w-16 text-white rounded-full mx-auto">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
-              </svg>
-          </a>
-          </div>
-          <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
-            {{ item.name }}
-          </span>
-        </div>
-      </div>
-      <span class="text-base text-center font-semibold text-neutral-600">
-        Asigna al inventario de alguna sucursal
-      </span>
-      <div class="flex justify-center gap-2">
-        <div class="inline-block radio text-center" *ngFor="let item of mybranch">
-          <div class="flex flex-col justify-center text-center">
-            <input
-              formControlName="store"
-              name="store"
-              type="radio"
-              [id]="item.id"
-              hidden="hidden"
-              [value]="item.id"
-              (click)="getTables(item.id)"
-            />
-            <label
-              [for]="item.id"
-              class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white cursor-pointer"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="h-16 w-16 text-white rounded-full mx-auto"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
-                />
-              </svg>
-            </label>
-          </div>
-          <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
-            {{ item.name }}
-          </span>
-        </div>
-      </div>
-      <!-- <span class="text-2xl text-center font-semibold text-neutral-600 my-4">
-        Ambientes de tu sucursal
-      </span>
-      <div class="relative inline-flex my-2">
-        <svg
-          class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 412 232"
-        >
-          <path
-            d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"
-            fill="#648299"
-            fill-rule="nonzero"
-          />
-        </svg>
-        <select
-          formControlName="ambients"
-          class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
-        >
-          <option value="">Selecciona un ambiente</option>
-          <option *ngFor="let item of ambients" [value]="item.id">
-            {{ item.name }}
-          </option>
-        </select>
-      </div>
-      <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-        <input
-          class="pl-2 w-full outline-none border-none"
-          formControlName="number"
-          placeholder="Ingrese la cantidad de mesas"
-        />
-      </div> -->
-    </form>
-    <div class="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 gap-4 m-4 w-full">
-      <a class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer" style="height: 150px;" *ngFor="let item of tables" (click)="detailTables(item.id)"> 
-        <!-- *ngFor="let item of ambients" -->
-        <div class="flex items-center">
-          <svg width="82" height="82" viewBox="0 0 82 82" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="0.436523" y="0.417969" width="80.7567" height="80.7567" rx="40.3783" fill="#A8A8A8"/>
-            <path d="M64.8727 56.14L59.9263 44.8341H63.0233C64.1398 44.8341 65.0423 43.9316 65.0423 42.8152C65.0423 41.6987 64.1398 40.7962 63.0233 40.7962H58.1598L51.9778 26.6638H56.9666C58.083 26.6638 58.9855 25.7614 58.9855 24.6449C58.9855 23.5284 58.083 22.626 56.9666 22.626H24.6639C23.5474 22.626 22.645 23.5284 22.645 24.6449C22.645 25.7614 23.5474 26.6638 24.6639 26.6638H29.6526L23.4707 40.7962H18.6071C17.4907 40.7962 16.5882 41.6987 16.5882 42.8152C16.5882 43.9316 17.4907 44.8341 18.6071 44.8341H21.7042L16.7578 56.14C16.3096 57.1616 16.776 58.3507 17.7996 58.7969C18.062 58.914 18.3366 58.9665 18.6051 58.9665C19.3844 58.9665 20.1254 58.5143 20.4565 57.7551L26.1094 44.8341H55.521L61.174 57.7551C61.5051 58.5143 62.2461 58.9665 63.0254 58.9665C63.2959 58.9665 63.5705 58.914 63.8309 58.7969C64.8545 58.3487 65.3188 57.1596 64.8727 56.14ZM27.876 40.7962L34.0579 26.6638H47.5705L53.7525 40.7962H27.876Z" fill="#FAFAFA"/>
+<div class="mx-auto max-w-7xl self-center bg-white p-2">
+  <form [formGroup]="tablesForm" class="grid grid-cols-1 gap-2 my-4">
+    <span class="text-base text-center font-semibold text-neutral-600">Tienda Principal</span>
+    <div class="flex justify-center gap-2">
+      <div class="inline-block radio text-center" *ngFor="let item of mystores">
+        <div class="flex flex-col justify-center text-center">
+          <input formControlName="store" type="radio" [id]="item.id" hidden="hidden" [value]="item.id" checked />
+          <label [for]="item.id"
+            class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="h-16 w-16 text-white rounded-full mx-auto">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
             </svg>
+          </label>
         </div>
-        <div class="grid justify-start gap-2 text-neutral-500">
-          <span class="text-xl font-semibold text-neutral-600 text-left">{{item.name}} </span>
-          <span class="text-neutral-600 text-left">Mesas: {{item.tables_count}} </span>
-        </div>
-      </a>
+        <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
+          {{ item.name }}
+        </span>
+      </div>
     </div>
-  </div>
+    <span class="text-base text-center font-semibold text-neutral-600">
+      Asigna al inventario de alguna sucursal
+    </span>
+    <div class="flex justify-center gap-2">
+      <div class="inline-block radio text-center" *ngFor="let item of mybranch">
+        <div class="flex flex-col justify-center text-center">
+          <input formControlName="store" type="radio" [id]="item.id" hidden="hidden" [value]="item.id" checked />
+          <label [for]="item.id"
+            class="flex items-center w-20 h-20 rounded-full mx-auto bg-neutral-400 text-white cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="h-16 w-16 text-white rounded-full mx-auto">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+            </svg>
+          </label>
+        </div>
+        <span class="pt-2 text-xs text-wrap font-semibold text-gray-400">
+          {{ item.name }}
+        </span>
+      </div>
+    </div>
 
-  <!-- <div class="flex justify-center gap-2 my-4">
-    <button
-      [disabled]="tablesForm.invalid"
-      class="p-3 rounded-full text-white w-1/2 font-semibold text-xl bg-neutral-500" 
-      (click)="onSubmit()"
-    >
-      Guardar cambios
-    </button>
-  </div> -->
+  </form>
+  <div class="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 gap-4 m-4 w-full">
+    <a class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer"
+      style="height: 150px;" *ngFor="let item of tables" (click)="detailTables(item.id)">
+      <!-- *ngFor="let item of ambients" -->
+      <div class="flex items-center">
+        <svg width="82" height="82" viewBox="0 0 82 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.436523" y="0.417969" width="80.7567" height="80.7567" rx="40.3783" fill="#A8A8A8" />
+          <path
+            d="M64.8727 56.14L59.9263 44.8341H63.0233C64.1398 44.8341 65.0423 43.9316 65.0423 42.8152C65.0423 41.6987 64.1398 40.7962 63.0233 40.7962H58.1598L51.9778 26.6638H56.9666C58.083 26.6638 58.9855 25.7614 58.9855 24.6449C58.9855 23.5284 58.083 22.626 56.9666 22.626H24.6639C23.5474 22.626 22.645 23.5284 22.645 24.6449C22.645 25.7614 23.5474 26.6638 24.6639 26.6638H29.6526L23.4707 40.7962H18.6071C17.4907 40.7962 16.5882 41.6987 16.5882 42.8152C16.5882 43.9316 17.4907 44.8341 18.6071 44.8341H21.7042L16.7578 56.14C16.3096 57.1616 16.776 58.3507 17.7996 58.7969C18.062 58.914 18.3366 58.9665 18.6051 58.9665C19.3844 58.9665 20.1254 58.5143 20.4565 57.7551L26.1094 44.8341H55.521L61.174 57.7551C61.5051 58.5143 62.2461 58.9665 63.0254 58.9665C63.2959 58.9665 63.5705 58.914 63.8309 58.7969C64.8545 58.3487 65.3188 57.1596 64.8727 56.14ZM27.876 40.7962L34.0579 26.6638H47.5705L53.7525 40.7962H27.876Z"
+            fill="#FAFAFA" />
+        </svg>
+      </div>
+      <div class="grid justify-start gap-2 text-neutral-500">
+        <span class="text-xl font-semibold text-neutral-600 text-left">{{item.name}} </span>
+        <span class="text-neutral-600 text-left">Mesas: {{item.tables_count}} </span>
+      </div>
+    </a>
+  </div>
 </div>
 
-<!-- <ng-container *ngIf="tablesArr.length > 0">
-  <div class="max-w-4xl grid xl:grid-cols-3 gap-4 m-4 mx-auto mt-8">
-    <div
-      *ngFor="let table of tablesArr; let i = index"
-      class="w-full rounded-full py-2 px-4 inline-flex items-center border-2 justify-between border-neutral-500 text-neutral-500"
-    >
-      <div>
-        <div class="inline-block h-9 w-9 rounded-full">
-          <svg
-            viewBox="0 0 122 121"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="0.506836"
-              width="120.991"
-              height="120.991"
-              rx="60.4953"
-              fill="#A8A8A8"
-            />
-            <path
-              d="M92.7786 80.7618L86.2452 65.8285H90.3359C91.8106 65.8285 93.0026 64.6365 93.0026 63.1618C93.0026 61.6871 91.8106 60.4951 90.3359 60.4951H83.9119L75.7466 41.8285H82.3359C83.8106 41.8285 85.0026 40.6365 85.0026 39.1618C85.0026 37.6871 83.8106 36.4951 82.3359 36.4951H39.6692C38.1946 36.4951 37.0026 37.6871 37.0026 39.1618C37.0026 40.6365 38.1946 41.8285 39.6692 41.8285H46.2586L38.0932 60.4951H31.6692C30.1946 60.4951 29.0026 61.6871 29.0026 63.1618C29.0026 64.6365 30.1946 65.8285 31.6692 65.8285H35.7599L29.2266 80.7618C28.6346 82.1111 29.2506 83.6818 30.6026 84.2711C30.9492 84.4258 31.3119 84.4951 31.6666 84.4951C32.6959 84.4951 33.6746 83.8978 34.1119 82.8951L41.5786 65.8285H80.4266L87.8932 82.8951C88.3306 83.8978 89.3092 84.4951 90.3386 84.4951C90.6959 84.4951 91.0586 84.4258 91.4026 84.2711C92.7546 83.6791 93.3679 82.1085 92.7786 80.7618ZM43.9119 60.4951L52.0772 41.8285H69.9252L78.0906 60.4951H43.9119Z"
-              fill="#FAFAFA"
-            />
-          </svg>
-        </div>
-      </div>
-      <span> {{ table.name }}</span>
-      <mat-icon mat-icon-button class="cursor-pointer" (click)="deleteSub(i)"
-        >do_not_disturb_on</mat-icon
-      >
-    </div>
-  </div>
-  <div class="flex justify-center gap-2 my-4">
-    <button
-      class="p-3 rounded-full text-white w-1/2 font-semibold text-xl bg-neutral-500"
-      (click)="onSubmit()"
-    >
-      Guardar cambios
-    </button>
-  </div>
-</ng-container> -->
-<!-- <div
-  class="max-w-4xl grid xl:grid-cols-3 gap-4 m-4 mx-auto mt-8"
-  *ngIf="tables.length > 0"
->
-  <div
-    *ngFor="let table of tables"
-    class="w-full rounded-full py-2 px-4 inline-flex items-center border-2 justify-between border-neutral-500 text-neutral-500"
-  >
-    <div>
-      <div class="inline-block h-9 w-9 rounded-full">
-        <svg
-          viewBox="0 0 122 121"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect
-            x="0.506836"
-            width="120.991"
-            height="120.991"
-            rx="60.4953"
-            fill="#A8A8A8"
-          />
-          <path
-            d="M92.7786 80.7618L86.2452 65.8285H90.3359C91.8106 65.8285 93.0026 64.6365 93.0026 63.1618C93.0026 61.6871 91.8106 60.4951 90.3359 60.4951H83.9119L75.7466 41.8285H82.3359C83.8106 41.8285 85.0026 40.6365 85.0026 39.1618C85.0026 37.6871 83.8106 36.4951 82.3359 36.4951H39.6692C38.1946 36.4951 37.0026 37.6871 37.0026 39.1618C37.0026 40.6365 38.1946 41.8285 39.6692 41.8285H46.2586L38.0932 60.4951H31.6692C30.1946 60.4951 29.0026 61.6871 29.0026 63.1618C29.0026 64.6365 30.1946 65.8285 31.6692 65.8285H35.7599L29.2266 80.7618C28.6346 82.1111 29.2506 83.6818 30.6026 84.2711C30.9492 84.4258 31.3119 84.4951 31.6666 84.4951C32.6959 84.4951 33.6746 83.8978 34.1119 82.8951L41.5786 65.8285H80.4266L87.8932 82.8951C88.3306 83.8978 89.3092 84.4951 90.3386 84.4951C90.6959 84.4951 91.0586 84.4258 91.4026 84.2711C92.7546 83.6791 93.3679 82.1085 92.7786 80.7618ZM43.9119 60.4951L52.0772 41.8285H69.9252L78.0906 60.4951H43.9119Z"
-            fill="#FAFAFA"
-          />
-        </svg>
-      </div>
-    </div>
-    <span> {{ table.number }} - {{ table.store_name }} </span>
-    <mat-icon mat-icon-button class="cursor-pointer" (click)="delete(table.id)"
-      >do_not_disturb_on</mat-icon
-    >
-  </div>
-
-  <div
-    *ngIf="tables.length > 0"
-    class="xl:fixed bottom-4 md:left-1/2 flex justify-center items-center space-x-4"
-  >
-    <mat-paginator
-      class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm"
-      [pageSizeOptions]="[10]"
-      showFirstLastButtons
-      [length]="count"
-      [hidePageSize]="true"
-      (page)="nextPageIndex($event)"
-    ></mat-paginator>
-  </div>
-</div> -->
+<div *ngIf="tables.length > 0" class="xl:fixed bottom-4 md:left-1/2 flex justify-center items-center space-x-4">
+  <mat-paginator class="rounded-full bg-neutral-400 px-2 py-1 shadow-sm" [pageSizeOptions]="[10]" showFirstLastButtons
+    [length]="count" [hidePageSize]="true" (page)="nextPageIndex($event)"></mat-paginator>
+</div>
