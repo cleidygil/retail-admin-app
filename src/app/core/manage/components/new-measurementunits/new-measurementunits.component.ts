@@ -42,6 +42,9 @@ export class NewMeasurementunitsComponent {
   ngOnInit(): void {
     this.getMu()
     this.getAllStore()
+    if(this.id!=null){
+      this.getMeasurementID()
+    }
   }
 
   getAllStore() {
@@ -88,6 +91,19 @@ export class NewMeasurementunitsComponent {
     }).catch((err) => {
     });
   }
-
+  getMeasurementID(){
+    this.services.getMeasurementunitsID(this.id).then((result) => {
+      this.muform.patchValue({
+        name: result.name,
+        store: result.store,
+        value:Number(result.value).toString() ,
+        abbreviation:result.abbreviation,
+        equivalence: result.equivalence,
+      })
+      console.log(result)
+      console.log("result")
+    }).catch((err) => {
+    });
+  }
  
 }

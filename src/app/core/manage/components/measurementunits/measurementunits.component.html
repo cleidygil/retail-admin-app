@@ -14,7 +14,8 @@
   <div class="grid xl:grid-cols-3 gap-4 m-4 mx-auto">
     <div
       *ngFor="let item of mu"
-      class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
+      class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2 cursor-pointer"
+      (click)="detailMeasurement(item.id)"
     >
       <div class="flex items-center">
         <!-- <ng-container *ngIf="item ; else SinImagen">
