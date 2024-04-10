@@ -25,7 +25,8 @@ export class WarehousesComponent {
   private router = inject(Router)
   mystores: AllStore[] = []
   mybranch: AllStore[] = []
-  data: any[] = []
+  dataTrash: any[] = []
+  dataDepot: any[] = []
   nextPage: number = 1;
   count: number = 1
   params = new FormGroup({
@@ -37,17 +38,18 @@ export class WarehousesComponent {
   })
 
   ngOnInit(): void {
-    this.getEntryAndExit()
+    // this.geTrashOption()
     this.getAllStore()
     this.getAllBranch()
     this.params.valueChanges.subscribe(data => {
-      console.log(data)
       if (data.type == 'false') {
-        this.getEntryAndExitDepot()
+        this.getDepotPurcahrseOrder()
         return
       }
-      this.getEntryAndExit()
-      return
+      if (data.type == 'true') {
+        this.geTrashOption()
+        return
+      }
     })
   }
   getAllStore() {
@@ -68,39 +70,40 @@ export class WarehousesComponent {
       console.log(err)
     });
   }
-  getEntryAndExit() {
+  geTrashOption() {
     const valor = this.params.value
     const params: EntryAndExit = new EntryAndExit()
     params.page = this.nextPage
     params.store = valor.store || '',
-      params.depot_exit = valor.type || '';
-    params.search = valor.search || ''
+      // params.depot_exit = valor.type || '';
+      params.search = valor.search || ''
 
     if (valor.start != null && valor.end != null) {
       params.since = new Date(valor?.start).toLocaleDateString("fr-CA",);
       params.until = new Date(valor?.end).toLocaleDateString("fr-CA",)
     }
     this.services.getrash(params).then((result) => {
-      this.data = result.results
+      this.dataTrash = result.results
       this.count = result.count
     }).catch((error) => {
       console.log(error)
     })
   }
-  getEntryAndExitDepot() {
+  getDepotPurcahrseOrder() {
     const valor = this.params.value
     const params: EntryAndExit = new EntryAndExit()
     params.page = this.nextPage
     params.store = valor.store || '',
-      params.depot_exit = valor.type || '';
-    params.search = valor.search || ''
+      params.depot__store = valor.store || '',
+      // params.depot_exit = valor.type || '';
+      params.search = valor.search || ''
 
     if (valor.start != null && valor.end != null) {
       params.since = new Date(valor?.start).toLocaleDateString("fr-CA",);
       params.until = new Date(valor?.end).toLocaleDateString("fr-CA",)
     }
-    this.services.getDepotInventory(params).then((result) => {
-      this.data = result.results
+    this.services.getDepotPurcahrseOrder(params).then((result) => {
+      this.dataDepot = result.results
       this.count = result.count
     }).catch((error) => {
       console.log(error)
@@ -109,11 +112,13 @@ export class WarehousesComponent {
   nextPageIndex(event: PageEvent) {
     this.nextPage = event.pageIndex + 1;
     if (this.params.value.type == 'false') {
-      this.getEntryAndExitDepot()
+      this.getDepotPurcahrseOrder()
       return
     }
-    this.getEntryAndExit()
-    return
+    if (this.params.value.type == 'true') {
+      this.geTrashOption()
+      return
+    }
   }
   openDetail(item: any) {
     const dialogo = this.dialog.open(DialogDetailEntryExitComponent, {
@@ -122,7 +127,7 @@ export class WarehousesComponent {
     })
     dialogo.afterClosed().subscribe(data => {
       if (data) {
-        this.getEntryAndExit()
+        this.geTrashOption()
       }
     })
   }

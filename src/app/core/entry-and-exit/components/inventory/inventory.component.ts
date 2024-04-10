@@ -24,7 +24,8 @@ export class InventoryComponent {
 
   mystores: AllStore[] = []
   mybranch: AllStore[] = []
-  data: any[] = []
+  dataTrash: any[] = []
+  dataDepotInv: any[] = []
   nextPage: number = 1;
   count: number = 1
   params = new FormGroup({
@@ -40,12 +41,25 @@ export class InventoryComponent {
   ngOnInit(): void {
     this.getAllStore()
     this.getAllBranch()
-    this.getEntryAndExit()
-    this.options.valueChanges.subscribe(data=>{
-      this.getEntryAndExit()
+    this.params.valueChanges.subscribe(data => {
+      if (data.type == 'false') {
+        this.getDepotInventory()
+        return
+      }
+      if (data.type == 'true') {
+        this.getTrashInventory()
+        return
+      }
     })
-    this.params.valueChanges.subscribe(data=>{
-      this.getEntryAndExit()
+    this.options.valueChanges.subscribe(data => {
+      if (this.params.value.type == 'false') {
+        this.getDepotInventory()
+        return
+      }
+      if (this.params.value.type == 'true') {
+        this.getTrashInventory()
+        return
+      }
     })
   }
 
@@ -67,21 +81,41 @@ export class InventoryComponent {
       console.log(err)
     });
   }
-  getEntryAndExit() {
+  getTrashInventory() {
     const valor = this.params.value
     const params: EntryAndExit = new EntryAndExit()
     params.page = this.nextPage
     params.store = valor.store || '',
-    params.inventory_exit = valor.type || '';
+      params.inventory_exit = 'true';
     params.inventory__type = this.options.value.typeinv || '';
     params.search = valor.search || ''
-   
+
     if (valor.start != null && valor.end != null) {
       params.since = new Date(valor?.start).toLocaleDateString("fr-CA",);
       params.until = new Date(valor?.end).toLocaleDateString("fr-CA",)
     }
     this.services.getrash(params).then((result) => {
-      this.data = result.results
+      this.dataTrash = result.results
+      this.count = result.count
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+  getDepotInventory() {
+    const valor = this.params.value
+    const params: EntryAndExit = new EntryAndExit()
+    params.page = this.nextPage
+    params.store = valor.store || '',
+      params.inventory_entry = 'true';
+    params.inventory__type = this.options.value.typeinv || '';
+    params.search = valor.search || ''
+
+    if (valor.start != null && valor.end != null) {
+      params.created_at_since = new Date(valor?.start).toLocaleDateString("fr-CA",);
+      params.created_at_until = new Date(valor?.end).toLocaleDateString("fr-CA",)
+    }
+    this.services.getDepotInventory(params).then((result) => {
+      this.dataDepotInv = result.results
       this.count = result.count
     }).catch((error) => {
       console.log(error)
@@ -89,7 +123,14 @@ export class InventoryComponent {
   }
   nextPageIndex(event: PageEvent) {
     this.nextPage = event.pageIndex + 1;
-    this.getEntryAndExit()
+    if (this.params.value.type == 'false') {
+      this.getDepotInventory()
+      return
+    }
+    if (this.params.value.type == 'true') {
+      this.getTrashInventory()
+      return
+    }
   }
   openDetail(item: any) {
     const dialogo = this.dialog.open(DialogDetailEntryExitComponent, {
@@ -98,7 +139,14 @@ export class InventoryComponent {
     })
     dialogo.afterClosed().subscribe(data => {
       if (data) {
-        this.getEntryAndExit()
+        if (this.params.value.type == 'false') {
+          this.getDepotInventory()
+          return
+        }
+        if (this.params.value.type == 'true') {
+          this.getTrashInventory()
+          return
+        }
       }
     })
   }

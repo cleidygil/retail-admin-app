@@ -9,6 +9,7 @@ export class EntryAndExit {
     finish_date_since?: string
     finish_date_until?: string
     purchase_order?: string
+    purchase_order__store?:string
     search?: string
     type?: string
     remove_pagination?: string
