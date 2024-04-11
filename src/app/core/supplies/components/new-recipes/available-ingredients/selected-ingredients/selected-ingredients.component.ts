@@ -45,8 +45,21 @@ export class SelectedIngredientsComponent {
     })
     dialogo.afterClosed().subscribe(data =>{
       if(data){
+        // console.log(data)
+        // console.log("data")
         const productoAModificar = this.sendProducts.find(item =>item.product ===data.id)
-        productoAModificar.quantity = data.quantity      
+        productoAModificar.quantity = data.quantity 
+        // console.log(productoAModificar)
+        // console.log("productoAModificar")
+
+        // console.log(data.quantity)
+        // console.log(data.price)
+
+        // console.log(data.price *data.quantity)
+        // console.log("data.price *data.quantity")
+
+        this.costTotal += productoAModificar.price *data.quantity ;
+        this.costTotalChange.emit(this.costTotal);  
       }
     })
   }
@@ -57,7 +70,8 @@ export class SelectedIngredientsComponent {
     if(foundIndex === -1 && this.id!=null){
       this.deleteProduct.push(data)
     }
-    this.costTotal -= data.price;
+    this.costTotal -=  data?.price ? parseFloat(data.price) * data?.quantity : 0;
+    // this.sendProducts.splice(foundIndex, 1);
     this.costTotalChange.emit(this.costTotal);
     this.sendProducts.splice(index,1)
   }

@@ -112,7 +112,7 @@ export class AvailableIngredientsComponent {
     const foundIndex = this.selectProducts.findIndex(item => item.id === data.id);
     if (foundIndex === -1) {
       this.selectProducts.push(data)
-      this.costTotal += parseInt(data.price, 10);
+      // this.costTotal += parseInt(data.price, 10);
       let type = data.brand !== undefined ? "product" : "recipe";
       const body = {
         product: data.id,
@@ -126,13 +126,16 @@ export class AvailableIngredientsComponent {
         serial: data.brand !== undefined ? data.sku : data.serial,
         price:parseInt(data.price, 10)
       };
+      this.costTotal += body.quantity;
+
       this.sendProducts.push(body);
     } else {
+      const data = this.sendProducts[foundIndex]
+      const valor= data?.price ? parseFloat(data.price) * data?.quantity : 0
+      this.costTotal -= valor;
       this.selectProducts.splice(foundIndex, 1);
       this.sendProducts.splice(foundIndex, 1);
-      this.costTotal -= parseInt(data.price, 10);
     }
-
   }
   isProductSelected(item: any): boolean {
     return this.selectProducts.some(selectedItem => selectedItem.id === item.id);

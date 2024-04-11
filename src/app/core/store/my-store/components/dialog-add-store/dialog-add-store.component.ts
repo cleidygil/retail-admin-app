@@ -28,6 +28,10 @@ export class DialogAddStoreComponent {
     'description': new FormControl('', [Validators.required]),
     'currency': new FormControl('', [Validators.required])
   })
+  ambientsData: any
+  ambientsForm = new FormGroup({
+    'name': new FormControl('', [Validators.required, Validators.maxLength(200)]),
+  })
   methodsform = new FormGroup({
     payment_methods: new FormControl<any>('', [Validators.required]),
     bank: new FormControl<any>('', [Validators.required]),
@@ -44,9 +48,13 @@ export class DialogAddStoreComponent {
   format: any = [];
   accept: string = '.jpg,.png';
   archivoSeleccionado!: File;
+  ambientsArr: any[] = []
   files = new FormGroup({
     file: new FormControl(''),
   })
+
+  id: number | null = null
+
   ngOnInit(): void {
     this.getMethods()
 
@@ -97,6 +105,7 @@ export class DialogAddStoreComponent {
   }
   onSubmit() {
     const valor = this.storeForm.value
+
     let body = {
       "rif": null,
       "name": valor.name,
@@ -106,7 +115,8 @@ export class DialogAddStoreComponent {
       "localphone": valor.localphone,
       "description": valor.description,
       "payment_methods": [],
-      "currency": null
+      "currency": null,
+      "ambients": this.ambientsArr
     }
     this.services.setMyStore(body).then((res) => {
       this.snack.openSnackBar("Tienda creada exitosamente");
@@ -146,5 +156,14 @@ export class DialogAddStoreComponent {
       (fil: string, i: number) => i !== indice
     );
     this.format = this.format.filter((fil: string, i: number) => i !== indice);
+  }
+  addAmbients() {
+    this.ambientsArr.push({
+      ...this.ambientsForm.value,
+    })
+    this.ambientsForm.reset()
+  }
+  deleteSub(i: number) {
+    this.ambientsArr = this.ambientsArr.filter((item: any, index: number) => index != i).map((item: any) => item)
   }
 }

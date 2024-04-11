@@ -26,6 +26,12 @@ export class StoreDetailsComponent {
   info!: AllStore
   user: any = ''
   typeStore:any= ''
+  ambientsForm = new FormGroup({
+    'name': new FormControl('', [Validators.required, Validators.maxLength(200)]),
+  })
+  ambientsData: any
+  ambientsArr: any[] = []
+
   constructor() {
     this.storeForm.disable()
     this.user = this.global.User()
@@ -56,7 +62,7 @@ export class StoreDetailsComponent {
         address: this.info?.address,
         localphone: this.info?.localphone,
         description: this.info?.description,
-        currency: this.info?.currency?.toString()
+        currency: this.info?.currency?.toString(),
       })
     }, 2500)
 
@@ -66,8 +72,8 @@ export class StoreDetailsComponent {
     this.services.getMyStoreID(this.id).then((result) => {
       this.loading.hideLoading()
       this.info = result
+      this.ambientsArr = result.ambients
       this.typeStore = this.info?.parent == null ? "Tienda": "Sucursal"
-
     }).catch((err) => {
       this.loading.hideLoading()
     });
@@ -84,7 +90,8 @@ export class StoreDetailsComponent {
       "parent":this.info?.parent == null ? null: this.user.store,
       "localphone": valor.localphone,
       "description": valor.description,
-      "currency": null
+      "currency": null,
+      "ambients": this.ambientsArr
     }
     this.services.patchMyStoreID(body, this.info?.id).then((res) => {
       this.snack.openSnackBar("Tienda actualizada exitosamente")
@@ -94,7 +101,14 @@ export class StoreDetailsComponent {
     })
   }
 
-
-
+  deleteSub(i: number) {
+    this.ambientsArr = this.ambientsArr.filter((item: any, index: number) => index != i).map((item: any) => item)
+  }
+  addAmbients() {
+    this.ambientsArr.push({
+      ...this.ambientsForm.value,
+    })
+    this.ambientsForm.reset()
+  }
 
 }

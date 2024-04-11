@@ -16,7 +16,12 @@ const routes: Routes = [
   {
     path: ':store/new_method',
     component: NewMethodPaymentComponent
+  },
+  {
+    path: ':store/method_store/:id',
+    component: NewMethodPaymentComponent
   }
+
 ];
 
 @NgModule({

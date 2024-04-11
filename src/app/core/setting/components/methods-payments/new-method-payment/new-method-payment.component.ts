@@ -8,6 +8,7 @@ import { SnackbarService } from 'src/app/global/services/snackbar.service';
 import { Method } from '../../../interface/settings.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ContentObserver } from '@angular/cdk/observers';
 
 @Component({
   selector: 'app-new-method-payment',
@@ -22,9 +23,8 @@ export class NewMethodPaymentComponent {
   private activateRou = inject(ActivatedRoute)
   private router = inject(Router)
   sub!: Subscription
-  id: number = 0
-
-
+  id: any | null = null
+  store: any | null = null
   methodsform = new FormGroup({
     methods_selected: new FormControl<string | number>('')
   })
@@ -35,16 +35,21 @@ export class NewMethodPaymentComponent {
 
   constructor() {
     this.activateRou.params.subscribe(data => {
-      this.id = Number(data['store'])
-     
+      this.store = Number(data['store'])
+      this.id = Number(data['id']) 
     })
   }
   ngOnInit(): void {
-    console.log(this.methods)
     this.getMethods()
     this.methodsform.valueChanges.subscribe(change => {
       this.inputMethod = change.methods_selected
     })
+    if(!isNaN(this.id)){
+      this.methodsform.disable()
+      this.getMethodID()
+    }else{
+      this.id=null
+    }
   }
   getMethods() {
     const params: MethosdParams = new MethosdParams()
@@ -56,9 +61,67 @@ export class NewMethodPaymentComponent {
   }
 
   onSubmit() {
-    let body = {
-      payment_method: Number(this.inputMethod),   method: true
+    if (this.inputMethod == '5' || this.inputMethod == '4') {
+      // methods ={
+      //   payment_methods: [Number(this.inputMethod)],   
+      //   method: true,
+      //   bank: null,
+      //   bank_account:null,
+      //   email: null,
+      //   identification: this.methods?.sender !=null? this.methods.sender :null
+      // }
+      this.methods ={
+        bank: "null",
+        bank_account: 'null',
+        email: 'null',
+        sender: 'null',
+      }
+     
     }
+    const  methods ={
+      payment_methods: [Number(this.inputMethod)],   
+      method: true,
+      bank: null,
+      bank_account:null,
+      email: null,
+      identification: this.methods?.sender !=null? this.methods.sender :null
+    }
+    console.log(this.id)
+    console.log("this.id")
+    if(this.id!=null){
+      this.services.patchPaymentMethods(methods, this.id).then((res) => {
+        this.snack.openSnackBar("Metodo de pago actualizado con exito exitosamente")
+        this.router.navigate(['/home/settings/methods_payments/'+this.store+'/method_store'])
+      }).catch((error) => {
+        const containsDuplicate = error.error.message.includes("Duplicate");
+        if(containsDuplicate){
+          this.snack.openSnackBar("El método de pago ya existe, por favor ingrese uno nuevo.")
+        }else{
+          this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
+        }
+      })
+    }else{
+      console.log("post")
+
+      this.services.postMyStorePaymentMethods(methods, this.store).then((res) => {
+        this.snack.openSnackBar("Metodo de pago agregado exitosamente")
+        this.router.navigate(['/home/settings/methods_payments/'+this.store+'/method_store'])
+      }).catch((error) => {
+        const containsDuplicate = error.error.message.includes("Duplicate");
+        if(containsDuplicate){
+          this.snack.openSnackBar("El método de pago ya existe, por favor ingrese uno nuevo.")
+        }else{
+          this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
+        }
+      })
+    }
+  }
+  deleteMethodID(){
+    let body = {
+      payment_methods: [Number(this.inputMethod)],   
+      method: false
+    }
+    let methods:any={}
     if (this.inputMethod == '5' || this.inputMethod == '4') {
       this.methods ={
         bank: "null",
@@ -66,18 +129,32 @@ export class NewMethodPaymentComponent {
         email: 'null',
         sender: 'null',
       }
+       methods ={
+        bank: null,
+        bank_account:null,
+        email: null,
+        sender: null,
+      }
     }
-    let body2 = { ...body, ...this.methods }
-    this.services.postMyStorePaymentMethods(body2, this.id).then((res) => {
-      this.snack.openSnackBar("Metodo de pago agregado exitosamente")
-      this.router.navigate(['../'])
+    let body2 = { ...body, ...methods }
+    this.services.postMyStorePaymentMethods(body2, this.store).then((res) => {
+      this.snack.openSnackBar("Metodo de pago eliminado exitosamente")
+      this.router.navigate(['/home/settings/methods_payments/'+this.store+'/method_store'])
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
-      this.snack.openSnackBar(error.error.message)
     })
   }
   changeReset() {
     this.sitesServices.paso2.next(null)
     this.methods = null
+  }
+  getMethodID(){
+    this.services.getPaymentMethodsID(this.id).then((result) => {
+      this.methodsform.patchValue({
+        methods_selected:result.payment_method
+      })
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }
