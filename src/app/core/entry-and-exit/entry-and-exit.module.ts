@@ -16,10 +16,12 @@ import { InventoryComponent } from './components/inventory/inventory.component';
 import { WarehousesComponent } from './components/warehouses/warehouses.component';
 import { OptionInventoryComponent } from './components/option-inventory/option-inventory.component';
 import { SalesRawMaterialComponent } from './components/sales-raw-material/sales-raw-material.component';
+import { DepotPurcharseOrderComponent } from './components/warehouses/depot-purcharse-order/depot-purcharse-order.component';
+import { DepotInventoryComponent } from './components/warehouses/depot-inventory/depot-inventory.component';
 
 
 @NgModule({
-  declarations: [EntryAndExitComponent, ComponentsComponent, ManualEntryComponent, PurchaseDataComponent, ProductSelectionComponent, DialogLoadProductComponent, DistributeProductComponent, ProductsListComponent, WarehousesComponent, InventoryComponent, OptionInventoryComponent, SalesRawMaterialComponent],
+  declarations: [EntryAndExitComponent, ComponentsComponent, ManualEntryComponent, PurchaseDataComponent, ProductSelectionComponent, DialogLoadProductComponent, DistributeProductComponent, ProductsListComponent, WarehousesComponent, InventoryComponent, OptionInventoryComponent, SalesRawMaterialComponent, DepotPurcharseOrderComponent, DepotInventoryComponent],
   imports: [
     MaterialDesignModule,
     CommonModule,

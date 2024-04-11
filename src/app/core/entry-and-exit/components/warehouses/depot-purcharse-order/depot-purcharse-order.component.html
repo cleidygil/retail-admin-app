@@ -1,0 +1,45 @@
+<div
+  class="relative bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2"
+>
+  <div class="flex items-center">
+    <svg
+      width="82"
+      height="82"
+      viewBox="0 0 82 82"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        x="0.36792"
+        y="0.832031"
+        width="80.7567"
+        height="80.7567"
+        rx="40.3783"
+        fill="#A8A8A8"
+      />
+      <path
+        d="M40.7463 16.9835C41.8607 16.9835 42.7652 17.888 42.7652 19.0024L42.7652 47.3399L49.3126 40.7926C50.102 40.0032 51.3779 40.0032 52.1673 40.7926C52.561 41.1863 52.7589 41.7031 52.7589 42.2199C52.7589 42.7368 52.561 43.2536 52.1673 43.6473L43.601 52.2136C42.0263 53.7883 39.4663 53.7883 37.8916 52.2136L29.3253 43.6473C28.5359 42.8579 28.5359 41.582 29.3253 40.7926C30.1147 40.0032 31.3906 40.0032 32.18 40.7926L38.7274 47.3399L38.7274 19.0024C38.7274 17.888 39.6319 16.9835 40.7463 16.9835ZM46.9403 19.7817C46.5345 20.8235 47.0494 21.9924 48.0871 22.3962C55.8922 25.4448 60.9355 32.8279 60.9355 41.2085C60.9355 52.3408 51.8786 61.3976 40.7463 61.3976C29.614 61.3976 20.5571 52.3428 20.5571 41.2105C20.5571 32.83 25.6004 25.4448 33.4055 22.3982C34.4432 21.9924 34.956 20.8275 34.5523 19.7837C34.1465 18.744 32.9755 18.2312 31.9378 18.637C22.572 22.2932 16.5193 31.1543 16.5193 41.2105C16.5193 54.5697 27.3871 65.4375 40.7463 65.4375C54.1055 65.4375 64.9733 54.5697 64.9733 41.2105C64.9733 31.1543 58.9206 22.2932 49.5569 18.635C48.5171 18.2292 47.3482 18.742 46.9424 19.7817L46.9403 19.7817Z"
+        fill="#FAFAFA"
+      />
+    </svg>
+  </div>
+  <div class="flex flex-col text-neutral-500">
+    <span class="text-xl font-semibold text-neutral-600">
+      {{ item.product_name }}</span
+    >
+    <span class="text-sm">{{ item?.inventory_type_name }}</span>
+    <span class="text-sm">{{ item?.depot_store_name }}</span>
+    <span class="text-sm" *ngIf="item?.purchase_order"
+      >Nro. Orden : {{ item?.purchase_order }}</span
+    >
+    <!-- <span class="text-sm font-semibold flex flex-col"
+      >Sucursal:
+      <span class="text-sm">{{
+        item?.purchase_order_store_name || item.inventory_store_name
+      }}</span>
+    </span> -->
+    <span class="text-sm"
+      >{{ item.created_at | date: "dd/MM/YYYY, hh:mm a" }}
+    </span>
+  </div>
+</div>

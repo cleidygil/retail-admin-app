@@ -34,6 +34,11 @@ export class EntryAndExitService {
     const ob = this.http.get<WarehousesEandE | Entry[]>(`${this.url}/api/inventory/depot_inventory/`, { params: resparams })
     return lastValueFrom(ob)
   }
+  getDepotPurcahrseOrder(params: EntryAndExit): Promise<any> {
+    const resparams = this.queryParams.buildQueryParams(params)
+    const ob = this.http.get<WarehousesEandE | Entry[]>(`${this.url}/api/inventory/purchases_order_depot/`, { params: resparams })
+    return lastValueFrom(ob)
+  }
   getOptionsInventory(params: EntryAndExit): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
     const ob = this.http.get<any>(`${this.url}/api/inventory/depot/options/`, { params: resparams })
