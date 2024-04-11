@@ -8,6 +8,7 @@ export class Management {
   store?: string
   type?: string
   tables?:boolean
+  work_hour?:string
 }
 
 
@@ -94,4 +95,24 @@ export interface Table {
   status: number
   status_name: string,
   ambient_name:string
+}
+
+export interface Measurementunits  {
+  count: number
+  next: string
+  previous: string
+  results: Measurementunit[]
+}
+
+export interface Measurementunit {
+  id: number
+  name: string
+  abbreviation: string
+  value: string
+  equivalence: number
+  cost: string
+  currency: number
+  currency_name: string
+  store: number
+  store_name: string
 }

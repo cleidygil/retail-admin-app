@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SuppliesService } from '../../services/supplies.service';
+import { SnackbarService } from 'src/app/global/services/snackbar.service';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { SuppliesService } from '../../services/supplies.service';
 })
 export class NewProductComponent {
   private services = inject(SuppliesService)
-
+  private router = inject(Router)
+  private snack = inject(SnackbarService)
   private activateRou = inject(ActivatedRoute);
   sub!: Subscription
   id: number | null = null
@@ -85,4 +87,12 @@ export class NewProductComponent {
     return objectURL;
   }
   
+  deleteProduct() {
+    this.services.deleteProductID(Number(this.id)).then((result) => {
+      this.snack.openSnackBar("Producto eliminado exitosamente");
+      this.router.navigate(['/home/supplies/products/']);
+    }).catch((error) => {
+      this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")
+    })
+  }
 }

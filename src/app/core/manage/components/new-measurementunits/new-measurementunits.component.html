@@ -1,12 +1,22 @@
 <div class="flex justify-between gap-2">
-  <a [routerLink]="['../measurement_units']" mat-mini-fab color="primary">
+  <a [routerLink]="[id == null ? '../measurement_units' : '../']" mat-mini-fab color="primary">
     <mat-icon>chevron_left</mat-icon>
   </a>
   <div class="flex flex-col gap-2 m-2">
-    <button mat-mini-fab color="primary" *ngIf="this.id!=null" (click)="muform.enable()">
+    <button
+      mat-mini-fab
+      color="primary"
+      *ngIf="this.id != null"
+      (click)="options.value.option === 'false'? muform.enable() : hourform.enable()"
+    >
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-mini-fab color="primary" *ngIf="this.id!=null" (click)="deleteMU()">
+    <button
+      mat-mini-fab
+      color="primary"
+      *ngIf="this.id != null"
+      (click)="deleteMU()"
+    >
       <mat-icon>delete</mat-icon>
     </button>
   </div>
@@ -16,35 +26,122 @@
   <div class="flex flex-col justify-center w-full text-center">
     <p class="text-3xl font-semibold">Unidades de medidas</p>
   </div>
-  <form [formGroup]="muform" class="grid grid-cols-1 gap-2 my-4">
-    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-      <input
-        class="pl-2 w-full outline-none border-none"
-        formControlName="name"
-        placeholder="Nombre de la Unidad"
-      />
+  <form [formGroup]="options" class="grid grid-cols-1 gap-2">
+    <div class="relative inline-flex my-2">
+      <svg
+        class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 412 232"
+      >
+        <path
+          d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"
+          fill="#648299"
+          fill-rule="nonzero"
+        />
+      </svg>
+      <select
+        formControlName="option"
+        placeholder="Equivalencia"
+        class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
+      >
+        <option value="false">Unidad de medida</option>
+        <option value="true">Horas</option>
+      </select>
     </div>
-    <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
-      <input
-        class="pl-2 w-full outline-none border-none"
-        formControlName="abbreviation"
-        placeholder="Abreviatura de la unidad"
-      />
-    </div>
-    <div>
+  </form>
+  <ng-container *ngIf="options.value.option === 'false'">
+    <form [formGroup]="muform" class="grid grid-cols-1 gap-2 my-4">
       <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
         <input
           class="pl-2 w-full outline-none border-none"
-          formControlName="cantidad"
-          placeholder="Cantidad"
-          minlength="1"
-          maxlength="5"
-          pattern="[0-9]*"
+          formControlName="name"
+          placeholder="Nombre de la Unidad"
         />
       </div>
-      <mat-error class="text-xs flex justify-center" *ngIf="muform.controls['cantidad'].hasError('pattern')">Solo caracteres numericos </mat-error>
-    </div>
-    <div class="grid xl:flex items-center justify-around gap-2  w-full">
+      <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+        <input
+          class="pl-2 w-full outline-none border-none"
+          formControlName="abbreviation"
+          placeholder="Abreviatura de la unidad"
+        />
+      </div>
+      <div>
+        <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+          <input
+            class="pl-2 w-full outline-none border-none"
+            formControlName="value"
+            placeholder="Cantidad"
+            minlength="1"
+            maxlength="5"
+            pattern="[0-9]*"
+          />
+        </div>
+        <mat-error
+          class="text-xs flex justify-center"
+          *ngIf="muform.controls['value'].hasError('pattern')"
+          >Solo caracteres numericos
+        </mat-error>
+      </div>
+      <div class="grid xl:flex items-center justify-around gap-2 w-full">
+        <div class="relative inline-flex my-2">
+          <svg
+            class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 412 232"
+          >
+            <path
+              d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"
+              fill="#648299"
+              fill-rule="nonzero"
+            />
+          </svg>
+          <select
+            (ngModelChange)="changeSelection()"
+            formControlName="equivalence"
+            placeholder="Equivalencia"
+            class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
+          >
+            <option value="">Equivalencia</option>
+            <option *ngFor="let item of mu" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+        <div class="flex justify-center mx-4">
+          <mat-icon>sync_alt</mat-icon>
+        </div>
+        <div>
+          <div
+            class="flex w-full items-center border-2 my-2 py-2 px-3 rounded-2xl"
+          >
+            <input
+              class="pl-2 w-full outline-none border-none"
+              formControlName="cantidad"
+              placeholder="Ejemplo: 1000"
+              readonly
+            />
+
+            <mat-icon matSuffix>scale</mat-icon>
+          </div>
+          <mat-error
+            class="text-xs flex justify-center"
+            *ngIf="muform.controls['cantidad'].hasError('pattern')"
+            >Solo caracteres numericos
+          </mat-error>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="options.value.option === 'true'">
+    <form [formGroup]="hourform" class="grid grid-cols-1 gap-2 my-4">
+      <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+        <input
+          class="pl-2 w-full outline-none border-none"
+          formControlName="name"
+          placeholder="Nombre de de unidad Tiempo"
+        />
+      </div>
       <div class="relative inline-flex my-2">
         <svg
           class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none"
@@ -58,86 +155,127 @@
           />
         </svg>
         <select
-          formControlName="equivalence"
-          placeholder="Equivalencia"
+          formControlName="currency"
+          placeholder="Tipo de moneda"
           class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
         >
-          <option value="">Equivalencia</option>
-          <option *ngFor="let item of mu" [value]="item.id">
-            {{ item.name }} - {{ item.equivalence }} ➡️ {{item.value}}
-          </option>
+          <option value="">Tipo de moneda</option>
+          <option value="1">BOLIVARES</option>
+          <option value="2">DOLARES</option>
+          <option value="3">EUROS</option>
         </select>
       </div>
-      <div class="flex justify-center mx-4">
-          <mat-icon >sync_alt</mat-icon>
+      <div>
+        <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+          <input
+            class="pl-2 w-full outline-none border-none"
+            formControlName="cost"
+            placeholder="Costo de hora"
+            minlength="0"
+            pattern="[0-9]*"
+          />
+        </div>
+        <mat-error
+          class="text-xs flex justify-center"
+          *ngIf="hourform.controls['cost'].hasError('pattern')"
+          >Solo caracteres numericos
+        </mat-error>
+      </div>
+      <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
+        <input
+          class="pl-2 w-full outline-none border-none"
+          formControlName="abbreviation"
+          placeholder="Abreviatura de la unidad"
+        />
       </div>
       <div>
-        <div class="flex w-full items-center border-2 my-2 py-2 px-3 rounded-2xl">
+        <div class="flex items-center border-2 my-2 py-2 px-3 rounded-2xl">
           <input
             class="pl-2 w-full outline-none border-none"
             formControlName="value"
-            placeholder="Ejemplo: 1000"
+            placeholder="Cantidad"
             minlength="1"
             maxlength="5"
             pattern="[0-9]*"
           />
-          
-          <mat-icon matSuffix >scale</mat-icon>
         </div>
-        <mat-error class="text-xs flex justify-center" *ngIf="muform.controls['value'].hasError('pattern')">Solo caracteres numericos </mat-error>
+        <mat-error
+          class="text-xs flex justify-center"
+          *ngIf="muform.controls['value'].hasError('pattern')"
+          >Solo caracteres numericos
+        </mat-error>
       </div>
-    </div>
-
-    <div class="flex justify-center gap-2 my-2 text-xl text-neutral-600">
-      Asigna al inventario de alguna sucursal
-    </div>
-    <div class="flex justify-center gap-4 my-4">
-      <div class="inline-block radio text-center" *ngFor="let item of mystores">
-        <div class="flex flex-col justify-center text-center">
-          <input
-            formControlName="store"
-            name="store"
-            type="radio"
-            [id]="item.id"
-            hidden="hidden"
-            [value]="item.id"
-          />
-          <label
-            [for]="item.id"
-            class="flex items-center w-32 h-32 rounded-full mx-auto bg-neutral-400 text-white"
+      <div class="grid xl:flex items-center justify-around gap-2 w-full">
+        <div class="relative inline-flex my-2">
+          <svg
+            class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 412 232"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="h-24 w-24 text-white rounded-full mx-auto"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
-              />
-            </svg>
-          </label>
+            <path
+              d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"
+              fill="#648299"
+              fill-rule="nonzero"
+            />
+          </svg>
+          <select
+            (ngModelChange)="changeSelection2()"
+            formControlName="equivalence"
+            placeholder="Equivalencia"
+            class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
+          >
+            <option value="">Equivalencia</option>
+            <option *ngFor="let item of mu" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
         </div>
-        <p class="pt-2 text-sm font-semibold text-gray-400">
-          {{ item.name }}
-        </p>
+        <div class="flex justify-center mx-4">
+          <mat-icon>sync_alt</mat-icon>
+        </div>
+        <div>
+          <div
+            class="flex w-full items-center border-2 my-2 py-2 px-3 rounded-2xl"
+          >
+            <input
+              class="pl-2 w-full outline-none border-none"
+              formControlName="cantidad"
+              placeholder="Ejemplo: 1000"
+              readonly
+            />
+
+            <mat-icon matSuffix>scale</mat-icon>
+          </div>
+          <mat-error
+            class="text-xs flex justify-center"
+            *ngIf="muform.controls['cantidad'].hasError('pattern')"
+            >Solo caracteres numericos
+          </mat-error>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </ng-container>
+
   <div></div>
 
   <div class="flex justify-center gap-2">
     <button
+      *ngIf="options.value.option === 'false'"
       class="p-3 rounded-full text-white w-1/2 font-semibold text-xl"
       [ngClass]="muform.invalid ? 'bg-neutral-300' : 'bg-neutral-500'"
       [disabled]="muform.invalid"
       (click)="onSubmit()"
     >
-      {{ id != null ? "Actualizar" : "Crear" }} unidad de medida
+      Guardar cambios
+    </button>
+    <button
+      *ngIf="options.value.option === 'true'"
+      class="p-3 rounded-full text-white w-1/2 font-semibold text-xl"
+      [ngClass]="hourform.invalid ? 'bg-neutral-300' : 'bg-neutral-500'"
+      [disabled]="hourform.invalid"
+      (click)="onSubmit()"
+    >
+      Guardar cambios
     </button>
   </div>
 </div>
