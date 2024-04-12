@@ -14,8 +14,6 @@ export class NewProductComponent {
   private services = inject(SuppliesService)
   private router = inject(Router)
   private snack = inject(SnackbarService)
-  private router = inject(Router)
-  private snack = inject(SnackbarService)
   private activateRou = inject(ActivatedRoute);
   sub!: Subscription
   id: number | null = null
