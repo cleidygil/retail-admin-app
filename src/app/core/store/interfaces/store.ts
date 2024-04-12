@@ -37,6 +37,7 @@ export interface PaymentMethod {
   bank_account?: string
   email?: string,
   identification?:string
+  sender?:string
 }
 export class MethosdParams {
   status?: string

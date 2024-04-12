@@ -92,7 +92,7 @@ export class NewMethodPaymentComponent {
         bank_account:null,
         email: Number(this.inputMethod)===5?this.methods?.email : null,
         identification:  this.methods?.sender !=null? this.methods.sender :null,
-        phone:this.methods?.phone !=null? Number(this.methods?.phone) :null
+        sender:this.methods?.phone !=null? Number(this.methods?.phone) :null
       }
       this.services.patchPaymentMethods(methods, this.id).then((res) => {
         this.snack.openSnackBar("Metodo de pago actualizado con exito exitosamente")
@@ -113,7 +113,7 @@ export class NewMethodPaymentComponent {
         bank_account: Number(this.inputMethod) ===5|| Number(this.inputMethod)===4 || Number(this.inputMethod)===3|| Number(this.inputMethod)===6?null:this.methods?.bank_account,
         email: Number(this.inputMethod)===5 ||Number(this.inputMethod)===6 ?this.methods?.email : null,
         identification: this.methods?.sender !=null? this.methods.sender :null,
-        phone:this.methods?.phone !=null? this.methods?.phone :null
+        sender:this.methods?.phone !=null? Number(this.methods?.phone) :null
       }
       this.services.postMyStorePaymentMethods(methods, this.store).then((res) => {
         this.snack.openSnackBar("Metodo de pago agregado exitosamente")

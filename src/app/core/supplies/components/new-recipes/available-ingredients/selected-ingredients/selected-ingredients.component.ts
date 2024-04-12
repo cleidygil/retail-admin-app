@@ -45,8 +45,6 @@ export class SelectedIngredientsComponent {
     })
     dialogo.afterClosed().subscribe(data =>{
       if(data){
-        // console.log(data)
-        // console.log("data")
         const productoAModificar = this.sendProducts.find(item =>item.product ===data.id)
         if(productoAModificar.quantity ==0){
           this.costTotal += productoAModificar.price *data.quantity ;
@@ -56,15 +54,6 @@ export class SelectedIngredientsComponent {
         }
         productoAModificar.quantity = data.quantity 
         this.costTotalChange.emit(this.costTotal);  
-
-        // console.log(productoAModificar)
-        // console.log("productoAModificar")
-
-        // console.log(data.quantity)
-        // console.log(data.price)
-
-        // console.log(data.price *data.quantity)
-        // console.log("data.price *data.quantity")
       }
     })
   }
@@ -92,13 +81,15 @@ export class SelectedIngredientsComponent {
       this.snack.openSnackBar("Por favor escribir una categoria.");
     } else if (!costSale) {
       this.snack.openSnackBar("Por favor escribir el precio.");
-    } else if (!description) {
+    }else  if (this.infoForms.infoForms.typeProduct ==="" || this.infoForms.infoForms.typeProduct ===undefined) {
+      this.snack.openSnackBar("Por favor elegir el tipo de receta.");
+    }else if (!description) {
       this.snack.openSnackBar("Por favor escribir la descripción.");
     } else if (this.sendProducts.length === 0) {
       this.snack.openSnackBar("Por favor seleccionar un producto para la receta.");
     }else if (foundIndex) {
       this.snack.openSnackBar("Por favor agregarle la cantidad a algunos de los productos.");
-    } else if (this.costTotal>this.infoForms.costSale) {
+    } else if (this.costTotal>this.infoForms.infoForms.costSale) {
       this.snack.openSnackBar("El costo total de producción no puede ser mayor al costo de venta, por favor validar.");
     }else {
       this.openDialog();

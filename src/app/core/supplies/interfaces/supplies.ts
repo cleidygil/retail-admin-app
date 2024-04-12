@@ -223,4 +223,5 @@ export interface ParamsTax {
     parent?: string
     only_prices?:boolean
     category?:number
+    is_base_recipe ?:boolean
   }
