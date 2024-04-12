@@ -58,7 +58,7 @@ export class InvoicesOrdersComponent {
     const params: Shopping = new Shopping()
     params.page= this.nextPage
     params.status= '4'
-    params.depot ='true'
+    // params.depot ='true'
     
     this.services.getPurchasesOrders(params).then((result) => {
       this.ordersList = result.results
