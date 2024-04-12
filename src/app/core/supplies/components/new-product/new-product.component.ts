@@ -27,7 +27,6 @@ export class NewProductComponent {
     url: new FormControl(''),
   })
   productSale:any
-
   image:string = ''
   constructor() {
     this.sub = this.activateRou.params.subscribe((data) => {
