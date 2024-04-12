@@ -24,7 +24,7 @@ export class RecipesAllComponent {
   count: number = 1
   countCategory: number = 1
   categorySelect = new FormGroup({
-    category: new FormControl<string | null>(null) 
+    category: new FormControl('') 
   })
   nextPageProd: number = 1;
   pageIndex: number = 10
@@ -42,6 +42,9 @@ export class RecipesAllComponent {
   ngOnInit(): void {
     this.getAllRecipes()
     this.getCategory()
+    this.categorySelect.valueChanges.subscribe(data=>{
+      this.getAllRecipes()
+    })
   }
   
   dialogDetailRecipes(data:any){

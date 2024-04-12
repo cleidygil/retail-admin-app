@@ -32,7 +32,10 @@ export class TransferOfItemsComponent {
   ngOnInit(): void {
     this.getAllBranch()
     this.getAllWarehouse()
-      }
+    this.params.valueChanges.subscribe(data => {
+      this.getAllWarehouse()
+    })
+  }
 
 
   getAllBranch() {
@@ -64,7 +67,7 @@ export class TransferOfItemsComponent {
   }
   openChangeStatus(item: any) {
     const dialogo = this.dialog.open(TransferProductComponent, {
-      data: {item, type:2},
+      data: { item, type: 2 },
       width: window.innerWidth > 430 ? '40%' : 'auto'
     })
     dialogo.afterClosed().subscribe(data => {
