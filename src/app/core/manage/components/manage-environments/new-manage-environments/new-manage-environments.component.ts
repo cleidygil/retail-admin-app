@@ -106,8 +106,8 @@ export class NewManageEnvironmentsComponent {
       store: this.ambientsForm.value.store
     }
     this.services.patchAmbients(body, Number(this.id)).then((result) => {
-      this.router.navigate(['../manage_environments'])
       this.snack.openSnackBar("Ambiente actualizado con exito!")
+      this.router.navigate(['home/management/manage_environments'])
       this.ambientsArr = []
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error, intente de nuevo!")

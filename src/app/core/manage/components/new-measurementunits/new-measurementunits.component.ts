@@ -171,7 +171,7 @@ export class NewMeasurementunitsComponent {
         abbreviation: result.abbreviation,
         value: result.value,
         equivalence: result.equivalence,
-        cost: result.cost,
+        cost: Number(result.cost).toString() ,
         currency: result.currency
       })
       this.changeSelection2()

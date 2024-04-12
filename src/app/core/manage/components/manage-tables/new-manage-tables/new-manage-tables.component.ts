@@ -61,7 +61,7 @@ export class NewManageTablesComponent {
   getTables() {
     this.loading.showLoading()
     const params: Management = new Management()
-    params.page = this.nextPage
+    params.remove_pagination="true"
     params.store = this.tablesForm.value.store || ''
     this.services.getTables(params).then((result) => {
       this.loading.hideLoading()
@@ -75,9 +75,10 @@ export class NewManageTablesComponent {
   getAmbients(id:any=0, tables:boolean=false) {
     const params: Management = new Management()
     params.store = id ==0 ? "":id
+    params.remove_pagination="true"
     params.tables=tables
     this.services.getAmbients(params).then((result) => {
-      this.ambients = result.results
+      this.ambients = result
       this.count = result.count
     }).catch((err) => {
     });
@@ -90,7 +91,6 @@ export class NewManageTablesComponent {
         number: result.tables_count
       })
       this.getAmbients(result.store.id, true)
-
     }).catch((err) => {
     });
   }

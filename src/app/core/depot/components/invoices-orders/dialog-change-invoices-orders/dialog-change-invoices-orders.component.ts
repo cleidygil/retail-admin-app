@@ -45,6 +45,8 @@ export class DialogChangeInvoicesOrdersComponent {
     this.form.patchValue({
       depot: this.data.depot.toString()
     })
+    console.log(this.data)
+    console.log("this.data")
 
     this.ordersId = this.data.id
     this.getOrderItems()
@@ -87,17 +89,22 @@ export class DialogChangeInvoicesOrdersComponent {
     this.getOrderItems()
   }
   onSubmit() {
-    let valor = this.form.value
-    let body = {
-      depot: valor.depot,
+    if(!this.data.depot){
+      let valor = this.form.value
+      let body = {
+        depot: valor.depot,
+      }
+    
+      this.services.patchPurchasesOrders(body, this.data.id).then((result) => {
+        this.dialogRef.close(true)
+        this.snack.openSnackBar("Orden actualizada exitosamente")
+      }).catch((error) => {
+        this.snack.openSnackBar("Ocurrio un error, intente de nuevo!")
+      })
+    }else{
+      this.dialogRef.close(false)
     }
-  
-    this.services.patchPurchasesOrders(body, this.data.id).then((result) => {
-      this.dialogRef.close(true)
-      this.snack.openSnackBar("Orden actualizada exitosamente")
-    }).catch((error) => {
-      this.snack.openSnackBar("Ocurrio un error, intente de nuevo!")
-    })
+
     return
   }
 }

@@ -98,11 +98,12 @@
     <span class="text-2xl text-center font-semibold text-neutral-600 my-4">
       Ambientes de tu sucursal
     </span>
-    <div class="relative w-full">
+    <div class="relative w-full ">
       <input
         formControlName="name"
         placeholder="Crea tu ambiente"
-        class="w-full rounded-full py-2.5 px-4 border text-base bg-neutral-300 outline-none"
+        [ngClass]="ambientsForm.enabled ? 'bg-neutral-300':'bg-neutral-200'"
+        class="w-full rounded-full py-2.5 px-4 border text-base outline-none"
       />
       <div
         class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"

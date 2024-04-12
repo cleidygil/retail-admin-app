@@ -50,6 +50,9 @@ export class NewTaxesComponent {
     params.parent = 'true'
     this.storeServices.getUserStores(params).then((result) => {
       this.mystores = result
+      console.log(result)
+      console.log("result355")
+
     }).catch((err) => {
       console.log(err)
     });
@@ -80,6 +83,8 @@ export class NewTaxesComponent {
          acronym:result.acronym,
          percentage: Number(result.percentage).toString()
       })
+      console.log(result)
+      console.log("result")
       // this.loading.hideLoading()
       // this.taxes = result
     }).catch((err) => {

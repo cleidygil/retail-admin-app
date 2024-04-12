@@ -20,13 +20,14 @@
         <div class="inline-block radio text-center" *ngFor="let item of mystores">
           <div class="flex flex-col justify-center text-center">
             <input
-              (input)="getAmbients()"
               formControlName="store"
               name="store"
               type="radio"
               [id]="item.id"
               hidden="hidden"
               [value]="item.id"
+              (click)="getAmbients(item.id)"
+
             />
             <label
               [for]="item.id"

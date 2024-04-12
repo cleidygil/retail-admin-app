@@ -53,6 +53,8 @@ export class ManageTablesComponent {
 
     console.log(this.tablesForm.value.store)
     console.log("this.tablesForm.value.store")
+    console.log(   params.store )
+    console.log("   params.store ")
 
     this.services.getAmbientsTables(params).then((result) => {
       this.loading.hideLoading()

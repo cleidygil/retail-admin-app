@@ -109,7 +109,8 @@ export class NewCategoryComponent {
     dialogo.afterClosed().subscribe(data => {
       if (data) {
         this.services.deletehCategoryID(i).then((value) => {
-          this.snack.openSnackBar("Items eliminadao con exito.")
+          this.snack.openSnackBar("Items eliminado con éxito.")
+          this.router.navigate(['/home/management/categories'])
           this.getSubCategories()
         }).catch((error) => {
           this.snack.openSnackBar(error.errror.message)
