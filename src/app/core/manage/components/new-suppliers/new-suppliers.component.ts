@@ -25,10 +25,9 @@ export class NewSuppliersComponent {
   image: string = ''
   mystores: AllStore[] = []
   supplierform = new FormGroup({
-    'rif': new FormControl('', [Validators.required, Validators.max(10)]),
+    'rif': new FormControl('', [Validators.required, Validators.maxLength(10)]),
     'name': new FormControl('', [Validators.required]),
     'address': new FormControl('', [Validators.required]),
-    'observation': new FormControl(''),
     'email': new FormControl('', [Validators.required, Validators.email]),
     'store': new FormControl('', [Validators.required])
   })
@@ -61,7 +60,7 @@ export class NewSuppliersComponent {
       "rif": valor.rif,
       "address": valor.address,
       "email": valor.email,
-      "observation": valor.observation,
+      "observation": valor.name,
       "image": '...',
       "store": valor.store,
     }
@@ -91,7 +90,6 @@ export class NewSuppliersComponent {
         rif: result.rif,
         email: result.email,
         address: result.address,
-        observation: result.observation
 
       })
       // this.image = result.image
