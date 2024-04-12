@@ -27,7 +27,7 @@ export class ManualEntryComponent {
     let body = {
       ...this.value1,
       items: this.value2,
-      status: 10
+      status: 4
     }
     this.shopServices.postPurchasesOrders(body).then((result) => {
       this.loading.hideLoading()

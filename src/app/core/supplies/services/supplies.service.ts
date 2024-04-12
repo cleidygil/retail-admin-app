@@ -40,6 +40,10 @@ export class SuppliesService {
     const obs$ = this.http.get<ProductId>(`${this.url}/api/products/${id}`)
     return lastValueFrom(obs$)
   }
+  deleteProductID(id:number): Promise<any> {
+    const obs$ = this.http.delete<any>(`${this.url}/api/products/${id}`)
+    return lastValueFrom(obs$)
+  }
   patchProduts(body: any, id:any): Promise<any> {
     const obs$ = this.http.patch<any>(`${this.url}/api/products/${id}/`, body)
     return lastValueFrom(obs$)
