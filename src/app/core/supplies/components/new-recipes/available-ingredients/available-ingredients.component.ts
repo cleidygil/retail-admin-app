@@ -30,6 +30,8 @@ export class AvailableIngredientsComponent {
     search: new FormControl(''),
   })
   costTotal: number=0
+  @Output() costTotalChanged = new EventEmitter<number>();
+
   selectIngredients :any
   search:String =""
   selectProducts: any[] =[];
@@ -112,7 +114,7 @@ export class AvailableIngredientsComponent {
     const foundIndex = this.selectProducts.findIndex(item => item.id === data.id);
     if (foundIndex === -1) {
       this.selectProducts.push(data)
-      this.costTotal += parseInt(data.price, 10);
+      // this.costTotal += parseInt(data.price, 10);
       let type = data.brand !== undefined ? "product" : "recipe";
       const body = {
         product: data.id,
@@ -126,13 +128,16 @@ export class AvailableIngredientsComponent {
         serial: data.brand !== undefined ? data.sku : data.serial,
         price:parseInt(data.price, 10)
       };
+      this.costTotal += body.quantity;
+
       this.sendProducts.push(body);
     } else {
+      const data = this.sendProducts[foundIndex]
+      const valor= data?.price ? parseFloat(data.price) * data?.quantity : 0
+      this.costTotal -= valor;
       this.selectProducts.splice(foundIndex, 1);
       this.sendProducts.splice(foundIndex, 1);
-      this.costTotal -= parseInt(data.price, 10);
     }
-
   }
   isProductSelected(item: any): boolean {
     return this.selectProducts.some(selectedItem => selectedItem.id === item.id);
@@ -200,5 +205,6 @@ export class AvailableIngredientsComponent {
   actualizarCostoTotal(nuevoCosto: number) {
     // Actualizar la variable costTotal con el nuevo valor
     this.costTotal = nuevoCosto;
+    this.costTotalChanged.emit(this.costTotal);
   }
 }

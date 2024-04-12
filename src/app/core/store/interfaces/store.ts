@@ -25,6 +25,7 @@ export interface AllStore {
   payment_methods: PaymentMethod[]
   currency?: number
   currency_name?: string
+  ambients:any[]
 }
 
 export interface PaymentMethod {
@@ -34,7 +35,9 @@ export interface PaymentMethod {
   bank?: number
   bank__name?: number
   bank_account?: string
-  email?: string
+  email?: string,
+  identification?:string
+  sender?:string
 }
 export class MethosdParams {
   status?: string

@@ -50,6 +50,10 @@ export class ManageTablesComponent {
     params.page = this.nextPage
     params.store = this.tablesForm.value.store
     params.tables=true
+
+    console.log(this.tablesForm.value.store)
+    console.log("this.tablesForm.value.store")
+
     this.services.getAmbientsTables(params).then((result) => {
       this.loading.hideLoading()
       this.tables = result.results

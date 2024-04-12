@@ -19,7 +19,6 @@ export class RecipesSaleComponent {
   @Output() image = new EventEmitter<string>()
   @Output() datosEnviados = new EventEmitter<any>();
   private loading = inject(LoadingService);
-
   private services = inject(SuppliesService)
   private router = inject(Router)
   private activateRou = inject(ActivatedRoute);
@@ -28,16 +27,29 @@ export class RecipesSaleComponent {
   taxes:any[]=[]
   recipe: FormGroup = new FormGroup({});
   nextPage: number = 1;
+  @Input() costTotal:number=0;
   productsAll: any = []
   count: number = 1
   sub!: Subscription
   id: number | null = null
   idCategory?: number
+  type:any =[
+    {
+      id:1,
+      name:"Final"
+    },
+    {
+      id:2,
+      name:"Intermedio"
+    }
+  ]
   constructor(private formBuilder: FormBuilder){
     this.recipe = this.formBuilder.group({
       nameRecipe:  '',
       category: ['', Validators.required],
+      typeProduct:'',
       costSale:  '',
+      hoursMen:'',
       description:  '',
       image:  '',
     });

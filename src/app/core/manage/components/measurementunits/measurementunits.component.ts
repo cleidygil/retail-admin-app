@@ -3,6 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { LoadingService } from 'src/app/global/services/loading.service';
 import { ManageService } from '../../services/manege.service';
 import { Management } from '../../interface/manege.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-measurementunits',
@@ -12,6 +13,7 @@ import { Management } from '../../interface/manege.interface';
 export class MeasurementunitsComponent {
   private services = inject(ManageService)
   private loading = inject(LoadingService);
+  private router = inject(Router)
 
   nextPage: number = 1;
   count: number = 1
@@ -37,4 +39,10 @@ export class MeasurementunitsComponent {
     this.nextPage = event.pageIndex + 1;
     this.getMeasurement()
   }
+  detailMeasurement(id:any){
+    console.log(id)
+    console.log("id")
+    this.router.navigate(["/home/management/measurement_units/"+id]);
+  }
+
 }

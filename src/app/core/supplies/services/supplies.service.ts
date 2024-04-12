@@ -48,6 +48,10 @@ export class SuppliesService {
     const obs$ = this.http.patch<any>(`${this.url}/api/products/${id}/`, body)
     return lastValueFrom(obs$)
   }
+  deleteProducts( id:any){
+    const obs$ = this.http.delete<any>(`${this.url}/api/products/${id}/`)
+    return lastValueFrom(obs$)
+  }
   getAllRecipes(params: MyRecipeParams): Promise<Recipes>{
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<Recipes>(`${this.url}/api/recipes/`, {params:resparams})

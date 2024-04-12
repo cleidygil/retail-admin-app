@@ -56,6 +56,7 @@ export class StoreService {
     const obs$ = this.http.post<any>(`${this.url}/api/stores/${id}/payment_methods/`,body)
     return lastValueFrom(obs$)
   }
+
   getMyStoreDistributionsMedium(id:number): Promise<any> {
     const obs$ = this.http.get<any>(`${this.url}/api/stores/${id}/distributions_medium/`)
     return lastValueFrom(obs$)
@@ -67,6 +68,18 @@ export class StoreService {
   getPaymentMethods(params:MethosdParams): Promise<any> {
     const resparams = this.queryParams.buildQueryParams(params)
     const obs$ = this.http.get<any>(`${this.url}/api/payments/methods/`, { params: resparams })
+    return lastValueFrom(obs$)
+  }
+  getPaymentMethodsID(id:any): Promise<any>{
+    const obs$ = this.http.get<any>(`${this.url}/api/stores/payment_methods/`+id)
+    return lastValueFrom(obs$)
+  }
+  patchPaymentMethods(body:any, id:number): Promise<any> {
+    const obs$ = this.http.patch<any>(`${this.url}/api/stores/payment_methods/${id}/`,body)
+    return lastValueFrom(obs$)
+  }
+  deletePaymentMethods(id:number): Promise<any> {
+    const obs$ = this.http.delete<any>(`${this.url}/api/stores/payment_methods/${id}`)
     return lastValueFrom(obs$)
   }
   getBanks(params:MethosdParams): Promise<any> {

@@ -33,6 +33,9 @@ export class RecipesAllComponent {
   params = new FormGroup({
     search: new FormControl(''),
   })
+  typeProduct:boolean=true
+  activeButton:boolean=true
+
   constructor(
     // private router: Router
   ) { }
@@ -91,16 +94,20 @@ export class RecipesAllComponent {
       return
     }
   }
-  getAllRecipes(id:number =0){
+  getAllRecipes(id:any =0){
     this.loading.showLoading()
+    this.activeButton =  this.typeProduct===true ?true:false
     const params = new MyRecipeParams()
     params.page = this.nextPage
+    params.is_base_recipe =this.typeProduct;
     this.categorySelect.get('category')?.setValue(null)
     if(id !=0){
       params.category =id 
     }
     this.categorySelect.value?.category
     params.search = this.params.value?.search|| '';
+ 
+
     this.services.getAllRecipes(params).then((result) => {
       this.recipesAll = result.results
       this.count = result.count
@@ -113,7 +120,11 @@ export class RecipesAllComponent {
       console.log(err)
     });
   }
-
+  filterTypeProducts(typeProduct:boolean){
+    this.typeProduct=typeProduct
+    const category =  this.categorySelect.value?.category ===null?0:this.categorySelect.value?.category
+    this.getAllRecipes(category)
+  }
 
   nextPageIndex(event: PageEvent) {
     this.nextPage = event.pageIndex + 1;

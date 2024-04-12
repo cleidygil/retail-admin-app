@@ -1,10 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute , Router} from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SuppliesService } from '../../services/supplies.service';
 import { SnackbarService } from 'src/app/global/services/snackbar.service';
-
 
 @Component({
   selector: 'app-new-product',
@@ -27,6 +26,7 @@ export class NewProductComponent {
     file: new FormControl(''),
     url: new FormControl(''),
   })
+  productSale:any
   image:string = ''
   constructor() {
     this.sub = this.activateRou.params.subscribe((data) => {
@@ -86,13 +86,15 @@ export class NewProductComponent {
     const objectURL = URL.createObjectURL(blob);
     return objectURL;
   }
-  
-  deleteProduct() {
-    this.services.deleteProductID(Number(this.id)).then((result) => {
-      this.snack.openSnackBar("Producto eliminado exitosamente");
-      this.router.navigate(['/home/supplies/products/']);
+  deleteProducts(){
+    this.services.deleteProducts(this.id).then((result) => {
+      this.snack.openSnackBar("Producto creado exitosamente");
+      this.router.navigate(['/home/supplies/products'])
     }).catch((error) => {
-      this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")
+      this.snack.openSnackBar("Ocurrio un error, por favor intente nuevamente")
     })
+  }
+  recibirDatos(datos: any) {
+    this.productSale=datos
   }
 }

@@ -125,7 +125,7 @@ export class DialogBranchRecipesComponent {
         price: this.data.infoForms.infoForms.costSale,
         detail: this.data.infoForms.infoForms.description,
         image: this.data.infoForms.image,
-        is_base_recipe: true,
+        is_base_recipe: this.data.infoForms.infoForms.typeProduct==="1"? true:false,
         store: this.sendStore,
         category: parseInt(this.data.infoForms.infoForms.category),
         prev_recipes: sendRecipes,
@@ -144,6 +144,7 @@ export class DialogBranchRecipesComponent {
         name: this.data.infoForms.infoForms.nameRecipe,
         price: this.data.infoForms.infoForms.costSale,
         detail: this.data.infoForms.infoForms.description,
+        is_base_recipe: this.data.infoForms.typeProduct==="1"? true:false,
         image: this.data.infoForms.image,
         category: parseInt(this.data.infoForms.infoForms.category),
       }

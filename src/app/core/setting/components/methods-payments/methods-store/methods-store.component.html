@@ -19,7 +19,7 @@
     </div>
     <div class="grid xl:grid-cols-2 gap-4 m-4">
       <div
-        class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2" *ngFor="let item of store_payment_methods"
+        class="bg-neutral-200 rounded-xl p-4 flex flex-shrink items-center justify-start gap-2" *ngFor="let item of store_payment_methods" (click)="editMethods(item.id)"
       >
         <div class="flex items-center">
             <svg width="122" height="122" viewBox="0 0 122 122" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,6 +34,8 @@
           <span class="text-sm">{{item.bank__name}}</span>
           <span class="text-sm">{{item.bank_account}}</span>
           <span class="text-sm">{{item.email}} </span>
+          <span class="text-sm">{{item.sender}} </span>
+          <span class="text-sm" *ngIf="item.identification !=null && item.identification != 'null'">{{item.identification }} </span>
         </div>
       </div>
     </div>

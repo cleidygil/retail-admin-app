@@ -46,7 +46,14 @@ export class SelectedIngredientsComponent {
     dialogo.afterClosed().subscribe(data =>{
       if(data){
         const productoAModificar = this.sendProducts.find(item =>item.product ===data.id)
-        productoAModificar.quantity = data.quantity      
+        if(productoAModificar.quantity ==0){
+          this.costTotal += productoAModificar.price *data.quantity ;
+        }else{
+          this.costTotal -= productoAModificar.price *productoAModificar.quantity
+          this.costTotal += productoAModificar.price *data.quantity ;
+        }
+        productoAModificar.quantity = data.quantity 
+        this.costTotalChange.emit(this.costTotal);  
       }
     })
   }
@@ -57,7 +64,8 @@ export class SelectedIngredientsComponent {
     if(foundIndex === -1 && this.id!=null){
       this.deleteProduct.push(data)
     }
-    this.costTotal -= data.price;
+    this.costTotal -=  data?.price ? parseFloat(data.price) * data?.quantity : 0;
+    // this.sendProducts.splice(foundIndex, 1);
     this.costTotalChange.emit(this.costTotal);
     this.sendProducts.splice(index,1)
   }
@@ -73,13 +81,17 @@ export class SelectedIngredientsComponent {
       this.snack.openSnackBar("Por favor escribir una categoria.");
     } else if (!costSale) {
       this.snack.openSnackBar("Por favor escribir el precio.");
-    } else if (!description) {
+    }else  if (this.infoForms.infoForms.typeProduct ==="" || this.infoForms.infoForms.typeProduct ===undefined) {
+      this.snack.openSnackBar("Por favor elegir el tipo de receta.");
+    }else if (!description) {
       this.snack.openSnackBar("Por favor escribir la descripción.");
     } else if (this.sendProducts.length === 0) {
       this.snack.openSnackBar("Por favor seleccionar un producto para la receta.");
     }else if (foundIndex) {
       this.snack.openSnackBar("Por favor agregarle la cantidad a algunos de los productos.");
-    } else {
+    } else if (this.costTotal>this.infoForms.infoForms.costSale) {
+      this.snack.openSnackBar("El costo total de producción no puede ser mayor al costo de venta, por favor validar.");
+    }else {
       this.openDialog();
     }
   }

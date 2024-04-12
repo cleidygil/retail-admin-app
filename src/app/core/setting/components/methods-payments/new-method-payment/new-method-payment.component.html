@@ -1,7 +1,15 @@
 <div class="flex justify-between gap-2">
-  <a [routerLink]="['../method_store']" mat-mini-fab color="primary">
+  <a [routerLink]="id !== null  ? ['../'] : ['../method_store']" mat-mini-fab color="primary">
     <mat-icon>chevron_left</mat-icon>
   </a>
+  <div class="flex flex-col gap-2 m-2">
+    <!-- <button mat-mini-fab color="primary" *ngIf="this.id!=null" (click)="brandsform.enable()">
+      <mat-icon>edit</mat-icon>
+    </button> -->
+    <button mat-mini-fab color="primary" *ngIf="this.id!=null" (click)="deleteMethodID()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
 </div>
 
 <div class="max-w-xl self-center mx-auto my-10 bg-white p-8">
@@ -30,7 +38,7 @@
         >
         <option value="">Seleccione el método de pago</option>
 
-          <option *ngFor="let item of methods_arr" [value]="item.id">
+          <option *ngFor="let item of methods_arr" [value]="item.id" >
             {{ item.name }}
           </option>
         </select>

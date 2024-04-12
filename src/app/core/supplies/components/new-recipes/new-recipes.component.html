@@ -142,7 +142,9 @@
     [files]="files.value"
     (image)="image = $event"
     (datosEnviados)="recibirDatos($event)"
+    [costTotal]="costTotal"
     ></app-recipes-sale>
+    <!-- (costTotal)="costTotalChanged.emit($event)" -->
 
 </div>
 <app-available-ingredients
@@ -150,5 +152,6 @@
     [files]="files.value"
     (image)="image = $event"
     [datosRecibidos]="datosEnviados"
+    (costTotalChanged)="costTotal = $event"
 ></app-available-ingredients>
 

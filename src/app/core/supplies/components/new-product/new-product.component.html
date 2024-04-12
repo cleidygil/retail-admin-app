@@ -3,13 +3,11 @@
     <mat-icon>chevron_left</mat-icon>
   </a>
   <div class="flex flex-col gap-2 m-2">
-        <button
-      mat-mini-fab
-      color="primary"
-      *ngIf="this.id != null"
-      (click)="deleteProduct()"
-    >
+    <button mat-mini-fab color="primary" *ngIf="this.id!=null" (click)="deleteProducts()">
       <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-mini-fab color="primary" *ngIf="this.id!=null" (click)="productSale.enable()">
+      <mat-icon>edit</mat-icon>
     </button>
   </div>
 </div>
@@ -151,5 +149,6 @@
     [myFiles]="myFiles"
     [files]="files.value"
     (image)="image = $event"
+    (productForm)="recibirDatos($event)"
   ></app-product-sale>
 </div>

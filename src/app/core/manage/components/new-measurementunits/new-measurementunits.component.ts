@@ -63,6 +63,9 @@ export class NewMeasurementunitsComponent {
     })
     this.getMu()
     this.getAllStore()
+    // if(this.id!=null){
+    //   this.getMeasurementID()
+    // }
   }
 
   getAllStore() {
