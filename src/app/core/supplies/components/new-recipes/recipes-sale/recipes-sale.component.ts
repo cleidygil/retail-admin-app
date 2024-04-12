@@ -33,6 +33,7 @@ export class RecipesSaleComponent {
   sub!: Subscription
   id: number | null = null
   idCategory?: number
+  valueTypeProduct?:any
   type:any =[
     {
       id:1,
@@ -87,8 +88,10 @@ export class RecipesSaleComponent {
         category:result.category,
         costSale: result.price,
         description:result.detail,
-        image:result.image
+        image:result.image,
+        hoursMen:result.hour_work
       })
+      this.valueTypeProduct= result.is_base_recipe ?1:2
       this.idCategory=result.category
       this.image.emit(result.image)
       // this.loading.hideLoading()

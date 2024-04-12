@@ -42,9 +42,8 @@ export class RecipesAllComponent {
   ngOnInit(): void {
     this.getAllRecipes()
     this.getCategory()
-    this.categorySelect.valueChanges.subscribe(data=>{
-      this.getAllRecipes()
-    })
+    // this.categorySelect.valueChanges.subscribe(data=>{
+    // })
   }
   
   dialogDetailRecipes(data:any){

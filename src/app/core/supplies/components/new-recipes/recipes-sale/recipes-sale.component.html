@@ -30,7 +30,7 @@
     <select formControlName="typeProduct"
       class="w-full border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
       <option value="" selected>Tipo de receta</option>
-      <option *ngFor="let item of type" [value]="item.id" >
+      <option *ngFor="let item of type" [value]="item.id" [selected]="valueTypeProduct===item.id">
         {{ item.name }}
       </option>
     </select>
