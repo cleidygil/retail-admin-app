@@ -20,6 +20,8 @@ export class MethodUsdComponent {
       bank: new FormControl(null),
       bank_account: new FormControl(null),
       email: new FormControl('', [Validators.required, Validators.email]),
+      identification: new FormControl(null),
+
     })
     this.payments.valueChanges.subscribe(changes => {
       this.methods.emit(changes)
@@ -32,6 +34,8 @@ export class MethodUsdComponent {
         bank_account: valor?.bank_account,
         email: valor?.email,
         sender: valor?.sender,
+        identification: valor?.identification,
+
       })
       this.input = valor?.payment_method
     }

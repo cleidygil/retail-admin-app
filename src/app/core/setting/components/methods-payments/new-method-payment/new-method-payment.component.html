@@ -67,7 +67,7 @@
         [disabled]="(methodsform.value.methods_selected== '3' || methodsform.value.methods_selected== '1' || methodsform.value.methods_selected== '2' ||  methodsform.value.methods_selected== '6' || methodsform.value.methods_selected== '' )&& this.methods == null ? true: false"
         (click)="onSubmit()"
       >
-       Agregar método
+       {{id != null ? 'Actualizado': 'Agregar'}} método
       </button>
     </div>
   </div>

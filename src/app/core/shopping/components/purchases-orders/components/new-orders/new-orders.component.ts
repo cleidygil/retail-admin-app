@@ -96,7 +96,7 @@ export class NewOrdersComponent {
       this.loading.hideLoading()
       this.services.productsArr.next([])
       const dialogo = this.dialog.open(NotificationDialogComponent, {
-        data: ['Tu order ha sido creada con exito.', 'Hemos enviado un PDF de la orden de compra a tu email y al prveedor.'],
+        data: ['Tu order ha sido creada con exito.', 'Hemos enviado un PDF de la orden de compra a tu email y al proveedor.'],
         width: window.innerWidth > 432 ? '30%' : 'auto',
         // height: '80%'
       })

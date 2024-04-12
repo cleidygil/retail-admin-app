@@ -26,10 +26,14 @@ export class PaymentsCreditComponent {
     'supplier': new FormControl<any>({ value: '', readonly: true }),
     'store': new FormControl<any>({ value: '', readonly: true }),
     'created_at': new FormControl<any>({ value: '', readonly: true }),
-    'nrofactura': new FormControl<any>('', [Validators.required, Validators.maxLength(10)]),
+    'nrofactura': new FormControl<any>('', [Validators.required, Validators.maxLength(10), Validators.pattern('[0-9]*')]),
     'datepay': new FormControl<any>('', [Validators.required]),
+    'method': new FormControl<any>('', [Validators.required]),
   })
-  methodArr: any[] = []
+  methodArr: any[] = [
+    { id: 1, name: 'AL CONTADO' },
+    { id: 2, name: 'CREDITO' },
+  ]
   constructor() {
     this.sub = this.activate.params.subscribe(data => {
       this.id = Number(data['id'])
@@ -38,7 +42,6 @@ export class PaymentsCreditComponent {
 
   ngOnInit(): void {
     this.getOrderId()
-    this.getMethods()
   }
   getOrderId() {
     this.services.getPurchasesOrdersID(this.id).then((result) => {
@@ -54,21 +57,15 @@ export class PaymentsCreditComponent {
     )
   }
 
-  getMethods() {
-    const params: Shopping = new Shopping()
-    this.store.getPaymentMethods(params).then((result) => {
-      this.methodArr = result
-    }).catch((error) => {
-      console.log(error)
-    })
-  }
+  
   onSubmit() {
     const data = this.supplierform.value
     const values = this.services.registerPurchasePrice.value;
     console.log(values, 'values') 
     let body = {
-      ...this.value,
-      depot:true,
+      method_payment: data.method,
+      status: 4,
+      depot:false,
       invoice_number: data.nrofactura,
       finish_date: data.datepay,
     }

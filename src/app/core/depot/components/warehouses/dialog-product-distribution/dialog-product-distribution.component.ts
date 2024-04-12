@@ -25,7 +25,7 @@ export class DialogProductDistributionComponent {
 
   mybranch: AllStore[] = []
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
     if (this.data.store == undefined) {
       this.getAllBranch()
       this.form = this.formBuilder.group({
@@ -34,7 +34,7 @@ export class DialogProductDistributionComponent {
         sales: new FormControl('', [Validators.required, Validators.min(0)]),
         store: new FormControl('', [Validators.required])
       });
-    }else{
+    } else {
       this.form = this.formBuilder.group({
         available: new FormControl(''),
         rawmaterial: new FormControl('', [Validators.required, Validators.min(0)]),
@@ -46,43 +46,44 @@ export class DialogProductDistributionComponent {
       available: this.data.quantity
     })
   }
- 
+
   onSubmit() {
     const valor = this.form.value
-    if (valor.rawmaterial != '') {
-      let material = {
-        "store": this.data.store || valor.store,
-        "product": this.data.product,
-        "quantity": Number(valor.rawmaterial),
-        "inventory_type": 2,
-        option:null
-
-      }
-      this.services.patchInventoryTransaction(material).then((value) => {
-        this.snack.openSnackBar("Operacion realizada exitosamente")
-        this.dialogRef.close(true)
-      }).catch((error) => {
-        console.log(error)
-        this.snack.openSnackBar("Ocurrio un error, asegurese que los datos sean correctos!")
-      })
+    if (valor.rawmaterial== '' || valor.sales == '') {
+      this.snack.openSnackBar("Por favor debe llenar los campos")
+      return
     }
-    if (valor.sales != '') {
-      let material = {
-        "store": this.data.store || valor.store,
-        "product": this.data.product,
-        "quantity": Number(valor.sales),
-        "inventory_type": 1,
-        option:null
+    let material = {
+      "store": this.data.store || valor.store,
+      "product": this.data.product,
+      "quantity": Number(valor.rawmaterial),
+      "inventory_type": 2,
+      option: null
 
-      }
-      this.services.patchInventoryTransaction(material).then((value) => {
-        this.snack.openSnackBar("Operacion realizada exitosamente")
-        this.dialogRef.close(true)
-      }).catch((error) => {
-        console.log(error)
-        this.snack.openSnackBar("Ocurrio un error, asegurese que los datos sean correctos!")
-      })
     }
+    this.services.patchInventoryTransaction(material).then((value) => {
+      this.snack.openSnackBar("Operacion realizada exitosamente")
+      this.dialogRef.close(true)
+    }).catch((error) => {
+      console.log(error)
+      this.snack.openSnackBar("Ocurrio un error, asegurese que los datos sean correctos!")
+    })
+
+    let venta = {
+      "store": this.data.store || valor.store,
+      "product": this.data.product,
+      "quantity": Number(valor.sales),
+      "inventory_type": 1,
+      option: null
+    }
+    this.services.patchInventoryTransaction(venta).then((value) => {
+      this.snack.openSnackBar("Operacion realizada exitosamente")
+      this.dialogRef.close(true)
+    }).catch((error) => {
+      console.log(error)
+      this.snack.openSnackBar("Ocurrio un error, asegurese que los datos sean correctos!")
+    })
+
   }
   getAllBranch() {
     const params = new MyStoreParams()

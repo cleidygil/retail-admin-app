@@ -33,7 +33,8 @@ export class WarehouseReturnComponent {
   }
   getOptions() {
     const params: EntryAndExit = new EntryAndExit()
-    params.remove_pagination = 'true'
+    params.remove_pagination = 'true';
+    params.type = '1'
     this.entryserv.getOptionsInventory(params).then((value) => {
       this.options = value
     }).catch((error) => {

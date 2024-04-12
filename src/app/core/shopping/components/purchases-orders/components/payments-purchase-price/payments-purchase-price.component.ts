@@ -21,22 +21,5 @@ export class PaymentsPurchasePriceComponent {
       this.id = Number(data['id'])
     })
   }
-  options: any[] = [
-    { id: 1, name: 'AL CONTADO' },
-    { id: 2, name: 'CREDITO' },
-  ]
-  selection = new FormGroup({
-    select: new FormControl<any>('')
-  })
-  ngOnInit(): void {
-    this.selection.valueChanges.subscribe(data => {
-      let body = {
-        method_payment: this.selection.value.select,
-        status: 4,
-      }
-      this.value = body
-    })
-  }
-
 
 }
