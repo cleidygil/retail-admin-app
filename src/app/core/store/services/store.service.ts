@@ -75,7 +75,11 @@ export class StoreService {
     return lastValueFrom(obs$)
   }
   patchPaymentMethods(body:any, id:number): Promise<any> {
-    const obs$ = this.http.patch<any>(`${this.url}/api/stores/payment_methods/${id}`,body)
+    const obs$ = this.http.patch<any>(`${this.url}/api/stores/payment_methods/${id}/`,body)
+    return lastValueFrom(obs$)
+  }
+  deletePaymentMethods(id:number): Promise<any> {
+    const obs$ = this.http.delete<any>(`${this.url}/api/stores/payment_methods/${id}`)
     return lastValueFrom(obs$)
   }
   getBanks(params:MethosdParams): Promise<any> {

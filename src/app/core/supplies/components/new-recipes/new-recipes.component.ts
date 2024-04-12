@@ -24,6 +24,7 @@ export class NewRecipesComponent {
   sub!: Subscription
   datos: any = null;
   temporalInfoForms: any = null;
+  costTotal:number=0;
   private activateRou = inject(ActivatedRoute);
 
   constructor(){

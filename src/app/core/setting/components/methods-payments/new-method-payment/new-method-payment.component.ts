@@ -61,6 +61,8 @@ export class NewMethodPaymentComponent {
   }
 
   onSubmit() {
+    console.log(this.inputMethod)
+    console.log("this.inputMethod")
     if (this.inputMethod == '5' || this.inputMethod == '4') {
       // methods ={
       //   payment_methods: [Number(this.inputMethod)],   
@@ -70,25 +72,28 @@ export class NewMethodPaymentComponent {
       //   email: null,
       //   identification: this.methods?.sender !=null? this.methods.sender :null
       // }
-      this.methods ={
-        bank: "null",
-        bank_account: 'null',
-        email: 'null',
-        sender: 'null',
-      }
+      // this.methods ={
+      //   bank: "null",
+      //   bank_account: 'null',
+      //   email: 'null',
+      //   sender: 'null',
+      // }
      
     }
-    const  methods ={
-      payment_methods: [Number(this.inputMethod)],   
-      method: true,
-      bank: null,
-      bank_account:null,
-      email: null,
-      identification: this.methods?.sender !=null? this.methods.sender :null
-    }
-    console.log(this.id)
-    console.log("this.id")
+    var methods:any={}
+    console.log(this.methods)
+    console.log("this.methods")
+
     if(this.id!=null){
+      const  methods ={
+        store:this.store,
+        payment_methods: Number(this.inputMethod),   
+        bank: null,
+        bank_account:null,
+        email: Number(this.inputMethod)===5?this.methods?.email : null,
+        identification:  this.methods?.sender !=null? this.methods.sender :null,
+        phone:this.methods?.phone !=null? Number(this.methods?.phone) :null
+      }
       this.services.patchPaymentMethods(methods, this.id).then((res) => {
         this.snack.openSnackBar("Metodo de pago actualizado con exito exitosamente")
         this.router.navigate(['/home/settings/methods_payments/'+this.store+'/method_store'])
@@ -101,8 +106,15 @@ export class NewMethodPaymentComponent {
         }
       })
     }else{
-      console.log("post")
-
+      methods ={
+        payment_methods:[Number(this.inputMethod)] ,   
+        method: true,
+        bank:  Number(this.inputMethod) ===5|| Number(this.inputMethod)===4 || Number(this.inputMethod)===3|| Number(this.inputMethod)===6?null:this.methods?.bank,
+        bank_account: Number(this.inputMethod) ===5|| Number(this.inputMethod)===4 || Number(this.inputMethod)===3|| Number(this.inputMethod)===6?null:this.methods?.bank_account,
+        email: Number(this.inputMethod)===5 ||Number(this.inputMethod)===6 ?this.methods?.email : null,
+        identification: this.methods?.sender !=null? this.methods.sender :null,
+        phone:this.methods?.phone !=null? this.methods?.phone :null
+      }
       this.services.postMyStorePaymentMethods(methods, this.store).then((res) => {
         this.snack.openSnackBar("Metodo de pago agregado exitosamente")
         this.router.navigate(['/home/settings/methods_payments/'+this.store+'/method_store'])
@@ -117,27 +129,27 @@ export class NewMethodPaymentComponent {
     }
   }
   deleteMethodID(){
-    let body = {
-      payment_methods: [Number(this.inputMethod)],   
-      method: false
-    }
-    let methods:any={}
-    if (this.inputMethod == '5' || this.inputMethod == '4') {
-      this.methods ={
-        bank: "null",
-        bank_account: 'null',
-        email: 'null',
-        sender: 'null',
-      }
-       methods ={
-        bank: null,
-        bank_account:null,
-        email: null,
-        sender: null,
-      }
-    }
-    let body2 = { ...body, ...methods }
-    this.services.postMyStorePaymentMethods(body2, this.store).then((res) => {
+    // let body = {
+    //   payment_methods: [Number(this.inputMethod)],   
+    //   method: false
+    // }
+    // let methods:any={}
+    // if (this.inputMethod == '5' || this.inputMethod == '4') {
+    //   this.methods ={
+    //     bank: "null",
+    //     bank_account: 'null',
+    //     email: 'null',
+    //     sender: 'null',
+    //   }
+    //    methods ={
+    //     bank: null,
+    //     bank_account:null,
+    //     email: null,
+    //     sender: null,
+    //   }
+    // }
+    // let body2 = { ...body, ...methods }
+    this.services.deletePaymentMethods(this.id).then((res) => {
       this.snack.openSnackBar("Metodo de pago eliminado exitosamente")
       this.router.navigate(['/home/settings/methods_payments/'+this.store+'/method_store'])
     }).catch((error) => {

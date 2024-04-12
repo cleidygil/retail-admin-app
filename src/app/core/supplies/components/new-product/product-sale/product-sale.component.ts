@@ -20,6 +20,7 @@ export class ProductSaleComponent {
   @Input() myFiles: any[] = []
   @Input() files: any
   @Output() image = new EventEmitter<string>()
+  @Output() productForm =new EventEmitter<FormGroup>()
   private manage = inject(ManageService)
   private services = inject(SuppliesService)
   private storeServices = inject(StoreService)
@@ -59,6 +60,7 @@ export class ProductSaleComponent {
     this.getAllBranch()
     this.getTax()
     if (this.id != null) {
+      this.productSale.disable()
       this.getProductsID()
     }
   }
@@ -162,6 +164,7 @@ export class ProductSaleComponent {
       })
       this.getMU()
       this.image.emit(result.image)
+      this.productForm.emit(this.productSale)
       this.getSubCategories()
     }).catch((error) => {
       this.snack.openSnackBar("Ocurrio un error! Por favor vuelva a intentarlo")

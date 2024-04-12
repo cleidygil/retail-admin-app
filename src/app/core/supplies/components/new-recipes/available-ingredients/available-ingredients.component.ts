@@ -30,6 +30,8 @@ export class AvailableIngredientsComponent {
     search: new FormControl(''),
   })
   costTotal: number=0
+  @Output() costTotalChanged = new EventEmitter<number>();
+
   selectIngredients :any
   search:String =""
   selectProducts: any[] =[];
@@ -203,5 +205,6 @@ export class AvailableIngredientsComponent {
   actualizarCostoTotal(nuevoCosto: number) {
     // Actualizar la variable costTotal con el nuevo valor
     this.costTotal = nuevoCosto;
+    this.costTotalChanged.emit(this.costTotal);
   }
 }

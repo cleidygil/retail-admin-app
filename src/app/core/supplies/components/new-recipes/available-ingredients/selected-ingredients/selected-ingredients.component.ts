@@ -48,7 +48,15 @@ export class SelectedIngredientsComponent {
         // console.log(data)
         // console.log("data")
         const productoAModificar = this.sendProducts.find(item =>item.product ===data.id)
+        if(productoAModificar.quantity ==0){
+          this.costTotal += productoAModificar.price *data.quantity ;
+        }else{
+          this.costTotal -= productoAModificar.price *productoAModificar.quantity
+          this.costTotal += productoAModificar.price *data.quantity ;
+        }
         productoAModificar.quantity = data.quantity 
+        this.costTotalChange.emit(this.costTotal);  
+
         // console.log(productoAModificar)
         // console.log("productoAModificar")
 
@@ -57,9 +65,6 @@ export class SelectedIngredientsComponent {
 
         // console.log(data.price *data.quantity)
         // console.log("data.price *data.quantity")
-
-        this.costTotal += productoAModificar.price *data.quantity ;
-        this.costTotalChange.emit(this.costTotal);  
       }
     })
   }
@@ -93,7 +98,9 @@ export class SelectedIngredientsComponent {
       this.snack.openSnackBar("Por favor seleccionar un producto para la receta.");
     }else if (foundIndex) {
       this.snack.openSnackBar("Por favor agregarle la cantidad a algunos de los productos.");
-    } else {
+    } else if (this.costTotal>this.infoForms.costSale) {
+      this.snack.openSnackBar("El costo total de producción no puede ser mayor al costo de venta, por favor validar.");
+    }else {
       this.openDialog();
     }
   }

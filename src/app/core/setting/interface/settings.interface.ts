@@ -9,4 +9,5 @@ export class Method{
     bank_account?: string
     email?: string
     sender?: string
+    phone?: number 
   }

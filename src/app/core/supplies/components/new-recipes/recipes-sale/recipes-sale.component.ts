@@ -28,6 +28,7 @@ export class RecipesSaleComponent {
   taxes:any[]=[]
   recipe: FormGroup = new FormGroup({});
   nextPage: number = 1;
+  @Input() costTotal:number=0;
   productsAll: any = []
   count: number = 1
   sub!: Subscription
